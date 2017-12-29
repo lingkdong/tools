@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="page">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+      <!--attr的使用方法-->
+      <span   th:attr="data-number=${page.number},
+            data-size=${page.size},
+            data-last=${page.last},
+            data-totalPages=${page.totalPages},
+            data-totalElements=${page.totalElements}
+             "
+       >
+      </span>
+     <!-- 字符串拼接  拼接 链接时  用 &amp; 替代 &-->
+      <span  th:data="'number='+${page.number}
+                     +'&amp;size='+${page.size}
+                     ">
+
+      </span>
+</body>
+</html>

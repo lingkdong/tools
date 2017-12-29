@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/tools?useUnicode=true&characterEncoding=utf8
+    username: root
+    password: 123456
+  jpa:
+    hibernate:
+    # Hibernate ddl auto
+    #   create          Create the schemaand destory previous data
+    #   validate        Validate the schema, make no changes to the databases
+    #   create-drop     DisableDDL handling
+    #   update           Update the schema if necessary
+      ddl-auto: update
+    show-sql: true
+  thymeleaf:
+    cache: false
+server:
+  port: 8081
+
