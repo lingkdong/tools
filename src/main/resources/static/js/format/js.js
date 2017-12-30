@@ -1,6 +1,11 @@
 var TYPE = "js";
 function pretty() {
-    format_pretty(TYPE)
+    require(['beautify-js'], function (beautify) {
+        if (!isInputBlank()) {
+            var result = beautify.js_beautify($(input).val());
+            $(input).val(result);
+        }
+    });
 }
 function compress() {
     format_compress(TYPE)

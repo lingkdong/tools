@@ -93,11 +93,5 @@ function format_clear0() {
     }
 }
 
-function code_prettify(prettifyClass) {
-    // var pre='<pre class="prettyprint lang-css" >'+$(input).val()+'</pre>';
-    // $(input).after(pre);
-    // prettyPrint();
-    // console.log($(pre).text())
-}
 
 

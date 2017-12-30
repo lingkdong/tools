@@ -1,7 +1,11 @@
 var TYPE = "css";
-var prettifyClass="lang-css"
 function pretty() {
-   code_prettify(prettifyClass);
+    require(['beautify-css'], function (beautify) {
+        if (!isInputBlank()) {
+            var result = beautify.css_beautify($(input).val());
+            $(input).val(result);
+        }
+    });
 }
 function compress() {
     format_compress(TYPE)
