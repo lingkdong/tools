@@ -26,7 +26,7 @@
         this.$wrap.css({});
         this.$element.css({
             "white-space": "pre",
-            "outline":"none",
+            "outline": "none",
             "font-size": config.fontSize,
             "resize": config.resize,
             "margin-left": (parseInt(config.width) - parseInt(this.$element.css("border-left-width"))) + 'px',
@@ -43,7 +43,7 @@
             that.$element.wrap(that.$group);
             that.$ol.insertBefore(that.$element);
             this.$ol.wrap(that.$wrap)
-            that.$element.on('keydown', {that: that}, that.inputText);
+            that.$element.bind('input propertychange', {that: that}, that.inputText);
             that.$element.on('scroll', {that: that}, that.syncScroll);
             that.inputText({data: {that: that}});
         },
@@ -54,39 +54,40 @@
                 "padding-left": that.$ol.outerWidth(true) + 10 + "px"
             });
             setTimeout(function () {
-                var value = that.$element.val();
-                value.match(/\n/g) ? that.updateLine(value.match(/\n/g).length + 1) : that.updateLine(1);
+                that.updateLine();
                 that.syncScroll({data: {that: that}});
             }, 0);
         },
 
-        updateLine: function (count) {
+        updateLine: function () {
             var that = this;
+            var value = that.$element.val();
+            var count = value.match(/\n/g) ? value.match(/\n/g).length + 1 : 1;
             that.$element;
             var line = $("#line");
-            var old_line =parseInt($(line).attr("data-line"));
+            var old_line = parseInt($(line).attr("data-line"));
             $(line).html(count).attr("data-line", count);
             //old_line compare with now line
-            if(count==1){
+            if (count == 1) {
                 that.$ol.html('');
                 for (var i = 1; i <= count; i++) {
                     that.$ol.append("<div class='data-num' data-num='" + i + "'>" + i + "</div>");
                 }
-            }else if(count==old_line){
+            } else if (count == old_line) {
                 return true;
-            }else if(count - old_line>0){
+            } else if (count - old_line > 0) {
                 //more append
-                for (var i = old_line+1; i <= count; i++) {
+                for (var i = old_line + 1; i <= count; i++) {
                     that.$ol.append("<div class='data-num' data-num='" + i + "'>" + i + "</div>");
                 }
-            }else if(old_line-count>=count){
+            } else if (old_line - count >= count) {
                 that.$ol.html('');
                 for (var i = 1; i <= count; i++) {
                     that.$ol.append("<div class='data-num' data-num='" + i + "'>" + i + "</div>");
                 }
-            }else {
+            } else {
                 //delete from end
-                for (var i =count+1; i <= old_line; i++) {
+                for (var i = count + 1; i <= old_line; i++) {
                     $(that.$ol.children(":last")).remove();
                 }
             }
@@ -123,4 +124,15 @@
             }
         });
     }
+    $.fn.updateLine = function () {
+        var $this = $(this),
+            data = $this.data('autoRowsNumbers');
+
+        if (!data) {
+            $this.data('autoRowsNumbers', (data = new AutoRowsNumbers($this, config)));
+        }
+        data.updateLine();
+    }
 })(jQuery)
+
+

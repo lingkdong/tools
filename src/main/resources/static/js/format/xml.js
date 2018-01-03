@@ -12,5 +12,5 @@ function clear0() {
     format_clear0();
 }
 function raw() {
-    format_raw();
+    format_raw(TYPE);
 }

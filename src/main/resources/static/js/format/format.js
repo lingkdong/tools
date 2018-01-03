@@ -8,14 +8,18 @@ $(function () {
         display: "inline-block",
         fontSize: "14px"
     });
+
 })
+function updateLine() {
+    $(input).updateLine();
+}
 function isInputBlank() {
     if ($(input).val().trim() == "") {
         return true;
     }
     return false;
 }
-function format_raw() {
+function format_raw(type) {
     if (isInputBlank()) {
         window.open("/tools/raw.html");
     } else {
@@ -25,7 +29,8 @@ function format_raw() {
             async: true,
             dataType: "text",
             data: {
-                v: $(input).val()
+                v: $(input).val(),
+                type: type,
             },
             success: function (result) {
                 window.open("/tools/raw.html?version=" + result);
@@ -51,6 +56,7 @@ function format_pretty(type) {
             },
             success: function (result) {
                 $(input).val(result);
+                updateLine();
             },
             error: function (result) {
             },
@@ -72,6 +78,7 @@ function format_compress(type) {
             },
             success: function (result) {
                 $(input).val(result);
+                updateLine();
             },
             error: function (result) {
             },
@@ -90,6 +97,7 @@ function format_copy() {
 function format_clear0() {
     if (!isInputBlank()) {
         _clear0(input)
+        updateLine();
     }
 }
 

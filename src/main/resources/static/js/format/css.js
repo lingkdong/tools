@@ -4,6 +4,7 @@ function pretty() {
         if (!isInputBlank()) {
             var result = beautify.css_beautify($(input).val());
             $(input).val(result);
+            updateLine();
         }
     });
 }
@@ -17,5 +18,5 @@ function clear0() {
     format_clear0();
 }
 function raw() {
-    format_raw();
+    format_raw(TYPE);
 }
