@@ -1,8 +1,6 @@
 package com.tools.action.format;
 
-import com.tools.dto.format.CssFormat;
 import com.tools.dto.format.JsonFormat;
-import com.tools.worker.CssFormatWorker;
 import com.tools.worker.JsonFormatWorker;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,8 +17,8 @@ public class JsonAction {
         return new JsonFormatWorker(format).pretty().getOutput();
     }
 
-    @PostMapping(value = "/css-compress")
-    public String compress(CssFormat format) {
-        return new CssFormatWorker(format).compress().getOutput();
+    @PostMapping(value = "/json-compress")
+    public String compress(JsonFormat format) {
+        return new JsonFormatWorker(format).compress().getOutput();
     }
 }

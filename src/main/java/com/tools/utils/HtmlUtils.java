@@ -2,6 +2,7 @@ package com.tools.utils;
 
 import com.googlecode.htmlcompressor.compressor.ClosureJavaScriptCompressor;
 import com.googlecode.htmlcompressor.compressor.HtmlCompressor;
+import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
@@ -10,11 +11,13 @@ import org.jsoup.nodes.Document;
  */
 public class HtmlUtils {
     public static String format(String html){
+        if(StringUtils.isBlank(html)) return html;
         Document document= Jsoup.parse(html);
         return document.html();
     }
 
     public static String compress(String html){
+        if(StringUtils.isBlank(html)) return html;
         HtmlCompressor compressor = new HtmlCompressor();
         compressor.setRemoveComments(false);            //if false keeps HTML comments (default is true)
         compressor.setRemoveIntertagSpaces(true);      //removes iter-tag whitespace characters

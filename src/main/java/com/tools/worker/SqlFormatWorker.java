@@ -1,23 +1,23 @@
 package com.tools.worker;
 
+import com.alibaba.druid.sql.SQLUtils;
 import com.tools.detection.CheckFormat;
 import com.tools.dto.format.Format;
-import com.tools.dto.format.JsonFormat;
-import com.tools.utils.JsonUtils;
+import com.tools.dto.format.SqlFormat;
 
 /**
  * Created by DT254 on 2017/11/7.
  */
-public class JsonFormatWorker extends FormatWorker {
-    private JsonFormat format;
-    public JsonFormatWorker(JsonFormat format) {
+public class SqlFormatWorker extends FormatWorker {
+    private SqlFormat format;
+    public SqlFormatWorker(SqlFormat format) {
         this.format=format;
     }
 
     @Override
     public Format pretty() {
         if(!CheckFormat.inputBlank(format)){
-           format.setOutput(JsonUtils.format(format.getInput()));
+           format.setOutput(SQLUtils.format(format.getInput(),format.getDbType()));
         }
         return format;
     }
@@ -25,7 +25,7 @@ public class JsonFormatWorker extends FormatWorker {
     @Override
     public Format compress() {
         if(!CheckFormat.inputBlank(format)){
-            format.setOutput(JsonUtils.compress(format.getInput()));
+            format.setOutput(SQLUtils.format(format.getInput(),format.getDbType()));
         }
         return format;
     }

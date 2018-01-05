@@ -1,6 +1,7 @@
 package com.tools.utils;
 
 import com.googlecode.htmlcompressor.compressor.XmlCompressor;
+import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Document;
 import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
@@ -17,10 +18,12 @@ import java.io.StringWriter;
 public class XmlUtils {
 
     public static String format(String xml) {
+        if(StringUtils.isBlank(xml)) return xml;
         return format(xml, Encoding.UTF_8);
     }
 
     public static String format(String xml, String encode) {
+        if(StringUtils.isBlank(xml)) return xml;
         StringWriter out = null;
         XMLWriter writer = null;
         try {

@@ -20,9 +20,7 @@ function isInputBlank() {
     return false;
 }
 function format_raw(type) {
-    if (isInputBlank()) {
-        window.open("/tools/raw.html");
-    } else {
+    if (!isInputBlank()) {
         $.ajax({
             type: "post",
             url: "/tools/store-raw.json",
@@ -48,7 +46,7 @@ function format_pretty(type) {
     if (!isInputBlank()) {
         $.ajax({
             type: "post",
-            url: "/tools/format/" + type + "-pretty.json",
+            url: getPrettyUrl(type),
             async: true,
             dataType: "text",
             data: {
@@ -70,7 +68,7 @@ function format_compress(type) {
     if (!isInputBlank()) {
         $.ajax({
             type: "post",
-            url: "/tools/format/" + type + "-compress.json",
+            url:getCompressUrl(type),
             async: true,
             dataType: "text",
             data: {
@@ -101,5 +99,12 @@ function format_clear0() {
     }
 }
 
+function getPrettyUrl(type) {
+    return "/tools/format/" + type + "-pretty.json";
+}
+
+function getCompressUrl(Type) {
+    return"/tools/format/" + type + "-compress.json";
+}
 
 

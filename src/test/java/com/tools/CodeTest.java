@@ -1,11 +1,15 @@
 package com.tools;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.googlecode.htmlcompressor.compressor.YuiCssCompressor;
 import com.tools.utils.CssFormator;
 import com.yahoo.platform.yui.compressor.CssCompressor;
 import org.junit.Test;
 
 import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by DT254 on 2017/12/8.
@@ -18,7 +22,17 @@ public class CodeTest {
             e.printStackTrace();
         }
     }
+    @Test
+    public void testGson(){
+        Map<String,Object> map=new HashMap<>();
+        map.put("key","000101");
+        map.put("name","json");
+        map.put("value","json_long_java");
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String json=gson.toJson(map);
+        System.out.println(json);
 
+    }
     public static final String readTitle(String filePath) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(
                 new FileInputStream(filePath)));
