@@ -69,11 +69,24 @@ svg:not(:root) {
     padding-left: 8px !important
 }
 
+.px-1 {
+    padding-right: 4px !important;
+    padding-left: 4px !important;
+}
 .px-2 {
     padding-right: 8px !important;
     padding-left: 8px !important;
 }
+.f2-light {
+    font-size: 22px !important;
+    font-weight: 300 !important
+}
 
+@media (min-width: 768px) {
+    .f2-light {
+        font-size:24px !important
+    }
+}
 .dropdown {
     position: relative
 }
@@ -246,7 +259,174 @@ a.tabnav-extra:hover {
 .p-5 {
     padding: 32px !important
 }
+.form-group {
+    margin: 15px 0
+}
 
+.form-group .form-control {
+    width: 440px;
+    max-width: 100%;
+    margin-right: 5px;
+    background-color: #fafbfc
+}
+
+.form-group .form-control:focus {
+    background-color: #fff
+}
+
+.form-group .form-control.shorter {
+    width: 130px
+}
+
+.form-group .form-control.short {
+    width: 250px
+}
+
+.form-group .form-control.long {
+    width: 100%
+}
+
+.form-group textarea.form-control {
+    width: 100%;
+    height: 200px;
+    min-height: 200px
+}
+
+.form-group textarea.form-control.short {
+    height: 50px;
+    min-height: 50px
+}
+
+.form-group dt {
+    margin: 0 0 6px
+}
+
+.form-group label {
+    position: relative
+}
+
+.form-group.flattened dt {
+    float: left;
+    margin: 0;
+    line-height: 32px
+}
+
+.form-group.flattened dd {
+    line-height: 32px
+}
+
+.form-group dd h4 {
+    margin: 4px 0 0
+}
+
+.form-group dd h4.is-error {
+    color: #cb2431
+}
+
+.form-group dd h4.is-success {
+    color: #28a745
+}
+
+.form-group dd h4+.note {
+    margin-top: 0
+}
+
+.form-group.required dt label::after {
+    padding-left: 5px;
+    color: #cb2431;
+    content: "*"
+}
+
+.form-group .success,.form-group .error,.form-group .indicator {
+    display: none;
+    font-size: 12px;
+    font-weight: 600
+}
+
+.form-group.loading {
+    opacity: 0.5
+}
+
+.form-group.loading .indicator {
+    display: inline
+}
+
+.form-group.loading .spinner {
+    display: inline-block;
+    vertical-align: middle
+}
+
+.form-group.successful .success {
+    display: inline;
+    color: #28a745
+}
+
+.form-group.warn .warning,.form-group.warn .error,.form-group.errored .warning,.form-group.errored .error {
+    position: absolute;
+    z-index: 10;
+    display: block;
+    max-width: 450px;
+    padding: 5px 8px;
+    margin: 4px 0 0;
+    font-size: 13px;
+    font-weight: 400;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 3px
+}
+
+.form-group.warn .warning::after,.form-group.warn .warning::before,.form-group.warn .error::after,.form-group.warn .error::before,.form-group.errored .warning::after,.form-group.errored .warning::before,.form-group.errored .error::after,.form-group.errored .error::before {
+    position: absolute;
+    bottom: 100%;
+    left: 10px;
+    z-index: 15;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+    content: " ";
+    border: solid transparent
+}
+
+.form-group.warn .warning::after,.form-group.warn .error::after,.form-group.errored .warning::after,.form-group.errored .error::after {
+    border-width: 5px
+}
+
+.form-group.warn .warning::before,.form-group.warn .error::before,.form-group.errored .warning::before,.form-group.errored .error::before {
+    margin-left: -1px;
+    border-width: 6px
+}
+
+.form-group.warn .warning {
+    color: #735c0f;
+    background-color: #fffbdd;
+    border-color: #d9d0a5
+}
+
+.form-group.warn .warning::after {
+    border-bottom-color: #fffbdd
+}
+
+.form-group.warn .warning::before {
+    border-bottom-color: #d9d0a5
+}
+
+.form-group.errored label {
+    color: #cb2431
+}
+
+.form-group.errored .error {
+    color: #86181d;
+    background-color: #ffdce0;
+    border-color: #cea0a5
+}
+
+.form-group.errored .error::after {
+    border-bottom-color: #ffdce0
+}
+
+.form-group.errored .error::before {
+    border-bottom-color: #cea0a5
+}
 .btn-link {
     display: inline-block;
     padding: 0;
@@ -954,4 +1134,69 @@ a.tabnav-extra:hover {
     -webkit-appearance: menulist;
     -moz-appearance: menulist;
     appearance: menulist
+}
+
+.steps {
+    display: table;
+    width: 100%;
+    padding: 0;
+    margin: 30px auto 0;
+    overflow: hidden;
+    list-style: none;
+    border: 1px solid #dfe2e5;
+    border-radius: 3px;
+    box-shadow: 0 1px 3px rgba(27,31,35,0.05)
+}
+
+.steps li {
+    display: table-cell;
+    width: 33.3%;
+    padding: 10px 15px;
+    color: #c6cbd1;
+    cursor: default;
+    background-color: #fafbfc;
+    border-left: 1px solid #dfe2e5
+}
+
+.steps li.current {
+    color: #24292e;
+    background-color: #fff
+}
+
+.steps li.current .octicon {
+    color: #0366d6
+}
+
+.steps li .octicon {
+    float: left;
+    margin-right: 15px;
+    margin-bottom: 5px
+}
+
+.steps li .step {
+    display: block
+}
+
+.steps li:first-child {
+    border-left: 0
+}
+
+.steps .complete {
+    color: #586069
+}
+
+.steps .complete .octicon {
+    color: #28a745
+}
+.setup-form {
+    padding-bottom: 15px
+}
+dd {
+    margin-left: 0;
+}
+.setup-form dd {
+    position: relative
+}
+label {
+    font-weight: 600;
 }
