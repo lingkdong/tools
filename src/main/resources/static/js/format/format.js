@@ -103,7 +103,7 @@ function getPrettyUrl(type) {
     return "/tools/format/" + type + "-pretty.json";
 }
 
-function getCompressUrl(Type) {
+function getCompressUrl(type) {
     return"/tools/format/" + type + "-compress.json";
 }
 
