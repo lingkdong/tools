@@ -53,4 +53,5 @@ public class BaseResponseDTO {
     public void setData(Object data) {
         this.data = data;
     }
+
 }

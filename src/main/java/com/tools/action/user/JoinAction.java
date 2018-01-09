@@ -1,5 +1,6 @@
-package com.tools.action;
+package com.tools.action.user;
 
+import com.tools.action.BaseAction;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
