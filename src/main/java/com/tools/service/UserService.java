@@ -17,5 +17,7 @@ public interface UserService {
 
     BaseResponseDTO createUser(UserBaseDto userBaseDto);
 
+    BaseResponseDTO sendValid(UserBaseDto userBaseDto);
+
 
 }

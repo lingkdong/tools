@@ -12,8 +12,9 @@ spring:
     cache: true
 server:
   port: 8081
-boot :
-  test:
-     welcome : This is my first boot project on product.
+
+prefox:
+ email:
+  from: prefox@outllok.com
 
 

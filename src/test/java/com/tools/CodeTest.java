@@ -2,9 +2,8 @@ package com.tools;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.googlecode.htmlcompressor.compressor.YuiCssCompressor;
 import com.tools.utils.CssFormator;
-import com.yahoo.platform.yui.compressor.CssCompressor;
+import com.tools.utils.StringUtil;
 import org.junit.Test;
 
 import java.io.*;
@@ -82,5 +81,10 @@ public class CodeTest {
             e.printStackTrace();
         }
         System.out.println(result.toString());
+    }
+
+    @Test
+    public void testValid(){
+        System.out.println(StringUtil.getValidCode(1000));
     }
 }

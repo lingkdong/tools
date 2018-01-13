@@ -18,3 +18,10 @@ spring:
 server:
   port: 8081
 
+prefox:
+ email:
+  host: smtp.googlemail.com
+  port: 465
+  from: prefoxchina@gmail.com
+  user: prefoxchina@gmail.com
+  pass: google@109964

@@ -12,9 +12,10 @@ spring:
     cache: false
 server:
   port: 8081
-boot :
-  test:
-     welcome : This is my first boot project on testing.
+
+prefox:
+ email:
+  from: prefox@outllok.com
 
 sprig:
  thmeleaf:
