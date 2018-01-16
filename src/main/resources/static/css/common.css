@@ -427,6 +427,21 @@ a.tabnav-extra:hover {
 .form-group.errored .error::before {
     border-bottom-color: #cea0a5
 }
+dl.form-group>dd .form-control.is-autocheck-loading,dl.form-group>dd .form-control.is-autocheck-successful,dl.form-group>dd .form-control.is-autocheck-errored {
+    padding-right: 30px
+}
+
+dl.form-group>dd .form-control.is-autocheck-loading {
+    background-image: url("/img/loading_16.gif")
+}
+
+dl.form-group>dd .form-control.is-autocheck-successful {
+    background-image: url("/img/success.png")
+}
+
+dl.form-group>dd .form-control.is-autocheck-errored {
+    background-image: url("/img/error.png")
+}
 .btn-link {
     display: inline-block;
     padding: 0;

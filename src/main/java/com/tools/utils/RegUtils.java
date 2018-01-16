@@ -20,7 +20,7 @@ public class RegUtils {
     */
     public static boolean isUsername(String str) {
         if (StringUtils.isNotBlank(str)) {
-            String regex = "[A-Za-z0-9_]";
+            String regex = "[A-Za-z0-9_]+$";
             return match(regex, str);
         }
         return false;

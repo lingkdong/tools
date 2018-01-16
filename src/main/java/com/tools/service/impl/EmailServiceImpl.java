@@ -4,6 +4,7 @@ import com.tools.dto.EmailDto;
 import com.tools.service.EmailService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.mail.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -37,9 +38,9 @@ public class EmailServiceImpl implements EmailService {
         email.setSSLOnConnect(true);
         email.setFrom(from);
         email.addTo(dto.getEmailTo());
-        email.addCc(dto.getEmailCCTo());
-        email.setSubject(dto.getSubjet());
-        email.setMsg(dto.getMsg());
+        if(StringUtils.isNotBlank(dto.getEmailCCTo()))email.addCc(dto.getEmailCCTo());
+        if(StringUtils.isNotBlank(dto.getSubjet()))email.setSubject(dto.getSubjet());
+        if(StringUtils.isNotBlank(dto.getMsg()))email.setMsg(dto.getMsg());
     }
 
     @Override

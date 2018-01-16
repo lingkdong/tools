@@ -10,17 +10,17 @@ import org.springframework.web.bind.annotation.*;
  * Created by DT254 on 2018/1/9.
  */
 @RestController
-@RequestMapping("/tools")
+@RequestMapping("/tools/user")
 public class UserAction {
     @Autowired
     private UserService userService;
 
-    @GetMapping(value = "name-unique")
+    @PostMapping(value = "name-unique")
     public BaseResponseDTO nameUnique(@RequestParam(value = "username", required = false) String username) {
         return userService.nameUnique(username, null);
     }
 
-    @GetMapping(value = "email-unique")
+    @PostMapping(value = "email-unique")
     public BaseResponseDTO emailUnique(@RequestParam(value = "email", required = false) String email) {
         return userService.emailUnique(email, null);
     }

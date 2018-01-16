@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8"/>
     <title th:text="Join"></title>
-    <link th:href="@{/css/join.css}" rel="stylesheet"/>
+    <script th:src="@{/js/md5.min.js }"></script>
     <script th:src="@{/js/common.js }"></script>
     <script th:src="@{/js/join.js}"></script>
 </head>
@@ -54,44 +54,44 @@
                         <dt class="input-label"><label autocapitalize="off" autofocus="autofocus">
                             用户名</label></dt>
                         <dd><input autocapitalize="off" autofocus="autofocus" class="form-control"
-                                   id="user_login" name="user[login]" size="30" type="text"/>
-                            <p class="note">请设置你登录的用户名.(数字、字母、下划线，或其组合)</p></dd>
+                                   id="user_name" name="username" size="30" type="text"/>
+                            <p class="note">用户名只支持数字、字母、下划线，或其组合</p></dd>
                     </dl>
 
-                    <dl class="form-group successed">
-                        <dt class="input-label"><label name="user[password]">密码
+                    <dl class="form-group ">
+                        <dt class="input-label"><label name="password">密码
                         </label></dt>
-                        <dd><input class="form-control is-autocheck-successful" id="user_password"
-                                   name="user[password]" size="30" type="password"/>
-                            <p class="note">请设置你的登录密码.</p></dd>
+                        <dd><input class="form-control" id="user_password"
+                                   name="password" size="30" type="password"/>
+                            <p class="note">密码必须包含数字、字母、特殊符号且大于等于8位.</p></dd>
                     </dl>
                     <dl class="form-group">
                         <dt class="input-label"><label autocapitalize="off" for="user_email"
-                                                       name="user[email]">邮箱</label></dt>
+                                                       name="email">邮箱</label></dt>
                         <dd>
-                            <input autocapitalize="off" class="form-control" id="user_email" name="user[email]"
+                            <input autocapitalize="off" class="form-control" id="user_email" name="email"
                                    size="30"
                                    type="text"/>
-                            <button  class="btn btn-primary" id="valid_button">
-                            发送验证码
+                            <button  class="btn btn-primary " id="valid_button">
+                                获取验证码
                             </button>
-                            <p class="note">请设置你的电子邮箱.</p></dd>
+                            <p class="note">请设置您的电子邮箱.</p></dd>
                     </dl>
                     <dl class="form-group">
-                        <dt class="input-label"><label autocapitalize="off" for="user_email"
-                                                       name="user[email]">验证码</label></dt>
+                        <dt class="input-label"><label autocapitalize="off" for="user_valid"
+                                                       name="valid">验证码</label></dt>
                         <dd>
-                            <input autocapitalize="off" class="form-control" id="user_valid" name="user[valid]"
+                            <input autocapitalize="off" class="form-control" id="user_valid" name="vaildCode"
                                    size="30"
                                    type="text"/>
-                            <p class="note">请输入你邮箱收到的验证码.</p></dd>
+                            <p class="note">请输入您收到的邮箱验证码.</p></dd>
                     </dl>
 
                     <p class="tos-info">By clicking on "Create an account" below, you are agreeing to the
                         <a href="#" target="_blank">Terms of Service</a> and the
                         <a href="#" target="_blank">Privacy Policy</a>.</p>
 
-                    <button type="submit" class="btn btn-primary" id="signup_button">
+                    <button  class="btn btn-primary" id="signup_button">
                      创建账户
                     </button>
 

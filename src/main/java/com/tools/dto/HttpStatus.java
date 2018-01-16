@@ -7,26 +7,39 @@ public enum HttpStatus {
 
     OK(2000, "Success"),
 
-    CLIENT_ERROR(4000,"Client Error"),
+    CLIENT_ERROR(4000, "Client Error"),
 
-    /** unauthorized **/
-    UNAUTHORIZED(4001,"unauthorized"),
+    /**
+     * unauthorized
+     **/
+    UNAUTHORIZED(4001, "unauthorized"),
 
-    /** user not exist **/
-    USER_NOT_EXIST(4002,"user not exist"),
+    /**
+     * user not exist
+     **/
+    USER_NOT_EXIST(4002, "user not exist"),
 
-    /** incorrect password **/
-    INCORRECT_PASSWORD(4003,"incorrect password"),
+    /**
+     * incorrect password
+     **/
+    INCORRECT_PASSWORD(4003, "incorrect password"),
 
-    /** user already exit **/
-    USER_ALREADY_EXIST(4004,"user already exit"),
-    /** param is incorrect **/
-    PARAM_INCORRECT(4007,"param is incorrect"),
+    /**
+     * user already exit
+     **/
+    USER_ALREADY_EXIST(4004, "user already exit"),
+    /**
+     * param is incorrect
+     **/
+    PARAM_INCORRECT(4007, "param is incorrect"),
+    IS_BLANK(4008, "is blank"),
+    INVALID_FORMAT(4009, "invalid format"),
+    ALREADY_EXIT(4010, "already exit"),
+
     // 5xxx  Server Error
-    SERVER_ERROR(5000,"Server Error"),
+    SERVER_ERROR(5000, "Server Error"),
 
-    INTERNAL_SERVER_ERROR(5003, "Service unavailable")
-    ;
+    INTERNAL_SERVER_ERROR(5003, "Service unavailable");
 
 
     private final int value;
