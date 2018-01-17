@@ -24,7 +24,7 @@ public class User {
     @Column(name="true_name",length =20)
     private String trueName;
 
-    @Column(name="male",nullable = false)
+    @Column(name="male",nullable=false)
     private Boolean male;
 
     private Date birthday;
@@ -32,11 +32,11 @@ public class User {
     private Date createTime;
     private Date lastUpdateTime;
 
-    @Column(name="picture",length = 200,nullable=false)
+    @Column(name="picture",length = 200)
     private String picture;
 
     @Column(name="status",length =3,unique = true,nullable = false)
-    private String status;//000 未认证，001 正常 ，002 锁定
+    private String status;//001 正常 ，002 锁定
     public Long getId() {
         return id;
     }

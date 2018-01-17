@@ -19,9 +19,11 @@ server:
   port: 8081
 
 prefox:
- email:
-  host: smtp.googlemail.com
-  port: 465
-  from: prefoxchina@gmail.com
-  user: prefoxchina@gmail.com
-  pass: google@109964
+ official:
+   email:
+    host: smtp.googlemail.com
+    port: 465
+    from: prefoxchina@gmail.com
+    user: prefoxchina@gmail.com
+    pass: google@109964
+   website: http://10.200.157.63:8081

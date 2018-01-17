@@ -18,17 +18,16 @@ import java.io.File;
 @Slf4j
 @Service
 public class EmailServiceImpl implements EmailService {
-    @Value("${prefox.email.host}")
+    @Value("${prefox.official.email.host}")
     private String host;
-    @Value("${prefox.email.port}")
+    @Value("${prefox.official.email.port}")
     private int port;
-    @Value("${prefox.email.from}")
+    @Value("${prefox.official.email.from}")
     private String from;
-    @Value("${prefox.email.user}")
+    @Value("${prefox.official.email.user}")
     private String user;
-    @Value("${prefox.email.pass}")
+    @Value("${prefox.official.email.pass}")
     private String pass;
-
     private void init(Email email, EmailDto dto) throws
             EmailException {
         Assert.notNull(dto.getEmailTo(), "emailTo  is null.");
@@ -50,11 +49,11 @@ public class EmailServiceImpl implements EmailService {
             Email email = new SimpleEmail();
             init(email, dto);
             email.send();
+            return true;
         } catch (EmailException e) {
             log.error("<send email error  : " + e + " in " + e.getStackTrace()[0].toString() + ">");
-            return false;
         }
-        return true;
+        return false;
     }
 
     @Override
@@ -69,11 +68,11 @@ public class EmailServiceImpl implements EmailService {
                 }
             }
             email.send();
+            return true;
         } catch (EmailException e) {
             log.error("<send email error  : " + e + " in " + e.getStackTrace()[0].toString() + ">");
-            return false;
         }
-        return true;
+        return false;
     }
 
     @Override
@@ -82,11 +81,14 @@ public class EmailServiceImpl implements EmailService {
         try {
             HtmlEmail email = new HtmlEmail();
             init(email, dto);
+            email.setCharset("utf-8");
             email.send();
+            return true;
         } catch (EmailException e) {
             log.error("<send email error  : " + e + " in " + e.getStackTrace()[0].toString() + ">");
-            return false;
         }
-        return true;
+        return false;
     }
+
+
 }

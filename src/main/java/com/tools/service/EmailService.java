@@ -11,4 +11,5 @@ public interface EmailService {
     boolean sendWithAttachment(EmailDto dto);
 
     boolean sendHtmlEmail(EmailDto dto);
+
 }

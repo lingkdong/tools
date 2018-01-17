@@ -19,7 +19,9 @@ var HttpStatus = {
     IS_BLANK: 4008,
     INVALID_FORMAT: 4009,
     ALREADY_EXIT: 4010,
-    PARAM_INCORRECT: 4007
+    PARAM_INCORRECT: 4007,
+    IS_EXPIRED: 4011,
+    INTERNAL_SERVER_ERROR:5003
 }
 
 //reg
@@ -43,13 +45,13 @@ function isValidCode(value) {
 
 var wait_time=60;
 function time(obj) {
-    if (wait == 0) {
+    if (wait_time == 0) {
         $(obj).removeAttr("disabled");
-        $(obj).innerHTML("获取验证码");
+        $(obj).html("获取验证码");
         wait_time = 60;
     } else {
         $(obj).attr("disabled", true);
-        $(obj).innerHTML("重新发送(" + wait_time + ")");
+        $(obj).html("重新发送(" + wait_time + ")");
         wait_time--;
         setTimeout(function() {
                 time()

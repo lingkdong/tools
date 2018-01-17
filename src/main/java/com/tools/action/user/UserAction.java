@@ -6,6 +6,8 @@ import com.tools.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * Created by DT254 on 2018/1/9.
  */
@@ -25,12 +27,14 @@ public class UserAction {
         return userService.emailUnique(email, null);
     }
     @PostMapping(value = "create")
-    public BaseResponseDTO createUser(UserBaseDto userBaseDto) {
+    public BaseResponseDTO createUser(UserBaseDto userBaseDto, HttpServletRequest request) {
+        userBaseDto.setRequest(request);
         return userService.createUser(userBaseDto);
     }
 
     @PostMapping(value = "sendValid")
-    public BaseResponseDTO sendValid(UserBaseDto userBaseDto){
+    public BaseResponseDTO sendValid(UserBaseDto userBaseDto,HttpServletRequest request){
+        userBaseDto.setRequest(request);
         return userService.sendValid(userBaseDto);
     }
 }

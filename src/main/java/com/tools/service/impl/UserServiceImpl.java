@@ -7,11 +7,12 @@ import com.tools.dto.ErrorInfo;
 import com.tools.dto.HttpStatus;
 import com.tools.dto.user.UserBaseDto;
 import com.tools.model.User;
+import com.tools.model.UserStatus;
 import com.tools.service.EmailService;
 import com.tools.service.UserService;
+import com.tools.utils.PrefoxEmailTemp;
 import com.tools.utils.RegUtils;
 import com.tools.utils.StringUtil;
-import com.tools.worker.SessionWorker;
 import com.tools.worker.Worker;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.collections.CollectionUtils;
@@ -30,6 +31,8 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao;
     @Autowired
     private EmailService emailService;
+    @Autowired
+    private PrefoxEmailTemp prefoxEmailTemp;
 
     @Override
     public boolean _nameUnique(String name, Long userId) {
@@ -60,9 +63,9 @@ public class UserServiceImpl implements UserService {
         String property = "email";
         BaseResponseDTO dto = Worker.isBlank2(property, email);
         if (!Worker.OK(dto)) return dto;
-        if (!RegUtils.isEmail(email)) return new BaseResponseDTO(HttpStatus.INVALID_FORMAT,  ErrorInfo.newErrorInfo
+        if (!RegUtils.isEmail(email)) return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT,  ErrorInfo.newErrorInfo
                 ().property(property).HttpStatus(HttpStatus.INVALID_FORMAT).build());
-        if (!this._emailUnique(email, null)) return new BaseResponseDTO(HttpStatus.ALREADY_EXIT,  ErrorInfo.newErrorInfo
+        if (!this._emailUnique(email, null)) return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT,  ErrorInfo.newErrorInfo
                 ().property(property).HttpStatus(HttpStatus.ALREADY_EXIT).build());
         return Worker.OK();
     }
@@ -79,15 +82,19 @@ public class UserServiceImpl implements UserService {
         //email
         dto = emailUnique(userBaseDto.getEmail(), null);
         if (!Worker.OK(dto))errorInfos.add((ErrorInfo) dto.getData());
-        //vaildCode
-        dto = Worker.isBlank2("validCode", userBaseDto.getVaildCode());
+        //validCode
+        dto = Worker.isBlank2("validCode", userBaseDto.getValidCode());
         if (!Worker.OK(dto)) errorInfos.add((ErrorInfo) dto.getData());
         if(CollectionUtils.isNotEmpty(errorInfos)) return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT,errorInfos);
 
-        //comapre vaild code with session
+        //comapre valid code with session
         HttpSession session = userBaseDto.getRequest().getSession();
         String code = (String) session.getAttribute(userBaseDto.getEmail());
-        if (!userBaseDto.getVaildCode().equalsIgnoreCase(code))
+        if(code==null){
+            return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT,ErrorInfo.newErrorInfo().property("validCode")
+                    .HttpStatus(HttpStatus.IS_EXPIRED).build());
+        }
+        if (!userBaseDto.getValidCode().equalsIgnoreCase(code))
             return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT,ErrorInfo.newErrorInfo().property("validCode")
                     .HttpStatus(HttpStatus
                     .PARAM_INCORRECT).build());
@@ -101,30 +108,33 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public BaseResponseDTO sendValid(UserBaseDto userBaseDto) {
-        List<ErrorInfo> errorInfos=new ArrayList<>();
-        //username
-        BaseResponseDTO dto = nameUnique(userBaseDto.getUsername(), null);
-        if (!Worker.OK(dto))errorInfos.add((ErrorInfo) dto.getData());
-        //password
-        dto = Worker.isBlank2("password", userBaseDto.getPassword());
-        if (!Worker.OK(dto))errorInfos.add((ErrorInfo) dto.getData());
-        //email
-        dto = emailUnique(userBaseDto.getEmail(), null);
-        if (!Worker.OK(dto)) errorInfos.add((ErrorInfo) dto.getData());
-        if(CollectionUtils.isNotEmpty(errorInfos)) return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT,errorInfos);
-
-        StringBuilder msg = new StringBuilder();
-        msg.append(userBaseDto.getUsername()).append("，你好").append(System.lineSeparator())
-                .append("以下为你的邮箱验证码：").append(System.lineSeparator())
-                .append(StringUtil.getValidCode(6).toUpperCase());
-       Boolean flag= emailService.send(EmailDto.newEmailDto()
-                .subjet("Prefox邮箱验证")
-                .emailTo(userBaseDto.getEmail())
-                .msg(msg.toString())
-                .build()
-        );
-        if(!Boolean.TRUE.equals(flag))  return new BaseResponseDTO(HttpStatus.INTERNAL_SERVER_ERROR,
-                "The email failed, please try again later.");
+//        List<ErrorInfo> errorInfos=new ArrayList<>();
+//        //username
+//        BaseResponseDTO dto = nameUnique(userBaseDto.getUsername(), null);
+//        if (!Worker.OK(dto))errorInfos.add((ErrorInfo) dto.getData());
+//        //password
+//        dto = Worker.isBlank2("password", userBaseDto.getPassword());
+//        if (!Worker.OK(dto))errorInfos.add((ErrorInfo) dto.getData());
+//        //email
+//        dto = emailUnique(userBaseDto.getEmail(), null);
+//        if (!Worker.OK(dto)) errorInfos.add((ErrorInfo) dto.getData());
+//        if(CollectionUtils.isNotEmpty(errorInfos)) return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT,errorInfos);
+//
+//        StringBuilder msg = new StringBuilder();
+//        String validCode=StringUtil.getValidCode(8).toUpperCase();
+//        msg.append(userBaseDto.getUsername()).append("，你好").append(System.lineSeparator())
+//                .append("以下为你的邮箱验证码：").append(System.lineSeparator())
+//                .append(validCode);
+//       Boolean flag= emailService.sendHtmlEmail(EmailDto.newEmailDto()
+//                .subjet("Prefox邮箱验证")
+//                .emailTo(userBaseDto.getEmail())
+//                .msg(prefoxEmailTemp.buildHtmlMsg(msg.toString()))
+//                .build()
+//        );
+//        if(!Boolean.TRUE.equals(flag))  return new BaseResponseDTO(HttpStatus.INTERNAL_SERVER_ERROR,
+//                "The email failed, please try again later.");
+//
+//        userBaseDto.getRequest().getSession().setAttribute(userBaseDto.getEmail(),validCode);
         return Worker.OK();
     }
 
@@ -136,6 +146,8 @@ public class UserServiceImpl implements UserService {
         user.setEmail(dto.getEmail());
         user.setCreateTime(date);
         user.setLastUpdateTime(date);
+        user.setMale(true);
+        user.setStatus(UserStatus.NORMAL.code());
         return user;
     }
 }

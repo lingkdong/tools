@@ -11,6 +11,6 @@ public class UserBaseDto {
     private String username;
     private String password;
     private String email;
-    private String vaildCode;
+    private String validCode;
     private HttpServletRequest request;
 }

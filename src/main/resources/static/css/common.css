@@ -431,7 +431,7 @@ dl.form-group>dd .form-control.is-autocheck-loading,dl.form-group>dd .form-contr
     padding-right: 30px
 }
 
-dl.form-group>dd .form-control.is-autocheck-loading {
+.is-autocheck-loading-16 {
     background-image: url("/img/loading_16.gif")
 }
 

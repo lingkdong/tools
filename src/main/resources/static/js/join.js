@@ -2,7 +2,7 @@ $(function () {
     username = $("#user_name");
     password = $("#user_password");
     email = $("#user_email");
-    validCode = $("#user_viald");
+    validCode = $("#user_valid");
     send = $("#valid_button");
     $(username).change(function () {
         detectUserName(true);
@@ -31,7 +31,7 @@ $(function () {
 })
 
 var itemStatus = {
-    "loading": "is-autocheck-loading",
+    "loading": "is-autocheck-loading-16",
     "success": "is-autocheck-successful",
     "errored": "is-autocheck-errored"
 };
@@ -169,14 +169,14 @@ function detectValidCode(isChange) {
     var value = $(obj).val();
     if (isBlank(value)) {
         if (!isChange) {
-            item_error(obj, "邮箱验证码不能为空")
+            item_error(obj, "验证码不能为空")
         }
         return false;
     }
     //loading
     item_loading(obj);
     //detect format errored
-    if (!isEmail(value)) {
+    if (!isValidCode(value)) {
         item_error(obj, "验证码错误");
         return false;
     }
@@ -197,7 +197,7 @@ function signUp() {
                 username: $(username).val(),
                 password: md5($(password).val()),
                 email: $(email).val(),
-                vaildCode: $(validCode).val()
+                validCode: $(validCode).val()
             },
             success: function (result) {
                 backDetectResult(result);
@@ -265,6 +265,8 @@ function backDetectResult(result) {
             backError(data);
         }
 
+    } else if (HttpStatus.INTERNAL_SERVER_ERROR == result.status) {
+        alert("服务器出错，请稍后再试")
     }
     return false;
 }
@@ -281,7 +283,7 @@ function backError(item) {
             item_error($(email), backErrorTxt("邮箱", item.status));
             break;
         case 'validCode':
-            item_error($(validCode), backErrorTxt("邮箱验证码", item.status));
+            item_error($(validCode), backErrorTxt("验证码", item.status));
             break;
     }
 }
@@ -294,6 +296,8 @@ function backErrorTxt(property, status) {
             return property + "格式错误";
         case HttpStatus.ALREADY_EXIT:
             return property + "已存在";
+        case HttpStatus.IS_EXPIRED:
+            return property + "失效或已过期";
         case HttpStatus.PARAM_INCORRECT:
             return property + "错误";
 
@@ -311,15 +315,25 @@ function sendValid() {
             password: md5($(password).val()),
             email: $(email).val()
         },
+        beforeSend:function () {
+            $(send).attr("disabled",true);
+            $(send).addClass(itemStatus.loading);
+        },
         success: function (result) {
             if (backDetectResult(result)) {
                 alert("验证码以发送至您的邮箱");
-                time(send)
+                try{
+                    time(send)
+                } catch (error){
+                   console.log(error)
+                }
+
             }
         },
         error: function (result) {
         },
         complete: function () {
+            $(send).removeClass(itemStatus.loading);
         }
     });
 }
