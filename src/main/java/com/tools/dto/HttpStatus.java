@@ -18,6 +18,8 @@ public enum HttpStatus {
      * user not exist
      **/
     USER_NOT_EXIST(4002, "user not exist"),
+    USER_IS_LOCKED(4020, "user is locked"),
+    USER_IS_CANCEL(4021, "user is cancel"),
 
     /**
      * incorrect password

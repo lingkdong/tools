@@ -5,6 +5,7 @@ import com.tools.dto.BaseResponseDTO;
 import com.tools.dto.EmailDto;
 import com.tools.dto.ErrorInfo;
 import com.tools.dto.HttpStatus;
+import com.tools.dto.user.LoginDto;
 import com.tools.dto.user.UserBaseDto;
 import com.tools.model.User;
 import com.tools.model.UserStatus;
@@ -101,41 +102,46 @@ public class UserServiceImpl implements UserService {
         session.removeAttribute(userBaseDto.getEmail());
         //save
         userDao.save(buildUser(userBaseDto));
-        //update session
-        session.setAttribute(userBaseDto.getUsername(), "nologin");
+        //auto login by username;
         return Worker.OK();
     }
 
     @Override
     public BaseResponseDTO sendValid(UserBaseDto userBaseDto) {
-//        List<ErrorInfo> errorInfos=new ArrayList<>();
-//        //username
-//        BaseResponseDTO dto = nameUnique(userBaseDto.getUsername(), null);
-//        if (!Worker.OK(dto))errorInfos.add((ErrorInfo) dto.getData());
-//        //password
-//        dto = Worker.isBlank2("password", userBaseDto.getPassword());
-//        if (!Worker.OK(dto))errorInfos.add((ErrorInfo) dto.getData());
-//        //email
-//        dto = emailUnique(userBaseDto.getEmail(), null);
-//        if (!Worker.OK(dto)) errorInfos.add((ErrorInfo) dto.getData());
-//        if(CollectionUtils.isNotEmpty(errorInfos)) return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT,errorInfos);
-//
-//        StringBuilder msg = new StringBuilder();
-//        String validCode=StringUtil.getValidCode(8).toUpperCase();
-//        msg.append(userBaseDto.getUsername()).append("，你好").append(System.lineSeparator())
-//                .append("以下为你的邮箱验证码：").append(System.lineSeparator())
-//                .append(validCode);
-//       Boolean flag= emailService.sendHtmlEmail(EmailDto.newEmailDto()
-//                .subjet("Prefox邮箱验证")
-//                .emailTo(userBaseDto.getEmail())
-//                .msg(prefoxEmailTemp.buildHtmlMsg(msg.toString()))
-//                .build()
-//        );
-//        if(!Boolean.TRUE.equals(flag))  return new BaseResponseDTO(HttpStatus.INTERNAL_SERVER_ERROR,
-//                "The email failed, please try again later.");
-//
-//        userBaseDto.getRequest().getSession().setAttribute(userBaseDto.getEmail(),validCode);
+        List<ErrorInfo> errorInfos=new ArrayList<>();
+        //username
+        BaseResponseDTO dto = nameUnique(userBaseDto.getUsername(), null);
+        if (!Worker.OK(dto))errorInfos.add((ErrorInfo) dto.getData());
+        //password
+        dto = Worker.isBlank2("password", userBaseDto.getPassword());
+        if (!Worker.OK(dto))errorInfos.add((ErrorInfo) dto.getData());
+        //email
+        dto = emailUnique(userBaseDto.getEmail(), null);
+        if (!Worker.OK(dto)) errorInfos.add((ErrorInfo) dto.getData());
+        if(CollectionUtils.isNotEmpty(errorInfos)) return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT,errorInfos);
+
+        StringBuilder msg = new StringBuilder();
+        String validCode=StringUtil.getValidCode(8).toUpperCase();
+        msg.append("以下为你的邮箱验证码：").append(System.lineSeparator())
+                .append(validCode);
+
+       Boolean flag= emailService.sendHtmlEmail(EmailDto.newEmailDto()
+                .subjet("Prefox邮箱验证")
+                .emailTo(userBaseDto.getEmail())
+                .msg(prefoxEmailTemp.buildHtmlMsg(String.format("%s，您好：",userBaseDto.getUsername()),
+                        "验证码",msg.toString()))
+                .build()
+        );
+        if(!Boolean.TRUE.equals(flag))  return new BaseResponseDTO(HttpStatus.INTERNAL_SERVER_ERROR,
+                "The email failed, please try again later.");
+
+        userBaseDto.getRequest().getSession().setAttribute(userBaseDto.getEmail(),validCode);
         return Worker.OK();
+    }
+
+    @Override
+    public User findByUsernameOrEmail(String username) {
+        return userDao.findFirstByUsernameOrEmail(username,username);
     }
 
     private User buildUser(UserBaseDto dto) {

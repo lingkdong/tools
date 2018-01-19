@@ -1,7 +1,9 @@
 package com.tools.service;
 
 import com.tools.dto.BaseResponseDTO;
+import com.tools.dto.user.LoginDto;
 import com.tools.dto.user.UserBaseDto;
+import com.tools.model.User;
 
 /**
  * Created by DT254 on 2018/1/9.
@@ -19,5 +21,6 @@ public interface UserService {
 
     BaseResponseDTO sendValid(UserBaseDto userBaseDto);
 
+    User findByUsernameOrEmail(String username);
 
 }

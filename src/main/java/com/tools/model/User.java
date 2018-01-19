@@ -9,22 +9,22 @@ import java.util.Date;
 @Entity
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO )
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "username",unique = true,length = 20,nullable = false)
+    @Column(name = "username", unique = true, length = 20, nullable = false)
     private String username;
 
-    @Column(name="password",length = 200,nullable=false)
+    @Column(name = "password", length = 50, nullable = false)
     private String password;
 
-    @Column(name="email",length =50,unique = true,nullable = false)
+    @Column(name = "email", length = 50, unique = true, nullable = false)
     private String email;
 
-    @Column(name="true_name",length =20)
+    @Column(name = "true_name", length = 20)
     private String trueName;
 
-    @Column(name="male",nullable=false)
+    @Column(name = "male", nullable = false)
     private Boolean male;
 
     private Date birthday;
@@ -32,11 +32,17 @@ public class User {
     private Date createTime;
     private Date lastUpdateTime;
 
-    @Column(name="picture",length = 200)
+    @Column(name = "picture", length = 100)
     private String picture;
 
-    @Column(name="status",length =3,unique = true,nullable = false)
-    private String status;//001 正常 ，002 锁定
+    @Column(name = "status", length = 3, nullable = false)
+    private Byte status;//1 正常 ，2 锁定
+
+    @Column(name = "phone", length = 20)
+    private String phone;
+
+    private String location;
+
     public Long getId() {
         return id;
     }
@@ -117,11 +123,27 @@ public class User {
         this.picture = picture;
     }
 
-    public String getStatus() {
+    public Byte getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Byte status) {
         this.status = status;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 }

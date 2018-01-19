@@ -1,8 +1,10 @@
 package com.tools.action.user;
 
 import com.tools.dto.BaseResponseDTO;
+import com.tools.dto.user.LoginDto;
 import com.tools.dto.user.UserBaseDto;
 import com.tools.service.UserService;
+import com.tools.worker.Worker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,4 +39,11 @@ public class UserAction {
         userBaseDto.setRequest(request);
         return userService.sendValid(userBaseDto);
     }
+
+    @PostMapping (value = "sendLogin")
+    public BaseResponseDTO sendLogin(LoginDto loginDto){
+        System.out.println(1);
+       return Worker.OK();
+    }
+
 }

@@ -235,6 +235,24 @@ a.tabnav-extra:hover {
 .mb-4 {
     margin-bottom: 24px !important;
 }
+.pt-5 {
+    padding-top: 32px !important
+}
+.pb-4 {
+    padding-bottom: 24px !important
+}
+.w-100{
+    width: 100px!important;
+}
+.w-150{
+    width: 150px!important;
+}
+.w-120{
+    width: 120px!important;
+}
+.w-50{
+    width: 50px!important;
+}
 
 .ml-2 {
     margin-left: 8px !important
@@ -259,10 +277,45 @@ a.tabnav-extra:hover {
 .p-5 {
     padding: 32px !important
 }
+.flex-justify-center {
+    -webkit-box-pack: center !important;
+    justify-content: center !important;
+}
+.text-right {
+    text-align: right !important
+}
+
+.text-left {
+    text-align: left !important
+}
+
+.text-center {
+    text-align: center !important
+}
 .form-group {
     margin: 15px 0
 }
+.form-control,.form-select {
+    min-height: 34px;
+    padding: 6px 8px;
+    font-size: 14px;
+    line-height: 20px;
+    color: #24292e;
+    vertical-align: middle;
+    background-color: #fff;
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    border: 1px solid #d1d5da;
+    border-radius: 3px;
+    outline: none;
+    box-shadow: inset 0 1px 2px rgba(27,31,35,0.075)
+}
 
+.form-control.focus,.form-control:focus,.form-select.focus,.form-select:focus {
+    border-color: #2188ff;
+    outline: none;
+    box-shadow: inset 0 1px 2px rgba(27,31,35,0.075),0 0 0 0.2em rgba(3,102,214,0.3)
+}
 .form-group .form-control {
     width: 440px;
     max-width: 100%;
@@ -1214,4 +1267,216 @@ dd {
 }
 label {
     font-weight: 600;
+}
+.auth-form {
+    width: 340px;
+    margin: 0 auto
+}
+.auth-form-body {
+    padding: 20px;
+    font-size: 14px;
+    background-color: #fff;
+    border: 1px solid #d8dee2;
+    border-top: 0;
+    border-radius: 0 0 3px 3px
+}
+.input-block {
+    display: block;
+    width: 100%
+}
+.btn-block {
+    display: block;
+    width: 100%;
+    text-align: center
+}
+.auth-form-body .input-block {
+    margin-top: 5px;
+    margin-bottom: 15px
+}
+
+.auth-form-body p {
+    margin: 10px 0
+}
+
+.auth-form-body ol,.auth-form-body ul {
+    padding-left: inherit;
+    margin-bottom: inherit
+}
+.flash {
+    position: relative;
+    padding: 16px;
+    color: #032f62;
+    background-color: #dbedff;
+    border: 1px solid rgba(27,31,35,0.15);
+    border-radius: 3px
+}
+
+.flash p:last-child {
+    margin-bottom: 0
+}
+
+.flash-messages {
+    margin-bottom: 24px
+}
+
+.flash-close {
+    float: right;
+    padding: 16px;
+    margin: -16px;
+    color: inherit;
+    text-align: center;
+    cursor: pointer;
+    background: none;
+    border: 0;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    opacity: 0.6;
+}
+
+.flash-close:hover {
+    opacity: 1
+}
+
+.flash-action {
+    float: right;
+    margin-top: -3px;
+    margin-left: 24px
+}
+
+.flash-warn {
+    color: #735c0f;
+    background-color: #fffbdd;
+    border-color: rgba(27,31,35,0.15)
+}
+
+.flash-error {
+    color: #86181d;
+    background-color: #ffdce0;
+    border-color: rgba(27,31,35,0.15)
+}
+
+.flash-success {
+    color: #165c26;
+    background-color: #dcffe4;
+    border-color: rgba(27,31,35,0.15)
+}
+
+.flash-full {
+    margin-top: -1px;
+    border-width: 1px 0;
+    border-radius: 0
+}
+.session-authentication {
+    background-color:#f9f9f9;
+}
+
+.session-authentication .header-logged-out {
+    background-color: transparent;
+    border-bottom: 0
+}
+
+.session-authentication .header-logo {
+    color: #333
+}
+
+.session-authentication .flash {
+    padding: 15px 20px;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    font-size: 13px;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 5px
+}
+
+.session-authentication .flash .container {
+    width: auto
+}
+
+.session-authentication .flash .flash-close {
+    height: 40px
+}
+
+.session-authentication .flash.is-signed-in,.session-authentication .flash.is-signed-out {
+    width: 100%;
+    border-top: 0;
+    border-right: 0;
+    border-left: 0;
+    border-radius: 0
+}
+
+.session-authentication .auth-form label {
+    display: block;
+    margin-bottom: 7px
+}
+
+.session-authentication .auth-form .btn {
+    margin-top: 20px
+}
+
+.session-authentication .auth-form .u2f-error {
+    margin-bottom: 0
+}
+
+.session-authentication .label-link {
+    float: right;
+    font-size: 12px
+}
+
+.session-authentication .auth-form-header {
+    margin-bottom: 15px;
+    color: #333;
+    text-align: center;
+    text-shadow: none;
+    background-color: transparent;
+    border: 0
+}
+
+.session-authentication .auth-form-header h1 {
+    font-size: 24px;
+    font-weight: 300;
+    letter-spacing: -0.5px
+}
+
+.session-authentication .auth-form-body {
+    border-top: 1px solid #d8dee2;
+    border-radius: 5px
+}
+
+.session-authentication .auth-form-body.u2f-auth-form-body {
+    padding: 20px
+}
+
+.session-authentication .create-account-callout {
+    padding: 15px 20px;
+    text-align: center;
+    border: 1px solid #d8dee2;
+    border-radius: 5px
+}
+
+.session-authentication .two-factor-help {
+    padding: 0 0 0 20px;
+    margin-top: 20px;
+    border: 0
+}
+
+.session-authentication .two-factor-help .octicon-device-mobile {
+    top: 3px;
+    left: 0
+}
+
+.session-authentication .two-factor-help .octicon-key {
+    top: 0;
+    left: 0
+}
+
+.session-authentication.enterprise .header-logged-out {
+    padding: 48px 0 28px;
+    background-color: transparent
+}
+
+.session-authentication.hosted .header-logged-out {
+    padding: 40px 0 20px;
+    background-color: transparent
 }

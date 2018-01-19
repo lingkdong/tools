@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="page">
+<head>
+    <meta charset="UTF-8"/>
+    <title th:text="complete"></title>
+    <script th:src="@{/js/common.js }"></script>
+    <script th:src="@{/js/complete.js}"></script>
+</head>
+<body>
+<div th:fragment="content" th:remove="tag">
+    <div class="setup-wrapper">
+        <div class="setup-header setup-org">
+            <h1>欢迎加入 Prefox</h1>
+            <p class="lead">You’ve taken your first step into a larger world.</p>
+
+            <!-- Show steps if user is creating an organiation -->
+            <ol class="steps">
+                <li class="complete">
+                    <svg aria-hidden="true" class="octicon octicon-check" height="32" version="1.1" viewBox="0 0 12 16" width="24"><path fill-rule="evenodd" d="M12 5l-8 8-4-4 1.5-1.5L4 10l6.5-6.5z"></path></svg>
+                    <strong class="step">已完成:</strong>
+                    创建账户
+                </li>
+                <li class="current">
+                <svg aria-hidden="true" class="octicon octicon-gear" height="32" version="1.1" viewBox="0 0 14 16" width="28"><path fill-rule="evenodd" d="M14 8.77v-1.6l-1.94-.64-.45-1.09.88-1.84-1.13-1.13-1.81.91-1.09-.45-.69-1.92h-1.6l-.63 1.94-1.11.45-1.84-.88-1.13 1.13.91 1.81-.45 1.09L0 7.23v1.59l1.94.64.45 1.09-.88 1.84 1.13 1.13 1.81-.91 1.09.45.69 1.92h1.59l.63-1.94 1.11-.45 1.84.88 1.13-1.13-.92-1.81.47-1.09L14 8.75v.02zM7 11c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z"></path></svg>
+                <strong class="step">Step 2:</strong>
+                完善资料
+                </li>
+            </ol>
+        </div>
+
+        <div class="setup-main ">
+            <div class="setup-form-container">
+                <form accept-charset="UTF-8" action="/join" autocomplete="off" class="setup-form js-signup-form"
+                      id="signup-form" method="post">
+                    <div style="margin:0;padding:0;display:inline"></div>
+
+                    <h2 class="f2-light mb-1">
+                        完善资料
+                    </h2>
+
+                    <dl class="form-group">
+                        <dt class="input-label"><label autocapitalize="off" autofocus="autofocus">
+                            真实姓名</label></dt>
+                        <dd><input autocapitalize="off" autofocus="autofocus" class="form-control"
+                                   id="true_name" name="truename" maxlength="30" type="text"/>
+                            <p class="note">设置您的真实姓名</p></dd>
+                    </dl>
+
+                    <dl class="form-group ">
+                        <dt class="input-label"><label name="birth">生日
+                        </label></dt>
+                        <dd><input class="form-control w-150" id="birth-year" placeholder="年"
+                                   name="birth-year" maxlength="4" />
+                            <select id="birth-month" class="form-control btn btn-sm select w-120" >
+                                <option value="01">1 月</option>
+                                <option value="02">2 月</option>
+                                <option value="03">3 月</option>
+                                <option value="04">4 月</option>
+                                <option value="05">5 月</option>
+                                <option value="06">6 月</option>
+                                <option value="07">7 月</option>
+                                <option value="08">8 月</option>
+                                <option value="09">9 月</option>
+                                <option value="10">10 月</option>
+                                <option value="11">11 月</option>
+                                <option value="12">12 月</option>
+                            </select>
+                            <input class="form-control w-150" id="birth-day" placeholder="日"
+                            name="birth-year" maxlength="2" />
+                            <p class="note">设置您的生日信息.</p></dd>
+                    </dl>
+                    <dl class="form-group">
+                        <dt class="input-label"><label autocapitalize="off" for="male"
+                                                       name="male">性别</label></dt>
+                        <dd>
+                            <select id="male" class="form-control btn btn-sm select w-150" >
+                                <option value="1">男</option>
+                                <option value="0">女</option>
+                            </select>
+                            <p class="note">请选择您的性别.</p></dd>
+                    </dl>
+                    <dl class="form-group">
+                        <dt class="input-label"><label autocapitalize="off" autofocus="autofocus">
+                            手机</label></dt>
+                        <dd><input autocapitalize="off" autofocus="autofocus" class="form-control"
+                                   id="phone" name="phone" maxlength="11" type="text"/>
+                            <p class="note">设置您的手机号码</p></dd>
+                    </dl>
+                    <dl class="form-group">
+                        <dt class="input-label"><label autocapitalize="off" for="location"
+                                                       name="valid">位置</label></dt>
+                        <dd>
+                            <input autocapitalize="off" class="form-control" id="location" name="validCode"
+                                   maxlength="50"
+                                   type="text"/>
+                            <p class="note">设置您的位置.</p></dd>
+                    </dl>
+
+                    <button  class="btn btn-primary" id="signup_button">
+                     保存资料
+                    </button>
+
+                </form>
+            </div> <!-- /.setup-form-container -->
+        </div> <!-- /.setup-main -->
+
+    </div>
+</div>
+</body>
+</html>

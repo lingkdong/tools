@@ -14,12 +14,17 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 @RequestMapping("/tools")
-public class JoinAction extends BaseAction {
+public class UserIndexAction extends BaseAction {
     @GetMapping(value = "/join")
-    public ModelAndView join(@RequestParam(value = "returnTo", required = false) String returnTo) {
+    public ModelAndView join() {
         ModelAndView mv=new ModelAndView("join");
-        if(StringUtils.isNotBlank(returnTo)) mv.addObject("returnTo",returnTo);
         return mv;
     }
 
+    @GetMapping(value="/login")
+    public ModelAndView login(@RequestParam(value = "returnTo", required = false) String returnTo ) {
+        ModelAndView mv=new ModelAndView("login");
+        mv.addObject("returnTo",returnTo);
+        return mv;
+    }
 }

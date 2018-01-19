@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="page">
+<head>
+    <meta charset="UTF-8">
+    <title>login</title>
+    <link th:href="@{/css/common.css}" rel="stylesheet" href="../static/css/common.css"/>
+    <script th:src="@{/js/jquery-3.2.1.min.js}"></script>
+    <script th:src="@{/js/login.js}"></script>
+</head>
+<body class="logged-out env-production page-responsive min-width-0 session-authentication"
+      th:attr="data-return=${returnTo}">
+<div class="position-relative js-header-wrapper ">
+    <div class="header header-logged-out width-full pt-5 pb-4" role="banner">
+        <div class="container clearfix width-full text-center">
+            <a class="header-logo" href="https://github.com/" aria-label="Homepage"
+               data-ga-click="(Logged out) Header, go to homepage, icon:logo-wordmark">
+                <svg version="1.0"
+                     width="48px" height="48px" viewBox="0 0 48.000000 48.000000"
+                     preserveAspectRatio="xMidYMid meet">
+
+                    <g transform="translate(0.000000,48.000000) scale(0.100000,-0.100000)"
+                       fill="#000000" stroke="none">
+                        <path d="M107 348 c-22 -21 -40 -50 -47 -78 -7 -24 -19 -49 -27 -55 -13 -9
+-12 -14 7 -35 19 -23 20 -23 18 -5 -2 23 56 120 77 129 21 8 48 -33 33 -51 -8
+-10 0 -13 45 -13 30 0 70 -3 88 -6 32 -5 33 -4 15 10 -16 13 -17 18 -5 33 19
+26 41 43 55 43 10 0 42 -69 59 -127 3 -13 11 -23 17 -23 6 0 7 8 3 18 -4 9
+-11 46 -16 82 -11 72 -30 110 -58 110 -21 0 -67 -43 -87 -82 -11 -21 -22 -28
+-45 -28 -20 0 -31 6 -35 18 -10 34 -39 86 -50 89 -7 2 -27 -11 -47 -29z"/>
+                    </g>
+                </svg>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div id="start-of-content" class="show-on-focus"></div>
+
+
+<div role="main">
+
+    <div id="js-pjax-container" data-pjax-container="">
+
+
+        <div class="auth-form px-3" id="login">
+
+            <!-- '"` --><!-- </textarea></xmp> -->
+            <form accept-charset="UTF-8" action="/session" method="post">
+
+                <div class="auth-form-header p-0">
+                    <h1>登录Prefox</h1>
+                </div>
+
+
+                <div id="js-flash-container">
+                    <div class="flash flash-full flash-error">
+                        <div>
+                            <button class="flash-close js-flash-close" type="button" aria-label="Dismiss this message">
+                                <svg aria-hidden="true" class="octicon octicon-x" height="16" version="1.1" viewBox="0 0 12 16" width="12"><path fill-rule="evenodd" d="M7.48 8l3.75 3.75-1.48 1.48L6 9.48l-3.75 3.75-1.48-1.48L4.52 8 .77 4.25l1.48-1.48L6 6.52l3.75-3.75 1.48 1.48z"></path></svg>
+                            </button>
+
+                            Incorrect username or password.
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="auth-form-body mt-3">
+
+                    <label for="login_field">
+                        用户名 或 邮箱
+                    </label>
+                    <input autocapitalize="off" autocorrect="off" autofocus="autofocus" class="form-control input-block"
+                           id="login_field" name="login" tabindex="1" type="text">
+
+                    <label for="password">
+                        密码 <a href="/password_reset" class="label-link">忘记密码?</a>
+                    </label>
+                    <input class="form-control form-control input-block" id="password" name="password" tabindex="2"
+                           type="password">
+
+                    <input class="btn btn-primary btn-block" data-disable-with="Signing in…" name="commit" tabindex="3"
+                           type="submit" value="登录">
+                </div>
+            </form>
+
+            <p class="create-account-callout mt-3">
+                尚未注册?
+                <a href="#">创建Prefox账户</a>.
+            </p>
+        </div>
+
+    </div>
+    <div class="modal-backdrop js-touch-events"></div>
+</div>
+
+<div class="footer container-lg p-responsive py-6 mt-6 f6" role="contentinfo">
+    <ul class="list-style-none d-flex flex-justify-center">
+        <li class="mr-3"><a href="#" class="link-gray"
+                            data-ga-click="Footer, go to terms, text:terms">Terms</a></li>
+        <li class="mr-3"><a href="#" class="link-gray"
+        >Help</a></li>
+        <li class="mr-3"><a href="#" class="link-gray"
+        >Blog</a></li>
+        <li><a href="#" class="link-gray">Contact Prefox</a></li>
+
+    </ul>
+</div>
+
+</body>
+</html>

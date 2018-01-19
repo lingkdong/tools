@@ -23,8 +23,11 @@ $(function () {
     })
 
     $(send).click(function (event) {
+        $(send).attr("disabled",true).html("发送中...");
         if (detectUserName(false) && detectPassword(false) && detectEmail(false)) {
             sendValid();
+        }else {
+            $(send).removeAttr("disabled").html("获取验证码");
         }
         stopEvent(event);
     })
@@ -203,6 +206,7 @@ function signUp() {
                 backDetectResult(result);
             },
             error: function (result) {
+                flashAjaxError();
             },
             complete: function () {
             }
@@ -224,6 +228,7 @@ function nameUnique() {
             flag = backDetectResult(result);
         },
         error: function (result) {
+            flashAjaxError();
         },
         complete: function () {
         }
@@ -244,6 +249,7 @@ function emailUnique() {
             flag = backDetectResult(result);
         },
         error: function (result) {
+            flashAjaxError();
         },
         complete: function () {
         }
@@ -266,7 +272,7 @@ function backDetectResult(result) {
         }
 
     } else if (HttpStatus.INTERNAL_SERVER_ERROR == result.status) {
-        alert("服务器出错，请稍后再试")
+        flash(FlashType.ERROR,"服务器出错，请稍后再试");
     }
     return false;
 }
@@ -316,12 +322,10 @@ function sendValid() {
             email: $(email).val()
         },
         beforeSend:function () {
-            $(send).attr("disabled",true);
-            $(send).addClass(itemStatus.loading);
         },
         success: function (result) {
             if (backDetectResult(result)) {
-                alert("验证码以发送至您的邮箱");
+                flash(FlashType.success,"验证码以发送至您的邮箱");
                 try{
                     time(send)
                 } catch (error){
@@ -331,6 +335,7 @@ function sendValid() {
             }
         },
         error: function (result) {
+            flashAjaxError();
         },
         complete: function () {
             $(send).removeClass(itemStatus.loading);

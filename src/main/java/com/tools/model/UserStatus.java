@@ -4,14 +4,14 @@ package com.tools.model;
  * Created by DT254 on 2018/1/17.
  */
 public enum  UserStatus {
-    NORMAL("002","normal"),
-    LOCKED("003","locked"),
-    CANCEL("005","cancel");
-    private final String code;
+    NORMAL((byte)1,"normal"),
+    LOCKED((byte)2,"locked"),
+    CANCEL((byte)3,"cancel");
+    private final Byte code;
 
     private final String detail;
 
-    public String code() {
+    public Byte code() {
         return this.code;
     }
 
@@ -21,7 +21,7 @@ public enum  UserStatus {
     public String getDetail() {
         return this.detail;
     }
-    UserStatus(String code,String detail) {
+    UserStatus(Byte code,String detail) {
         this.code=code;
         this.detail=detail;
     }
