@@ -13,7 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
  * Created by DT254 on 2017/8/30.
  */
 @Controller
-@RequestMapping("/tools")
+@RequestMapping("/tools/user/")
 public class UserIndexAction extends BaseAction {
     @GetMapping(value = "/join")
     public ModelAndView join() {
@@ -23,7 +23,7 @@ public class UserIndexAction extends BaseAction {
 
     @GetMapping(value="/login")
     public ModelAndView login(@RequestParam(value = "returnTo", required = false) String returnTo ) {
-        ModelAndView mv=new ModelAndView("login");
+        ModelAndView mv=new ModelAndView("user/login");
         mv.addObject("returnTo",returnTo);
         return mv;
     }

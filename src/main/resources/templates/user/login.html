@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorator="page">
+     >
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"/>
     <title>login</title>
     <link th:href="@{/css/common.css}" rel="stylesheet" href="../../static/css/common.css"/>
     <script th:src="@{/js/jquery-3.2.1.min.js}"></script>
@@ -73,16 +72,16 @@
                         用户名 或 邮箱
                     </label>
                     <input autocapitalize="off" autocorrect="off" autofocus="autofocus" class="form-control input-block"
-                           id="login_field" name="login" tabindex="1" type="text">
+                           id="login_field" name="login" tabindex="1" type="text"/>
 
                     <label for="password">
                         密码 <a href="/password_reset" class="label-link">忘记密码?</a>
                     </label>
                     <input class="form-control form-control input-block" id="password" name="password" tabindex="2"
-                           type="password">
+                           type="password"/>
 
                     <input class="btn btn-primary btn-block" data-disable-with="Signing in…" name="commit" tabindex="3"
-                           type="submit" value="登录">
+                           type="submit" value="登录"/>
                 </div>
             </form>
 
