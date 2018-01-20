@@ -17,7 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class UserIndexAction extends BaseAction {
     @GetMapping(value = "/join")
     public ModelAndView join() {
-        ModelAndView mv=new ModelAndView("join");
+        ModelAndView mv=new ModelAndView("user/join");
         return mv;
     }
 

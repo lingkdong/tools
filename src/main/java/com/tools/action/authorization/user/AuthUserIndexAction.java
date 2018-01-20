@@ -13,7 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class AuthUserIndexAction {
     @GetMapping(value = "/complete")
     public ModelAndView complete() {
-        ModelAndView mv=new ModelAndView("complete");
+        ModelAndView mv=new ModelAndView("user/complete");
         return mv;
     }
 }

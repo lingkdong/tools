@@ -1,4 +1,3 @@
-
 function _copy(obj) {
     obj.select(); // 选择对象
     document.execCommand("Copy");
@@ -70,33 +69,34 @@ function stopEvent(event) {
     event.preventDefault();
 }
 
-function flash2(parent, type, msg) {
-    if (!isBlank(msg)) {
-        if (isExist(parent) && !isBlank(type)) {
-            var html = '<div class="flash flash-full flash-' + type + '"><button class="flash-close js-flash-close"' +
-                ' type="button"' +
-                ' onclick="closeParent(this)"><svg aria-hidden="true" class="octicon octicon-x" height="16"' +
-                ' version="1.1" viewBox="0 0 12 16" width="12"><path fill-rule="evenodd" d="M7.48 8l3.75 3.75-1.48' +
-                ' 1.48L6 9.48l-3.75 3.75-1.48-1.48L4.52 8 .77 4.25l1.48-1.48L6 6.52l3.75-3.75 1.48' +
-                ' 1.48z"></path></svg></button><span class="flash-info">'+msg+'</span></div>';
-            $(parent).html(html);
-            setTimeout(function () {
-              $(parent).html("")
-            },5000);
-        }else {
-            alert(msg)
-        }
+function flash(type, msg) {
+    if(isBlank(msg)){
+        return false;
+    }
+    parent=$("#body");
+    pop=$("#pop-msg");
+    if(isExist(pop)){
+        $(pop).remove();
+    }
+    if ((!isBlank(type))&&isExist(parent)) {
+        var html = '<div id="pop-msg" class="w-250 flash b-radius-5 flash-' + type + '" style="position: fixed; right: 2%; bottom: 2%;"><button class="pd-18 flash-close js-flash-close"' +
+            ' type="button"' +
+            ' onclick="closeParent(this)"><svg aria-hidden="true" class="octicon octicon-x" height="16"' +
+            ' version="1.1" viewBox="0 0 12 16" width="12"><path fill-rule="evenodd" d="M7.48 8l3.75 3.75-1.48' +
+            ' 1.48L6 9.48l-3.75 3.75-1.48-1.48L4.52 8 .77 4.25l1.48-1.48L6 6.52l3.75-3.75 1.48' +
+            ' 1.48z"></path></svg></button><span class="flash-info">' + msg + '</span></div>';
+        $(parent).append(html);
+        setTimeout(function () {
+            $("#pop-msg").fadeOut(3000)
+        }, 3000);
+    } else {
+        alert(msg)
     }
 
 }
 
-function flash(type, msg) {
-    var parent=$("#js-flash-container");
-     flash2(parent,type,msg);
-}
-
-function flashAjaxError(){
-    flash(FlashType.ERROR,"服务器错误，请稍后再试");
+function flashAjaxError() {
+    flash(FlashType.ERROR, "服务器错误，请稍后再试");
 }
 
 function closeParent(obj) {
