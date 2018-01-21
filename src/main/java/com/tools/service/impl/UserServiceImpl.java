@@ -5,7 +5,6 @@ import com.tools.dto.BaseResponseDTO;
 import com.tools.dto.EmailDto;
 import com.tools.dto.ErrorInfo;
 import com.tools.dto.HttpStatus;
-import com.tools.dto.user.LoginDto;
 import com.tools.dto.user.UserBaseDto;
 import com.tools.model.User;
 import com.tools.model.UserStatus;
@@ -51,7 +50,7 @@ public class UserServiceImpl implements UserService {
     public BaseResponseDTO nameUnique(String name, Long userId) {
         String property = "username";
         BaseResponseDTO dto = Worker.isBlank2(property, name);
-        if (!Worker.OK(dto)) return dto;
+        if (!Worker.isOK(dto)) return dto;
         if (!RegUtils.isUsername(name)) return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT, ErrorInfo.newErrorInfo
                 ().property(property).HttpStatus(HttpStatus.INVALID_FORMAT).build());
         if (!this._nameUnique(name, null)) return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT,  ErrorInfo.newErrorInfo
@@ -63,7 +62,7 @@ public class UserServiceImpl implements UserService {
     public BaseResponseDTO emailUnique(String email, Long userId) {
         String property = "email";
         BaseResponseDTO dto = Worker.isBlank2(property, email);
-        if (!Worker.OK(dto)) return dto;
+        if (!Worker.isOK(dto)) return dto;
         if (!RegUtils.isEmail(email)) return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT,  ErrorInfo.newErrorInfo
                 ().property(property).HttpStatus(HttpStatus.INVALID_FORMAT).build());
         if (!this._emailUnique(email, null)) return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT,  ErrorInfo.newErrorInfo
@@ -76,16 +75,16 @@ public class UserServiceImpl implements UserService {
         List<ErrorInfo> errorInfos=new ArrayList<>();
         //username
         BaseResponseDTO dto = nameUnique(userBaseDto.getUsername(), null);
-        if (!Worker.OK(dto))errorInfos.add((ErrorInfo) dto.getData());
+        if (!Worker.isOK(dto))errorInfos.add((ErrorInfo) dto.getData());
         //password
         dto = Worker.isBlank2("password", userBaseDto.getPassword());
-        if (!Worker.OK(dto))errorInfos.add((ErrorInfo) dto.getData());
+        if (!Worker.isOK(dto))errorInfos.add((ErrorInfo) dto.getData());
         //email
         dto = emailUnique(userBaseDto.getEmail(), null);
-        if (!Worker.OK(dto))errorInfos.add((ErrorInfo) dto.getData());
+        if (!Worker.isOK(dto))errorInfos.add((ErrorInfo) dto.getData());
         //validCode
         dto = Worker.isBlank2("validCode", userBaseDto.getValidCode());
-        if (!Worker.OK(dto)) errorInfos.add((ErrorInfo) dto.getData());
+        if (!Worker.isOK(dto)) errorInfos.add((ErrorInfo) dto.getData());
         if(CollectionUtils.isNotEmpty(errorInfos)) return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT,errorInfos);
 
         //comapre valid code with session
@@ -111,13 +110,13 @@ public class UserServiceImpl implements UserService {
         List<ErrorInfo> errorInfos=new ArrayList<>();
         //username
         BaseResponseDTO dto = nameUnique(userBaseDto.getUsername(), null);
-        if (!Worker.OK(dto))errorInfos.add((ErrorInfo) dto.getData());
+        if (!Worker.isOK(dto))errorInfos.add((ErrorInfo) dto.getData());
         //password
         dto = Worker.isBlank2("password", userBaseDto.getPassword());
-        if (!Worker.OK(dto))errorInfos.add((ErrorInfo) dto.getData());
+        if (!Worker.isOK(dto))errorInfos.add((ErrorInfo) dto.getData());
         //email
         dto = emailUnique(userBaseDto.getEmail(), null);
-        if (!Worker.OK(dto)) errorInfos.add((ErrorInfo) dto.getData());
+        if (!Worker.isOK(dto)) errorInfos.add((ErrorInfo) dto.getData());
         if(CollectionUtils.isNotEmpty(errorInfos)) return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT,errorInfos);
 
         StringBuilder msg = new StringBuilder();

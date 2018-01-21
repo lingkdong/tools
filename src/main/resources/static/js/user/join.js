@@ -206,7 +206,7 @@ function signUp() {
                 backDetectResult(result);
             },
             error: function (result) {
-                flashAjaxError();
+                alertServerError();
             },
             complete: function () {
             }
@@ -228,7 +228,7 @@ function nameUnique() {
             flag = backDetectResult(result);
         },
         error: function (result) {
-            flashAjaxError();
+            alertServerError();
         },
         complete: function () {
         }
@@ -249,7 +249,7 @@ function emailUnique() {
             flag = backDetectResult(result);
         },
         error: function (result) {
-            flashAjaxError();
+           alertServerError();
         },
         complete: function () {
         }
@@ -272,7 +272,7 @@ function backDetectResult(result) {
         }
 
     } else if (HttpStatus.INTERNAL_SERVER_ERROR == result.status) {
-        flash(FlashType.ERROR,"服务器出错，请稍后再试");
+        alertServerError();
     }
     return false;
 }
@@ -325,7 +325,7 @@ function sendValid() {
         },
         success: function (result) {
             if (backDetectResult(result)) {
-                flash(FlashType.success,"验证码以发送至您的邮箱");
+                alertSuccess("验证码以发送至您的邮箱");
                 try{
                     time(send)
                 } catch (error){
@@ -335,7 +335,7 @@ function sendValid() {
             }
         },
         error: function (result) {
-            flashAjaxError();
+            alertServerError();
         },
         complete: function () {
             $(send).removeClass(itemStatus.loading);

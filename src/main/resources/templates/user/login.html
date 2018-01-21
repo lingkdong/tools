@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-     >
+        >
 <head>
     <meta charset="UTF-8"/>
     <title>login</title>
     <link th:href="@{/css/common.css}" rel="stylesheet" href="../../static/css/common.css"/>
     <script th:src="@{/js/jquery-3.2.1.min.js}"></script>
-    <script th:src="@{/js/login.js}"></script>
+    <script th:src="@{/js/md5.min.js}"></script>
+    <script th:src="@{/js/common.js}"></script>
+    <script th:src="@{/js/user/login.js}"></script>
 </head>
 <body class="logged-out env-production page-responsive min-width-0 session-authentication"
       th:attr="data-return=${returnTo}">
@@ -42,7 +44,7 @@
     <div id="js-pjax-container" data-pjax-container="">
 
 
-        <div class="auth-form px-3" id="login">
+        <div class="auth-form px-3">
 
             <!-- '"` --><!-- </textarea></xmp> -->
             <form accept-charset="UTF-8" action="/session" method="post">
@@ -51,28 +53,26 @@
                     <h1>登录Prefox</h1>
                 </div>
 
-
                 <div id="js-flash-container">
-                    <div class="flash flash-full flash-error">
-                        <div>
-                            <button class="flash-close js-flash-close" type="button" aria-label="Dismiss this message">
-                                <svg aria-hidden="true" class="octicon octicon-x" height="16" version="1.1" viewBox="0 0 12 16" width="12"><path fill-rule="evenodd" d="M7.48 8l3.75 3.75-1.48 1.48L6 9.48l-3.75 3.75-1.48-1.48L4.52 8 .77 4.25l1.48-1.48L6 6.52l3.75-3.75 1.48 1.48z"></path></svg>
-                            </button>
+                    <!-- <div class="flash flash-full flash-error">
+                         <div>
+                             <button class="flash-close js-flash-close" type="button" aria-label="Dismiss this message">
+                                 <svg aria-hidden="true" class="octicon octicon-x" height="16" version="1.1" viewBox="0 0 12 16" width="12"><path fill-rule="evenodd" d="M7.48 8l3.75 3.75-1.48 1.48L6 9.48l-3.75 3.75-1.48-1.48L4.52 8 .77 4.25l1.48-1.48L6 6.52l3.75-3.75 1.48 1.48z"></path></svg>
+                             </button>
 
-                            Incorrect username or password.
+                             Incorrect username or password.
 
-                        </div>
-                    </div>
+                         </div>
+                     </div>-->
                 </div>
-
 
                 <div class="auth-form-body mt-3">
 
-                    <label for="login_field">
+                    <label for="username">
                         用户名 或 邮箱
                     </label>
                     <input autocapitalize="off" autocorrect="off" autofocus="autofocus" class="form-control input-block"
-                           id="login_field" name="login" tabindex="1" type="text"/>
+                           id="username" name="username" tabindex="1" type="text"/>
 
                     <label for="password">
                         密码 <a href="/password_reset" class="label-link">忘记密码?</a>
@@ -80,8 +80,8 @@
                     <input class="form-control form-control input-block" id="password" name="password" tabindex="2"
                            type="password"/>
 
-                    <input class="btn btn-primary btn-block" data-disable-with="Signing in…" name="commit" tabindex="3"
-                           type="submit" value="登录"/>
+                    <input class="btn btn-primary btn-block"   tabindex="3"
+                           id="login" value="登录"/>
                 </div>
             </form>
 
@@ -100,9 +100,9 @@
         <li class="mr-3"><a href="#" class="link-gray"
                             data-ga-click="Footer, go to terms, text:terms">Terms</a></li>
         <li class="mr-3"><a href="#" class="link-gray"
-        >Help</a></li>
+                >Help</a></li>
         <li class="mr-3"><a href="#" class="link-gray"
-        >Blog</a></li>
+                >Blog</a></li>
         <li><a href="#" class="link-gray">Contact Prefox</a></li>
 
     </ul>

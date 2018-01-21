@@ -29,8 +29,11 @@ public class Worker {
     public static BaseResponseDTO OK() {
         return new BaseResponseDTO(HttpStatus.OK);
     }
+    public static BaseResponseDTO OK(Object data) {
+        return new BaseResponseDTO(HttpStatus.OK,data);
+    }
 
-    public static boolean OK(BaseResponseDTO dto) {
+    public static boolean isOK(BaseResponseDTO dto) {
         return dto.getStatus().equals(HttpStatus.OK.value());
     }
 }

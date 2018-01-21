@@ -5,6 +5,8 @@ import com.tools.dto.user.LoginDto;
 import com.tools.dto.user.UserBaseDto;
 import com.tools.service.UserService;
 import com.tools.worker.Worker;
+import org.apache.shiro.web.util.SavedRequest;
+import org.apache.shiro.web.util.WebUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,6 +30,7 @@ public class UserAction {
     public BaseResponseDTO emailUnique(@RequestParam(value = "email", required = false) String email) {
         return userService.emailUnique(email, null);
     }
+
     @PostMapping(value = "create")
     public BaseResponseDTO createUser(UserBaseDto userBaseDto, HttpServletRequest request) {
         userBaseDto.setRequest(request);
@@ -35,15 +38,20 @@ public class UserAction {
     }
 
     @PostMapping(value = "sendValid")
-    public BaseResponseDTO sendValid(UserBaseDto userBaseDto,HttpServletRequest request){
+    public BaseResponseDTO sendValid(UserBaseDto userBaseDto, HttpServletRequest request) {
         userBaseDto.setRequest(request);
         return userService.sendValid(userBaseDto);
     }
 
-    @PostMapping (value = "sendLogin")
-    public BaseResponseDTO sendLogin(LoginDto loginDto){
-        System.out.println(1);
-       return Worker.OK();
+    @PostMapping(value = "sendLogin")
+    public BaseResponseDTO sendLogin(LoginDto loginDto, HttpServletRequest request) {
+        SavedRequest savedRequest = WebUtils.getSavedRequest(request);
+        // 获取保存的URL
+        Object data = null;
+        if (savedRequest != null) {
+            data = savedRequest.getRequestUrl();
+        }
+        return Worker.OK(data);
     }
 
 }
