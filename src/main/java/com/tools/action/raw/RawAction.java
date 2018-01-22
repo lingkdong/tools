@@ -2,7 +2,9 @@ package com.tools.action.raw;
 import com.tools.utils.MathUtils;
 import com.tools.utils.TimeUtils;
 import com.tools.worker.SessionWorker;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
@@ -12,10 +14,11 @@ import java.util.Map;
 /**
  * Created by DT254 on 2017/11/21.
  */
-@RestController
+@Controller
 @RequestMapping("/tools")
 public class RawAction {
     @PostMapping(value = "/store-raw")
+    @ResponseBody
     public String open(
             HttpServletRequest request,
             @RequestParam(value = "v", required = false) String value,
@@ -27,5 +30,16 @@ public class RawAction {
         obj.put("type",type);
         SessionWorker.setInterval(request.getSession(),SessionWorker.HOUR_1).setAttribute(version,obj);
         return version;
+    }
+    @GetMapping(value = "/raw")
+    public ModelAndView index(@RequestParam(value = "version", required = false) String version, HttpServletRequest request) {
+        ModelAndView mv=new ModelAndView("rawPage");
+        Map<String,Object> obj= (Map<String, Object>) request.getSession().getAttribute(version);
+        if(obj!=null){
+            mv.addObject("value",(obj.get("value")==null)?"":obj.get("value"));
+            mv.addObject("type",(obj.get("type")==null)?"":obj.get("type"));
+            mv.addObject("version",version);
+        }
+        return mv;
     }
 }

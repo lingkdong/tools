@@ -125,7 +125,7 @@ function addMsg(parent, type, msg) {
         if ((!isExist(parent)) || isBlank(type)) {
             alert(msg);
         } else {
-            var info = $(parent).children(".flash-add-info");
+            var info = $(parent).find(".flash-add-info");
             if (isExist(info)) {
                 $(info).html(msg);
 
