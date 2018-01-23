@@ -11,12 +11,6 @@ import java.util.HashMap;
  * Created by DT254 on 2018/1/9.
  */
 public class Worker {
-    public static BaseResponseDTO isBlank(String property, String value) {
-        if (StringUtils.isBlank(value)) {
-            return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT, String.format("%s is blank", property));
-        }
-        return OK();
-    }
 
     public static BaseResponseDTO isBlank2(String property, String value) {
         if (StringUtils.isBlank(value)) {

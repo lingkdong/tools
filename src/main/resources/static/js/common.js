@@ -25,6 +25,7 @@ var HttpStatus = {
     ALREADY_EXIT: 4010,
     PARAM_INCORRECT: 4007,
     IS_EXPIRED: 4011,
+    IS_DISABLED:4012,
     INTERNAL_SERVER_ERROR: 5003
 }
 var FlashType = {

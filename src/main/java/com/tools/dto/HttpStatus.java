@@ -38,6 +38,7 @@ public enum HttpStatus {
     INVALID_FORMAT(4009, "invalid format"),
     ALREADY_EXIT(4010, "already exit"),
     IS_EXPIRED(4011, "is expired"),
+    IS_DISABLED(4012, "is disabled"),
 
     // 5xxx  Server Error
     SERVER_ERROR(5000, "Server Error"),

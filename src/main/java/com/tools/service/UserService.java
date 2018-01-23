@@ -23,4 +23,5 @@ public interface UserService {
 
     User findByUsernameOrEmail(String username);
 
+    BaseResponseDTO login(LoginDto loginDto);
 }

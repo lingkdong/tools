@@ -1,13 +1,9 @@
 package com.tools.config;
 
-import com.tools.dto.HttpStatus;
-import com.tools.dto.PreException;
 import com.tools.model.User;
+import com.tools.model.UserStatus;
 import com.tools.service.UserService;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationInfo;
-import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.SimpleAuthenticationInfo;
+import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
@@ -39,11 +35,14 @@ public class ShiroRealm extends AuthorizingRealm {
     }
 
     @Override
-    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
-        String username= (String)token.getPrincipal();
+    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
+        UsernamePasswordToken token= (UsernamePasswordToken) authenticationToken;
+        String username= (String)token.getUsername();
         User user=userService.findByUsernameOrEmail(username);
-        if(user==null||!user.getPassword().equals(token.getCredentials())){
-            throw new PreException(HttpStatus.USER_NOT_EXIST,"Incorrect username or password.");
+        if(user==null||!user.getPassword().equals(String.valueOf(token.getPassword()))){
+            throw new AccountException("Incorrect username or password.");
+        }else if(UserStatus.CANCEL.code().equals(user.getStatus())){
+            throw  new DisabledAccountException("The account disabled.");
         }
         SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(
                 user,

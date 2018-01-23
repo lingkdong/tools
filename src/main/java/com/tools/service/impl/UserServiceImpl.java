@@ -5,6 +5,7 @@ import com.tools.dto.BaseResponseDTO;
 import com.tools.dto.EmailDto;
 import com.tools.dto.ErrorInfo;
 import com.tools.dto.HttpStatus;
+import com.tools.dto.user.LoginDto;
 import com.tools.dto.user.UserBaseDto;
 import com.tools.model.User;
 import com.tools.model.UserStatus;
@@ -16,6 +17,12 @@ import com.tools.utils.StringUtil;
 import com.tools.worker.Worker;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AccountException;
+import org.apache.shiro.authc.DisabledAccountException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.web.util.SavedRequest;
+import org.apache.shiro.web.util.WebUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -141,6 +148,35 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findByUsernameOrEmail(String username) {
         return userDao.findFirstByUsernameOrEmail(username,username);
+    }
+
+    @Override
+    public BaseResponseDTO login(LoginDto loginDto) {
+        try {
+            BaseResponseDTO dto=Worker.isBlank2("username",loginDto.getUsername());
+            if(!Worker.isOK(dto))return dto;
+            dto=Worker.isBlank2("password",loginDto.getPassword());
+            if(!Worker.isOK(dto))return dto;
+            UsernamePasswordToken token = new UsernamePasswordToken(loginDto.getUsername(), DigestUtils.md5Hex(loginDto
+                    .getPassword()),
+                    loginDto.isRememberMe());
+            SecurityUtils.getSubject().login(token);
+            SavedRequest savedRequest = WebUtils.getSavedRequest(loginDto.getRequest());
+            // 获取保存的URL
+            Object data = null;
+            if (savedRequest != null && savedRequest.getRequestUrl()!=null && !savedRequest.getRequestUrl().contains
+                    ("favicon.ico")) {
+                data = savedRequest.getRequestUrl();
+            }
+            return Worker.OK(data);
+        }catch (DisabledAccountException de){
+            return  new BaseResponseDTO(HttpStatus.PARAM_INCORRECT, ErrorInfo.newErrorInfo().property("username")
+                    .HttpStatus(HttpStatus.IS_DISABLED).build());
+        }catch (AccountException ae){
+            return  new BaseResponseDTO(HttpStatus.PARAM_INCORRECT,ErrorInfo.newErrorInfo().property("username")
+                    .HttpStatus(HttpStatus.PARAM_INCORRECT).build());
+        }
+
     }
 
     private User buildUser(UserBaseDto dto) {
