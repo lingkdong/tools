@@ -1,12 +1,12 @@
 $(function () {
 
 })
-
+var INDEX_BASE_URL="/tools/anon/"
 //load category
 function dashboard_more(obj) {
     $.ajax({
         type: "post",
-        url: "/tools/search.json",
+        url: INDEX_BASE_URL+"search.json",
         dataType: "json",
         data:{
             q:$(obj).attr("data-q"),

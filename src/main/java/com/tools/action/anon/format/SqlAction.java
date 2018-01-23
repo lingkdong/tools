@@ -1,4 +1,4 @@
-package com.tools.action.format;
+package com.tools.action.anon.format;
 
 import com.tools.dto.format.SqlFormat;
 import com.tools.worker.SqlFormatWorker;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
  * Created by DT254 on 2017/11/17.
  */
 @RestController
-@RequestMapping("/tools/format")
+@RequestMapping("/tools/anon/format")
 public class SqlAction {
     @PostMapping(value = "/sql-pretty")
     public String pretty(SqlFormat format) {

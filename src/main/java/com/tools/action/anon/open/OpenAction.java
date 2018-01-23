@@ -1,4 +1,4 @@
-package com.tools.action.raw;
+package com.tools.action.anon.open;
 import com.tools.utils.MathUtils;
 import com.tools.utils.TimeUtils;
 import com.tools.worker.SessionWorker;
@@ -15,9 +15,9 @@ import java.util.Map;
  * Created by DT254 on 2017/11/21.
  */
 @Controller
-@RequestMapping("/tools")
-public class RawAction {
-    @PostMapping(value = "/store-raw")
+@RequestMapping("/tools/anon/open")
+public class OpenAction {
+    @PostMapping(value = "/store")
     @ResponseBody
     public String open(
             HttpServletRequest request,
@@ -31,9 +31,9 @@ public class RawAction {
         SessionWorker.setInterval(request.getSession(),SessionWorker.HOUR_1).setAttribute(version,obj);
         return version;
     }
-    @GetMapping(value = "/raw")
+    @GetMapping(value = "/show")
     public ModelAndView index(@RequestParam(value = "version", required = false) String version, HttpServletRequest request) {
-        ModelAndView mv=new ModelAndView("rawPage");
+        ModelAndView mv=new ModelAndView("open");
         Map<String,Object> obj= (Map<String, Object>) request.getSession().getAttribute(version);
         if(obj!=null){
             mv.addObject("value",(obj.get("value")==null)?"":obj.get("value"));

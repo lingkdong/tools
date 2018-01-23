@@ -1,13 +1,9 @@
-package com.tools.action.user;
+package com.tools.action.anon.user;
 
 import com.tools.dto.BaseResponseDTO;
-import com.tools.dto.user.LoginDto;
 import com.tools.dto.user.UserBaseDto;
 import com.tools.service.UserService;
-import com.tools.worker.Worker;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.web.util.SavedRequest;
-import org.apache.shiro.web.util.WebUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +17,7 @@ import java.util.Map;
  */
 @Controller
 @Slf4j
-@RequestMapping("/tools/user")
+@RequestMapping("/tools/anon/user")
 public class UserAction {
     @Autowired
     private UserService userService;

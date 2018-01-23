@@ -10,6 +10,8 @@ $(function () {
     });
 
 })
+var FORMAT_BASE_URL="/tools/anon/format/";
+var OPEN_BASE_URL="/tools/anon/open/";
 function updateLine() {
     $(input).updateLine();
 }
@@ -23,7 +25,7 @@ function format_raw(type) {
     if (!isInputBlank()) {
         $.ajax({
             type: "post",
-            url: "/tools/store-raw.json",
+            url: OPEN_BASE_URL+"store.json",
             async: true,
             dataType: "text",
             data: {
@@ -31,7 +33,7 @@ function format_raw(type) {
                 type: type,
             },
             success: function (result) {
-                window.open("/tools/raw.html?version=" + result);
+                window.open(OPEN_BASE_URL+"show.html?version=" + result);
             },
             error: function (result) {
             },
@@ -100,11 +102,11 @@ function format_clear0() {
 }
 
 function getPrettyUrl(type) {
-    return "/tools/format/" + type + "-pretty.json";
+    return FORMAT_BASE_URL+ type + "-pretty.json";
 }
 
 function getCompressUrl(type) {
-    return"/tools/format/" + type + "-compress.json";
+    return FORMAT_BASE_URL + type + "-compress.json";
 }
 
 

@@ -1,4 +1,4 @@
-package com.tools.action.format;
+package com.tools.action.anon.format;
 
 import com.tools.action.BaseAction;
 import com.tools.dto.CategoryDto;
@@ -16,7 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
  * Created by DT254 on 2017/11/17.
  */
 @Controller
-@RequestMapping("/tools/format")
+@RequestMapping("/tools/anon/format")
 public class FormatIndexAction extends BaseAction {
     @Autowired
     private ResourceService resourceService;

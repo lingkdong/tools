@@ -32,7 +32,7 @@ $(function () {
         stopEvent(event);
     })
 })
-
+var JOIN_BASE_URL="/tools/anon/user/";
 var itemStatus = {
     "loading": "is-autocheck-loading-16",
     "success": "is-autocheck-successful",
@@ -193,7 +193,7 @@ function signUp() {
         // ajax submit
         $.ajax({
             type: "post",
-            url: "/tools/user/create.json",
+            url: "create.json",
             async: false,
             dataType: "text",
             data: {
@@ -218,7 +218,7 @@ function nameUnique() {
     var flag = false;
     $.ajax({
         type: "post",
-        url: "/tools/user/name-unique.json",
+        url: JOIN_BASE_URL+"name-unique.json",
         async: false,
         dataType: "text",
         data: {
@@ -239,7 +239,7 @@ function emailUnique() {
     var flag = false;
     $.ajax({
         type: "post",
-        url: "/tools/user/email-unique.json",
+        url: JOIN_BASE_URL+"email-unique.json",
         async: false,
         dataType: "text",
         data: {
@@ -313,7 +313,7 @@ function backErrorTxt(property, status) {
 function sendValid() {
     $.ajax({
         type: "post",
-        url: "/tools/user/sendValid.json",
+        url: JOIN_BASE_URL+"sendValid.json",
         async: false,
         dataType: "text",
         data: {

@@ -1,4 +1,4 @@
-package com.tools.action.format;
+package com.tools.action.anon.format;
 
 import com.tools.dto.format.JsonFormat;
 import com.tools.worker.JsonFormatWorker;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
  * Created by DT254 on 2017/11/17.
  */
 @RestController
-@RequestMapping("/tools/format")
+@RequestMapping("/tools/anon/format")
 public class JsonAction {
     @PostMapping(value = "/json-pretty")
     public String pretty(JsonFormat format) {
