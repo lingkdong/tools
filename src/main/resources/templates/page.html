@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro"
 >
 <head>
     <meta charset="UTF-8"/>
@@ -78,7 +79,7 @@
                     </ul>
                 </div>
                 <div class="d-flex">
-                    <div class="user-nav d-flex flex-items-center list-style-none" id="user-links">
+                    <div shiro:guest="" class="user-nav d-flex flex-items-center list-style-none">
                         <a th:href="@{/tools/anon/user/login}" class="text-bold px-1  HeaderNavlink">
                             登录
                         </a>
@@ -86,6 +87,9 @@
                         <a th:href="@{/tools/anon/user/join}" class="text-bold px-1  HeaderNavlink">
                             注册
                         </a>
+                    </div>
+                    <div shiro:user="" class="user-nav d-flex flex-items-center list-style-none">
+                        <span shiro:principal="" property="username"></span>
                     </div>
                 </div>
             </div>

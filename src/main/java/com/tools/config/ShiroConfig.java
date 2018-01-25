@@ -1,5 +1,6 @@
 package com.tools.config;
 
+import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
@@ -42,7 +43,10 @@ public class ShiroConfig {
         return shiroFilterFactoryBean;
     }
 
-
+    @Bean
+    public ShiroDialect shiroDialect() {
+        return new ShiroDialect();
+    }
     @Bean
     public ShiroRealm shiroRealm() {
         ShiroRealm shiroRealm = new ShiroRealm();
@@ -62,5 +66,6 @@ public class ShiroConfig {
         manager.setRealm(shiroRealm());
         return manager;
     }
+
 
 }
