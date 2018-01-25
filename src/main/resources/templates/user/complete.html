@@ -5,8 +5,7 @@
 <head>
     <meta charset="UTF-8"/>
     <title th:text="complete"></title>
-    <script th:src="@{/js/common.js }"></script>
-    <script th:src="@{/js/complete.js}"></script>
+    <script th:src="@{/js/user/complete.js}"></script>
 </head>
 <body>
 <div th:fragment="content" th:remove="tag">
@@ -18,14 +17,21 @@
             <!-- Show steps if user is creating an organiation -->
             <ol class="steps">
                 <li class="complete">
-                    <svg aria-hidden="true" class="octicon octicon-check" height="32" version="1.1" viewBox="0 0 12 16" width="24"><path fill-rule="evenodd" d="M12 5l-8 8-4-4 1.5-1.5L4 10l6.5-6.5z"></path></svg>
+                    <svg aria-hidden="true" class="octicon octicon-check" height="32" version="1.1" viewBox="0 0 12 16"
+                         width="24">
+                        <path fill-rule="evenodd" d="M12 5l-8 8-4-4 1.5-1.5L4 10l6.5-6.5z"></path>
+                    </svg>
                     <strong class="step">已完成:</strong>
                     创建账户
                 </li>
                 <li class="current">
-                <svg aria-hidden="true" class="octicon octicon-gear" height="32" version="1.1" viewBox="0 0 14 16" width="28"><path fill-rule="evenodd" d="M14 8.77v-1.6l-1.94-.64-.45-1.09.88-1.84-1.13-1.13-1.81.91-1.09-.45-.69-1.92h-1.6l-.63 1.94-1.11.45-1.84-.88-1.13 1.13.91 1.81-.45 1.09L0 7.23v1.59l1.94.64.45 1.09-.88 1.84 1.13 1.13 1.81-.91 1.09.45.69 1.92h1.59l.63-1.94 1.11-.45 1.84.88 1.13-1.13-.92-1.81.47-1.09L14 8.75v.02zM7 11c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z"></path></svg>
-                <strong class="step">Step 2:</strong>
-                完善资料
+                    <svg aria-hidden="true" class="octicon octicon-gear" height="32" version="1.1" viewBox="0 0 14 16"
+                         width="28">
+                        <path fill-rule="evenodd"
+                              d="M14 8.77v-1.6l-1.94-.64-.45-1.09.88-1.84-1.13-1.13-1.81.91-1.09-.45-.69-1.92h-1.6l-.63 1.94-1.11.45-1.84-.88-1.13 1.13.91 1.81-.45 1.09L0 7.23v1.59l1.94.64.45 1.09-.88 1.84 1.13 1.13 1.81-.91 1.09.45.69 1.92h1.59l.63-1.94 1.11-.45 1.84.88 1.13-1.13-.92-1.81.47-1.09L14 8.75v.02zM7 11c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z"></path>
+                    </svg>
+                    <strong class="step">Step 2:</strong>
+                    完善资料
                 </li>
             </ol>
         </div>
@@ -52,8 +58,8 @@
                         <dt class="input-label"><label name="birth">生日
                         </label></dt>
                         <dd><input class="form-control w-150" id="birth-year" placeholder="年"
-                                   name="birth-year" maxlength="4" />
-                            <select id="birth-month" class="form-control btn btn-sm select w-120" >
+                                   name="birth-year" maxlength="4"/>
+                            <select id="birth-month" class="form-control btn btn-sm select w-120">
                                 <option value="01">1 月</option>
                                 <option value="02">2 月</option>
                                 <option value="03">3 月</option>
@@ -68,18 +74,27 @@
                                 <option value="12">12 月</option>
                             </select>
                             <input class="form-control w-150" id="birth-day" placeholder="日"
-                            name="birth-year" maxlength="2" />
+                                   name="birth-year" maxlength="2"/>
                             <p class="note">设置您的生日信息.</p></dd>
                     </dl>
                     <dl class="form-group">
                         <dt class="input-label"><label autocapitalize="off" for="male"
                                                        name="male">性别</label></dt>
                         <dd>
-                            <select id="male" class="form-control btn btn-sm select w-150" >
+                            <select id="male" class="form-control btn btn-sm select w-150">
                                 <option value="1">男</option>
                                 <option value="0">女</option>
                             </select>
                             <p class="note">请选择您的性别.</p></dd>
+                    </dl>
+                    <dl class="form-group">
+                        <dt class="input-label"><label autocapitalize="off" for="skillTag"
+                                                       name="valid">技能标签</label></dt>
+                        <dd>
+                            <input autocapitalize="off" class="form-control" id="skillTag" name="skillTag"
+                                   maxlength="50"
+                                   type="text"/>
+                            <p class="note">设置您的技能标签.</p></dd>
                     </dl>
                     <dl class="form-group">
                         <dt class="input-label"><label autocapitalize="off" autofocus="autofocus">
@@ -92,14 +107,14 @@
                         <dt class="input-label"><label autocapitalize="off" for="location"
                                                        name="valid">位置</label></dt>
                         <dd>
-                            <input autocapitalize="off" class="form-control" id="location" name="validCode"
+                            <input autocapitalize="off" class="form-control" id="location" name="location"
                                    maxlength="50"
                                    type="text"/>
                             <p class="note">设置您的位置.</p></dd>
                     </dl>
 
-                    <button  class="btn btn-primary" id="signup_button">
-                     保存资料
+                    <button class="btn btn-primary" id="complete">
+                        保存资料
                     </button>
 
                 </form>

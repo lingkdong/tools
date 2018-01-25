@@ -105,9 +105,9 @@ public class UserServiceImpl implements UserService {
             return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT,ErrorInfo.newErrorInfo().property("validCode")
                     .HttpStatus(HttpStatus
                     .PARAM_INCORRECT).build());
-        session.removeAttribute(userBaseDto.getEmail());
         //save
         userDao.save(buildUser(userBaseDto));
+        session.removeAttribute(userBaseDto.getEmail());
         //auto login by username;
         return Worker.OK();
     }

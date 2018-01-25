@@ -17,7 +17,7 @@ function dashboard_more(obj) {
             totalElements:$(obj).attr("data-totalElements")
         },
         success: function (result) {
-            if(result&&result.status==200&&result.data){
+            if(result&&result.status==HttpStatus.OK&&result.data){
                 var html = '';
                 data=eval(result.data)
                 if (data && data.content && data.content.length > 0) {

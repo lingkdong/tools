@@ -40,7 +40,8 @@ public class User {
 
     @Column(name = "phone", length = 20)
     private String phone;
-
+    @Column(name = "skill_tag", length = 50)
+    private String skillTag;
     private String location;
 
     public Long getId() {
@@ -145,5 +146,13 @@ public class User {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public String getSkillTag() {
+        return skillTag;
+    }
+
+    public void setSkillTag(String skillTag) {
+        this.skillTag = skillTag;
     }
 }

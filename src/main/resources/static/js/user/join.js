@@ -4,17 +4,17 @@ $(function () {
     email = $("#user_email");
     validCode = $("#user_valid");
     send = $("#valid_button");
-    $(username).change(function () {
-        detectUserName(true);
+    $(username).keyup(function () {
+        detectUserName();
     });
-    $(password).change(function () {
-        detectPassword(true);
+    $(password).keyup(function () {
+        detectPassword();
     });
-    $(email).change(function () {
-        detectEmail(true);
+    $(email).keyup(function () {
+        detectEmail();
     });
-    $(validCode).click(function (event) {
-        detectValidCode(true);
+    $(validCode).keyup(function (event) {
+        detectValidCode();
         stopEvent(event);
     });
     $("#signup_button").click(function (event) {
@@ -23,31 +23,31 @@ $(function () {
     })
 
     $(send).click(function (event) {
-        $(send).attr("disabled",true).html("发送中...");
-        if (detectUserName(false) && detectPassword(false) && detectEmail(false)) {
+        $(send).attr("disabled", true).html("发送中...");
+        if (detectUserName() && detectPassword() && detectEmail()) {
             sendValid();
-        }else {
+        } else {
             $(send).removeAttr("disabled").html("获取验证码");
         }
         stopEvent(event);
     })
 })
-var JOIN_BASE_URL="/tools/anon/user/";
+var JOIN_BASE_URL = "/tools/anon/user/";
 var itemStatus = {
-    "loading": "is-autocheck-loading-16",
-    "success": "is-autocheck-successful",
-    "errored": "is-autocheck-errored"
+    LOADING: "is-autocheck-loading-16",
+    SUCCESS: "is-autocheck-successful",
+    ERRORED: "is-autocheck-errored"
 };
 //loading
 function item_loading(obj) {
     clearItemStatus();
-    $(obj).addClass(itemStatus["loading"]);
+    $(obj).addClass(itemStatus.LOADING);
 }
 
 //success
 function item_success(obj) {
     clearItemStatus(obj);
-    $(obj).addClass(itemStatus["success"]);
+    $(obj).addClass(itemStatus.SUCCESS);
 }
 function item_error(obj, txt) {
     clearItemStatus(obj);
@@ -57,7 +57,7 @@ function item_error(obj, txt) {
         $(group).addClass("errored")
     }
     //logo
-    $(obj).addClass(itemStatus["errored"]);
+    $(obj).addClass(itemStatus.ERRORED);
     addItemInfo(group, txt);
     $(obj).parent().children(".note").hide();
 }
@@ -100,13 +100,11 @@ function addItemInfo(group, txt) {
 }
 
 
-function detectUserName(isChange) {
+function detectUserName() {
     var obj = username;
     var value = $(obj).val();
     if (isBlank(value)) {
-        if (!isChange) {
-            item_error(obj, "用户名不能为空")
-        }
+        item_error(obj, "用户名不能为空")
         return false;
     }
     //loading
@@ -124,13 +122,11 @@ function detectUserName(isChange) {
     return true;
 }
 
-function detectPassword(isChange) {
+function detectPassword() {
     var obj = password;
     var value = $(obj).val();
     if (isBlank(value)) {
-        if (!isChange) {
-            item_error(obj, "密码不能为空")
-        }
+        item_error(obj, "密码不能为空")
         return false;
     }
     //loading
@@ -144,13 +140,11 @@ function detectPassword(isChange) {
     item_success(obj);
     return true;
 }
-function detectEmail(isChange) {
+function detectEmail() {
     var obj = email;
     var value = $(obj).val();
     if (isBlank(value)) {
-        if (!isChange) {
-            item_error(obj, "邮箱不能为空")
-        }
+        item_error(obj, "邮箱不能为空")
         return false;
     }
     //loading
@@ -167,13 +161,11 @@ function detectEmail(isChange) {
     }
     return true;
 }
-function detectValidCode(isChange) {
+function detectValidCode() {
     var obj = validCode;
     var value = $(obj).val();
     if (isBlank(value)) {
-        if (!isChange) {
-            item_error(obj, "验证码不能为空")
-        }
+        item_error(obj, "验证码不能为空")
         return false;
     }
     //loading
@@ -189,7 +181,7 @@ function detectValidCode(isChange) {
 }
 
 function signUp() {
-    if (detectUserName(false) && detectPassword(false) && detectEmail(false) && detectValidCode(false)) {
+    if (detectUserName() && detectPassword() && detectEmail() && detectValidCode()) {
         // ajax submit
         $.ajax({
             type: "post",
@@ -203,7 +195,10 @@ function signUp() {
                 validCode: $(validCode).val()
             },
             success: function (result) {
-                backDetectResult(result);
+                if (backDetectResult(result));
+                {
+                    window.location.href = "/tools/anon/index";
+                }
             },
             error: function (result) {
                 alertServerError();
@@ -218,7 +213,7 @@ function nameUnique() {
     var flag = false;
     $.ajax({
         type: "post",
-        url: JOIN_BASE_URL+"name-unique.json",
+        url: JOIN_BASE_URL + "name-unique.json",
         async: false,
         dataType: "text",
         data: {
@@ -239,7 +234,7 @@ function emailUnique() {
     var flag = false;
     $.ajax({
         type: "post",
-        url: JOIN_BASE_URL+"email-unique.json",
+        url: JOIN_BASE_URL + "email-unique.json",
         async: false,
         dataType: "text",
         data: {
@@ -249,7 +244,7 @@ function emailUnique() {
             flag = backDetectResult(result);
         },
         error: function (result) {
-           alertServerError();
+            alertServerError();
         },
         complete: function () {
         }
@@ -313,7 +308,7 @@ function backErrorTxt(property, status) {
 function sendValid() {
     $.ajax({
         type: "post",
-        url: JOIN_BASE_URL+"sendValid.json",
+        url: JOIN_BASE_URL + "sendValid.json",
         async: false,
         dataType: "text",
         data: {
@@ -321,15 +316,15 @@ function sendValid() {
             password: md5($(password).val()),
             email: $(email).val()
         },
-        beforeSend:function () {
+        beforeSend: function () {
         },
         success: function (result) {
             if (backDetectResult(result)) {
                 alertSuccess("验证码以发送至您的邮箱");
-                try{
+                try {
                     time(send)
-                } catch (error){
-                   console.log(error)
+                } catch (error) {
+                    console.log(error)
                 }
 
             }
@@ -338,7 +333,7 @@ function sendValid() {
             alertServerError();
         },
         complete: function () {
-            $(send).removeClass(itemStatus.loading);
+            $(send).removeClass(itemStatus.LOADING);
         }
     });
 }
