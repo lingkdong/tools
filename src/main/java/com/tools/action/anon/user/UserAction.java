@@ -67,7 +67,7 @@ public class UserAction {
     }
 
     @RequestMapping(value = "/login")
-    public ModelAndView login(HttpServletRequest request, Map<String, Object> map) {
+    public ModelAndView login() {
         ModelAndView mv = new ModelAndView("user/login");
         return mv;
     }

@@ -39,7 +39,10 @@ var usename_reg = /^[a-zA-Z0-9_]+$/;
 var password_reg = /^(?=.*\d)(?=.*[a-zA-Z])(?=.*[~!@#$%^&*])[\da-zA-Z~!@#$%^&*]{8,}$/;
 var email_reg = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
 var validcode_reg = /^[a-zA-Z0-9]+$/;
-
+var year_reg=/^[0-9]{4}$/;
+var month_reg=/^(0?[1-9]|1[0-2])$/;
+var day_reg=/^((0?[1-9])|((1|2)[0-9])|30|31)$/;
+var phone_reg=/^0?(13[0-9]|14[56789]|15[012356789]|166|17[012345678]|18[0-9]|19[89])[0-9]{8}$/;
 function isUserName(value) {
     return usename_reg.test(value);
 }
@@ -52,7 +55,26 @@ function isEmail(value) {
 function isValidCode(value) {
     return validcode_reg.test(value);
 }
-
+function isYear(value){
+    return year_reg.test(value);
+}
+function isMonth(value) {
+    return month_reg.test(value);
+}
+function isDay(value) {
+    return day_reg.test(value);
+}
+function isPhone(value) {
+    return phone_reg.test(value);
+}
+function isDate(args) {
+   try {
+       new Date(args);
+       return true;
+   }catch (error){
+       return false;
+   }
+}
 var wait_time = 60;
 function time(obj) {
     if (wait_time == 0) {
@@ -138,3 +160,72 @@ function addMsg(parent, type, msg) {
         }
     }
 }
+/*...........form item detect.........*/
+var itemStatus = {
+    LOADING: "is-autocheck-loading-16",
+    SUCCESS: "is-autocheck-successful",
+    ERRORED: "is-autocheck-errored"
+};
+
+//loading
+function item_loading(obj) {
+    clearItemStatus();
+    $(obj).addClass(itemStatus.LOADING);
+}
+
+//success
+function item_success(obj) {
+    clearItemStatus(obj);
+    $(obj).addClass(itemStatus.SUCCESS);
+}
+
+function item_error(obj, txt) {
+    clearItemStatus(obj);
+    //lable
+    var group = getItemGroup(obj);
+    if (isExist(group)) {
+        $(group).addClass("errored")
+    }
+    //logo
+    $(obj).addClass(itemStatus.ERRORED);
+    addItemInfo(group, txt);
+    $(obj).parent().children(".note").hide();
+}
+//clear status class
+function clearItemStatus(obj) {
+    var group = getItemGroup(obj);
+    //lable
+    if (isExist(group)) {
+        $(group).removeClass("errored");
+    }
+    //logo
+    for (var key in itemStatus) {
+        $(obj).removeClass(itemStatus[key]);
+    }
+
+    // error info
+    var info = getItemInfo(group);
+    if (isExist(info)) {
+        $(info).remove();
+    }
+    $(obj).parent().children(".note").show();
+}
+
+function getItemGroup(obj) {
+    return $($(obj).parent()).parent(".form-group");
+}
+
+function getItemInfo(group) {
+    return $(group).children(".error")
+}
+
+function addItemInfo(group, txt) {
+    var info = getItemInfo(group);
+    if (isExist(info)) {
+        $(info).html(txt);
+    } else {
+        var dd = '<dd class="error">' + txt + '</dd>';
+        $(group).append($(dd));
+    }
+}
+/*...........form item detect.........*/

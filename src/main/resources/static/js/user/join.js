@@ -33,82 +33,16 @@ $(function () {
     })
 })
 var JOIN_BASE_URL = "/tools/anon/user/";
-var itemStatus = {
-    LOADING: "is-autocheck-loading-16",
-    SUCCESS: "is-autocheck-successful",
-    ERRORED: "is-autocheck-errored"
-};
-//loading
-function item_loading(obj) {
-    clearItemStatus();
-    $(obj).addClass(itemStatus.LOADING);
-}
-
-//success
-function item_success(obj) {
-    clearItemStatus(obj);
-    $(obj).addClass(itemStatus.SUCCESS);
-}
-function item_error(obj, txt) {
-    clearItemStatus(obj);
-    //lable
-    var group = getItemGroup(obj);
-    if (isExist(group)) {
-        $(group).addClass("errored")
-    }
-    //logo
-    $(obj).addClass(itemStatus.ERRORED);
-    addItemInfo(group, txt);
-    $(obj).parent().children(".note").hide();
-}
-//clear status class
-function clearItemStatus(obj) {
-    var group = getItemGroup(obj);
-    //lable
-    if (isExist(group)) {
-        $(group).removeClass("errored");
-    }
-    //logo
-    for (var key in itemStatus) {
-        $(obj).removeClass(itemStatus[key]);
-    }
-
-    // error info
-    var info = getItemInfo(group);
-    if (isExist(info)) {
-        $(info).remove();
-    }
-    $(obj).parent().children(".note").show();
-}
-
-function getItemGroup(obj) {
-    return $($(obj).parent()).parent(".form-group");
-}
-
-function getItemInfo(group) {
-    return $(group).children(".error")
-}
-
-function addItemInfo(group, txt) {
-    var info = getItemInfo(group);
-    if (isExist(info)) {
-        $(info).html(txt);
-    } else {
-        var dd = '<dd class="error">' + txt + '</dd>';
-        $(group).append($(dd));
-    }
-}
-
 
 function detectUserName() {
     var obj = username;
+    //loading
+    item_loading(obj);
     var value = $(obj).val();
     if (isBlank(value)) {
         item_error(obj, "用户名不能为空")
         return false;
     }
-    //loading
-    item_loading(obj);
     //detect format errored
     if (!isUserName(value)) {
         item_error(obj, "用户名只支持数字、字母、下划线，或其组合");
@@ -124,13 +58,13 @@ function detectUserName() {
 
 function detectPassword() {
     var obj = password;
+    //loading
+    item_loading(obj);
     var value = $(obj).val();
     if (isBlank(value)) {
         item_error(obj, "密码不能为空")
         return false;
     }
-    //loading
-    item_loading(obj);
     //detect format errored
     if (!isPassword(value)) {
         item_error(obj, "密码必须包含数字、字母、特殊符号且大于等于8位");
@@ -142,13 +76,13 @@ function detectPassword() {
 }
 function detectEmail() {
     var obj = email;
+    //loading
+    item_loading(obj);
     var value = $(obj).val();
     if (isBlank(value)) {
         item_error(obj, "邮箱不能为空")
         return false;
     }
-    //loading
-    item_loading(obj);
     //detect format errored
     if (!isEmail(value)) {
         item_error(obj, "邮箱格式错误");
@@ -163,13 +97,13 @@ function detectEmail() {
 }
 function detectValidCode() {
     var obj = validCode;
+    //loading
+    item_loading(obj);
     var value = $(obj).val();
     if (isBlank(value)) {
         item_error(obj, "验证码不能为空")
         return false;
     }
-    //loading
-    item_loading(obj);
     //detect format errored
     if (!isValidCode(value)) {
         item_error(obj, "验证码错误");
