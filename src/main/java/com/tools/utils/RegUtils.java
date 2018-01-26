@@ -30,4 +30,12 @@ public class RegUtils {
         String regex = "^([\\w-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([\\w-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$";
         return match(regex, str);
     }
+
+    public static boolean isPhone(String str) {
+        if (StringUtils.isNotBlank(str)) {
+            String regex = "^0?(13[0-9]|14[56789]|15[012356789]|166|17[012345678]|18[0-9]|19[89])[0-9]{8}$";
+            return match(regex, str);
+        }
+        return false;
+    }
 }

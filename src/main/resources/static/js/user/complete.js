@@ -6,15 +6,15 @@ $(function () {
     male = $("#male");
     skillTag = $("#skillTag");
     phone = $("#phone");
-    location1 = $("#location");
-    complete=$("#complete");
+    userLocal = $("#location");
+    complete = $("#complete");
     $(trueName).keyup(function () {
         detectTrueName();
     });
     $(birthYear).keyup(function () {
         detectBirthYear();
     });
-    $(birthMonth).keyup(function () {
+    $(birthMonth).change(function () {
         detectBirthMonth();
     });
     $(birthday).keyup(function () {
@@ -70,19 +70,19 @@ function detectBirthYear() {
 function detectBirthMonth() {
     var obj = birthMonth;
     //loading
-    item_loading(obj);
+    select_item_loading(obj);
     var value = $(obj).val();
     if (isBlank(value)) {
-        item_error(obj, "月份不能为空")
+        item_error_position(obj, "月份不能为空")
         return false;
     }
     //detect format errored
     if (!isMonth(value)) {
-        item_error(obj, "月份格式错误");
+        item_error_position(obj, "月份格式错误");
         return false;
     }
     //success
-    item_success(obj);
+    select_item_success(obj);
     return true;
 }
 function detectBirthDay() {
@@ -91,12 +91,12 @@ function detectBirthDay() {
     item_loading(obj);
     var value = $(obj).val();
     if (isBlank(value)) {
-        item_error(obj, "日期不能为空")
+        item_error_position(obj, "日期不能为空")
         return false;
     }
     //detect format errored
-    if (!(isDay(value) || isDate($(birthYear).val(), $(birthMonth).val(), $(birthday).val()))) {
-        item_error(obj, "日期格式错误");
+    if (!(isDay(value) && isDate($(birthYear).val(), $(birthMonth).val(), $(birthday).val()))) {
+        item_error_position(obj, "日期格式错误");
         return false;
     }
     //success
@@ -107,7 +107,7 @@ function detectBirthDay() {
 function detectMale() {
     var obj = male;
     //loading
-    item_loading(obj);
+    select_item_loading(obj);
     var value = $(obj).val();
     if (isBlank(value)) {
         item_error(obj, "性别不能为空")
@@ -119,10 +119,10 @@ function detectMale() {
         return false;
     }
     //success
-    item_success(obj);
+    select_item_success(obj);
     return true;
 }
-
+var BASE_COMPLETE_URL="/tools/authc/user/";
 function detectSkillTag() {
     var obj = skillTag;
     //loading
@@ -143,23 +143,93 @@ function detectPhone() {
     item_loading(obj);
     var value = $(obj).val();
     //detect format errored
-    if (!isPhone(value)) {
-        item_error(obj, "手机格式错误");
-        return false;
-    }
-    if (!isBlank(value)) {
-        //success
+    //phone can blank
+    if(!isBlank(value)){
+        if (!isPhone(value)) {
+            item_error(obj, "手机格式错误");
+            return false;
+        }
         item_success(obj);
-    } else {
+    }else {
         clearItemStatus(obj)
     }
     return true;
 }
 function sendComplete() {
     $(complete).attr("disabled", true).html("保存...");
-    if(detectTrueName()&&detectBirthYear()&&detectBirthMonth()&&detectBirthDay()&&detectMale()&&detectSkillTag()&&detectPhone()){
-
+    if (detectTrueName() && detectBirthYear() && detectBirthMonth() && detectBirthDay() && detectMale() && detectSkillTag() && detectPhone()) {
+        var _month = $(birthMonth).val() + "";
+        var _day = $(birthday).val() + "";
+        if (_month.length == 1) _month = "0" + _month;
+        if (_day.length == 1) _month = "0" + _day;
+        $.ajax({
+            type: "post",
+            url: BASE_COMPLETE_URL+"sendComplete.json",
+            async: false,
+            dataType: "text",
+            data: {
+                trueName: $(trueName).val().trim(),
+                birthday: _month+"/" + _day+"/"+$(birthYear).val(),
+                male: $(male).val(),
+                skillTag: $(skillTag).val(),
+                location: $(userLocal).val()
+            },
+            success: function (result) {
+                if (backDetectResult(result)==true)
+                {
+                    window.location.href = "/tools/anon/index";
+                }
+            },
+            error: function (result) {
+                alertServerError();
+            },
+            complete: function () {
+            }
+        });
     }
-
     $(complete).removeAttr("disabled").html("保存资料");
 }
+// back program detect result
+function backDetectResult(result) {
+    result = JSON.parse(result);
+    if (HttpStatus.OK == result.status) {
+        return true;
+    } else if (HttpStatus.LOGIN_EXPIRED == result.status) {
+        alertError("登录过期，请重新登录")
+    } else if (HttpStatus.PARAM_INCORRECT == result.status) {
+        var data = result.data;
+        if (data instanceof Array) {
+            for (var i = 0; i < data.length; i++) {
+                backError(data[i]);
+            }
+        } else {
+            backError(data);
+        }
+
+    } else if (HttpStatus.INTERNAL_SERVER_ERROR == result.status) {
+        alertServerError();
+    }
+    return false;
+}
+
+function backError(item) {
+    switch (item.property) {
+        case 'trueName':
+            item_error($(trueName), backErrorTxt("真实姓名", item.status));
+            break;
+        case 'birthday':
+            item_error($(password), backErrorTxt("生日", item.status));
+            break;
+        case 'male':
+            item_error($(email), backErrorTxt("性别", item.status));
+            break;
+        case 'skillTag':
+            item_error($(skillTag), backErrorTxt("技能标签", item.status));
+            break;
+        case 'phone':
+            item_error($(phone), backErrorTxt("手机", item.status));
+            break;
+    }
+}
+
+

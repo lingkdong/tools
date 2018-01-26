@@ -1,6 +1,7 @@
 package com.tools.service;
 
 import com.tools.dto.BaseResponseDTO;
+import com.tools.dto.user.CompleteDto;
 import com.tools.dto.user.LoginDto;
 import com.tools.dto.user.UserBaseDto;
 import com.tools.model.User;
@@ -24,4 +25,6 @@ public interface UserService {
     User findByUsernameOrEmail(String username);
 
     BaseResponseDTO login(LoginDto loginDto);
+
+    BaseResponseDTO complete(CompleteDto completeDto);
 }

@@ -7,7 +7,7 @@ function _clear0(obj) {
 }
 
 function isBlank(value) {
-    return (value == null || value == undefined || value == '');
+    return (value == null || value == undefined || value.trim() == '');
 }
 
 function isNotBlank(value) {
@@ -26,6 +26,7 @@ var HttpStatus = {
     PARAM_INCORRECT: 4007,
     IS_EXPIRED: 4011,
     IS_DISABLED:4012,
+    LOGIN_EXPIRED:4013,
     INTERNAL_SERVER_ERROR: 5003
 }
 var FlashType = {
@@ -67,9 +68,10 @@ function isDay(value) {
 function isPhone(value) {
     return phone_reg.test(value);
 }
-function isDate(args) {
+//new modify
+function isDate() {
    try {
-       new Date(args);
+       new Date(arguments);
        return true;
    }catch (error){
        return false;
@@ -173,10 +175,18 @@ function item_loading(obj) {
     $(obj).addClass(itemStatus.LOADING);
 }
 
+function select_item_loading(obj) {
+    clearItemStatus();
+}
+
 //success
 function item_success(obj) {
     clearItemStatus(obj);
     $(obj).addClass(itemStatus.SUCCESS);
+}
+//success
+function select_item_success(obj) {
+    clearItemStatus(obj);
 }
 
 function item_error(obj, txt) {
@@ -188,7 +198,18 @@ function item_error(obj, txt) {
     }
     //logo
     $(obj).addClass(itemStatus.ERRORED);
-    addItemInfo(group, txt);
+    addItemInfo(obj, txt);
+    $(obj).parent().children(".note").hide();
+}
+function select_item_error(obj, txt) {
+    clearItemStatus(obj);
+    //lable
+    var group = getItemGroup(obj);
+    if (isExist(group)) {
+        $(group).addClass("errored")
+    }
+    $(obj).addClass(itemStatus.ERRORED);
+    addItemInfo(obj, txt);
     $(obj).parent().children(".note").hide();
 }
 //clear status class
@@ -219,13 +240,55 @@ function getItemInfo(group) {
     return $(group).children(".error")
 }
 
-function addItemInfo(group, txt) {
+function addItemInfo(obj, txt) {
+    group=getItemGroup(obj)
     var info = getItemInfo(group);
     if (isExist(info)) {
         $(info).html(txt);
     } else {
-        var dd = '<dd class="error">' + txt + '</dd>';
-        $(group).append($(dd));
+         info = '<dd class="error">' + txt + '</dd>';
+        $(info).css("color","red");
+        $(group).append($(info));
     }
 }
+function addItemInfo_position(obj, txt) {
+    group=getItemGroup(obj)
+    var info = getItemInfo(group);
+    if (isExist(info)) {
+        $(info).remove();
+    } else {
+        info = '<dd class="error" style="margin-left: '+obj.position().left+'px">' + txt + '</dd>';
+        $(info).css("color","red");
+        $(group).append($(info));
+    }
+}
+
+function item_error_position(obj, txt) {
+    clearItemStatus(obj);
+    //lable
+    var group = getItemGroup(obj);
+    if (isExist(group)) {
+        $(group).addClass("errored")
+    }
+    //logo
+    $(obj).addClass(itemStatus.ERRORED);
+    addItemInfo_position(obj, txt);
+    $(obj).parent().children(".note").hide();
+}
 /*...........form item detect.........*/
+
+function backErrorTxt(property, status) {
+    switch (status) {
+        case HttpStatus.IS_BLANK:
+            return property + "不能为空";
+        case HttpStatus.INVALID_FORMAT:
+            return property + "格式错误";
+        case HttpStatus.ALREADY_EXIT:
+            return property + "已存在";
+        case HttpStatus.IS_EXPIRED:
+            return property + "失效或已过期";
+        case HttpStatus.PARAM_INCORRECT:
+            return property + "错误";
+
+    }
+}

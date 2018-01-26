@@ -5,6 +5,7 @@ import com.tools.dto.BaseResponseDTO;
 import com.tools.dto.EmailDto;
 import com.tools.dto.ErrorInfo;
 import com.tools.dto.HttpStatus;
+import com.tools.dto.user.CompleteDto;
 import com.tools.dto.user.LoginDto;
 import com.tools.dto.user.UserBaseDto;
 import com.tools.model.User;
@@ -17,6 +18,7 @@ import com.tools.utils.StringUtil;
 import com.tools.worker.Worker;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AccountException;
 import org.apache.shiro.authc.DisabledAccountException;
@@ -108,6 +110,9 @@ public class UserServiceImpl implements UserService {
         //save
         userDao.save(buildUser(userBaseDto));
         session.removeAttribute(userBaseDto.getEmail());
+        //login
+        login(LoginDto.newLoginDto().username(userBaseDto.getUsername()).password(userBaseDto.getPassword()).request
+                (userBaseDto.getRequest()).build());
         //auto login by username;
         return Worker.OK();
     }
@@ -179,6 +184,36 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    @Override
+    public BaseResponseDTO complete(CompleteDto completeDto) {
+        List<ErrorInfo> errorInfos=new ArrayList<>();
+        //trueName
+        BaseResponseDTO dto = Worker.isBlank2("trueName",completeDto.getTrueName());
+        if (!Worker.isOK(dto))errorInfos.add((ErrorInfo) dto.getData());
+        //birthDay
+        dto = Worker.isNull("birthday", completeDto.getBirthday());
+        if (!Worker.isOK(dto))errorInfos.add((ErrorInfo) dto.getData());
+        //male
+        dto = Worker.isNull("male",completeDto.getMale());
+        if (!Worker.isOK(dto))errorInfos.add((ErrorInfo) dto.getData());
+        //skillTag
+        dto = Worker.isBlank2("skillTag", completeDto.getSkillTag());
+        if (!Worker.isOK(dto)) errorInfos.add((ErrorInfo) dto.getData());
+        //phone can blank but valid format
+        if(StringUtils.isNotBlank(completeDto.getPhone())) {
+            if (!RegUtils.isPhone(completeDto.getPhone())) errorInfos.add(ErrorInfo
+                    .newErrorInfo().property("phone").HttpStatus(HttpStatus.INVALID_FORMAT).build());
+        }
+        if(CollectionUtils.isNotEmpty(errorInfos)) return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT,errorInfos);
+        //获取当前用户
+        User sessionUser=Worker.getCurrentUser();
+        if(sessionUser==null)  return new BaseResponseDTO(HttpStatus.LOGIN_EXPIRED);
+        User user =userDao.findOne(sessionUser.getId());
+        if(user==null)  return new BaseResponseDTO(HttpStatus.LOGIN_EXPIRED);
+        userDao.save(buildComplete(user,completeDto));
+        return Worker.OK();
+    }
+
     private User buildUser(UserBaseDto dto) {
         Date date = new Date();
         User user = new User();
@@ -189,6 +224,17 @@ public class UserServiceImpl implements UserService {
         user.setLastUpdateTime(date);
         user.setMale(true);
         user.setStatus(UserStatus.NORMAL.code());
+        return user;
+    }
+    private User buildComplete(User user,CompleteDto dto) {
+        Date date = new Date();
+        user.setTrueName(dto.getTrueName());
+        user.setBirthday(dto.getBirthday());
+        user.setMale(dto.getMale());
+        user.setSkillTag(dto.getSkillTag());
+        user.setPhone(dto.getPhone());
+        user.setLocation(dto.getLocation());
+        user.setLastUpdateTime(date);
         return user;
     }
 }

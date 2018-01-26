@@ -223,22 +223,6 @@ function backError(item) {
     }
 }
 
-function backErrorTxt(property, status) {
-    switch (status) {
-        case HttpStatus.IS_BLANK:
-            return property + "不能为空";
-        case HttpStatus.INVALID_FORMAT:
-            return property + "格式错误";
-        case HttpStatus.ALREADY_EXIT:
-            return property + "已存在";
-        case HttpStatus.IS_EXPIRED:
-            return property + "失效或已过期";
-        case HttpStatus.PARAM_INCORRECT:
-            return property + "错误";
-
-    }
-}
-
 function sendValid() {
     $.ajax({
         type: "post",

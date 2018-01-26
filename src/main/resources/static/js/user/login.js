@@ -1,5 +1,4 @@
 $(function () {
-    location = $("#location");
     username = $("#username");
     password = $("#password");
     msgContainer = $("#js-flash-container");
