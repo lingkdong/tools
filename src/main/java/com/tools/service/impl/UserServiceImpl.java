@@ -12,6 +12,7 @@ import com.tools.model.User;
 import com.tools.model.UserStatus;
 import com.tools.service.EmailService;
 import com.tools.service.UserService;
+import com.tools.utils.BeanUtil;
 import com.tools.utils.PrefoxEmailTemp;
 import com.tools.utils.RegUtils;
 import com.tools.utils.StringUtil;
@@ -210,8 +211,24 @@ public class UserServiceImpl implements UserService {
         if(sessionUser==null)  return new BaseResponseDTO(HttpStatus.LOGIN_EXPIRED);
         User user =userDao.findOne(sessionUser.getId());
         if(user==null)  return new BaseResponseDTO(HttpStatus.LOGIN_EXPIRED);
-        userDao.save(buildComplete(user,completeDto));
+        if(BeanUtil.compareAndModify(user,completeDto)){
+            userDao.save(user);
+            //update sessionUser
+            BeanUtil.compareAndModify(sessionUser,completeDto);
+        }
         return Worker.OK();
+    }
+
+    @Override
+    public BaseResponseDTO getComplete() {
+        //获取当前用户
+        User sessionUser=Worker.getCurrentUser();
+        if(sessionUser==null)  return new BaseResponseDTO(HttpStatus.LOGIN_EXPIRED);
+        User user =userDao.findOne(sessionUser.getId());
+        if(user==null)  return new BaseResponseDTO(HttpStatus.LOGIN_EXPIRED);
+        CompleteDto completeDto=new CompleteDto();
+        BeanUtil.copy(completeDto,user);
+        return Worker.OK(completeDto);
     }
 
     private User buildUser(UserBaseDto dto) {
@@ -224,17 +241,6 @@ public class UserServiceImpl implements UserService {
         user.setLastUpdateTime(date);
         user.setMale(true);
         user.setStatus(UserStatus.NORMAL.code());
-        return user;
-    }
-    private User buildComplete(User user,CompleteDto dto) {
-        Date date = new Date();
-        user.setTrueName(dto.getTrueName());
-        user.setBirthday(dto.getBirthday());
-        user.setMale(dto.getMale());
-        user.setSkillTag(dto.getSkillTag());
-        user.setPhone(dto.getPhone());
-        user.setLocation(dto.getLocation());
-        user.setLastUpdateTime(date);
         return user;
     }
 }

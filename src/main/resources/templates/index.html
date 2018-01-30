@@ -15,9 +15,9 @@
             <h3 class="h2 lh-condensed mb-2" th:text="${item.name}"/>
             <p class="f4">
                 <txt th:text="${item.description}"></txt>
-                <div th:each="sub:${item.resourceDtos}" th:remove="tag">
+                <th:block th:each="sub:${item.resourceDtos}">
                    <a class="ml-2" th:href="${sub.url}" th:text="${sub.name}"/>
-                </div>
+                </th:block>
             </p>
         </div>
     </div>

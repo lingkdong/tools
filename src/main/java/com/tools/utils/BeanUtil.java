@@ -4,18 +4,20 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.beanutils.BeanUtils;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 
 /**
  * Created by DT254 on 2017/11/14.
  */
+@Slf4j
 public class BeanUtil extends BeanUtils {
     public static void copy(Object dest, Object orig){
         try {
             copyProperties(dest,orig);
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
+            log.error("<BeanUtil.copy failed, {} {} >", e, e.getStackTrace()[0].toString());
         } catch (InvocationTargetException e) {
-            e.printStackTrace();
+            log.error("<BeanUtil.copy failed, {} {} >", e, e.getStackTrace()[0].toString());
         }
     }
 
@@ -25,10 +27,31 @@ public class BeanUtil extends BeanUtils {
             copy(dest,orig);
             return (T)dest;
         } catch (InstantiationException e) {
-            e.printStackTrace();
+            log.error("<BeanUtil.cast failed, {} {} >", e, e.getStackTrace()[0].toString());
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
+            log.error("<BeanUtil.cast failed, {} {} >", e, e.getStackTrace()[0].toString());
         }
         return null;
+    }
+
+    public static boolean compareAndModify(Object dest, Object orig){
+        try {
+            return BeanUtilBean.getInstance().compareAndModify(dest,orig);
+        } catch (IllegalAccessException e) {
+            log.error("<BeanUtil.compareAndModify failed, {} {} >", e, e.getStackTrace()[0].toString());
+        } catch (InvocationTargetException e) {
+            log.error("<BeanUtil.compareAndModify failed, {} {} >", e, e.getStackTrace()[0].toString());
+        }
+        return false;
+    }
+    public static boolean compareAndModify(Object dest, Object orig,List<String> modifyProperty){
+        try {
+            return BeanUtilBean.getInstance().compareAndModify(dest,orig,modifyProperty);
+        } catch (IllegalAccessException e) {
+            log.error("<BeanUtil.compareAndModify failed, {} {} >", e, e.getStackTrace()[0].toString());
+        } catch (InvocationTargetException e) {
+            log.error("<BeanUtil.compareAndModify failed, {} {} >", e, e.getStackTrace()[0].toString());
+        }
+        return false;
     }
 }

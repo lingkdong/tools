@@ -27,4 +27,6 @@ public interface UserService {
     BaseResponseDTO login(LoginDto loginDto);
 
     BaseResponseDTO complete(CompleteDto completeDto);
+
+    BaseResponseDTO getComplete();
 }

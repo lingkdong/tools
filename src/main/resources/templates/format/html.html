@@ -24,10 +24,10 @@
     </h1>
     <div class="tabnav mb-4">
         <nav class="tabnav-tabs" aria-label="Navigate your dashboard">
-            <div th:each="item:${categoryDto.resourceDtos}" th:remove="tag">
+            <th:block th:each="item:${categoryDto.resourceDtos}" >
                 <a th:href="${item.url}" th:class="${item.code==type}?'tabnav-tab selected':'tabnav-tab'"
                    th:text="${item.name}"></a>
-            </div>
+            </th:block>
         </nav>
     </div>
     <div class="file border-bottom-none">

@@ -50,7 +50,8 @@
                         <dt class="input-label"><label autocapitalize="off" autofocus="autofocus">
                             真实姓名</label></dt>
                         <dd><input autocapitalize="off" autofocus="autofocus" class="form-control"
-                                   id="true_name" name="truename" maxlength="30" type="text"/>
+                                   id="true_name" name="truename" maxlength="30" type="text"
+                                   th:value="${complete.trueName}"/>
                             <p class="note">设置您的真实姓名</p></dd>
                     </dl>
 
@@ -58,23 +59,16 @@
                         <dt class="input-label"><label name="birth">生日
                         </label></dt>
                         <dd><input class="form-control w-150" id="birth-year" placeholder="年"
-                                   name="birth-year" maxlength="4"/>
+                                   name="birth-year" maxlength="4" th:value="${birthYear}"/>
                             <select id="birth-month" class="form-control btn btn-sm select w-120">
-                                <option value="01">1 月</option>
-                                <option value="02">2 月</option>
-                                <option value="03">3 月</option>
-                                <option value="04">4 月</option>
-                                <option value="05">5 月</option>
-                                <option value="06">6 月</option>
-                                <option value="07">7 月</option>
-                                <option value="08">8 月</option>
-                                <option value="09">9 月</option>
-                                <option value="10">10 月</option>
-                                <option value="11">11 月</option>
-                                <option value="12">12 月</option>
+                                th
+                                <th:block th:each="item:${#numbers.sequence(1,12)}">
+                                    <option th:value="${item}" th:text="${item+'月'}"
+                                     th:selected="${item==birthMonth}"/>
+                                </th:block>
                             </select>
                             <input class="form-control w-150" id="birth-day" placeholder="日"
-                                   name="birth-year" maxlength="2"/>
+                                   name="birth-year" maxlength="2" th:value="${birthday}"/>
                             <p class="note">设置您的生日信息.</p></dd>
                     </dl>
                     <dl class="form-group">
@@ -82,8 +76,8 @@
                                                        name="male">性别</label></dt>
                         <dd>
                             <select id="male" class="form-control btn btn-sm select w-150">
-                                <option value="1">男</option>
-                                <option value="0">女</option>
+                                <option value="1" th:selected="${complete.male==true}">男</option>
+                                <option value="0" th:selected="${complete.male==false}">女</option>
                             </select>
                             <p class="note">请选择您的性别.</p></dd>
                     </dl>
@@ -93,14 +87,14 @@
                         <dd>
                             <input autocapitalize="off" class="form-control" id="skillTag" name="skillTag"
                                    maxlength="50"
-                                   type="text"/>
+                                   type="text" th:value="${complete.skillTag}"/>
                             <p class="note">设置您的技能标签.</p></dd>
                     </dl>
                     <dl class="form-group">
                         <dt class="input-label"><label autocapitalize="off" autofocus="autofocus">
                             手机</label></dt>
                         <dd><input autocapitalize="off" autofocus="autofocus" class="form-control"
-                                   id="phone" name="phone" maxlength="11" type="text"/>
+                                   id="phone" name="phone" maxlength="11" type="text" th:value="${complete.phone}"/>
                             <p class="note">设置您的手机号码</p></dd>
                     </dl>
                     <dl class="form-group">
@@ -109,7 +103,7 @@
                         <dd>
                             <input autocapitalize="off" class="form-control" id="location" name="location"
                                    maxlength="50"
-                                   type="text"/>
+                                   type="text" th:value="${complete.location}"/>
                             <p class="note">设置您的位置.</p></dd>
                     </dl>
 
