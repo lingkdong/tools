@@ -3,6 +3,7 @@ package com.tools.service;
 import com.tools.dto.BaseResponseDTO;
 import com.tools.dto.user.CompleteDto;
 import com.tools.dto.user.LoginDto;
+import com.tools.dto.user.ResetDto;
 import com.tools.dto.user.UserBaseDto;
 import com.tools.model.User;
 
@@ -29,4 +30,9 @@ public interface UserService {
     BaseResponseDTO complete(CompleteDto completeDto);
 
     BaseResponseDTO getComplete();
+
+    BaseResponseDTO loginOut();
+
+    BaseResponseDTO passReset(ResetDto resetDto);
+
 }

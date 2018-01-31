@@ -1,0 +1,11 @@
+package com.tools.dto.user;
+
+import lombok.Data;
+
+/**
+ * Created by DT254 on 2018/1/31.
+ */
+@Data
+public class ResetDto {
+    private String email;
+}

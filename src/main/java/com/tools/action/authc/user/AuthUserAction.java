@@ -41,7 +41,7 @@ public class AuthUserAction {
         return mv;
     }
 
-    @PostMapping(value = "sendComplete")
+    @PostMapping(value = "send-complete")
     @ResponseBody
     public BaseResponseDTO sendComplete(CompleteDto completeDto)
     {

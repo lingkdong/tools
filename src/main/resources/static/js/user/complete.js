@@ -122,7 +122,7 @@ function detectMale() {
     select_item_success(obj);
     return true;
 }
-var BASE_COMPLETE_URL="/tools/authc/user/";
+var BASE_COMPLETE_URL=PRE_FOX_AUTHC_BASE+"/user/";
 function detectSkillTag() {
     var obj = skillTag;
     //loading
@@ -164,7 +164,7 @@ function sendComplete() {
         if (_day.length == 1) _month = "0" + _day;
         $.ajax({
             type: "post",
-            url: BASE_COMPLETE_URL+"sendComplete.json",
+            url: BASE_COMPLETE_URL+"send-complete.json",
             async: false,
             dataType: "text",
             data: {
@@ -177,7 +177,7 @@ function sendComplete() {
             success: function (result) {
                 if (backDetectResult(result)==true)
                 {
-                    window.location.href = "/tools/anon/index";
+                    window.location.href = PRE_FOX_INDEX_HTML;
                 }
             },
             error: function (result) {

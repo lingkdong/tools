@@ -2,6 +2,7 @@ package com.tools.action.anon.user;
 
 import com.tools.dto.BaseResponseDTO;
 import com.tools.dto.user.LoginDto;
+import com.tools.dto.user.ResetDto;
 import com.tools.dto.user.UserBaseDto;
 import com.tools.service.UserService;
 import com.tools.worker.Worker;
@@ -45,17 +46,16 @@ public class UserAction {
         return userService.createUser(userBaseDto);
     }
 
-    @PostMapping(value = "sendValid")
+    @PostMapping(value = "send-valid")
     @ResponseBody
     public BaseResponseDTO sendValid(UserBaseDto userBaseDto, HttpServletRequest request) {
         userBaseDto.setRequest(request);
         return userService.sendValid(userBaseDto);
     }
 
-    @PostMapping(value = "sendLogin")
+    @PostMapping(value = "send-login")
     @ResponseBody
-    public BaseResponseDTO sendLogin(LoginDto loginDto, HttpServletRequest request)
-    {
+    public BaseResponseDTO sendLogin(LoginDto loginDto, HttpServletRequest request) {
         loginDto.setRequest(request);
         return userService.login(loginDto);
     }
@@ -71,4 +71,24 @@ public class UserAction {
         ModelAndView mv = new ModelAndView("user/login");
         return mv;
     }
+
+    @PostMapping(value = "login-out")
+    @ResponseBody
+    public BaseResponseDTO loginOut() {
+        return userService.loginOut();
+    }
+
+    @RequestMapping(value = "/password-reset")
+    public ModelAndView passReset() {
+        ModelAndView mv = new ModelAndView("user/password-reset");
+        return mv;
+    }
+
+    @PostMapping(value = "send-password-reset")
+    @ResponseBody
+    public BaseResponseDTO sendReset(ResetDto resetDto) {
+        return userService.passReset(resetDto);
+    }
+
+
 }

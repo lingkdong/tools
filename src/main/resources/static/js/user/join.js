@@ -32,7 +32,7 @@ $(function () {
         stopEvent(event);
     })
 })
-var JOIN_BASE_URL = "/tools/anon/user/";
+var JOIN_BASE_URL = PRE_FOX_ANON_BASE+"/user/";
 
 function detectUserName() {
     var obj = username;
@@ -131,7 +131,7 @@ function signUp() {
             success: function (result) {
                 if (backDetectResult(result));
                 {
-                    window.location.href = "/tools/anon/index";
+                    window.location.href = PRE_FOX_INDEX_HTML;
                 }
             },
             error: function (result) {
@@ -226,7 +226,7 @@ function backError(item) {
 function sendValid() {
     $.ajax({
         type: "post",
-        url: JOIN_BASE_URL + "sendValid.json",
+        url: JOIN_BASE_URL + "send-valid.json",
         async: false,
         dataType: "text",
         data: {
@@ -240,7 +240,7 @@ function sendValid() {
             if (backDetectResult(result)) {
                 alertSuccess("验证码以发送至您的邮箱");
                 try {
-                    time(send)
+                    time(send,"获取验证码","重新发送",60)
                 } catch (error) {
                     console.log(error)
                 }

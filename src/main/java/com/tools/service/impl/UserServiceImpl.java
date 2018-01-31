@@ -7,6 +7,7 @@ import com.tools.dto.ErrorInfo;
 import com.tools.dto.HttpStatus;
 import com.tools.dto.user.CompleteDto;
 import com.tools.dto.user.LoginDto;
+import com.tools.dto.user.ResetDto;
 import com.tools.dto.user.UserBaseDto;
 import com.tools.model.User;
 import com.tools.model.UserStatus;
@@ -71,10 +72,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public BaseResponseDTO emailUnique(String email, Long userId) {
         String property = "email";
-        BaseResponseDTO dto = Worker.isBlank2(property, email);
+        BaseResponseDTO dto = Worker.isEmail(email);
         if (!Worker.isOK(dto)) return dto;
-        if (!RegUtils.isEmail(email)) return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT,  ErrorInfo.newErrorInfo
-                ().property(property).HttpStatus(HttpStatus.INVALID_FORMAT).build());
         if (!this._emailUnique(email, null)) return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT,  ErrorInfo.newErrorInfo
                 ().property(property).HttpStatus(HttpStatus.ALREADY_EXIT).build());
         return Worker.OK();
@@ -134,7 +133,7 @@ public class UserServiceImpl implements UserService {
 
         StringBuilder msg = new StringBuilder();
         String validCode=StringUtil.getValidCode(8).toUpperCase();
-        msg.append("以下为你的邮箱验证码：").append(System.lineSeparator())
+        msg.append("以下为您的邮箱验证码：").append(System.lineSeparator())
                 .append(validCode);
 
        Boolean flag= emailService.sendHtmlEmail(EmailDto.newEmailDto()
@@ -229,6 +228,41 @@ public class UserServiceImpl implements UserService {
         CompleteDto completeDto=new CompleteDto();
         BeanUtil.copy(completeDto,user);
         return Worker.OK(completeDto);
+    }
+
+    @Override
+    public BaseResponseDTO loginOut() {
+        SecurityUtils.getSubject().logout();
+        return Worker.OK();
+    }
+
+    @Override
+    public BaseResponseDTO passReset(ResetDto resetDto) {
+        String property = "email";
+        BaseResponseDTO dto = Worker.isEmail(resetDto.getEmail());
+        if (!Worker.isOK(dto)) return dto;
+        User user=userDao.findFirstByEmail(resetDto.getEmail());
+        if(user==null){
+            return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT,  ErrorInfo.newErrorInfo
+                    ().property(property).HttpStatus(HttpStatus.USER_NOT_EXIST).build());
+        }
+        StringBuilder msg = new StringBuilder();
+        String password=StringUtil.getPassword(8);//需要进行一次 前端js加密
+        msg.append("以下为您的账户新密码：").append(System.lineSeparator())
+                .append(password);
+        Boolean flag= emailService.sendHtmlEmail(EmailDto.newEmailDto()
+                .subjet("Prefox账户密码重置")
+                .emailTo(resetDto.getEmail())
+                .msg(prefoxEmailTemp.buildHtmlMsg(String.format("%s，您好：",user.getUsername()),
+                        "密码重置",msg.toString()))
+                .build()
+        );
+        if(!Boolean.TRUE.equals(flag))  return new BaseResponseDTO(HttpStatus.INTERNAL_SERVER_ERROR,
+                "The email failed, please try again later.");
+        user.setPassword(DigestUtils.md5Hex(password));
+        user.setLastUpdateTime(new Date());
+        userDao.save(user);
+        return Worker.OK();
     }
 
     private User buildUser(UserBaseDto dto) {

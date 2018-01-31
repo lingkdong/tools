@@ -4,6 +4,7 @@ import com.tools.dto.BaseResponseDTO;
 import com.tools.dto.ErrorInfo;
 import com.tools.dto.HttpStatus;
 import com.tools.model.User;
+import com.tools.utils.RegUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 
@@ -20,6 +21,14 @@ public class Worker {
             return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT, ErrorInfo.newErrorInfo().property(property)
                     .HttpStatus(HttpStatus.IS_BLANK).build());
         }
+        return OK();
+    }
+    public static BaseResponseDTO isEmail(String value) {
+        String property = "email";
+        BaseResponseDTO dto = Worker.isBlank2(property, value);
+        if (!Worker.isOK(dto)) return dto;
+        if (!RegUtils.isEmail(value)) return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT,  ErrorInfo.newErrorInfo
+                ().property(property).HttpStatus(HttpStatus.INVALID_FORMAT).build());
         return OK();
     }
 

@@ -10,8 +10,8 @@ $(function () {
     });
 
 })
-var FORMAT_BASE_URL="/tools/anon/format/";
-var OPEN_BASE_URL="/tools/anon/open/";
+var FORMAT_BASE_URL=PRE_FOX_ANON_BASE+"/format/";
+var OPEN_BASE_URL=PRE_FOX_ANON_BASE+"/open/";
 function updateLine() {
     $(input).updateLine();
 }

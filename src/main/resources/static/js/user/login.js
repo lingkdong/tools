@@ -21,7 +21,7 @@ function sendLogin() {
     if (detect()) {
         $.ajax({
             type: "post",
-            url: "/tools/anon/user/sendLogin.json",
+            url: PRE_FOX_ANON_BASE+"/user/send-login.json",
             async: false,
             dataType: "text",
             data: {
@@ -29,7 +29,7 @@ function sendLogin() {
                 password: md5($(password).val())
             },
             beforeSend: function () {
-                // $(login).attr(DISABLED, true);
+                $(login).attr(DISABLED, true);
             },
             success: function (result) {
                  backDetectResult(result);
@@ -50,14 +50,14 @@ function sendLogin() {
 function backDetectResult(result) {
     result = JSON.parse(result);
     if (HttpStatus.OK == result.status) {
-        var url = "/tools/anon/index";
+        var url =PRE_FOX_INDEX_HTML;
         if (!isBlank(result.data)) {
             url = result.data;
         }
         try {
             window.location.href=url;
         }catch (error){
-            window.location.href="/tools/anon/index";
+            window.location.href=PRE_FOX_INDEX_HTML;
         }
 
     } else if (HttpStatus.PARAM_INCORRECT == result.status) {

@@ -25,9 +25,11 @@ var HttpStatus = {
     ALREADY_EXIT: 4010,
     PARAM_INCORRECT: 4007,
     IS_EXPIRED: 4011,
-    IS_DISABLED:4012,
-    LOGIN_EXPIRED:4013,
-    INTERNAL_SERVER_ERROR: 5003
+    IS_DISABLED: 4012,
+    LOGIN_EXPIRED: 4013,
+    INTERNAL_SERVER_ERROR: 5003,
+    NOT_EXIST: 4014,
+    USER_NOT_EXIST: 4002
 }
 var FlashType = {
     SUCCESS: "success",
@@ -40,10 +42,10 @@ var usename_reg = /^[a-zA-Z0-9_]+$/;
 var password_reg = /^(?=.*\d)(?=.*[a-zA-Z])(?=.*[~!@#$%^&*])[\da-zA-Z~!@#$%^&*]{8,}$/;
 var email_reg = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
 var validcode_reg = /^[a-zA-Z0-9]+$/;
-var year_reg=/^[0-9]{4}$/;
-var month_reg=/^(0?[1-9]|1[0-2])$/;
-var day_reg=/^((0?[1-9])|((1|2)[0-9])|30|31)$/;
-var phone_reg=/^0?(13[0-9]|14[56789]|15[012356789]|166|17[012345678]|18[0-9]|19[89])[0-9]{8}$/;
+var year_reg = /^[0-9]{4}$/;
+var month_reg = /^(0?[1-9]|1[0-2])$/;
+var day_reg = /^((0?[1-9])|((1|2)[0-9])|30|31)$/;
+var phone_reg = /^0?(13[0-9]|14[56789]|15[012356789]|166|17[012345678]|18[0-9]|19[89])[0-9]{8}$/;
 function isUserName(value) {
     return usename_reg.test(value);
 }
@@ -56,7 +58,7 @@ function isEmail(value) {
 function isValidCode(value) {
     return validcode_reg.test(value);
 }
-function isYear(value){
+function isYear(value) {
     return year_reg.test(value);
 }
 function isMonth(value) {
@@ -70,33 +72,39 @@ function isPhone(value) {
 }
 //new modify
 function isDate() {
-   try {
-       new Date(arguments);
-       return true;
-   }catch (error){
-       return false;
-   }
+    try {
+        new Date(arguments);
+        return true;
+    } catch (error) {
+        return false;
+    }
 }
 var wait_time = 60;
-function time(obj) {
+function time(obj, normalInfo, waitInfo, waitTime,url) {
+    if (wait_time > waitTime) {
+        wait_time = waitTime;
+    }
     if (wait_time == 0) {
+        if(isNotBlank(url)){
+            window.location.href=url;
+        }
         $(obj).removeAttr("disabled");
-        $(obj).html("获取验证码");
+        $(obj).html(normalInfo);
         wait_time = 60;
     } else {
         $(obj).attr("disabled", true);
-        $(obj).html("重新发送(" + wait_time + ")");
+        $(obj).html(waitInfo + "(" + wait_time + ")");
         wait_time--;
         setTimeout(function () {
-                time(obj)
+                time(obj, normalInfo, waitInfo, waitTime)
             },
             1000)
     }
 }
 
 function stopEvent(e) {
-    window.event? window.event.cancelBubble = true : e.stopPropagation();
-    window.event? window.event.returnValue = false : e.preventDefault();
+    window.event ? window.event.cancelBubble = true : e.stopPropagation();
+    window.event ? window.event.returnValue = false : e.preventDefault();
 }
 
 function alertMsg(type, msg) {
@@ -155,8 +163,8 @@ function addMsg(parent, type, msg) {
                 $(info).html(msg);
 
             } else {
-                var html = '<div class="flash flash-full flash-'+type+'"><button class="flash-close js-flash-close" onclick="closeParent(this)" type="button" aria-label="Dismiss this message"><svg aria-hidden="true" class="octicon octicon-x" height="16" version="1.1" viewBox="0 0 12 16" width="12"><path fill-rule="evenodd" d="M7.48 8l3.75 3.75-1.48 1.48L6 9.48l-3.75 3.75-1.48-1.48L4.52 8 .77 4.25l1.48-1.48L6 6.52l3.75-3.75 1.48 1.48z"></path></svg></button> ' +
-                    '<span class="flash-add-info">'+msg+'</span></div>';
+                var html = '<div class="flash flash-full flash-' + type + '"><button class="flash-close js-flash-close" onclick="closeParent(this)" type="button" aria-label="Dismiss this message"><svg aria-hidden="true" class="octicon octicon-x" height="16" version="1.1" viewBox="0 0 12 16" width="12"><path fill-rule="evenodd" d="M7.48 8l3.75 3.75-1.48 1.48L6 9.48l-3.75 3.75-1.48-1.48L4.52 8 .77 4.25l1.48-1.48L6 6.52l3.75-3.75 1.48 1.48z"></path></svg></button> ' +
+                    '<span class="flash-add-info">' + msg + '</span></div>';
                 $(parent).append(html);
             }
         }
@@ -241,24 +249,24 @@ function getItemInfo(group) {
 }
 
 function addItemInfo(obj, txt) {
-    group=getItemGroup(obj)
+    group = getItemGroup(obj)
     var info = getItemInfo(group);
     if (isExist(info)) {
         $(info).html(txt);
     } else {
-         info = '<dd class="error">' + txt + '</dd>';
-        $(info).css("color","red");
+        info = '<dd class="error">' + txt + '</dd>';
+        $(info).css("color", "red");
         $(group).append($(info));
     }
 }
 function addItemInfo_position(obj, txt) {
-    group=getItemGroup(obj)
+    group = getItemGroup(obj)
     var info = getItemInfo(group);
     if (isExist(info)) {
         $(info).remove();
     } else {
-        info = '<dd class="error" style="margin-left: '+obj.position().left+'px">' + txt + '</dd>';
-        $(info).css("color","red");
+        info = '<dd class="error" style="margin-left: ' + obj.position().left + 'px">' + txt + '</dd>';
+        $(info).css("color", "red");
         $(group).append($(info));
     }
 }
@@ -289,6 +297,11 @@ function backErrorTxt(property, status) {
             return property + "失效或已过期";
         case HttpStatus.PARAM_INCORRECT:
             return property + "错误";
+        case HttpStatus.NOT_EXIST:
+            return property + "不存在";
 
     }
 }
+var PRE_FOX_AUTHC_BASE = "/tools/authc";
+var PRE_FOX_ANON_BASE = "/tools/anon";
+var PRE_FOX_INDEX_HTML = PRE_FOX_ANON_BASE + "/index";

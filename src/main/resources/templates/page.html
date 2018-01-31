@@ -13,7 +13,7 @@
     <script th:src="@{/js/page.js}"></script>
 </head>
 <body id="body">
-<div class="position-relative js-header-wrapper " >
+<div class="position-relative js-header-wrapper ">
     <header class="Header f5">
         <div class="d-flex px-3 flex-justify-between container-lg">
             <div class="d-flex flex-justify-between">
@@ -89,9 +89,48 @@
                             注册
                         </a>
                     </div>
-                    <div shiro:user="" class="user-nav d-flex flex-items-center list-style-none">
-                        <span shiro:principal="" property="username"></span>
-                    </div>
+                    <ul shiro:user="" class="user-nav d-flex flex-items-center list-style-none">
+                        <li class="dropdown ">
+                            <details
+                                    class="dropdown-details details-reset js-dropdown-details d-flex pl-2 flex-items-center">
+                                <summary class="HeaderNavlink name mt-1 outline-none">
+                                    <span shiro:principal="" property="username"></span>
+                                    <span class="dropdown-caret"></span>
+                                </summary>
+                                <ul class="dropdown-menu dropdown-menu-sw">
+                                    <li class="dropdown-header header-nav-current-user css-truncate">
+                                        用户 <strong class="css-truncate-target" shiro:principal="" property="username"/>
+                                    </li>
+
+                                    <li class="dropdown-divider"></li>
+
+                                    <li><a class="dropdown-item" href="#">
+                                        个人资料
+                                    </a></li>
+                                    <li><a class="dropdown-item" href="#">
+                                        收藏
+                                    </a></li>
+                                    <li class="dropdown-divider"></li>
+
+                                    <li><a class="dropdown-item" href="#">
+                                        Help
+                                    </a></li>
+
+                                    <li><a class="dropdown-item" href="/settings/profile"
+                                           data-ga-click="Header, go to settings, icon:settings">
+                                        Settings
+                                    </a></li>
+
+                                    <li>
+                                        <button  id="login_out" class="dropdown-item dropdown-signout cursor-p ">
+                                            退出
+                                        </button>
+                                    </li>
+                                </ul>
+                            </details>
+                        </li>
+
+                    </ul>
                 </div>
             </div>
         </div>
