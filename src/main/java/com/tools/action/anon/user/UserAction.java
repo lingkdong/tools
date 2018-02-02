@@ -99,7 +99,11 @@ public class UserAction {
         ModelAndView mv = new ModelAndView("user/password-change");
         boolean isValid=false;
         try {
-             if(userService.getUserByToken(request,token)!=null) isValid=true;
+            User user=userService.getUserByToken(request,token);
+             if(user!=null){
+                 isValid=true;
+                 mv.addObject("username",user.getUsername());
+             }
         }catch (Exception e){
            isValid=false;
         }

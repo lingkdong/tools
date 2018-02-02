@@ -94,6 +94,6 @@ function backError(item) {
     }
 }
 
-function () {
-    
+function redirectToReset() {
+    window.location.href = PRE_FOX_ANON_BASE+"/user/password-reset"
 }
