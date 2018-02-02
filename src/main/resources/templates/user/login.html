@@ -15,7 +15,7 @@
 <div class="position-relative js-header-wrapper ">
     <div class="header header-logged-out width-full pt-5 pb-4" role="banner">
         <div class="container clearfix width-full text-center">
-            <a class="header-logo" href="https://github.com/" aria-label="Homepage"
+            <a class="header-logo" th:href="@{/tools/anon/index}" aria-label="Homepage"
                data-ga-click="(Logged out) Header, go to homepage, icon:logo-wordmark">
                 <svg version="1.0"
                      width="48px" height="48px" viewBox="0 0 48.000000 48.000000"
@@ -74,7 +74,7 @@
                     <input class="btn btn-primary btn-block" tabindex="3" type="submit"
                            id="login" value="登录"/>
                 </div>
-            </di>
+            </div>
 
             <p class="create-account-callout mt-3">
                 尚未注册?

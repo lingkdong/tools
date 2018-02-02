@@ -120,7 +120,7 @@ function signUp() {
         $.ajax({
             type: "post",
             url: "create.json",
-            async: false,
+            async: true,
             dataType: "text",
             data: {
                 username: $(username).val(),
@@ -131,7 +131,7 @@ function signUp() {
             success: function (result) {
                 if (backDetectResult(result));
                 {
-                    window.location.href = PRE_FOX_INDEX_HTML;
+                   returnToIndex();
                 }
             },
             error: function (result) {
@@ -148,7 +148,7 @@ function nameUnique() {
     $.ajax({
         type: "post",
         url: JOIN_BASE_URL + "name-unique.json",
-        async: false,
+        async: true,
         dataType: "text",
         data: {
             username: $(username).val()
@@ -169,7 +169,7 @@ function emailUnique() {
     $.ajax({
         type: "post",
         url: JOIN_BASE_URL + "email-unique.json",
-        async: false,
+        async: true,
         dataType: "text",
         data: {
             email: $(email).val()
@@ -227,7 +227,7 @@ function sendValid() {
     $.ajax({
         type: "post",
         url: JOIN_BASE_URL + "send-valid.json",
-        async: false,
+        async: true,
         dataType: "text",
         data: {
             username: $(username).val(),
@@ -238,7 +238,7 @@ function sendValid() {
         },
         success: function (result) {
             if (backDetectResult(result)) {
-                alertSuccess("验证码以发送至您的邮箱");
+                alertSuccess("验证码以发送至您的邮箱，若未发现邮件，请检查您的垃圾箱");
                 try {
                     time(send,"获取验证码","重新发送",60)
                 } catch (error) {

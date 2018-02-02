@@ -165,7 +165,7 @@ function sendComplete() {
         $.ajax({
             type: "post",
             url: BASE_COMPLETE_URL+"send-complete.json",
-            async: false,
+            async: true,
             dataType: "text",
             data: {
                 trueName: $(trueName).val().trim(),
@@ -177,7 +177,7 @@ function sendComplete() {
             success: function (result) {
                 if (backDetectResult(result)==true)
                 {
-                    window.location.href = PRE_FOX_INDEX_HTML;
+                    returnToIndex();
                 }
             },
             error: function (result) {

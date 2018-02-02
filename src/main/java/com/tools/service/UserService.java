@@ -1,11 +1,10 @@
 package com.tools.service;
 
 import com.tools.dto.BaseResponseDTO;
-import com.tools.dto.user.CompleteDto;
-import com.tools.dto.user.LoginDto;
-import com.tools.dto.user.ResetDto;
-import com.tools.dto.user.UserBaseDto;
+import com.tools.dto.user.*;
 import com.tools.model.User;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created by DT254 on 2018/1/9.
@@ -25,6 +24,8 @@ public interface UserService {
 
     User findByUsernameOrEmail(String username);
 
+    User findByUsername(String username);
+
     BaseResponseDTO login(LoginDto loginDto);
 
     BaseResponseDTO complete(CompleteDto completeDto);
@@ -34,5 +35,9 @@ public interface UserService {
     BaseResponseDTO loginOut();
 
     BaseResponseDTO passReset(ResetDto resetDto);
+
+    User getUserByToken(HttpServletRequest request,String token);
+
+    BaseResponseDTO changePass(PassChangeDto passChangeDto);
 
 }

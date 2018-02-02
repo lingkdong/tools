@@ -22,7 +22,7 @@ function sendLogin() {
         $.ajax({
             type: "post",
             url: PRE_FOX_ANON_BASE+"/user/send-login.json",
-            async: false,
+            async: true,
             dataType: "text",
             data: {
                 username: $(username).val(),
@@ -57,7 +57,7 @@ function backDetectResult(result) {
         try {
             window.location.href=url;
         }catch (error){
-            window.location.href=PRE_FOX_INDEX_HTML;
+            returnToIndex();
         }
 
     } else if (HttpStatus.PARAM_INCORRECT == result.status) {

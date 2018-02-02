@@ -2,6 +2,7 @@ $(function () {
     email = $("#email");
     msgContainer = $("#js-flash-container");
     reset = $("#reset");
+    emailBody=$("#email-body")
     $(reset).click(function (event) {
          sendReset();
          stopEvent(event);
@@ -13,7 +14,7 @@ function sendReset() {
         $.ajax({
             type: "post",
             url: PRE_FOX_ANON_BASE + "/user/send-password-reset.json",
-            async: false,
+            async: true,
             dataType: "text",
             data: {
                 "email": $(email).val(),
@@ -24,7 +25,7 @@ function sendReset() {
             success: function (result) {
                 if (backDetectResult(result)) {
                     addMsg(msgContainer, FlashType.SUCCESS, "邮件发送成功");
-                    time(reset,"发送重置邮件","跳转至登录",5,PRE_FOX_INDEX_HTML);
+                    $(emailBody).html(reset_success_html);
                 }
             },
             error: function (result) {
@@ -86,3 +87,5 @@ function backError(item) {
             break;
     }
 }
+var reset_success_html='<label for="return"> 重置链接已发送至您的邮箱，请检查邮箱。如果几分钟内仍未收到收到重置邮件，请检查您的邮箱垃圾桶。 </label><input' +
+    ' class="btn btn-primary btn-block" tabindex="3" id="return" onclick="returnToIndex()" value="返回登录"/>';

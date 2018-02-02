@@ -8,7 +8,8 @@ import javax.servlet.http.HttpServletRequest;
  * Created by DT254 on 2018/1/31.
  */
 @Data
-public class ResetDto {
-    private String email;
+public class PassChangeDto {
+    private String token;
+    private String password;
     private HttpServletRequest request;
 }
