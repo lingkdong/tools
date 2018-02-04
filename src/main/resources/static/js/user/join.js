@@ -131,7 +131,7 @@ function signUp() {
             success: function (result) {
                 if (backDetectResult(result));
                 {
-                   returnToIndex();
+                    window.location.href = PRE_FOX_AUTHC_BASE+"/user/complete";
                 }
             },
             error: function (result) {
@@ -148,7 +148,7 @@ function nameUnique() {
     $.ajax({
         type: "post",
         url: JOIN_BASE_URL + "name-unique.json",
-        async: true,
+        async: false,
         dataType: "text",
         data: {
             username: $(username).val()
@@ -169,7 +169,7 @@ function emailUnique() {
     $.ajax({
         type: "post",
         url: JOIN_BASE_URL + "email-unique.json",
-        async: true,
+        async: false,
         dataType: "text",
         data: {
             email: $(email).val()
@@ -252,6 +252,7 @@ function sendValid() {
         },
         complete: function () {
             $(send).removeClass(itemStatus.LOADING);
+            $(send).removeAttr(DISABLED).html("获取验证码");
         }
     });
 }

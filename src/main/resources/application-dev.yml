@@ -26,4 +26,9 @@ prefox:
     from: prefoxchina@gmail.com
     user: prefoxchina@gmail.com
     pass: google@109964
-   website: http://10.200.157.63:8081
+#    host: smtp-mail.outlook.com
+#    port: 587
+#    from: pre_fox@outlook.com
+#    user: pre_fox@outlook.com
+#    pass: outlook@109964
+   website: http://127.0.0.1:8081
