@@ -80,13 +80,13 @@ function isDate() {
     }
 }
 var wait_time = 60;
-function time(obj, normalInfo, waitInfo, waitTime,url) {
+function time(obj, normalInfo, waitInfo, waitTime, url) {
     if (wait_time > waitTime) {
         wait_time = waitTime;
     }
     if (wait_time == 0) {
-        if(isNotBlank(url)){
-            window.location.href=url;
+        if (isNotBlank(url)) {
+            window.location.href = url;
         }
         $(obj).removeAttr("disabled");
         $(obj).html(normalInfo);
@@ -96,7 +96,7 @@ function time(obj, normalInfo, waitInfo, waitTime,url) {
         $(obj).html(waitInfo + "(" + wait_time + ")");
         wait_time--;
         setTimeout(function () {
-                time(obj, normalInfo, waitInfo, waitTime)
+                time(obj, normalInfo, waitInfo, waitTime, url)
             },
             1000)
     }
@@ -159,16 +159,10 @@ function addMsg(parent, type, msg) {
         if ((!isExist(parent)) || isBlank(type)) {
             alert(msg);
         } else {
-            var info = $(parent).find(".flash-add-info");
-            if (isExist(info)) {
-                $(info).html(msg);
-
-            } else {
-                var html = '<div class="flash flash-full flash-' + type + '"><button class="flash-close' +
-                    ' js-flash-close outline-none" onclick="closeParent(this)" type="button" aria-label="Dismiss this message"><svg aria-hidden="true" class="octicon octicon-x" height="16" version="1.1" viewBox="0 0 12 16" width="12"><path fill-rule="evenodd" d="M7.48 8l3.75 3.75-1.48 1.48L6 9.48l-3.75 3.75-1.48-1.48L4.52 8 .77 4.25l1.48-1.48L6 6.52l3.75-3.75 1.48 1.48z"></path></svg></button> ' +
-                    '<span class="flash-add-info">' + msg + '</span></div>';
-                $(parent).append(html);
-            }
+            var html = '<div class="flash flash-full flash-' + type + '"><button class="flash-close' +
+                ' js-flash-close outline-none" onclick="closeParent(this)" type="button" aria-label="Dismiss this message"><svg aria-hidden="true" class="octicon octicon-x" height="16" version="1.1" viewBox="0 0 12 16" width="12"><path fill-rule="evenodd" d="M7.48 8l3.75 3.75-1.48 1.48L6 9.48l-3.75 3.75-1.48-1.48L4.52 8 .77 4.25l1.48-1.48L6 6.52l3.75-3.75 1.48 1.48z"></path></svg></button> ' +
+                '<span class="flash-add-info">' + msg + '</span></div>';
+            $(parent).html(html)
         }
     }
 }
@@ -306,7 +300,8 @@ function backErrorTxt(property, status) {
 }
 var PRE_FOX_AUTHC_BASE = "/tools/authc";
 var PRE_FOX_ANON_BASE = "/tools/anon";
-var PRE_FOX_INDEX_HTML = PRE_FOX_ANON_BASE + "/index";
+var PRE_FOX_INDEX = PRE_FOX_ANON_BASE + "/index";
+var PRE_FOX_LOGIN = PRE_FOX_ANON_BASE + "/user/login";
 function returnToIndex() {
-    window.location.href = PRE_FOX_INDEX_HTML;
+    window.location.href = PRE_FOX_INDEX;
 }

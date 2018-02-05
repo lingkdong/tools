@@ -62,7 +62,8 @@
                     </div>
                     <ul class="d-flex pl-2 flex-items-center text-bold list-style-none" role="navigation">
                         <li>
-                            <a href="/users" class="js-selected-navigation-item HeaderNavlink px-2">
+                            <a th:href="@{/tools/anon/users/index}"
+                               class="js-selected-navigation-item HeaderNavlink px-2">
                                 用户
                             </a>
                         </li>
@@ -116,8 +117,7 @@
                                         Help
                                     </a></li>
 
-                                    <li><a class="dropdown-item" href="/settings/profile"
-                                           data-ga-click="Header, go to settings, icon:settings">
+                                    <li><a class="dropdown-item" href="#" >
                                         Settings
                                     </a></li>
 
@@ -138,7 +138,7 @@
 </div>
 <div role="main">
     <div id="js-pjax-container">
-        <div class="container page-content">
+        <div class="container page-content" style="min-height:700px ">
             <div th:include="this :: content"></div>
         </div>
     </div>

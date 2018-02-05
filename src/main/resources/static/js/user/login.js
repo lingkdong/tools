@@ -50,7 +50,7 @@ function sendLogin() {
 function backDetectResult(result) {
     result = JSON.parse(result);
     if (HttpStatus.OK == result.status) {
-        var url =PRE_FOX_INDEX_HTML;
+        var url =PRE_FOX_INDEX;
         if (!isBlank(result.data)) {
             url = result.data;
         }

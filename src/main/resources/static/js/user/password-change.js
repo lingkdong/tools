@@ -12,21 +12,20 @@ $(function () {
 })
 
 function detect() {
-    var password=$(password).val();
-    var confirm=$(confirm).val();
-    if(isBlank(password)) {
+
+    if(isBlank($(password).val())) {
         addMsg(msgContainer, FlashType.ERROR, "密码不能为空");
         return false;
     }
-    if(isPassword(password)) {
+    if(!isPassword($(password).val())) {
         addMsg(msgContainer, FlashType.ERROR, "密码格式错误");
         return false;
     }
-    if(isBlank(confirm)) {
+    if(isBlank($(confirm).val())) {
         addMsg(msgContainer, FlashType.ERROR, "确认密码不能为空");
         return false;
     }
-    if(password!=confirm){
+    if($(password).val()!=$(confirm).val()){
         addMsg(msgContainer, FlashType.ERROR, "密码和确认密码不一致");
         return false;
     }
@@ -41,8 +40,8 @@ function sendChange() {
             async: true,
             dataType: "text",
             data: {
-                "password": $(password).val(),
-                "token":$(passwordBody).attr("token")
+                "password":  md5($(password).val()),
+                "token":$(passwordBody).attr("data-token")
             },
             beforeSend: function () {
                 $(change).attr(DISABLED, true).val("更改密码...");
@@ -50,7 +49,7 @@ function sendChange() {
             success: function (result) {
                 if (backDetectResult(result)) {
                     addMsg(msgContainer, FlashType.SUCCESS, "密码修改成功，5秒后跳转到登录页");
-                    time(change,"更改密码","密码修改成功",5,PRE_FOX_INDEX_HTML);
+                    time(passwordBody,"","即将跳转",5,PRE_FOX_LOGIN);
                 }
             },
             error: function (result) {
