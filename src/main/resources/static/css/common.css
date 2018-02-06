@@ -1732,7 +1732,9 @@ label {
 .users .user-info .user-gravatar48 {
     float: left;
     width: 48px;
-    height: 48px
+    height: 48px;
+    box-shadow: 2px 2px 4px rgba(12,13,14,0.5);
+    border-collapse: separate
 }
 
 .users .user-info .user-details {

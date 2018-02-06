@@ -44,7 +44,7 @@ public class User {
     private String skillTag;
     private String location;
 
-    private Integer score;
+    private int score;
 
     public Long getId() {
         return id;
@@ -158,11 +158,11 @@ public class User {
         this.skillTag = skillTag;
     }
 
-    public Integer getScore() {
+    public int getScore() {
         return score;
     }
 
-    public void setScore(Integer score) {
+    public void setScore(int score) {
         this.score = score;
     }
 }

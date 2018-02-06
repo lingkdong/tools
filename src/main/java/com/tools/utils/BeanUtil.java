@@ -13,7 +13,7 @@ import java.util.List;
 public class BeanUtil extends BeanUtils {
     public static void copy(Object dest, Object orig){
         try {
-            copyProperties(dest,orig);
+            BeanUtilBean.getInstance().copyProperties(dest,orig);
         } catch (IllegalAccessException e) {
             log.error("<BeanUtil.copy failed, {} {} >", e, e.getStackTrace()[0].toString());
         } catch (InvocationTargetException e) {

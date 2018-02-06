@@ -19,31 +19,33 @@
     </h1>
     <div class="py-3 border-top">
         <label class="fw-normal">查找用户：</label>
-        <input class="form-control" id="find-user"/>
+        <input class="form-control" id="find-user" th:value="${findUsers.username}"/>
     </div>
     <ul class="list-style-none users" name="user-list">
-        <li class="f-left px-1 py-1 w-percent-25" >
-            <div class="user-info  user-hover">
-                <div class="user-gravatar48">
-                    <a href="#">
-                        <div class="gravatar-wrapper-48">
-                            <img src="#">
-                        </div>
-                    </a>
-                </div>
-                <div class="user-details">
-                    <a href="#">gnarf</a>
-                    <span class="user-location">Boston, MA</span>
-                    <div class="-flair">
-                        <span class="fw-bold"
-                              dir="ltr">980</span>
+        <th:block th:each="item:${page.content}">
+            <li class="f-left px-1 py-1 w-percent-25">
+                <div class="user-info  user-hover">
+                    <div class="user-gravatar48">
+                        <a href="#">
+                            <div class="gravatar-wrapper-48">
+                                <img th:src="${'/img/'+item.picture}">
+                            </div>
+                        </a>
                     </div>
+                    <div class="user-details">
+                        <a href="#" th:text="${item.username}"/>
+                        <span class="user-location" th:text="${item.location}"/>
+                        <div class="-flair">
+                            <span class="fw-bold" th:text="${item.score}"/>
+                        </div>
+                    </div>
+                    <div class="user-tags" th:text="${item.skillTag}">
+                    </div>
+
                 </div>
-                <div class="user-tags">
-                     java,jquery,c++
-                </div>
-            </div>
-        </li>
+            </li>
+        </th:block>
+
     </ul>
 </div>
 </body>

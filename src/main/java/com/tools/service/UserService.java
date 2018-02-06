@@ -3,6 +3,8 @@ package com.tools.service;
 import com.tools.dto.BaseResponseDTO;
 import com.tools.dto.user.*;
 import com.tools.model.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -40,4 +42,5 @@ public interface UserService {
 
     BaseResponseDTO changePass(PassChangeDto passChangeDto);
 
+    Page<UsersDto> findUsers(FindUsersDto findUsersDto, Pageable pageable);
 }

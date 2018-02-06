@@ -26,6 +26,10 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.web.util.SavedRequest;
 import org.apache.shiro.web.util.WebUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -243,7 +247,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public BaseResponseDTO passReset(ResetDto resetDto) {
-        HttpSession session=resetDto.getRequest().getSession();
+        HttpSession session = resetDto.getRequest().getSession();
         String property = "email";
         BaseResponseDTO dto = Worker.isEmail(resetDto.getEmail());
         if (!Worker.isOK(dto)) return dto;
@@ -260,12 +264,12 @@ public class UserServiceImpl implements UserService {
                 .append(DigestUtils.md5Hex(StringUtil.getPassword(16)));
         msg.append("以下为您的密码重置链接：").append(System.lineSeparator())
                 .append
-                        ("<a href=\"" +PrefoxEmailTemp.CHANGE_PASS_URL+token+ "\" target=\"_blank\">")
-                         .append(PrefoxEmailTemp.CHANGE_PASS_URL+token).append("</a>")
+                        ("<a href=\"" + PrefoxEmailTemp.CHANGE_PASS_URL + token + "\" target=\"_blank\">")
+                .append(PrefoxEmailTemp.CHANGE_PASS_URL + token).append("</a>")
                 .append(System.lineSeparator())
                 .append("链接有效期为1小时。若链接已过期，获得新的密码重置连接，请访问 ")
-                .append("<a href=\"" +PrefoxEmailTemp.RESET_PASS_URL + "\" target=\"_blank\">")
-                        .append(PrefoxEmailTemp.RESET_PASS_URL).append("</a>");
+                .append("<a href=\"" + PrefoxEmailTemp.RESET_PASS_URL + "\" target=\"_blank\">")
+                .append(PrefoxEmailTemp.RESET_PASS_URL).append("</a>");
         ;
         Boolean flag = emailService.sendHtmlEmail(EmailDto.newEmailDto()
                 .subjet("Prefox密码重置")
@@ -276,14 +280,14 @@ public class UserServiceImpl implements UserService {
         );
         if (!Boolean.TRUE.equals(flag)) return new BaseResponseDTO(HttpStatus.INTERNAL_SERVER_ERROR,
                 "The email failed, please try again later.");
-        SessionWorker.setInterval(session,SessionWorker.HOUR_1);
-        session.setAttribute(token.toString(),user.getUsername());
+        SessionWorker.setInterval(session, SessionWorker.HOUR_1);
+        session.setAttribute(token.toString(), user.getUsername());
         return Worker.OK();
     }
 
     @Override
     public User getUserByToken(HttpServletRequest request, String token) {
-        if(StringUtils.isNotBlank(token)) {
+        if (StringUtils.isNotBlank(token)) {
             String username = (String) request.getSession().getAttribute(token);
             if (StringUtils.isNotBlank(username)) {
                 return userDao.findFirstByUsername(username);
@@ -294,8 +298,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public BaseResponseDTO changePass(PassChangeDto passChangeDto) {
-        User user=getUserByToken(passChangeDto.getRequest(),passChangeDto.getToken());
-        if(user==null) return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT, ErrorInfo.newErrorInfo().property
+        User user = getUserByToken(passChangeDto.getRequest(), passChangeDto.getToken());
+        if (user == null) return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT, ErrorInfo.newErrorInfo().property
                 ("token").HttpStatus(HttpStatus.PARAM_INCORRECT).build());
         BaseResponseDTO dto = Worker.isBlank2("password", passChangeDto.getPassword());
         if (!Worker.isOK(dto)) return dto;
@@ -316,5 +320,21 @@ public class UserServiceImpl implements UserService {
         user.setMale(true);
         user.setStatus(UserStatus.NORMAL.code());
         return user;
+    }
+
+    @Override
+    public Page<UsersDto> findUsers(FindUsersDto findUsersDto, Pageable pageable) {
+        Page users = (StringUtils.isBlank(findUsersDto.getUsername())) ? userDao.findAllByOrderByScoreDesc(pageable) : userDao
+                .findByUsernameContainingOrderByScoreDesc(findUsersDto.getUsername(), pageable);
+        if (users.hasContent()) {
+            List<UsersDto> usersDtos = new ArrayList<>();
+            for (User item : (List<User>) users.getContent()) {
+                usersDtos.add(BeanUtil.cast(UsersDto.class, item));
+            }
+            Page<UsersDto> result = new PageImpl<>(usersDtos, new PageRequest(users.getNumber(), users.getSize
+                    ()), users.getTotalElements());
+            return result;
+        }
+        return users;
     }
 }

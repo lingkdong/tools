@@ -10,7 +10,7 @@
 </head>
 <body>
 <div th:fragment="content" th:remove="tag">
-    <div th:each="item:${page.content}" th:remove="tag">
+    <th:block th:each="item:${page.content}">
         <div class="newsfeed-placeholder p-5 mb-4">
             <h3 class="h2 lh-condensed mb-2" th:text="${item.name}"/>
             <p class="f4">
@@ -20,7 +20,7 @@
                 </th:block>
             </p>
         </div>
-    </div>
+    </th:block>
     <div class="more-repos-link" id="more-div">
 
     <button th:if="${page.last==false}" type="submit" class="btn-link width-full  js-more-repos-link"
