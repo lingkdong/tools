@@ -121,7 +121,9 @@ details:not([open]) > *:not(summary) {
 .dropdown-details:not([open]) {
     cursor: pointer
 }
-
+.o-hid{
+    overflow: hidden;
+}
 ul, ol {
     padding-left: 0;
     margin-top: 0;
@@ -735,7 +737,9 @@ dl.form-group > dd .form-control.is-autocheck-errored {
 .fw-normal {
     font-weight: normal !important;
 }
-
+.fr{
+    float: right!important;
+}
 .fw-bold {
     font-weight: bold !important;
 }
@@ -1716,74 +1720,4 @@ label {
     font-size: inherit
 }
 
-.users {
 
-}
-
-.users .user-info {
-    color: #6a737c;
-}
-
-.users .user-info {
-    margin-bottom: 1.2em;
-    width: 100%;
-}
-
-.users .user-info .user-gravatar48 {
-    float: left;
-    width: 48px;
-    height: 48px;
-    box-shadow: 2px 2px 4px rgba(12,13,14,0.5);
-    border-collapse: separate
-}
-
-.users .user-info .user-details {
-    margin-left: 58px;
-    width: calc(100% - 64px);
-    line-height: 1.3
-}
-
-.users .user-info .user-details > a {
-    display: inline-block;
-    font-size: 14px
-}
-
-.users .user-info .user-details .-flair, .users .user-info .user-details .user-location {
-    display: block
-}
-
-.users .user-info .user-details .user-location {
-    font-size: 12px;
-    margin-bottom: 2px
-}
-
-.users .user-info .user-details .-flair {
-    line-height: 1;
-    margin-bottom: 4px
-}
-
-.users .user-info .user-tags {
-    clear: both;
-    font-size: 12px;
-    margin-left: 57px
-}
-
-.users .user-info .user-tags > a {
-    color: #848d95
-}
-
-.users .user-info .user-tags > a:hover {
-    color: #6a737c;
-    text-decoration: underline
-}
-
-.users .user-info:hover {
-    background-color: #f4f8fb;
-    transition: background .1s ease-in-out
-}
-
-.users .no-search-results {
-    font-weight: bold;
-    font-size: 120%;
-    padding: 20px
-}

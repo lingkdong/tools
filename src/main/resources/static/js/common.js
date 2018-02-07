@@ -305,3 +305,7 @@ var PRE_FOX_LOGIN = PRE_FOX_ANON_BASE + "/user/login";
 function returnToIndex() {
     window.location.href = PRE_FOX_INDEX;
 }
+
+function jump_page(url) {
+    window.location.href = url;
+}

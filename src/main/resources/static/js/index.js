@@ -10,7 +10,7 @@ function dashboard_more(obj) {
         dataType: "json",
         data:{
             q:$(obj).attr("data-q"),
-            number:$(obj).attr("data-number"),
+            page:$(obj).attr("data-number"),
             size:$(obj).attr("data-size"),
             last:$(obj).attr("data-last"),
             totalPages:$(obj).attr("data-totalPages"),

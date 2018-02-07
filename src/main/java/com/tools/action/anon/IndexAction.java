@@ -26,7 +26,7 @@ public class IndexAction extends BaseAction {
     @GetMapping(value = "/index")
     public ModelAndView index(@RequestParam(value = "q", required = false) String searchKey) {
         ModelAndView mv=new ModelAndView("index");
-        Page<CategoryDto> page = categoryService.find(searchKey, new PageRequest(0,4));
+        Page<CategoryDto> page = categoryService.find(searchKey, new PageRequest(0,1));
         mv.addObject("page",page);
         if(StringUtils.isNotBlank(searchKey)) mv.addObject("q",searchKey);
         return mv;

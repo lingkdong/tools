@@ -20,12 +20,13 @@ import org.springframework.web.servlet.ModelAndView;
 @Slf4j
 @RequestMapping("/tools/anon/users")
 public class UsersAction {
+    private final static   int pageSize=1;
     @Autowired
     private UserService userService;
     @RequestMapping(value = "/index")
     public ModelAndView index(FindUsersDto findUsersDto, Pageable pageable) {
         ModelAndView mv = new ModelAndView("user/users");
-        if(pageable.getPageSize()!=36) pageable=new PageRequest(0,36);
+        if(pageable.getPageSize()!=pageSize) pageable=new PageRequest(0,pageSize);
         Page<UsersDto> page=userService.findUsers(findUsersDto,pageable);
         mv.addObject("page",page);
         mv.addObject("findUsers",findUsersDto);

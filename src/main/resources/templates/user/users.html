@@ -5,6 +5,7 @@
 <head>
     <meta charset="UTF-8"/>
     <title th:text="Users"></title>
+    <link th:href="@{/css/users.css}" rel="stylesheet"/>
     <script th:src="@{/js/user/users.js }"></script>
 </head>
 <body>
@@ -19,9 +20,10 @@
     </h1>
     <div class="py-3 border-top">
         <label class="fw-normal">查找用户：</label>
-        <input class="form-control" id="find-user" th:value="${findUsers.username}"/>
+        <input class="form-control" id="find-user" th:value="${findUsers.username}"
+               th:attr="data-username=${findUsers.username}"/>
     </div>
-    <ul class="list-style-none users" name="user-list">
+    <ul class="list-style-none users o-hid" name="user-list">
         <th:block th:each="item:${page.content}">
             <li class="f-left px-1 py-1 w-percent-25">
                 <div class="user-info  user-hover">
@@ -47,6 +49,82 @@
         </th:block>
 
     </ul>
+
+    <div class="pager fr" th:if="${page.totalPages gt 1}" th:with="number=${page.number+1}">
+
+        <a  th:if="${number!=1}" rel="prev" th:with="prev=${number-1}"
+            th:title="${'跳转至第'+prev+'页'}"  th:attr="data-number=${prev}">
+            <span class="page-numbers prev">前一页</span>
+        </a>
+        <th:block th:if="${number lt 5}">
+             <th:block th:if="${number gt 1}">
+                 <th:block th:each="item:${#numbers.sequence(1,number-1)}">
+                     <a  th:title="${'跳转至第'+item+'页'}" th:attr="data-number=${item}">
+                         <span class="page-numbers" th:text="${item}" />
+                     </a>
+                 </th:block>
+             </th:block>
+            <span class="page-numbers current" th:text="${number}"/>
+            <th:block th:each="item:${#numbers.sequence(number+1,5)}">
+                <a  th:title="${'跳转至第'+item+'页'}" th:attr="data-number=${item}">
+                    <span class="page-numbers" th:text="${item}" />
+                </a>
+            </th:block>
+            <th:block th:if="${page.totalPages gt 5}">
+                <span  class="page-numbers dots">…</span>
+                <a  th:title="${'跳转至第'+page.totalPages+'页'}" th:attr="data-number=${page.totalPages}">
+                    <span class="page-numbers" th:text="${page.totalPages}" />
+                </a>
+            </th:block>
+        </th:block>
+
+        <th:block th:if="${number ge 5 }">
+            <th:block th:if="${number+4 le page.totalPages}">
+                <span  class="page-numbers dots">…</span>
+                <th:block th:each="item:${#numbers.sequence(number-2,number-1)}">
+                    <a  th:title="${'跳转至第'+item+'页'}"  th:attr="data-number=${item}">
+                        <span class="page-numbers" th:text="${item}"/>
+                    </a>
+                </th:block>
+                <span class="page-numbers current" th:text="${number}"/>
+                <th:block th:each="item:${#numbers.sequence(number+1,number+2)}">
+                    <a  th:title="${'跳转至第'+item+'页'}" th:attr="data-number=${item}">
+                        <span class="page-numbers" th:text="${item}" />
+                    </a>
+                </th:block>
+                <th:block th:if="${page.totalPages gt 5}">
+                    <span  class="page-numbers dots">…</span>
+                    <a  th:title="${'跳转至第'+page.totalPages+'页'}"  th:attr="data-number=${page.totalPages}">
+                        <span class="page-numbers" th:text="${page.totalPages}"/>
+                    </a>
+                </th:block>
+            </th:block>
+            <th:block th:if="${number+4 gt page.totalPages}">
+
+                <a  th:title="${'跳转至第1页'}" th:attr="data-number=${1}">
+                    <span class="page-numbers" th:text="${1}" />
+                </a>
+                <span  class="page-numbers dots">…</span>
+
+                <th:block th:each="item:${#numbers.sequence(page.totalPages-4,number-1)}">
+                    <a  th:title="${'跳转至第'+item+'页'}" th:attr="data-number=${item}">
+                        <span class="page-numbers" th:text="${item}" />
+                    </a>
+                </th:block>
+                <span class="page-numbers current" th:text="${number}"/>
+                <th:block th:each="item:${#numbers.sequence(number+1,page.totalPages)}">
+                    <a  th:title="${'跳转至第'+item+'页'}" th:attr="data-number=${item}">
+                        <span class="page-numbers" th:text="${item}" />
+                    </a>
+                </th:block>
+            </th:block>
+        </th:block>
+
+        <a  rel="next" th:with="next=${number+1}" th:title="${'跳转至第'+next+'页'}" th:attr="data-number=${next}">
+            <span class="page-numbers next"> 下一页</span>
+        </a>
+
+    </div>
 </div>
 </body>
 </html>
