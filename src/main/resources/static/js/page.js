@@ -1,5 +1,7 @@
 $(function () {
-    $("#header-search-input").focus()
+    headSearch=$("#header-search-input");
+    var value=$(headSearch).val();
+    $(headSearch).focus().val("").val(value);
     $(document).mouseup(function(e){
         var _con = $('details');   // 设置目标区域
         if(!_con.is(e.target) && _con.has(e.target).length === 0){

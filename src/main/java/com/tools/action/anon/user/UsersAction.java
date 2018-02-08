@@ -22,7 +22,7 @@ public class UsersAction {
     @Autowired
     private UserService userService;
     @RequestMapping(value = "/index")
-    public ModelAndView index(FindUsersDto findUsersDto,@PageableDefault(value = 1) Pageable pageable) {
+    public ModelAndView index(FindUsersDto findUsersDto,@PageableDefault(value = 28) Pageable pageable) {
         ModelAndView mv = new ModelAndView("user/users");
         /*index begain at 0 but web show 1 so now -1*/
         Page<UsersDto> page=userService.findUsersDto(findUsersDto,pageable.previousOrFirst());
