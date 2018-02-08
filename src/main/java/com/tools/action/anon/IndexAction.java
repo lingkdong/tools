@@ -35,7 +35,7 @@ public class IndexAction extends BaseAction {
     @ResponseBody
     public BaseResponseDTO search(@RequestParam(value = "q", required = false) String searchKey, Pageable
             pageable) {
-        Page<CategoryDto> categories = categoryService.find(searchKey, pageable.next());
+        Page<CategoryDto> categories = categoryService.find(searchKey, pageable);
         return new BaseResponseDTO(HttpStatus.OK, categories);
     }
 

@@ -42,5 +42,5 @@ public interface UserService {
 
     BaseResponseDTO changePass(PassChangeDto passChangeDto);
 
-    Page<UsersDto> findUsers(FindUsersDto findUsersDto, Pageable pageable);
+    Page<UsersDto> findUsersDto(FindUsersDto findUsersDto, Pageable pageable);
 }

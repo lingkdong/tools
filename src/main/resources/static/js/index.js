@@ -4,17 +4,15 @@ $(function () {
 var INDEX_BASE_URL="/tools/anon/"
 //load category
 function dashboard_more(obj) {
+    var number=parseInt($(obj).attr("data-number"))+1;
     $.ajax({
         type: "post",
         url: INDEX_BASE_URL+"search.json",
         dataType: "json",
         data:{
             q:$(obj).attr("data-q"),
-            page:$(obj).attr("data-number"),
-            size:$(obj).attr("data-size"),
-            last:$(obj).attr("data-last"),
-            totalPages:$(obj).attr("data-totalPages"),
-            totalElements:$(obj).attr("data-totalElements")
+            page:number,
+            size:$(obj).attr("data-size")
         },
         success: function (result) {
             if(result&&result.status==HttpStatus.OK&&result.data){
@@ -36,6 +34,7 @@ function dashboard_more(obj) {
                             + innerHtml
                             + '</p>'
                             + '</div>'
+                        $(obj).attr("data-number",number);
                     });
                     var more_div=$("#more-div");
                     $(html).insertBefore($(more_div))

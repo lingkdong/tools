@@ -323,9 +323,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<UsersDto> findUsers(FindUsersDto findUsersDto, Pageable pageable) {
-        Page users = (StringUtils.isBlank(findUsersDto.getUsername())) ? userDao.findAllByOrderByScoreDesc(pageable) : userDao
-                .findByUsernameContainingOrderByScoreDesc(findUsersDto.getUsername(), pageable);
+    public Page<UsersDto> findUsersDto(FindUsersDto findUsersDto, Pageable pageable) {
+        Page users = findUsers(findUsersDto,pageable);
+        if(pageable.getPageNumber()>=users.getTotalPages()){
+            pageable=new PageRequest(users.getTotalPages()-1,pageable.getPageSize(),pageable.getSort());
+            users = findUsers(findUsersDto,pageable);
+        }
         if (users.hasContent()) {
             List<UsersDto> usersDtos = new ArrayList<>();
             for (User item : (List<User>) users.getContent()) {
@@ -336,5 +339,10 @@ public class UserServiceImpl implements UserService {
             return result;
         }
         return users;
+    }
+
+    private  Page<User> findUsers(FindUsersDto findUsersDto, Pageable pageable){
+        return (StringUtils.isBlank(findUsersDto.getUsername())) ? userDao.findAllByOrderByScoreDesc(pageable) : userDao
+                .findByUsernameContainingOrderByScoreDesc(findUsersDto.getUsername(), pageable);
     }
 }
