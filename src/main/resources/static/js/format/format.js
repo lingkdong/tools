@@ -10,8 +10,8 @@ $(function () {
     });
 
 })
-var FORMAT_BASE_URL=PRE_FOX_ANON_BASE+"/format/";
-var OPEN_BASE_URL=PRE_FOX_ANON_BASE+"/open/";
+var FORMAT_BASE_URL = PRE_FOX_ANON_BASE + "/format/";
+var OPEN_BASE_URL = PRE_FOX_ANON_BASE + "/open/";
 function updateLine() {
     $(input).updateLine();
 }
@@ -25,7 +25,7 @@ function format_raw(type) {
     if (!isInputBlank()) {
         $.ajax({
             type: "post",
-            url: OPEN_BASE_URL+"store.json",
+            url: OPEN_BASE_URL + "store.json",
             async: true,
             dataType: "text",
             data: {
@@ -33,7 +33,7 @@ function format_raw(type) {
                 type: type,
             },
             success: function (result) {
-                window.open(OPEN_BASE_URL+"show.html?version=" + result);
+                window.open(OPEN_BASE_URL + "show.html?version=" + result);
             },
             error: function (result) {
             },
@@ -55,8 +55,13 @@ function format_pretty(type) {
                 input: $(input).val()
             },
             success: function (result) {
-                $(input).val(result);
-                updateLine();
+                result=JSON.parse(result)
+                if (HttpStatus.PARAM_INCORRECT == result.status) {
+                    alertError(type + "格式解析出错，请检查您的输入");
+                } else {
+                    $(input).val(result.data);
+                    updateLine();
+                }
             },
             error: function (result) {
             },
@@ -70,15 +75,20 @@ function format_compress(type) {
     if (!isInputBlank()) {
         $.ajax({
             type: "post",
-            url:getCompressUrl(type),
+            url: getCompressUrl(type),
             async: true,
             dataType: "text",
             data: {
                 input: $(input).val()
             },
             success: function (result) {
-                $(input).val(result);
-                updateLine();
+                result=JSON.parse(result)
+                if (HttpStatus.PARAM_INCORRECT == result.status) {
+                    alertError(type + "格式解析出错，请检查您的输入");
+                } else {
+                    $(input).val(result.data);
+                    updateLine();
+                }
             },
             error: function (result) {
             },
@@ -90,7 +100,7 @@ function format_compress(type) {
 
 function format_copy() {
     if (!isInputBlank()) {
-        var input=document.getElementById("text");
+        var input = document.getElementById("text");
         _copy(input)
     }
 }
@@ -102,7 +112,7 @@ function format_clear0() {
 }
 
 function getPrettyUrl(type) {
-    return FORMAT_BASE_URL+ type + "-pretty.json";
+    return FORMAT_BASE_URL + type + "-pretty.json";
 }
 
 function getCompressUrl(type) {

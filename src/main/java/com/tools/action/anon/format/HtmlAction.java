@@ -1,5 +1,7 @@
 package com.tools.action.anon.format;
 
+import com.tools.dto.BaseResponseDTO;
+import com.tools.dto.HttpStatus;
 import com.tools.dto.format.HtmlFormat;
 import com.tools.worker.HtmlFormatWorker;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,12 +15,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/tools/anon/format")
 public class HtmlAction {
     @PostMapping(value = "/html-pretty")
-    public String pretty(HtmlFormat format) {
-        return new HtmlFormatWorker(format).pretty().getOutput();
+    public Object pretty(HtmlFormat format) {
+        try {
+            return new BaseResponseDTO(HttpStatus.OK,new HtmlFormatWorker(format).pretty().getOutput());
+        } catch (Exception e) {
+            return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT);
+        }
     }
 
     @PostMapping(value = "/html-compress")
-    public String compress(HtmlFormat format) {
-        return new HtmlFormatWorker(format).compress().getOutput();
+    public Object compress(HtmlFormat format) {
+        try {
+            return new BaseResponseDTO(HttpStatus.OK,new HtmlFormatWorker(format).compress().getOutput());
+        } catch (Exception e) {
+            return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT);
+        }
     }
 }

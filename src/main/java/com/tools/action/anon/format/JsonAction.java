@@ -1,24 +1,38 @@
 package com.tools.action.anon.format;
 
+import com.tools.dto.BaseResponseDTO;
+import com.tools.dto.HttpStatus;
 import com.tools.dto.format.JsonFormat;
 import com.tools.worker.JsonFormatWorker;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Arrays;
 
 /**
  * Created by DT254 on 2017/11/17.
  */
 @RestController
 @RequestMapping("/tools/anon/format")
+@Slf4j
 public class JsonAction {
     @PostMapping(value = "/json-pretty")
-    public String pretty(JsonFormat format) {
-        return new JsonFormatWorker(format).pretty().getOutput();
+    public Object pretty(JsonFormat format) {
+        try {
+            return new BaseResponseDTO(HttpStatus.OK, new JsonFormatWorker(format).pretty().getOutput());
+        } catch (Exception e) {
+            return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT);
+        }
     }
 
     @PostMapping(value = "/json-compress")
-    public String compress(JsonFormat format) {
-        return new JsonFormatWorker(format).compress().getOutput();
+    public Object compress(JsonFormat format) {
+        try {
+            return new BaseResponseDTO(HttpStatus.OK, new JsonFormatWorker(format).compress().getOutput());
+        } catch (Exception e) {
+            return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT);
+        }
     }
 }

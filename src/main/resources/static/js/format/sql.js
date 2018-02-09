@@ -11,8 +11,13 @@ function pretty() {
                 dbType: $("#dbType").val()
             },
             success: function (result) {
-                $(input).val(result);
-                updateLine();
+                result=JSON.parse(result);
+                if (HttpStatus.PARAM_INCORRECT == result.status) {
+                    alertError(type + "格式解析出错，请检查您的输入");
+                }else {
+                    $(input).val(result.data);
+                    updateLine();
+                }
             },
             error: function (result) {
             },
