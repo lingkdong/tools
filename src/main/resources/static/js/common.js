@@ -166,6 +166,15 @@ function addMsg(parent, type, msg) {
         }
     }
 }
+function addErrorMsg(obj, msg) {
+    addMsg(obj, FlashType.ERROR, msg);
+}
+function addSuccessMsg(obj, msg) {
+    addMsg(obj, FlashType.SUCCESS, msg);
+}
+function addWarnMsg(obj, msg) {
+    addMsg(obj, FlashType.WARN, msg);
+}
 /*...........form item detect.........*/
 var itemStatus = {
     LOADING: "is-autocheck-loading-16",
@@ -308,4 +317,14 @@ function returnToIndex() {
 
 function jump_page(url) {
     window.location.href = url;
+}
+
+function makePreZero(obj, len) {
+    var value = $(obj).val() + "";
+    len=len-value.length;
+    var zero = ""
+    for ( i = 0; i<len; i++) {
+        zero = zero + "0";
+    }
+    return  zero+value;
 }

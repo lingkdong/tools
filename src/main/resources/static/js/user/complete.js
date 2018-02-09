@@ -158,10 +158,7 @@ function detectPhone() {
 function sendComplete() {
     $(complete).attr("disabled", true).html("保存...");
     if (detectTrueName() && detectBirthYear() && detectBirthMonth() && detectBirthDay() && detectMale() && detectSkillTag() && detectPhone()) {
-        var _month = $(birthMonth).val() + "";
-        var _day = $(birthday).val() + "";
-        if (_month.length == 1) _month = "0" + _month;
-        if (_day.length == 1) _month = "0" + _day;
+
         $.ajax({
             type: "post",
             url: BASE_COMPLETE_URL+"send-complete.json",
@@ -169,7 +166,7 @@ function sendComplete() {
             dataType: "text",
             data: {
                 trueName: $(trueName).val().trim(),
-                birthday: _month+"/" + _day+"/"+$(birthYear).val(),
+                birthday: makePreZero(birthMonth,2)+"/" + makePreZero(birthday,2)+"/"+$(birthYear).val(),
                 male: $(male).val(),
                 skillTag: $(skillTag).val(),
                 location: $(userLocal).val()
@@ -218,10 +215,10 @@ function backError(item) {
             item_error($(trueName), backErrorTxt("真实姓名", item.status));
             break;
         case 'birthday':
-            item_error($(password), backErrorTxt("生日", item.status));
+            item_error($(birthday), backErrorTxt("生日", item.status));
             break;
         case 'male':
-            item_error($(email), backErrorTxt("性别", item.status));
+            item_error($(male), backErrorTxt("性别", item.status));
             break;
         case 'skillTag':
             item_error($(skillTag), backErrorTxt("技能标签", item.status));

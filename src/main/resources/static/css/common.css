@@ -121,9 +121,11 @@ details:not([open]) > *:not(summary) {
 .dropdown-details:not([open]) {
     cursor: pointer
 }
-.o-hid{
+
+.o-hid {
     overflow: hidden;
 }
+
 ul, ol {
     padding-left: 0;
     margin-top: 0;
@@ -263,6 +265,18 @@ a.tabnav-extra:hover {
 
 .mb-4 {
     margin-bottom: 24px !important;
+}
+
+.fs-1 {
+    font-size: 12px !important;
+}
+
+.fs-3 {
+    font-size: 36px !important;
+}
+
+.fs-4 {
+    font-size: 48px !important;
 }
 
 .pt-5 {
@@ -737,9 +751,11 @@ dl.form-group > dd .form-control.is-autocheck-errored {
 .fw-normal {
     font-weight: normal !important;
 }
-.fr{
-    float: right!important;
+
+.fr {
+    float: right !important;
 }
+
 .fw-bold {
     font-weight: bold !important;
 }
@@ -766,9 +782,11 @@ dl.form-group > dd .form-control.is-autocheck-errored {
     padding-top: 4px !important;
     padding-bottom: 4px !important
 }
-.w-percent-25{
-    width: 25%!important;
+
+.w-percent-25 {
+    width: 25% !important;
 }
+
 .d-flex {
     display: -webkit-box !important;
     display: flex !important

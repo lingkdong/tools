@@ -57,7 +57,7 @@ function format_pretty(type) {
             success: function (result) {
                 result=JSON.parse(result)
                 if (HttpStatus.PARAM_INCORRECT == result.status) {
-                    alertError(type + "格式解析出错，请检查您的输入");
+                    alertError(type + "输入错误，请检查您的数据");
                 } else {
                     $(input).val(result.data);
                     updateLine();
@@ -84,7 +84,7 @@ function format_compress(type) {
             success: function (result) {
                 result=JSON.parse(result)
                 if (HttpStatus.PARAM_INCORRECT == result.status) {
-                    alertError(type + "格式解析出错，请检查您的输入");
+                    alertError(type + "输入错误，请检查您的数据");
                 } else {
                     $(input).val(result.data);
                     updateLine();

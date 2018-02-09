@@ -1,0 +1,6 @@
+INSERT INTO `tools`.`category` ( `code`, `create_time`, `last_update_time`, `name`, `sort_num`, `tags`, `description`) VALUES ( 'format', '2017-11-08 16:39:54', '2017-11-08 16:39:57', '压缩/格式化', '1', 'js,html,json,css,js格式化,js压缩,html格式化,html压缩,json格式化,json压缩,css格式化,css压缩', '在线压缩、格式化');
+INSERT INTO `tools`.`category` ( `code`, `create_time`, `last_update_time`, `name`, `sort_num`, `tags`, `description`) VALUES ( 'date_calculator', '2017-11-10 09:58:20', '2017-11-10 09:58:23', '日期计算器', '2', NULL, NULL);
+INSERT INTO `tools`.`category` ( `code`, `create_time`, `last_update_time`, `name`, `sort_num`, `tags`, `description`) VALUES ( 'calendar', '2017-11-14 15:19:19', '2017-11-14 15:19:22', '日历', '3', NULL, NULL);
+INSERT INTO `tools`.`category` ( `code`, `create_time`, `last_update_time`, `name`, `sort_num`, `tags`, `description`) VALUES ( 'regex', '2017-11-15 13:56:59', '2017-11-15 13:57:02', '正则表达式', '4', NULL, NULL);
+INSERT INTO `tools`.`category` ( `code`, `create_time`, `last_update_time`, `name`, `sort_num`, `tags`, `description`) VALUES ( 'pdf', '2017-11-15 13:58:41', '2017-11-15 13:58:45', 'PDF转换', '5', NULL, NULL);
+INSERT INTO `tools`.`category` ( `code`, `create_time`, `last_update_time`, `name`, `sort_num`, `tags`, `description`) VALUES ( 'cron', '2017-11-15 14:00:09', '2017-11-15 14:00:13', 'Cron表达式', '6', NULL, NULL);
