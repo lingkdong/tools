@@ -13,6 +13,7 @@ import java.util.Date;
 @Slf4j
 public class DateUtil {
     public final static  String DATE_FORMAT="yyyy-MM-dd";
+    public final static  String DATE_FORMAT_2="yyyy/MM/dd";
     public static String formatDate(Date date, String format) {
         SimpleDateFormat sdf = new SimpleDateFormat(format);
         return sdf.format(date);

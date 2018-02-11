@@ -46,6 +46,7 @@ var year_reg = /^[0-9]{4}$/;
 var month_reg = /^(0?[1-9]|1[0-2])$/;
 var day_reg = /^((0?[1-9])|((1|2)[0-9])|30|31)$/;
 var phone_reg = /^0?(13[0-9]|14[56789]|15[012356789]|166|17[012345678]|18[0-9]|19[89])[0-9]{8}$/;
+var positive_reg=/^[0-9]*[1-9][0-9]*$/;
 function isUserName(value) {
     return usename_reg.test(value);
 }
@@ -69,6 +70,9 @@ function isDay(value) {
 }
 function isPhone(value) {
     return phone_reg.test(value);
+}
+function isPositive(value) {
+    return positive_reg.test(value);
 }
 //new modify
 function isDate() {
@@ -270,7 +274,7 @@ function addItemInfo_position(obj, txt) {
     if (isExist(info)) {
         $(info).remove();
     } else {
-        info = '<dd class="error" style="margin-left: ' + obj.position().left + 'px">' + txt + '</dd>';
+        info = '<dd class="error" style="margin-left: ' + $(obj).position().left + 'px">' + txt + '</dd>';
         $(info).css("color", "red");
         $(group).append($(info));
     }

@@ -38,4 +38,10 @@ public class DateAction {
     public Object betweenDate(DateCalculateDto dateCalculateDto){
       return dateService.betweenDate(dateCalculateDto);
     }
+
+    @PostMapping(value="/date-add")
+    @ResponseBody
+    public Object dateAdd(DateCalculateDto dateCalculateDto){
+        return dateService.dateAdd(dateCalculateDto);
+    }
 }

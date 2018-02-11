@@ -38,10 +38,8 @@
 
         <div class="setup-main ">
             <div class="setup-form-container">
-                <form accept-charset="UTF-8" action="/join" autocomplete="off" class="setup-form js-signup-form"
-                      id="signup-form" method="post">
-                    <div style="margin:0;padding:0;display:inline"></div>
-
+                <div accept-charset="UTF-8" autocomplete="off" class="setup-form js-signup-form"
+                     id="signup-form" method="post">
                     <h2 class="f2-light mb-1">
                         完善资料
                     </h2>
@@ -52,7 +50,8 @@
                         <dd><input autocapitalize="off" autofocus="autofocus" class="form-control"
                                    id="true_name" name="truename" maxlength="30" type="text"
                                    th:value="${complete.trueName}"/>
-                            <p class="note">设置您的真实姓名</p></dd>
+                            <p class="note">设置您的真实姓名</p>
+                        </dd>
                     </dl>
 
                     <dl class="form-group ">
@@ -64,12 +63,13 @@
                                 th
                                 <th:block th:each="item:${#numbers.sequence(1,12)}">
                                     <option th:value="${item}" th:text="${item+'月'}"
-                                     th:selected="${item==birthMonth}"/>
+                                            th:selected="${item==birthMonth}"/>
                                 </th:block>
                             </select>
                             <input class="form-control w-150" id="birth-day" placeholder="日"
                                    name="birth-day" maxlength="2" th:value="${birthday}"/>
-                            <p class="note">设置您的生日信息.</p></dd>
+                            <p class="note">设置您的生日信息.</p>
+                        </dd>
                     </dl>
                     <dl class="form-group">
                         <dt class="input-label"><label autocapitalize="off" for="male"
@@ -88,14 +88,16 @@
                             <input autocapitalize="off" class="form-control" id="skillTag" name="skillTag"
                                    maxlength="50"
                                    type="text" th:value="${complete.skillTag}"/>
-                            <p class="note">设置您的技能标签.</p></dd>
+                            <p class="note">设置您的技能标签.</p>
+                        </dd>
                     </dl>
                     <dl class="form-group">
                         <dt class="input-label"><label autocapitalize="off" autofocus="autofocus">
                             手机</label></dt>
                         <dd><input autocapitalize="off" autofocus="autofocus" class="form-control"
                                    id="phone" name="phone" maxlength="11" type="text" th:value="${complete.phone}"/>
-                            <p class="note">设置您的手机号码</p></dd>
+                            <p class="note">设置您的手机号码</p>
+                        </dd>
                     </dl>
                     <dl class="form-group">
                         <dt class="input-label"><label autocapitalize="off" for="location"
@@ -104,14 +106,15 @@
                             <input autocapitalize="off" class="form-control" id="location" name="location"
                                    maxlength="50"
                                    type="text" th:value="${complete.location}"/>
-                            <p class="note">设置您的位置.</p></dd>
+                            <p class="note">设置您的位置.</p>
+                        </dd>
                     </dl>
 
                     <button class="btn btn-primary" id="complete">
                         保存资料
                     </button>
 
-                </form>
+                </div>
             </div> <!-- /.setup-form-container -->
         </div> <!-- /.setup-main -->
 

@@ -3,32 +3,24 @@ $(function () {
     startYear = $("#start-year");
     startMonth = $("#start-month");
     startday = $("#start-day");
-
-    endYear = $("#end-year");
-    endMonth = $("#end-month");
-    endday = $("#end-day");
-
+    operator = $("#operator");
+    differ = $("#differ");
     calculate = $("#calculate");
     $(startYear).keyup(function (event) {
-        detectYear(this);
-    });
-    $(endYear).keyup(function (event) {
         detectYear(this);
     });
     $(startMonth).keyup(function (event) {
         detectMonth(this);
     });
-    $(endMonth).keyup(function (event) {
-        detectMonth(this);
-    });
     $(startday).keyup(function (event) {
         detectDay(this);
     });
-    $(endday).keyup(function (event) {
-        detectDay(this);
+
+    $(differ).keyup(function (event) {
+        detectDiffer(this);
     });
     $(calculate).click(function (event) {
-        dateBetween()
+        dateAdd()
         stopEvent(event)
     })
 })
@@ -84,21 +76,36 @@ function detectDay(obj) {
     item_success(obj);
     return true;
 }
-
-function dateBetween() {
+function detectDiffer(obj) {
+    //loading
+    item_loading(obj);
+    var value = $(obj).val();
+    if (isBlank(value)) {
+        item_error_position(obj, "天数不能为空")
+        return false;
+    }
+    //detect format errored
+    if (!isPositive(value)) {
+        item_error_position(obj, "天数格式错误");
+        return false;
+    }
+    //success
+    item_success(obj);
+    return true;
+}
+function dateAdd() {
     if (detectYear(startYear) && detectMonth(startMonth) && detectDay(startday)
-        && detectYear(endYear) && detectMonth(endMonth) && detectDay(endday)
     ) {
         var _startDate = makePreZero(startMonth, 2) + "/" + makePreZero(startday, 2) + "/" + $(startYear).val();
-        var _endDate = makePreZero(endMonth, 2) + "/" + makePreZero(endday, 2) + "/" + $(endYear).val();
         $.ajax({
             type: "post",
-            url: PRE_FOX_ANON_BASE + "/date/date-between.json",
+            url: PRE_FOX_ANON_BASE + "/date/date-add.json",
             async: true,
             dataType: "text",
             data: {
                 startDate: _startDate,
-                endDate: _endDate
+                operator: $(operator).val(),
+                differ: $(differ).val()
             },
             beforeSend: function () {
                 $(calculate).attr(DISABLED, DISABLED).attr("计算中...")
@@ -108,7 +115,8 @@ function dateBetween() {
                     result = JSON.parse(result);
                     var startDate = result.data.startDate;
                     var endDate = result.data.endDate;
-                    addSuccessMsg(msgContainer, '<p>' + startDate + ' - ' + endDate + '</p><span class="fw-bold fs-3">' + result.data.differ + '</span>')
+                    addSuccessMsg(msgContainer, '<p>' + startDate + ' ' + result.data.operator + ' ' + result.data.differ + '</p>' +
+                        '<span class="fw-bold fs-3">' + endDate + '</span>')
                 }
             },
             error: function (result) {
@@ -147,12 +155,13 @@ function backError(item) {
         case 'startDate':
             item_error($(startday), backErrorTxt("日期", item.status));
             break;
-        case 'endDate':
-            item_error($(endday), backErrorTxt("日期", item.status));
+        case 'operator':
+            item_error($(operator), backErrorTxt("运算符", item.status));
             break;
         case 'differ':
-            alertError("日期转换出错，请稍后再试")
+            item_error($(differ), backErrorTxt("天数", item.status));
             break;
+
 
     }
 }
