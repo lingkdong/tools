@@ -61,7 +61,7 @@ public class DateServiceImpl implements DateService {
         map.put("startDate",DateUtil.formatDate(dateCalculateDto.getStartDate(),DateUtil.DATE_FORMAT));
         map.put("operator",operator);
         map.put("differ",dateCalculateDto.getDiffer());
-        map.put("endDate",DateUtil.formatDate(endDate,DateUtil.DATE_FORMAT));
+        map.put("endDate",DateUtil.formatDate(endDate,DateUtil.G_DATE_FORMAT));
         return Worker.OK(map);
     }
 }

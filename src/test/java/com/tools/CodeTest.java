@@ -85,6 +85,8 @@ public class CodeTest {
 
     @Test
     public void testValid(){
-        System.out.println(StringUtil.getValidCode(1000));
+//        System.out.println(StringUtil.getValidCode(1000));
+        int test=0x7fffffff;
+        System.out.println(test);
     }
 }
