@@ -23,16 +23,16 @@ function dashboard_more(obj) {
                         var innerHtml = '';
                         if (item.resourceDtos && item.resourceDtos.length > 0) {
                             $.each(item.resourceDtos, function (subIndex,sub) {
-                                innerHtml += '<a class="ml-2" href="' + sub.url + '">'+sub.name+'</a>'
+                                innerHtml += '<a class="btn btn-outline mt-2" href="' + sub.url + '">'+sub.name+'</a>'
                             })
                         }
                         var description=(item.description)?item.description:'';
                         html += '<div class="newsfeed-placeholder p-5 mb-4">'
                             + '<h3 class="h2 lh-condensed mb-2" >'+item.name+'</h3>'
-                            + '<p class="f4">'
+                            + '<div class="f4">'
                             + description
                             + innerHtml
-                            + '</p>'
+                            + '</div>'
                             + '</div>'
                         $(obj).attr("data-number",number);
                     });

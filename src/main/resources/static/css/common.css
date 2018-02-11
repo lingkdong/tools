@@ -12,6 +12,13 @@ body {
 svg:not(:root) {
     overflow: hidden;
 }
+a:hover{
+    text-decoration:underline;
+}
+
+.btn-link:hover {
+    text-decoration: underline
+}
 
 .octicon {
     vertical-align: text-bottom;
@@ -758,6 +765,9 @@ dl.form-group > dd .form-control.is-autocheck-errored {
 
 .fw-bold {
     font-weight: bold !important;
+}
+.fw-bold-5 {
+    font-weight: 500 !important;
 }
 
 .f-left {

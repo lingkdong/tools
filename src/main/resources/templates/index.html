@@ -13,17 +13,18 @@
     <th:block th:each="item:${page.content}">
         <div class="newsfeed-placeholder p-5 mb-4">
             <h3 class="h2 lh-condensed mb-2" th:text="${item.name}"/>
-            <p class="f4">
-                <txt th:text="${item.description}"></txt>
+            <txt th:text="${item.description}"></txt>
+            <div class="f4">
                 <th:block th:each="sub:${item.resourceDtos}">
-                   <a class="ml-2" th:href="${sub.url}" th:text="${sub.name}"/>
+                   <a class="btn btn-outline mt-2" th:href="${sub.url}" th:text="${sub.name}"/>
                 </th:block>
-            </p>
+            </div>
         </div>
     </th:block>
     <div class="more-repos-link" id="more-div">
 
-    <button th:if="${page.last==false}" type="submit" class="btn-link width-full  js-more-repos-link outline-none"
+    <button th:if="${page.last==false}" type="submit"
+            class="btn-link width-full  js-more-repos-link outline-none fw-bold-5"
             th:attr="
             data-q=${q},
             data-number=${page.number},
