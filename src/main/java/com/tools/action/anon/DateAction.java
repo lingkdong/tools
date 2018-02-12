@@ -1,5 +1,6 @@
 package com.tools.action.anon;
 
+import com.tools.action.BaseAction;
 import com.tools.dto.CategoryDto;
 import com.tools.dto.DateCalculateDto;
 import com.tools.model.Resource;
@@ -16,21 +17,12 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 @RequestMapping("/tools/anon/date")
-public class DateAction {
-    @Autowired
-    private ResourceService resourceService;
-    @Autowired
-    private CategoryService categoryService;
+public class DateAction extends BaseAction {
     @Autowired
     private DateService dateService;
     @GetMapping(value="/{type}/index")
     public ModelAndView index(@PathVariable(value = "type") String type) {
-        Resource resource= resourceService.findByCode(type);
-        CategoryDto categoryDto=categoryService.findDtoById(resource.getCategoryId());
-        ModelAndView mv=new ModelAndView("date/"+type);
-        mv.addObject("categoryDto",categoryDto);
-        mv.addObject("type",type);
-        return mv;
+        return getResource(type,"date/"+type);
     }
 
     @PostMapping(value="/date-between")

@@ -278,6 +278,10 @@ a.tabnav-extra:hover {
     font-size: 12px !important;
 }
 
+.fs-2 {
+    font-size: 24px !important;
+}
+
 .fs-3 {
     font-size: 36px !important;
 }
@@ -312,6 +316,13 @@ a.tabnav-extra:hover {
 
 .w-50 {
     width: 50px !important;
+}
+.h-150 {
+    width: 150px !important;
+}
+
+.h-200 {
+    height: 200px !important;
 }
 
 .b-radius-5 {
@@ -1747,5 +1758,16 @@ label {
     padding-bottom: 0;
     font-size: inherit
 }
-
-
+.upload{
+    opacity: 0;
+    filter: alpha(opacity=0);
+    height: 100%;
+    position: absolute;
+    padding: 0;
+    margin: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 1;
+}
