@@ -12,8 +12,8 @@ body {
 svg:not(:root) {
     overflow: hidden;
 }
-a:hover{
-    text-decoration:underline;
+a:hover {
+    text-decoration: underline;
 }
 
 .btn-link:hover {
@@ -317,12 +317,17 @@ a.tabnav-extra:hover {
 .w-50 {
     width: 50px !important;
 }
+
 .h-150 {
     width: 150px !important;
 }
 
 .h-200 {
     height: 200px !important;
+}
+
+.h-80 {
+    height: 80px !important;
 }
 
 .b-radius-5 {
@@ -777,6 +782,7 @@ dl.form-group > dd .form-control.is-autocheck-errored {
 .fw-bold {
     font-weight: bold !important;
 }
+
 .fw-bold-5 {
     font-weight: 500 !important;
 }
@@ -846,7 +852,11 @@ dl.form-group > dd .form-control.is-autocheck-errored {
 }
 
 .color-grey {
-    color: #959da5;
+    color: #959da5 !important;
+}
+
+.color-grey2 {
+    color: #586069 !important;
 }
 
 .file {
@@ -1758,7 +1768,8 @@ label {
     padding-bottom: 0;
     font-size: inherit
 }
-.upload{
+
+.upload {
     opacity: 0;
     filter: alpha(opacity=0);
     height: 100%;
@@ -1770,4 +1781,16 @@ label {
     bottom: 0;
     width: 100%;
     z-index: 1;
+}
+
+.img-pdf-80 {
+    width: 80px;
+    height: 80px;
+    background: url("/img/pdf-80.png") no-repeat;
+}
+
+.img-word-80 {
+    width: 80px;
+    height: 80px;
+    background: url("/img/word-80.png") no-repeat;
 }

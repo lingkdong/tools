@@ -29,9 +29,14 @@
         <dl class="form-group">
             <dt class="input-label"><label autocapitalize="off" autofocus="autofocus">
                 请选择DOC文件</label></dt>
-            <dd class="h-200 width-full btn btn-outline text-center fs-3">
+            <dd class="h-200 width-full btn btn-outline text-center fs-3 ">
                 <input autocapitalize="off" autofocus="autofocus" class="upload cursor-p"
                        id="upload" name="upload" type="file"/>
+                <div class="mb-4 mt-4">
+                    <img th:src="@{/img/word-80.png}"/>
+                    <img th:src="@{/img/right-arrow.png}"/>
+                    <img th:src="@{/img/pdf-80.png}"/>
+                </div>
                 <label>选择DOC文件</label>
             </dd>
         </dl>
