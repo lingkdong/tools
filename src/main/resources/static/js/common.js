@@ -332,3 +332,6 @@ function makePreZero(obj, len) {
     }
     return  zero+value;
 }
+function isIE() {
+    return (!+[1,])
+}
