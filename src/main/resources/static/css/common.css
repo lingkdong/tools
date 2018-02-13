@@ -1271,6 +1271,40 @@ dl.form-group > dd .form-control.is-autocheck-errored {
     box-shadow: none
 }
 
+.btn-outline2 {
+    color: #959da5;
+    background-color: #fff;
+    background-image: none
+}
+
+.btn-outline2 .Counter {
+    background-color: rgba(27, 31, 35, 0.07)
+}
+
+.btn-outline2:hover, .btn-outline2:active, .btn-outline2.selected, [open] > .btn-outline2 {
+    color: #fff;
+    background-color: #959da5;
+    background-image: none;
+    border-color: #959da5
+}
+
+.btn-outline2:hover .Counter, .btn-outline2:active .Counter, .btn-outline2.selected .Counter, [open] > .btn-outline2 .Counter {
+    color: #959da5;
+    background-color: #fff
+}
+
+.btn-outline2:focus {
+    border-color: #959da5;
+    box-shadow: 0 0 0 0.2em rgba(3, 102, 214, 0.3)
+}
+
+.btn-outline2:disabled, .btn-outline2.disabled {
+    color: rgba(27, 31, 35, 0.3);
+    background-color: #fff;
+    border-color: rgba(27, 31, 35, 0.15);
+    box-shadow: none
+}
+
 .btn-with-count {
     float: left;
     border-top-right-radius: 0;
