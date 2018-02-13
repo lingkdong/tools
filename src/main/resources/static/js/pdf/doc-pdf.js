@@ -46,7 +46,6 @@ function fileTypeDetect(obj) {
     return true;
 }
 function wordSelect() {
-    $(uploadDiv).removeClass("flash-success")
     $(uploadImg).html(word_select_html);
     $(uploadInfo).html("请选择Word文件")
 }
@@ -58,7 +57,7 @@ function word(obj) {
 }
 
 function wordSelectError() {
-    $(uploadDiv).addClass("flash-error");
+    $(uploadDiv).removeClass("flash-success").addClass("flash-error");
     $(upload).attr(DISABLED, DISABLED);
     setTimeout(function () {
         $(uploadDiv).removeClass("flash-error");
@@ -67,5 +66,5 @@ function wordSelectError() {
     }, 2000);
 }
 function wordSelectSuccess() {
-    $(uploadDiv).addClass("flash-success")
+    $(uploadDiv).removeClass("flash-error").addClass("flash-success")
 }
