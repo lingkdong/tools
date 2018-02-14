@@ -33,8 +33,8 @@ function fileTypeDetect(obj) {
         return false
     }
     var name = obj.value;
-    var fileName = name.substring(name.lastIndexOf(".") + 1).toLowerCase();
-    if (!(fileName == "doc" || fileName == "docx" || fileName == "txt")) {
+    var fileType = name.substring(name.lastIndexOf(".") + 1).toLowerCase();
+    if (!(fileType == "doc" || fileType == "docx" || fileType == "txt")) {
         wordSelectError(obj,"文件格式错误，请选择Word格式文件上传");
         return false
     }
