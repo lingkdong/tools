@@ -43,7 +43,8 @@ function fileTypeDetect(obj) {
 }
 function wordSelect() {
     $(uploadImg).html(word_select_html);
-    $(uploadInfo).html("请选择Word文件")
+    $(uploadInfo).html("请选择Word文件");
+    $(uploadDiv).removeClass("flash-success").removeClass("flash-error");
 }
 
 function wordSelectError(obj,errorInfo) {
