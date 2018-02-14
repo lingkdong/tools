@@ -16,7 +16,7 @@ function fileTypeDetect(obj) {
         wordSelect();
         return true;
     } else {
-        word(obj)
+        $(uploadInfo).html(obj.value);
     }
     var fileSize = 0;
     if (isIE && !obj.files) {
@@ -29,17 +29,13 @@ function fileTypeDetect(obj) {
     }
     var size = fileSize / 1024;
     if (size > 2000 * 10 * 10) {
-        alertError("附件不能大于200M");
-        obj.value = "";
-        wordSelectError()
+        wordSelectError(obj,"附件不能大于200M");
         return false
     }
     var name = obj.value;
     var fileName = name.substring(name.lastIndexOf(".") + 1).toLowerCase();
     if (!(fileName == "doc" || fileName == "docx" || fileName == "txt")) {
-        alertError("请选择Word格式文件上传！");
-        obj.value = "";
-        wordSelectError()
+        wordSelectError(obj,"文件格式错误，请选择Word格式文件上传");
         return false
     }
     wordSelectSuccess();
@@ -50,21 +46,12 @@ function wordSelect() {
     $(uploadInfo).html("请选择Word文件")
 }
 
-function word(obj) {
-
-    $(uploadImg).html(word_html);
-    $(uploadInfo).html(obj.value);
-}
-
-function wordSelectError() {
+function wordSelectError(obj,errorInfo) {
+    obj.value = "";
+    $(uploadImg).html(errorInfo);
     $(uploadDiv).removeClass("flash-success").addClass("flash-error");
-    $(upload).attr(DISABLED, DISABLED);
-    setTimeout(function () {
-        $(uploadDiv).removeClass("flash-error");
-        $(upload).removeAttr(DISABLED);
-        wordSelect()
-    }, 2000);
 }
 function wordSelectSuccess() {
+    $(uploadImg).html(word_html);
     $(uploadDiv).removeClass("flash-error").addClass("flash-success")
 }
