@@ -25,14 +25,14 @@
             </th:block>
         </nav>
     </div>
-    <div class="setup-form">
+    <form class="setup-form" method="POST" enctype="multipart/form-data">
         <dl class="form-group">
             <dt class="input-label"><label autocapitalize="off" autofocus="autofocus">
                 请选择DOC文件</label></dt>
             <dd class="h-200 width-full btn btn-outline2 text-center fs-3 " id="upload-div">
                 <input autocapitalize="off" autofocus="autofocus" class="upload cursor-p"
-                       id="upload" name="upload" type="file"  accept=".doc,.docx,.txt" />
-                <div class="mb-4 mt-4" id="upload-img">
+                       id="file" name="file" type="file"  accept=".doc,.docx,.txt" />
+                <div class="mb-4 mt-4" id="upload-icon">
                     <img th:src="@{/img/word-80.png}"/>
                     <img th:src="@{/img/right-arrow.png}"/>
                     <img th:src="@{/img/pdf-80.png}"/>
@@ -40,13 +40,13 @@
                 <label id="upload-info">选择Word文件</label>
             </dd>
         </dl>
-        <button class="btn btn-primary" id="calculate">
+        <button class="btn btn-primary" id="convert">
             转换
         </button>
         <div id="js-flash-container" class="mt-3" style="width: 440px">
 
         </div>
-    </div>
+    </form>
 </div>
 </body>
 </html>

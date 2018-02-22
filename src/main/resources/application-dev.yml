@@ -32,3 +32,9 @@ prefox:
 #    user: pre_fox@outlook.com
 #    pass: outlook@109964
    website: http://127.0.0.1:8081
+ file:
+  upload:
+   temp: '\usr\local\webapps\prefox\file\upload\temp'
+   basic: '\usr\local\webapps\prefox\file\upload\basic'
+  download:
+   temp: '\usr\local\webapps\prefox\file\download\temp'

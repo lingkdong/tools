@@ -15,6 +15,7 @@ public class DateUtil {
     public final static  String DATE_FORMAT="yyyy-MM-dd";
     public final static  String G_DATE_FORMAT="G yyyy-MM-dd";
     public final static  String DATE_FORMAT_2="yyyy/MM/dd";
+    public final static  String DATE_FORMAT_FULL="yyyyMMddHHmmss";
     public static String formatDate(Date date, String format) {
         SimpleDateFormat sdf = new SimpleDateFormat(format);
         return sdf.format(date);
