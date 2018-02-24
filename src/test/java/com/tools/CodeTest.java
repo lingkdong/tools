@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.tools.utils.CssFormator;
 import com.tools.utils.StringUtil;
+import org.jodconverter.office.OfficeManager;
 import org.junit.Test;
 
 import java.io.*;
@@ -88,5 +89,9 @@ public class CodeTest {
 //        System.out.println(StringUtil.getValidCode(1000));
         int test=0x7fffffff;
         System.out.println(test);
+    }
+
+    @Test
+    public void jodconverterCoreTest(){
     }
 }

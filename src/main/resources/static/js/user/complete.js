@@ -163,7 +163,7 @@ function sendComplete() {
             type: "post",
             url: BASE_COMPLETE_URL+"send-complete.json",
             async: true,
-            dataType: "text",
+            dataType: "json",
             data: {
                 trueName: $(trueName).val().trim(),
                 birthday: makePreZero(birthMonth,2)+"/" + makePreZero(birthday,2)+"/"+$(birthYear).val(),
@@ -188,7 +188,6 @@ function sendComplete() {
 }
 // back program detect result
 function backDetectResult(result) {
-    result = JSON.parse(result);
     if (HttpStatus.OK == result.status) {
         return true;
     } else if (HttpStatus.LOGIN_EXPIRED == result.status) {

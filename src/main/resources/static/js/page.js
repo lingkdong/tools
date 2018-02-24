@@ -19,11 +19,10 @@ function loginOut() {
         type: "post",
         url: LOGIN_OUT_BASE_URL+"login-out.json",
         async: true,
-        dataType: "text",
+        dataType: "json",
         data: {
         },
         success: function (result) {
-           result=JSON.parse(result);
             if (HttpStatus.OK == result.status) {
                 location.reload();
             }else {

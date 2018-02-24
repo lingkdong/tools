@@ -38,3 +38,7 @@ prefox:
    basic: '\usr\local\webapps\prefox\file\upload\basic'
   download:
    temp: '\usr\local\webapps\prefox\file\download\temp'
+ openOffice:
+   host: 127.0.0.1
+   port: 8100
+   home: 'E:\Program Files (x86)\OpenOffice 4'

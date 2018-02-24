@@ -95,7 +95,7 @@ function dateBetween() {
             type: "post",
             url: PRE_FOX_ANON_BASE + "/date/date-between.json",
             async: true,
-            dataType: "text",
+            dataType: "json",
             data: {
                 startDate: _startDate,
                 endDate: _endDate
@@ -105,7 +105,6 @@ function dateBetween() {
             },
             success: function (result) {
                 if (backDetectResult(result) == true) {
-                    result = JSON.parse(result);
                     var startDate = result.data.startDate;
                     var endDate = result.data.endDate;
                     addSuccessMsg(msgContainer, '<p>' + startDate + ' - ' + endDate + '</p><span class="fw-bold fs-3">' + result.data.differ + '</span>')
@@ -123,7 +122,6 @@ function dateBetween() {
 
 // back program detect result
 function backDetectResult(result) {
-    result = JSON.parse(result);
     if (HttpStatus.OK == result.status) {
         return true;
     } else if (HttpStatus.PARAM_INCORRECT == result.status) {

@@ -9,4 +9,5 @@ import org.springframework.web.multipart.MultipartFile;
 @Data
 public class ConvertFileDto {
     private MultipartFile file;
+    private String token;
 }

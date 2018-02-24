@@ -20,6 +20,10 @@ public class DateUtil {
         SimpleDateFormat sdf = new SimpleDateFormat(format);
         return sdf.format(date);
     }
+    public static String formatDate(Date date) {
+        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+        return sdf.format(date);
+    }
     public static Integer getDiffDay(Date startDate,Date endDate){
         try {
             return  (int) (((DateUtils.parseDate(formatDate(startDate,DATE_FORMAT),DATE_FORMAT)).getTime() - (DateUtils.parseDate

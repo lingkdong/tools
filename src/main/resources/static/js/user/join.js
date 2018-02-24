@@ -121,7 +121,7 @@ function signUp() {
             type: "post",
             url: "create.json",
             async: true,
-            dataType: "text",
+            dataType: "json",
             data: {
                 username: $(username).val(),
                 password: md5($(password).val()),
@@ -187,7 +187,6 @@ function emailUnique() {
 }
 // back program detect result
 function backDetectResult(result) {
-    result = JSON.parse(result);
     if (HttpStatus.OK == result.status) {
         return true;
     } else if (HttpStatus.PARAM_INCORRECT == result.status) {

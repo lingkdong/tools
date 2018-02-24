@@ -5,13 +5,12 @@ function pretty() {
             type: "post",
             url: getPrettyUrl(TYPE),
             async: true,
-            dataType: "text",
+            dataType: "json",
             data: {
                 input: $(input).val(),
                 dbType: $("#dbType").val()
             },
             success: function (result) {
-                result=JSON.parse(result);
                 if (HttpStatus.PARAM_INCORRECT == result.status) {
                     alertError(type + "格式解析出错，请检查您的输入");
                 }else {

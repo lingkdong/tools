@@ -101,7 +101,7 @@ function dateAdd() {
             type: "post",
             url: PRE_FOX_ANON_BASE + "/date/date-add.json",
             async: true,
-            dataType: "text",
+            dataType: "json",
             data: {
                 startDate: _startDate,
                 operator: $(operator).val(),
@@ -112,7 +112,6 @@ function dateAdd() {
             },
             success: function (result) {
                 if (backDetectResult(result) == true) {
-                    result = JSON.parse(result);
                     var startDate = result.data.startDate;
                     var endDate = result.data.endDate;
                     addSuccessMsg(msgContainer, '<p>' + startDate + ' ' + result.data.operator + ' ' + result.data.differ + '</p>' +
@@ -131,7 +130,6 @@ function dateAdd() {
 
 // back program detect result
 function backDetectResult(result) {
-    result = JSON.parse(result);
     if (HttpStatus.OK == result.status) {
         return true;
     } else if (HttpStatus.PARAM_INCORRECT == result.status) {

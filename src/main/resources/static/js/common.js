@@ -29,7 +29,10 @@ var HttpStatus = {
     LOGIN_EXPIRED: 4013,
     INTERNAL_SERVER_ERROR: 5003,
     NOT_EXIST: 4014,
-    USER_NOT_EXIST: 4002
+    USER_NOT_EXIST: 4002,
+    FILE_EMPTY: 4015,
+    FILE_UPLOAD_ERROR: 4016,
+    FILE_CONVERT_ERROR: 4017
 }
 var FlashType = {
     SUCCESS: "success",
@@ -46,7 +49,7 @@ var year_reg = /^[0-9]{4}$/;
 var month_reg = /^(0?[1-9]|1[0-2])$/;
 var day_reg = /^((0?[1-9])|((1|2)[0-9])|30|31)$/;
 var phone_reg = /^0?(13[0-9]|14[56789]|15[012356789]|166|17[012345678]|18[0-9]|19[89])[0-9]{8}$/;
-var positive_reg=/^[0-9]*[1-9][0-9]*$/;
+var positive_reg = /^[0-9]*[1-9][0-9]*$/;
 function isUserName(value) {
     return usename_reg.test(value);
 }
@@ -163,7 +166,7 @@ function addMsg(parent, type, msg) {
         if ((!isExist(parent)) || isBlank(type)) {
             alert(msg);
         } else {
-            var html = '<div class="flash flash-full flash-' + type + '"><button class="flash-close' +
+            var html = '<div class="flash flash-full flash-' + type + '" style="border-radius: 5px"><button class="flash-close' +
                 ' js-flash-close outline-none" onclick="closeParent(this)" type="button" aria-label="Dismiss this message"><svg aria-hidden="true" class="octicon octicon-x" height="16" version="1.1" viewBox="0 0 12 16" width="12"><path fill-rule="evenodd" d="M7.48 8l3.75 3.75-1.48 1.48L6 9.48l-3.75 3.75-1.48-1.48L4.52 8 .77 4.25l1.48-1.48L6 6.52l3.75-3.75 1.48 1.48z"></path></svg></button> ' +
                 '<span class="flash-add-info">' + msg + '</span></div>';
             $(parent).html(html)
@@ -325,12 +328,12 @@ function jump_page(url) {
 
 function makePreZero(obj, len) {
     var value = $(obj).val() + "";
-    len=len-value.length;
+    len = len - value.length;
     var zero = ""
-    for ( i = 0; i<len; i++) {
+    for (i = 0; i < len; i++) {
         zero = zero + "0";
     }
-    return  zero+value;
+    return zero + value;
 }
 function isIE() {
     return (!+[1,])

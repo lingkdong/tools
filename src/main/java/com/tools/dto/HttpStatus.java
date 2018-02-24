@@ -42,6 +42,8 @@ public enum HttpStatus {
     LOGIN_EXPIRED(4013, "login expired"),
     NOT_EXIT(4014, "not exit"),
     FILE_EMPTY(4015, "file empty"),
+    FILE_UPLOAD_ERROR(4016, "file upload error"),
+    FILE_CONVERT_ERROR(4017, "file convert error"),
 
     // 5xxx  Server Error
     SERVER_ERROR(5000, "Server Error"),

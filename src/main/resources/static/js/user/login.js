@@ -23,7 +23,7 @@ function sendLogin() {
             type: "post",
             url: PRE_FOX_ANON_BASE+"/user/send-login.json",
             async: true,
-            dataType: "text",
+            dataType: "json",
             data: {
                 username: $(username).val(),
                 password: md5($(password).val())
@@ -48,7 +48,6 @@ function sendLogin() {
 }
 
 function backDetectResult(result) {
-    result = JSON.parse(result);
     if (HttpStatus.OK == result.status) {
         var url =PRE_FOX_INDEX;
         if (!isBlank(result.data)) {

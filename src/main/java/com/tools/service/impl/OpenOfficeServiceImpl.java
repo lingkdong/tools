@@ -1,11 +1,12 @@
 package com.tools.service.impl;
 
-import com.artofsolving.jodconverter.DocumentConverter;
-import com.artofsolving.jodconverter.openoffice.connection.OpenOfficeConnection;
-import com.artofsolving.jodconverter.openoffice.connection.SocketOpenOfficeConnection;
-import com.artofsolving.jodconverter.openoffice.converter.OpenOfficeDocumentConverter;
 import com.tools.service.OpenOfficeService;
 import lombok.extern.slf4j.Slf4j;
+import org.jodconverter.DocumentConverter;
+import org.jodconverter.JodConverter;
+import org.jodconverter.office.LocalOfficeManager;
+import org.jodconverter.office.OfficeUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -17,24 +18,30 @@ import java.net.ConnectException;
 @Slf4j
 @Service
 public class OpenOfficeServiceImpl implements OpenOfficeService {
+    @Value("${prefox.openOffice.home}")
+    private String home;
+    @Value("${prefox.openOffice.host}")
+    private String host;
+    @Value("${prefox.openOffice.port}")
+    private int port;
+
     @Override
     public boolean convert(File orig, File dest) {
-        OpenOfficeConnection connection=null;
+        final LocalOfficeManager officeManager = LocalOfficeManager.builder().officeHome(home).install().build();
         try {
-            // connect to an OpenOffice.org instance running on port 8100
-           connection = new SocketOpenOfficeConnection(8100);
-            connection.connect();
-            // convert
-            DocumentConverter converter = new OpenOfficeDocumentConverter(connection);
-            converter.convert(orig, dest);
+            officeManager.start();
+            // Convert
+            JodConverter
+                    .convert(orig)
+                    .to(dest)
+                    .execute();
             return true;
-        } catch (ConnectException e) {
-            log.error("<OpenOfficeServiceImpl.convert failed, {} {} >", e, e.getStackTrace()[0].toString());
-        }finally {
-            // close the connection
-            if(connection!=null)connection.disconnect();
+        } catch (Exception e) {
+            log.error("<OpenOfficeServiceImpl.convert failed,fileName:{} {} {}  >",orig.getName()
+                    , e, e.getStackTrace  ()[0].toString());
+        } finally {
+            OfficeUtils.stopQuietly(officeManager);
         }
-
         return false;
     }
 }

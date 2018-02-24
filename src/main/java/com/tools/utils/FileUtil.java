@@ -12,10 +12,14 @@ import java.io.*;
 public class FileUtil {
 
     public static File uploadFile(MultipartFile multipartFile,String dir){
+        return uploadFile(multipartFile,dir,multipartFile.getOriginalFilename());
+    }
+
+    public static File uploadFile(MultipartFile multipartFile,String dir,String fileName){
         File file=null;
         try {
             markDir(dir);
-            file=new File(dir+File.separator+multipartFile .getOriginalFilename());
+            file=new File(dir+File.separator+fileName);
             BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(file));
             out.write(multipartFile.getBytes());
             out.flush();
@@ -27,7 +31,6 @@ public class FileUtil {
         }
         return file;
     }
-
     public static void markDir(String path){
         File dir = new File(path);
         if (!dir.exists()) {
@@ -37,6 +40,9 @@ public class FileUtil {
 
     public static String getNamePrefix(String fileName){
         return fileName.substring(0,fileName.lastIndexOf("."));
+
+    }public static String getNameSuffix(String fileName){
+        return fileName.substring(fileName.lastIndexOf("."));
     }
 
 }

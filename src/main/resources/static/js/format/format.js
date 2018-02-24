@@ -50,12 +50,11 @@ function format_pretty(type) {
             type: "post",
             url: getPrettyUrl(type),
             async: true,
-            dataType: "text",
+            dataType: "json",
             data: {
                 input: $(input).val()
             },
             success: function (result) {
-                result=JSON.parse(result)
                 if (HttpStatus.PARAM_INCORRECT == result.status) {
                     alertError(type + "输入错误，请检查您的数据");
                 } else {
@@ -77,12 +76,11 @@ function format_compress(type) {
             type: "post",
             url: getCompressUrl(type),
             async: true,
-            dataType: "text",
+            dataType: "json",
             data: {
                 input: $(input).val()
             },
             success: function (result) {
-                result=JSON.parse(result)
                 if (HttpStatus.PARAM_INCORRECT == result.status) {
                     alertError(type + "输入错误，请检查您的数据");
                 } else {

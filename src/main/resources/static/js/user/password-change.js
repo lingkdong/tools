@@ -38,7 +38,7 @@ function sendChange() {
             type: "post",
             url: PRE_FOX_ANON_BASE + "/user/send-password-change.json",
             async: true,
-            dataType: "text",
+            dataType: "json",
             data: {
                 "password":  md5($(password).val()),
                 "token":$(passwordBody).attr("data-token")
@@ -63,7 +63,6 @@ function sendChange() {
 }
 
 function backDetectResult(result) {
-    result = JSON.parse(result);
     if (HttpStatus.OK == result.status) {
         return true;
     } else if (HttpStatus.PARAM_INCORRECT == result.status) {
