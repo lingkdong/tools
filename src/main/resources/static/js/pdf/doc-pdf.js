@@ -27,7 +27,13 @@ function fileDetect(obj) {
         alertError("请选择Word格式文件")
         return false;
     } else {
-        $(uploadInfo).html(obj.value);
+        var fileName=obj.value;
+        fileName=fileName.substring(fileName.lastIndexOf("\\")+1);
+        if(fileName.length>40){
+            var index=fileName.lastIndexOf(".");
+            fileName=fileName.substring(0,40)+"..."+fileName.substring(index)
+        }
+        $(uploadInfo).html(fileName);
     }
     var fileSize = 0;
     if (isIE && !obj.files) {
