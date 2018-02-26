@@ -174,7 +174,7 @@ function sendComplete() {
             success: function (result) {
                 if (backDetectResult(result)==true)
                 {
-                    returnToIndex();
+                    jump_index();
                 }
             },
             error: function (result) {

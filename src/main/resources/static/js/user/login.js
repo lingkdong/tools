@@ -56,7 +56,7 @@ function backDetectResult(result) {
         try {
             window.location.href=url;
         }catch (error){
-            returnToIndex();
+            jump_index();
         }
 
     } else if (HttpStatus.PARAM_INCORRECT == result.status) {

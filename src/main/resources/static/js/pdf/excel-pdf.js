@@ -17,10 +17,10 @@ $(function () {
         return false;
     })
 })
-var type_array=new Array("doc","docx","txt","rtf","html","wpd")
-var uploadIcon_Select = '<img src="/img/word-80.png"/><img src="/img/right-arrow.png"/><img' +
+var type_array=new Array("csv","xls","xlsx","tsv")
+var uploadIcon_Select = '<img src="/img/excel-128.png" class="wh-80"/><img src="/img/right-arrow.png"/><img' +
     ' src="/img/pdf-80.png"/>';
-var uploadIcon_Success = '<img src="/img/word-96.png"/>';
+var uploadIcon_Success = '<img src="/img/excel-128.png" class="wh-96"/>';
 function fileDetect(obj) {
     if (isBlank(obj.value)) {
         uploadSelect();
@@ -50,7 +50,7 @@ function fileDetect(obj) {
     var name = obj.value;
     var fileType = name.substring(name.lastIndexOf(".") + 1).toLowerCase();
     if (!(isInArray(type_array,fileType))) {
-        uploadError(obj, "文件格式错误，请选择Word格式文件上传");
+        uploadError(obj, "文件格式错误，请选择Excel格式文件上传");
         return false
     }
     uploadSuccess();
@@ -58,7 +58,7 @@ function fileDetect(obj) {
 }
 function uploadSelect() {
     $(uploadIcon).html(uploadIcon_Select);
-    $(uploadInfo).html("选择Word文件");
+    $(uploadInfo).html("选择Excel文件");
     $(uploadDiv).removeClass("flash-success").removeClass("flash-error");
 }
 
@@ -75,12 +75,12 @@ function doConvert() {
     //detect
     var flag=$(file).attr("valid");
     if (flag=="true") {
-        $(convertForm).attr("action",PDF_BASE_URL + "/doc-pdf.json");
+        $(convertForm).attr("action",PDF_BASE_URL + "/excel-pdf.json");
         // $(convertForm).submit();
         $(convertForm).ajaxSubmit({
             dataType: "json",
             beforeSend: function () {
-                $(convert).attr(DISABLED, true).html("转化中...");
+                $(convert).html("转化中...").attr(DISABLED, true);
             },
             success: function (result) {
                 if(backDetectResult(result)){

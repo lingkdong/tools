@@ -44,7 +44,7 @@ function sendChange() {
                 "token":$(passwordBody).attr("data-token")
             },
             beforeSend: function () {
-                $(change).attr(DISABLED, true).val("更改密码...");
+                $(change).attr(DISABLED, true).html("更改密码...");
             },
             success: function (result) {
                 if (backDetectResult(result)) {
@@ -56,7 +56,7 @@ function sendChange() {
                 alertServerError();
             },
             complete: function () {
-                $(change).removeAttr(DISABLED).val("更改密码");
+                $(change).removeAttr(DISABLED).html("更改密码");
             }
         });
     }

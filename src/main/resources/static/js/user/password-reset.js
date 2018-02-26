@@ -20,7 +20,7 @@ function sendReset() {
                 "email": $(email).val(),
             },
             beforeSend: function () {
-                $(reset).attr(DISABLED, true).val("邮件发送中...");
+                $(reset).attr(DISABLED, true).html("邮件发送中...");
             },
             success: function (result) {
                 if (backDetectResult(result)) {
@@ -32,7 +32,7 @@ function sendReset() {
                 alertServerError();
             },
             complete: function () {
-                $(reset).removeAttr(DISABLED).val("发送重置邮件");
+                $(reset).removeAttr(DISABLED).html("发送重置邮件");
             }
         });
     }
@@ -87,4 +87,4 @@ function backError(item) {
     }
 }
 var reset_success_html='<label for="return"> 重置链接已发送至您的邮箱，请检查邮箱。如果几分钟内仍未收到收到重置邮件，请检查您的邮箱垃圾桶。 </label><input' +
-    ' class="btn btn-primary btn-block" tabindex="3" id="return" onclick="returnToIndex()" value="返回登录"/>';
+    ' class="btn btn-primary btn-block" tabindex="3" id="return" onclick="jump_index()" value="返回登录"/>';

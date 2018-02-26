@@ -9,6 +9,7 @@ import org.jodconverter.office.OfficeUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.io.File;
 import java.net.ConnectException;
 
@@ -24,7 +25,6 @@ public class OpenOfficeServiceImpl implements OpenOfficeService {
     private String host;
     @Value("${prefox.openOffice.port}")
     private int port;
-
     @Override
     public boolean convert(File orig, File dest) {
         final LocalOfficeManager officeManager = LocalOfficeManager.builder().officeHome(home).install().build();

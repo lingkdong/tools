@@ -13,10 +13,10 @@
     <th:block th:each="item:${page.content}">
         <div class="newsfeed-placeholder p-5 mb-4">
             <h3 class="h2 lh-condensed mb-2" th:text="${item.name}"/>
-            <txt th:text="${item.description}"></txt>
+            [[${item.description}]]
             <div class="f4">
                 <th:block th:each="sub:${item.resourceDtos}">
-                   <a class="btn btn-outline mt-2" th:href="${sub.url}" th:text="${sub.name}"/>
+                   <a class="btn btn-outline mt-2" target="_blank" th:href="${sub.url}" th:text="${sub.name}"/>
                 </th:block>
             </div>
         </div>

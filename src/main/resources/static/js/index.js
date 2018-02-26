@@ -23,7 +23,7 @@ function dashboard_more(obj) {
                         var innerHtml = '';
                         if (item.resourceDtos && item.resourceDtos.length > 0) {
                             $.each(item.resourceDtos, function (subIndex,sub) {
-                                innerHtml += '<a class="btn btn-outline mt-2" href="' + sub.url + '">'+sub.name+'</a>'
+                                innerHtml += '<a class="btn btn-outline mt-2" target="_blank" href="' + sub.url + '">'+sub.name+'</a>'
                             })
                         }
                         var description=(item.description)?item.description:'';

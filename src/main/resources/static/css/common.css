@@ -45,7 +45,17 @@ details:not([open]) > *:not(summary) {
 .details-reset > summary::before {
     display: none
 }
-
+.f-black{
+    color: #000;
+}
+.wh-80{
+    width: 80px!important;
+    height: 80px!important;
+}
+.wh-96{
+    width: 96px!important;
+    height: 96px!important;
+}
 .details-reset > summary::-webkit-details-marker {
     display: none
 }
@@ -1272,7 +1282,7 @@ dl.form-group > dd .form-control.is-autocheck-errored {
 }
 
 .btn-outline2 {
-    color: #959da5;
+    /*color: #959da5;*/
     background-color: #fff;
     background-image: none
 }
@@ -1283,18 +1293,18 @@ dl.form-group > dd .form-control.is-autocheck-errored {
 
 .btn-outline2:hover, .btn-outline2:active, .btn-outline2.selected, [open] > .btn-outline2 {
     color: #fff;
-    background-color: #959da5;
+    background-color: #000;
     background-image: none;
-    border-color: #959da5
+    border-color: #000
 }
 
 .btn-outline2:hover .Counter, .btn-outline2:active .Counter, .btn-outline2.selected .Counter, [open] > .btn-outline2 .Counter {
-    color: #959da5;
+    color: #000;
     background-color: #fff
 }
 
 .btn-outline2:focus {
-    border-color: #959da5;
+    border-color: #000;
     box-shadow: 0 0 0 0.2em rgba(3, 102, 214, 0.3)
 }
 

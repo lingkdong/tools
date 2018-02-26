@@ -1,9 +1,6 @@
 package com.tools.service.impl;
 
-import com.tools.dto.BaseResponseDTO;
-import com.tools.dto.ConvertFileDto;
-import com.tools.dto.ErrorInfo;
-import com.tools.dto.HttpStatus;
+import com.tools.dto.*;
 import com.tools.service.OpenOfficeService;
 import com.tools.service.PdfService;
 import com.tools.utils.Constant;
@@ -11,15 +8,14 @@ import com.tools.utils.DateUtil;
 import com.tools.utils.FileUtil;
 import com.tools.worker.Worker;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by DT254 on 2018/2/22.
@@ -33,14 +29,43 @@ public class PdfServiceImpl implements PdfService {
     private String upDir;
     @Autowired
     private OpenOfficeService openOfficeService;
-
+    private final static List<String>WORD_TYPE= Arrays.asList(Constant.DOC,
+            Constant.DOCX,
+            Constant.TXT,
+            Constant.RTF,
+            Constant.HTML,
+            Constant.WPD);
+    private final static List<String>EXCEL_TYPE= Arrays.asList(Constant.CSV,
+            Constant.XLS,
+            Constant.XLSX,
+            Constant.TSV);
     @Override
     public BaseResponseDTO docToPdf(ConvertFileDto convertFileDto) {
+        return  fileToPdf(convertFileDto,WORD_TYPE);
+    }
+
+    @Override
+    public BaseResponseDTO excelToPdf(ConvertFileDto convertFileDto) {
+        return fileToPdf(convertFileDto,EXCEL_TYPE);
+    }
+
+    @Override
+    public File getFile(DownloadDto downloadDto) {
+        if (StringUtils.isBlank(downloadDto.getDownloadName()) || StringUtils.isBlank(downloadDto.getDateDir())) {
+            return null;
+        }
+        File file = new File(getDownPath(downloadDto.getDateDir(), downloadDto.getDownloadName()));
+        if (file.exists()) return file;
+
+        return null;
+    }
+
+    private BaseResponseDTO fileToPdf(ConvertFileDto convertFileDto, List<String> from) {
         MultipartFile file = convertFileDto.getFile();
         BaseResponseDTO dto = Worker.isNull("file", file);
         if (!Worker.isOK(dto)) return dto;
-        if (!(file.getOriginalFilename().endsWith(Constant.DOC) || file.getOriginalFilename().endsWith(Constant.DOCX) || file
-                .getOriginalFilename().endsWith(Constant.TXT))) {
+        String type = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")).toLowerCase();
+        if (!(from.contains(type))) {
             return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT, ErrorInfo.newErrorInfo().property("file")
                     .HttpStatus(HttpStatus.INVALID_FORMAT).build());
         }
@@ -64,19 +89,15 @@ public class PdfServiceImpl implements PdfService {
             return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT, ErrorInfo.newErrorInfo().property("file")
                     .HttpStatus(HttpStatus.FILE_UPLOAD_ERROR).build());
         }
-        boolean flag=false;
+        boolean flag = false;
         try {
-            FileUtil.markDir(downDir);
-            dest = new File(downDir
-                    + File.separator
-                    + dateDir
-                    + File.separator
-                    + FileUtil.getNamePrefix(orig.getName())
-                    + Constant.PDF);
+            dest = new File(getDownPath(dateDir,
+                    FileUtil.getNamePrefix(orig.getName()) + Constant.PDF));
+
             if (!openOfficeService.convert(orig, dest)) {
                 return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT, ErrorInfo.newErrorInfo().property("file")
                         .HttpStatus(HttpStatus.FILE_CONVERT_ERROR).build());
-            }else {
+            } else {
                 //delete orig
                 orig.delete();
             }
@@ -87,8 +108,17 @@ public class PdfServiceImpl implements PdfService {
         }
         Map map = new HashMap();
         map.put("name", namePrefix + Constant.PDF);
-        map.put("downLoadName", dest.getName());
-        map.put("date", dateDir);
+        map.put("downloadName", dest.getName());
+        map.put("dateDir", dateDir);
         return Worker.OK(map);
+    }
+
+    private String getDownPath(String dateDir, String fileName) {
+        FileUtil.markDir(downDir);
+        return downDir
+                + File.separator
+                + dateDir
+                + File.separator
+                + fileName;
     }
 }

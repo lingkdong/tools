@@ -101,7 +101,7 @@ function dateBetween() {
                 endDate: _endDate
             },
             beforeSend: function () {
-                $(calculate).attr(DISABLED, DISABLED).attr("计算中...")
+                $(calculate).attr(DISABLED, DISABLED).html("计算中...")
             },
             success: function (result) {
                 if (backDetectResult(result) == true) {
@@ -114,7 +114,7 @@ function dateBetween() {
                 alertServerError();
             },
             complete: function () {
-                $(calculate).removeAttr(DISABLED).attr("计算")
+                $(calculate).removeAttr(DISABLED).html("计算")
             }
         });
     }

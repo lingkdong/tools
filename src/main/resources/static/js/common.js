@@ -318,7 +318,7 @@ var PRE_FOX_AUTHC_BASE = "/tools/authc";
 var PRE_FOX_ANON_BASE = "/tools/anon";
 var PRE_FOX_INDEX = PRE_FOX_ANON_BASE + "/index";
 var PRE_FOX_LOGIN = PRE_FOX_ANON_BASE + "/user/login";
-function returnToIndex() {
+function jump_index() {
     window.location.href = PRE_FOX_INDEX;
 }
 
@@ -326,6 +326,9 @@ function jump_page(url) {
     window.location.href = url;
 }
 
+function open_blank(url) {
+    window.open (url,"_blank" ) ;
+}
 function makePreZero(obj, len) {
     var value = $(obj).val() + "";
     len = len - value.length;
@@ -337,4 +340,13 @@ function makePreZero(obj, len) {
 }
 function isIE() {
     return (!+[1,])
+}
+
+function isInArray(arr,value){
+    for(var i = 0; i < arr.length; i++){
+        if(value === arr[i]){
+            return true;
+        }
+    }
+    return false;
 }
