@@ -12,8 +12,8 @@
 <div th:fragment="content" th:remove="tag">
     <th:block th:each="item:${page.content}">
         <div class="newsfeed-placeholder p-5 mb-4">
-            <h3 class="h2 lh-condensed mb-2" th:text="${item.name}"/>
-            [[${item.description}]]
+            <h3 class="h2 lh-condensed mb-2 " th:text="${item.name}"/>
+            <span class="f6" th:utext="${item.description}"/>
             <div class="f4">
                 <th:block th:each="sub:${item.resourceDtos}">
                    <a class="btn btn-outline mt-2" target="_blank" th:href="${sub.url}" th:text="${sub.name}"/>

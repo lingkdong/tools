@@ -15,4 +15,6 @@ public class Constant {
     public final static String XLS=".xls";
     public final static String XLSX=".xlsx";
     public final static String TSV=".tsv";
+    public final static String PPT=".ppt";
+    public final static String PPTX=".pptx";
 }

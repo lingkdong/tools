@@ -39,6 +39,9 @@ public class PdfServiceImpl implements PdfService {
             Constant.XLS,
             Constant.XLSX,
             Constant.TSV);
+    private final static List<String>PPT_TYPE= Arrays.asList(Constant.PPT,
+            Constant.PPTX
+    );
     @Override
     public BaseResponseDTO docToPdf(ConvertFileDto convertFileDto) {
         return  fileToPdf(convertFileDto,WORD_TYPE);
@@ -47,6 +50,11 @@ public class PdfServiceImpl implements PdfService {
     @Override
     public BaseResponseDTO excelToPdf(ConvertFileDto convertFileDto) {
         return fileToPdf(convertFileDto,EXCEL_TYPE);
+    }
+
+    @Override
+    public BaseResponseDTO pptToPdf(ConvertFileDto convertFileDto) {
+        return fileToPdf(convertFileDto,PPT_TYPE);
     }
 
     @Override

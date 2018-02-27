@@ -53,6 +53,13 @@ public class PdfAction extends BaseAction {
         return pdfService.excelToPdf(convertFileDto);
     }
 
+    @PostMapping(value = "/ppt-pdf")
+    @ResponseBody
+    public BaseResponseDTO pptToPdf(ConvertFileDto convertFileDto) {
+        convertFileDto.setToken(DateUtil.formatDate(new Date(),DateUtil.DATE_FORMAT_FULL)+"_"+ MathUtils.getRandom(6));
+        return pdfService.pptToPdf(convertFileDto);
+    }
+
     @GetMapping(value = "/download")
     @ResponseBody
     public Object download(DownloadDto downloadDto,HttpServletResponse response) {

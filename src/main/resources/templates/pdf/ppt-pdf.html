@@ -4,8 +4,8 @@
       layout:decorate="page">
 <head>
     <meta charset="UTF-8"/>
-    <title>Excel to PDF</title>
-    <script th:src="@{/js/pdf/excel-pdf.js }"></script>
+    <title>PPT to PDF</title>
+    <script th:src="@{/js/pdf/ppt-pdf.js }"></script>
     <script th:src="@{/js/jquery.form.js }"></script>
 </head>
 <body>
@@ -29,16 +29,16 @@
     <form class="setup-form" id="convert-form" method="post" enctype="multipart/form-data">
         <dl class="form-group">
             <dt class="input-label"><label autocapitalize="off" autofocus="autofocus">
-                请选择Excel文件  (支持 CSV,XLS,XLSX,TSV 转成 PDF)</label></dt>
+                请选择PPT文件  (支持 PPT,PPTX 转成 PDF)</label></dt>
             <dd class="h-200 width-full btn btn-outline2 text-center fs-3 " id="upload-div">
                 <input  autofocus="autofocus" class="upload cursor-p"
-                       id="file" name="file" type="file"  accept=".csv,.xls,.xlsx,.tsv" valid="false"/>
+                       id="file" name="file" type="file"  accept=".ppt,.pptx" valid="false"/>
                 <div class="mb-4 mt-4" id="upload-icon">
-                    <img th:src="@{/img/excel-128.png}" class="wh-80"/>
+                    <img th:src="@{/img/ppt-80.png}" class="wh-80"/>
                     <img th:src="@{/img/right-arrow.png}"/>
                     <img th:src="@{/img/pdf-80.png}"/>
                 </div>
-                <label id="upload-info">选择Excel文件</label>
+                <label id="upload-info">选择PPT文件</label>
             </dd>
         </dl>
         <button class="btn btn-primary" id="convert">
