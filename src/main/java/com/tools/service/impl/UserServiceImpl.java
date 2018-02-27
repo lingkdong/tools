@@ -341,6 +341,52 @@ public class UserServiceImpl implements UserService {
         return users;
     }
 
+    @Override
+    public BaseResponseDTO getChange() {
+        //获取当前用户
+        User sessionUser = Worker.getCurrentUser();
+        if (sessionUser == null) return new BaseResponseDTO(HttpStatus.LOGIN_EXPIRED);
+        User user = userDao.findOne(sessionUser.getId());
+        if (user == null) return new BaseResponseDTO(HttpStatus.LOGIN_EXPIRED);
+        ChangeDto changeDto = new ChangeDto();
+        BeanUtil.copy(changeDto, user);
+        return Worker.OK(changeDto);
+    }
+
+    @Override
+    public BaseResponseDTO change(SaveChangeDto saveChangeDto) {
+        List<ErrorInfo> errorInfos = new ArrayList<>();
+        //trueName
+        BaseResponseDTO dto = Worker.isBlank2("trueName", saveChangeDto.getTrueName());
+        if (!Worker.isOK(dto)) errorInfos.add((ErrorInfo) dto.getData());
+        //birthDay
+        dto = Worker.isNull("birthday", saveChangeDto.getBirthday());
+        if (!Worker.isOK(dto)) errorInfos.add((ErrorInfo) dto.getData());
+        //male
+        dto = Worker.isNull("male", saveChangeDto.getMale());
+        if (!Worker.isOK(dto)) errorInfos.add((ErrorInfo) dto.getData());
+        //skillTag
+        dto = Worker.isBlank2("skillTag", saveChangeDto.getSkillTag());
+        if (!Worker.isOK(dto)) errorInfos.add((ErrorInfo) dto.getData());
+        //phone can blank but valid format
+        if (StringUtils.isNotBlank(saveChangeDto.getPhone())) {
+            if (!RegUtils.isPhone(saveChangeDto.getPhone())) errorInfos.add(ErrorInfo
+                    .newErrorInfo().property("phone").HttpStatus(HttpStatus.INVALID_FORMAT).build());
+        }
+        if (CollectionUtils.isNotEmpty(errorInfos)) return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT, errorInfos);
+        //获取当前用户
+        User sessionUser = Worker.getCurrentUser();
+        if (sessionUser == null) return new BaseResponseDTO(HttpStatus.LOGIN_EXPIRED);
+        User user = userDao.findOne(sessionUser.getId());
+        if (user == null) return new BaseResponseDTO(HttpStatus.LOGIN_EXPIRED);
+        if (BeanUtil.compareAndModify(user, saveChangeDto)) {
+            userDao.save(user);
+            //update sessionUser
+            BeanUtil.compareAndModify(sessionUser, saveChangeDto);
+        }
+        return Worker.OK();
+    }
+
     private  Page<User> findUsers(FindUsersDto findUsersDto, Pageable pageable){
         return (StringUtils.isBlank(findUsersDto.getUsername())) ? userDao.findAllByOrderByScoreDesc(pageable) : userDao
                 .findByUsernameContainingOrderByScoreDesc(findUsersDto.getUsername(), pageable);

@@ -12,6 +12,7 @@ body {
 svg:not(:root) {
     overflow: hidden;
 }
+
 a:hover {
     text-decoration: underline;
 }
@@ -45,17 +46,21 @@ details:not([open]) > *:not(summary) {
 .details-reset > summary::before {
     display: none
 }
-.f-black{
+
+.f-black {
     color: #000;
 }
-.wh-80{
-    width: 80px!important;
-    height: 80px!important;
+
+.wh-80 {
+    width: 80px !important;
+    height: 80px !important;
 }
-.wh-96{
-    width: 96px!important;
-    height: 96px!important;
+
+.wh-96 {
+    width: 96px !important;
+    height: 96px !important;
 }
+
 .details-reset > summary::-webkit-details-marker {
     display: none
 }
@@ -320,6 +325,10 @@ a.tabnav-extra:hover {
     width: 250px !important;
 }
 
+.w-440 {
+    width: 440px !important;
+}
+
 .w-120 {
     width: 120px !important;
 }
@@ -374,6 +383,10 @@ a.tabnav-extra:hover {
 
 .p-5 {
     padding: 32px !important
+}
+
+.p-1 {
+    padding: 10px !important
 }
 
 .flex-justify-center {
@@ -1837,4 +1850,17 @@ label {
     width: 80px;
     height: 80px;
     background: url("/img/word-80.png") no-repeat;
+}
+
+.Box {
+    background-color: #fff;
+    border: 1px solid #d1d5da;
+    border-radius: 3px
+}
+
+.Box-row {
+    padding: 16px;
+    margin-top: -1px;
+    list-style-type: none;
+    border-top: 1px solid #e1e4e8
 }
