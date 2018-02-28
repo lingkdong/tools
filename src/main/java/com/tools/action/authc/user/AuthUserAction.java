@@ -2,16 +2,14 @@ package com.tools.action.authc.user;
 
 import com.tools.dto.BaseResponseDTO;
 import com.tools.dto.HttpStatus;
-import com.tools.dto.user.ChangeDto;
+import com.tools.dto.user.ViewChangeDto;
 import com.tools.dto.user.CompleteDto;
 import com.tools.dto.user.SaveChangeDto;
 import com.tools.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Calendar;
@@ -57,7 +55,7 @@ public class AuthUserAction {
             return new ModelAndView("user/login");
         }
         ModelAndView mv=new ModelAndView("user/change");
-        ChangeDto changeDto= (ChangeDto) dto.getData();
+        ViewChangeDto changeDto= (ViewChangeDto) dto.getData();
         if(changeDto!=null&&changeDto.getBirthday()!=null){
             Calendar calendar=Calendar.getInstance();
             calendar.setTime(changeDto.getBirthday());
@@ -76,5 +74,10 @@ public class AuthUserAction {
         return userService.change(saveChangeDto);
     }
 
+    @PostMapping(value = "/avatar")
+    @ResponseBody
+    public BaseResponseDTO avatar(MultipartFile file) {
+         return userService.avatar(file);
+    }
 }
 

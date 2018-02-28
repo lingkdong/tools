@@ -5,6 +5,7 @@ import com.tools.dto.user.*;
 import com.tools.model.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -47,4 +48,6 @@ public interface UserService {
     BaseResponseDTO getChange();
 
     BaseResponseDTO change(SaveChangeDto saveChangeDto);
+
+    BaseResponseDTO avatar(MultipartFile multipartFile);
 }

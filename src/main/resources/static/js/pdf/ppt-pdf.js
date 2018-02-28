@@ -35,6 +35,13 @@ function fileDetect(obj) {
         }
         $(uploadInfo).html(fileName);
     }
+    var name = obj.value;
+    var fileType = name.substring(name.lastIndexOf(".") + 1).toLowerCase();
+    if (!(isInArray(type_array,fileType))) {
+        uploadError(obj, "文件格式错误，请选择PPT文件上传");
+        return false
+    }
+
     var fileSize = 0;
     if (isIE && !obj.files) {
         var filePath = obj.value;
@@ -51,12 +58,6 @@ function fileDetect(obj) {
     var size = fileSize / 1024;
     if (size > 2000) {
         uploadError(obj, "附件不能大于2M");
-        return false
-    }
-    var name = obj.value;
-    var fileType = name.substring(name.lastIndexOf(".") + 1).toLowerCase();
-    if (!(isInArray(type_array,fileType))) {
-        uploadError(obj, "文件格式错误，请选择PPT文件上传");
         return false
     }
     uploadSuccess();

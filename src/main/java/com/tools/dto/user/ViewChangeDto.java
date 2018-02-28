@@ -8,7 +8,7 @@ import java.util.Date;
  * Created by DT254 on 2018/1/26.
  */
 @Data
-public class ChangeDto {
+public class ViewChangeDto {
     private String username;
     private String email;
     private String picture;

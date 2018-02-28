@@ -277,6 +277,22 @@ a.tabnav-extra:hover {
     margin-right: 16px !important
 }
 
+.mr-4 {
+    margin-right: 24px !important
+}
+
+.mr-5 {
+    margin-right: 48px !important
+}
+
+.mr-6 {
+    margin-right: 96px !important
+}
+
+.mr-7 {
+    margin-right: 192px !important
+}
+
 .mr-2 {
     margin-right: 8px !important
 }
@@ -325,8 +341,8 @@ a.tabnav-extra:hover {
     width: 250px !important;
 }
 
-.w-440 {
-    width: 440px !important;
+.w-445 {
+    width: 445px !important;
 }
 
 .w-120 {
@@ -369,6 +385,10 @@ a.tabnav-extra:hover {
     margin-top: 8px !important
 }
 
+.mt-none {
+    margin-top: 0px !important
+}
+
 .mt-3 {
     margin-top: 16px !important
 }
@@ -385,8 +405,20 @@ a.tabnav-extra:hover {
     padding: 32px !important
 }
 
+.p-4 {
+    padding: 24px !important
+}
+
+.p-3 {
+    padding: 16px !important
+}
+
+.p-2 {
+    padding: 8px !important
+}
+
 .p-1 {
-    padding: 10px !important
+    padding: 4px !important
 }
 
 .flex-justify-center {
@@ -812,6 +844,14 @@ dl.form-group > dd .form-control.is-autocheck-errored {
 
 .f-left {
     float: left !important;
+}
+
+.f-right {
+    float: right !important;
+}
+
+.f-none {
+    float: none !important
 }
 
 .f6 {
@@ -1864,3 +1904,18 @@ label {
     list-style-type: none;
     border-top: 1px solid #e1e4e8
 }
+
+.edit-profile-avatar {
+    width: 200px
+}
+
+.edit-profile-avatar .manual-file-chooser {
+    opacity: 0.0001;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 34px;
+    padding: 0;
+    cursor: pointer
+}
+

@@ -1,6 +1,7 @@
 package com.tools.utils;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
@@ -11,38 +12,72 @@ import java.io.*;
 @Slf4j
 public class FileUtil {
 
-    public static File uploadFile(MultipartFile multipartFile,String dir){
-        return uploadFile(multipartFile,dir,multipartFile.getOriginalFilename());
+    public static File uploadFile(MultipartFile multipartFile, String dir) {
+        return uploadFile(multipartFile, dir, multipartFile.getOriginalFilename());
     }
 
-    public static File uploadFile(MultipartFile multipartFile,String dir,String fileName){
-        File file=null;
+    public static File uploadFile(MultipartFile multipartFile, String dir, String fileName) {
+        File file;
+        BufferedOutputStream out = null;
         try {
             markDir(dir);
-            file=new File(dir+File.separator+fileName);
-            BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(file));
+            file = new File(dir + File.separator + fileName);
+            out = new BufferedOutputStream(new FileOutputStream(file));
             out.write(multipartFile.getBytes());
             out.flush();
             out.close();
-        } catch (FileNotFoundException e) {
+        } catch (Exception e) {
             log.error("<FileUtil.uploadFile failed, {} {} >", e, e.getStackTrace()[0].toString());
-        } catch (IOException e) {
-            log.error("<FileUtil.uploadFile failed, {} {} >", e, e.getStackTrace()[0].toString());
+            return null;
+        } finally {
+            if (out != null) {
+                try {
+                    out.close();
+                } catch (IOException e) {
+                    log.error("<FileUtil.uploadFile failed, {} {} >", e, e.getStackTrace()[0].toString());
+                }
+            }
         }
         return file;
     }
-    public static void markDir(String path){
+
+    public static void markDir(String path) {
         File dir = new File(path);
         if (!dir.exists()) {
             dir.mkdirs();
         }
     }
 
-    public static String getNamePrefix(String fileName){
-        return fileName.substring(0,fileName.lastIndexOf("."));
+    public static String getNamePrefix(String fileName) {
+        return fileName.substring(0, fileName.lastIndexOf("."));
 
-    }public static String getNameSuffix(String fileName){
+    }
+
+    public static String getNameSuffix(String fileName) {
         return fileName.substring(fileName.lastIndexOf("."));
+    }
+
+    public static String FileBase64(File file) {
+        InputStream in = null;
+        byte[] data = null;
+        //读取图片字节数组
+        try {
+            in = new FileInputStream(file);
+            data = new byte[in.available()];
+            in.read(data);
+            in.close();
+        } catch (IOException e) {
+            log.error("<FileUtil.FileBase64 failed, {} {} >", e, e.getStackTrace()[0].toString());
+        }finally {
+            if(in!=null){
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    log.error("<FileUtil.FileBase64 failed, {} {} >", e, e.getStackTrace()[0].toString());
+                }
+            }
+        }
+        return new String(Base64.encodeBase64(data));
     }
 
 }

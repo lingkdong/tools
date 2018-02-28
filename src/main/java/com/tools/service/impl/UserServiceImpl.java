@@ -10,14 +10,12 @@ import com.tools.model.User;
 import com.tools.model.UserStatus;
 import com.tools.service.EmailService;
 import com.tools.service.UserService;
-import com.tools.utils.BeanUtil;
-import com.tools.utils.PrefoxEmailTemp;
-import com.tools.utils.RegUtils;
-import com.tools.utils.StringUtil;
+import com.tools.utils.*;
 import com.tools.worker.SessionWorker;
 import com.tools.worker.Worker;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AccountException;
@@ -26,14 +24,17 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.web.util.SavedRequest;
 import org.apache.shiro.web.util.WebUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.util.*;
 
 /**
@@ -47,7 +48,15 @@ public class UserServiceImpl implements UserService {
     private EmailService emailService;
     @Autowired
     private PrefoxEmailTemp prefoxEmailTemp;
-
+    @Value("${prefox.file.upload.basic}")
+    private String upBasic;
+    private final static List<String>AVATAR_TYPE= Arrays.asList(Constant.JPG,
+            Constant.JPEG,
+            Constant.PNG,
+            Constant.GIF
+    );
+    private int small=48;
+    private int large=200;
     @Override
     public boolean _nameUnique(String name, Long userId) {
         User user = userDao.findFirstByUsername(name);
@@ -348,8 +357,16 @@ public class UserServiceImpl implements UserService {
         if (sessionUser == null) return new BaseResponseDTO(HttpStatus.LOGIN_EXPIRED);
         User user = userDao.findOne(sessionUser.getId());
         if (user == null) return new BaseResponseDTO(HttpStatus.LOGIN_EXPIRED);
-        ChangeDto changeDto = new ChangeDto();
+        ViewChangeDto changeDto = new ViewChangeDto();
         BeanUtil.copy(changeDto, user);
+        if(StringUtils.isNotBlank(changeDto.getPicture())){
+            File avatar=new File(upBasic+File.separator+changeDto.getPicture());
+            if(avatar.exists()){
+                changeDto.setPicture(FileUtil.FileBase64(avatar));
+            }else {
+                changeDto.setPicture(null);
+            }
+        }
         return Worker.OK(changeDto);
     }
 
@@ -387,8 +404,42 @@ public class UserServiceImpl implements UserService {
         return Worker.OK();
     }
 
+    @Override
+    public BaseResponseDTO avatar(MultipartFile file) {
+        String type = FileUtil.getNameSuffix(file.getOriginalFilename()).toLowerCase();
+        if (!(AVATAR_TYPE.contains(type))) {
+            return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT, ErrorInfo.newErrorInfo().property("avatar")
+                    .HttpStatus(HttpStatus.INVALID_FORMAT).build());
+        }
+        User sessionUser = Worker.getCurrentUser();
+        if (sessionUser == null) return new BaseResponseDTO(HttpStatus.LOGIN_EXPIRED);
+        String avatarDir=getAvatarDir(sessionUser.getId());
+        File orig=FileUtil.uploadFile(file,upBasic+File.separator+avatarDir,Constant.AVATAR+type);
+        if(orig==null){
+            return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT, ErrorInfo.newErrorInfo().property("avatar")
+                    .HttpStatus(HttpStatus.FILE_UPLOAD_ERROR).build());
+        }
+        File largeFile=ImgUtil.doCompress(orig.getAbsolutePath(),large,large,1f,"_large",false);
+        //compress
+        File smallFile=ImgUtil.doCompress(orig.getAbsolutePath(),small,small,1f,"_small",false);
+        if(largeFile==null||smallFile==null){
+            return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT, ErrorInfo.newErrorInfo().property("avatar")
+                    .HttpStatus(HttpStatus.FILE_UPLOAD_ERROR).build());
+        }
+        orig.delete();
+        return Worker.OK(avatarDir+File.separator+smallFile.getName());
+    }
+
     private  Page<User> findUsers(FindUsersDto findUsersDto, Pageable pageable){
         return (StringUtils.isBlank(findUsersDto.getUsername())) ? userDao.findAllByOrderByScoreDesc(pageable) : userDao
                 .findByUsernameContainingOrderByScoreDesc(findUsersDto.getUsername(), pageable);
+    }
+
+    private String getAvatarDir(Long userId){
+        return Constant.USERS
+                +File.separator
+                +userId
+                +File.separator
+                +Constant.IMG;
     }
 }

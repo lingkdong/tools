@@ -35,6 +35,12 @@ function fileDetect(obj) {
         }
         $(uploadInfo).html(fileName);
     }
+    var name = obj.value;
+    var fileType = name.substring(name.lastIndexOf(".") + 1).toLowerCase();
+    if (!(isInArray(type_array,fileType))) {
+        uploadError(obj, "文件格式错误，请选择Word格式文件上传");
+        return false
+    }
     var fileSize = 0;
     if (isIE && !obj.files) {
         var filePath = obj.value;
@@ -53,12 +59,7 @@ function fileDetect(obj) {
         uploadError(obj, "附件不能大于2M");
         return false
     }
-    var name = obj.value;
-    var fileType = name.substring(name.lastIndexOf(".") + 1).toLowerCase();
-    if (!(isInArray(type_array,fileType))) {
-        uploadError(obj, "文件格式错误，请选择Word格式文件上传");
-        return false
-    }
+
     uploadSuccess();
     return true;
 }

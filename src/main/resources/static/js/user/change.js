@@ -1,4 +1,8 @@
 $(function () {
+    msgContainer = $("#js-flash-container");
+    avatarForm=$("#avatar-form");
+    file = $("#upload-profile-picture");
+    img = $("#avatar-img");
     trueName = $("#true_name");
     birthYear = $("#birth-year");
     birthMonth = $("#birth-month");
@@ -30,12 +34,72 @@ $(function () {
         detectPhone();
     });
     $(complete).click(function (event) {
-        sendComplete();
+        sendChange();
         stopEvent(event);
     })
-
+    $(file).change(function (event) {
+        var flag = fileDetect(this)
+        $(file).attr("valid", flag)
+        stopEvent(event);
+    });
 });
+var type_array = new Array("jpg", "jpeg", "png", "gif");
+function getPath(obj, fileQuery, transImg) {
+    var value = fileQuery.value;
+    if (isBlank(value)) {
+        return true;
+    }
+    var fileType = value.substring(value.lastIndexOf(".") + 1).toLowerCase();
+    if (!isInArray(type_array, fileType)) {
+        addErrorMsg(msgContainer, "只支持" + type_array.toString().toLocaleUpperCase() + "类型图片")
+        return false;
+    }
+    if (isIE && !fileQuery.files) {  // IE浏览器判断
+        var filePath = obj.value;
+        var fileSystem = new ActiveXObject("Scripting.FileSystemObject");
+        var file = fileSystem.GetFile(filePath);
+        if (isLargeSize(file.Size)) {
+            return false;
+        }
+        if (obj.select) {
+            obj.select();
+            var path = document.selection.createRange().text;
+            obj.removeAttribute("src");
+            obj.setAttribute("src", transImg);
+            obj.style.filter =
+                "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='" + path + "', sizingMethod='scale');";  // IE通过滤镜的方式实现图片显示
+        } else {
+            obj.src = value;
+        }
 
+    } else {
+        var file = fileQuery.files[0];
+        if (isLargeSize(file.size)) {
+            return false;
+        }
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            obj.setAttribute("src", e.target.result);
+        }
+        reader.readAsDataURL(file);
+    }
+    msgContainer.html("");
+    return true;
+}
+
+function fileDetect(obj) {
+    var file_img = document.getElementById("avatar-img");
+    return getPath(file_img, obj, file_img);
+}
+
+function isLargeSize(fileSize) {
+    var size = fileSize / 1024;
+    if (size > 1000) {
+        addErrorMsg(msgContainer, "图片不能大于1M");
+        return true
+    }
+    return false;
+}
 function detectTrueName() {
     var obj = trueName;
     //loading
@@ -122,7 +186,7 @@ function detectMale() {
     select_item_success(obj);
     return true;
 }
-var BASE_COMPLETE_URL=PRE_FOX_AUTHC_BASE+"/user/";
+var BASE_CHANGE_URL = PRE_FOX_AUTHC_BASE + "/user/";
 function detectSkillTag() {
     var obj = skillTag;
     //loading
@@ -144,47 +208,84 @@ function detectPhone() {
     var value = $(obj).val();
     //detect format errored
     //phone can blank
-    if(!isBlank(value)){
+    if (!isBlank(value)) {
         if (!isPhone(value)) {
             item_error(obj, "手机格式错误");
             return false;
         }
         item_success(obj);
-    }else {
+    } else {
         clearItemStatus(obj)
     }
     return true;
 }
-function sendComplete() {
-    $(complete).attr("disabled", true).html("保存...");
-    if (detectTrueName() && detectBirthYear() && detectBirthMonth() && detectBirthDay() && detectMale() && detectSkillTag() && detectPhone()) {
 
-        $.ajax({
-            type: "post",
-            url: BASE_COMPLETE_URL+"send-complete.json",
-            async: true,
+function sendChange() {
+    var flag=$(file).attr("valid");
+    if (flag=="true") {
+        $(avatarForm).attr("action",BASE_CHANGE_URL + "/avatar.json");
+        $(avatarForm).ajaxSubmit({
             dataType: "json",
-            data: {
-                trueName: $(trueName).val().trim(),
-                birthday: makePreZero(birthMonth,2)+"/" + makePreZero(birthday,2)+"/"+$(birthYear).val(),
-                male: $(male).val(),
-                skillTag: $(skillTag).val(),
-                location: $(userLocal).val()
+            beforeSend: function () {
+                $(complete).attr(DISABLED, true).html("保存...");
             },
             success: function (result) {
-                if (backDetectResult(result)==true)
-                {
-                    jump_index();
+                if(backDetectResult(result)){
+                    $(file).attr("data-value",result.data);
+                   sendProfile();
+                }else {
+                    var item=result.data;
+                    switch (item.status) {
+                        case HttpStatus.INVALID_FORMAT:
+                            addErrorMsg(msgContainer,"只支持" + type_array.toString().toLocaleUpperCase() + "类型图片")
+                        case HttpStatus.FILE_UPLOAD_ERROR:
+                         alertError("保存失败，请稍后再试")
+                    }
                 }
             },
             error: function (result) {
                 alertServerError();
             },
             complete: function () {
+                $(complete).removeAttr(DISABLED).html("保存修改");
+            }
+        });
+    }else {
+        sendProfile();
+    }
+
+}
+function sendProfile() {
+    if (detectTrueName() && detectBirthYear() && detectBirthMonth() && detectBirthDay() && detectMale() && detectSkillTag() && detectPhone()) {
+        $.ajax({
+            type: "post",
+            url: BASE_CHANGE_URL + "/send-change.json",
+            async: true,
+            dataType: "json",
+            beforeSend: function () {
+                $(complete).attr(DISABLED, true).html("保存...");
+            },
+            data: {
+                picture:$(file).attr("data-value"),
+                trueName: $(trueName).val().trim(),
+                birthday: makePreZero(birthMonth, 2) + "/" + makePreZero(birthday, 2) + "/" + $(birthYear).val(),
+                male: $(male).val(),
+                skillTag: $(skillTag).val(),
+                location: $(userLocal).val()
+            },
+            success: function (result) {
+              if(backDetectResult(result)){
+                  alertSuccess("个人资料，保存成功")
+              }
+            },
+            error: function (result) {
+                alertServerError();
+            },
+            complete: function () {
+                $(complete).removeAttr(DISABLED).html("保存修改");
             }
         });
     }
-    $(complete).removeAttr("disabled").html("保存资料");
 }
 // back program detect result
 function backDetectResult(result) {
@@ -227,5 +328,4 @@ function backError(item) {
             break;
     }
 }
-
 

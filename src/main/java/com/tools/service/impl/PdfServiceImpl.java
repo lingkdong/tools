@@ -72,7 +72,7 @@ public class PdfServiceImpl implements PdfService {
         MultipartFile file = convertFileDto.getFile();
         BaseResponseDTO dto = Worker.isNull("file", file);
         if (!Worker.isOK(dto)) return dto;
-        String type = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")).toLowerCase();
+        String type = FileUtil.getNameSuffix(file.getOriginalFilename()).toLowerCase();
         if (!(from.contains(type))) {
             return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT, ErrorInfo.newErrorInfo().property("file")
                     .HttpStatus(HttpStatus.INVALID_FORMAT).build());
@@ -85,18 +85,16 @@ public class PdfServiceImpl implements PdfService {
         File orig;
         File dest;
         String namePrefix = FileUtil.getNamePrefix(file.getOriginalFilename());
-        try {
             orig = FileUtil.uploadFile(file, upDir + File.separator + dateDir
                     , namePrefix
                             + "_"
                             + convertFileDto.getToken()
                             + FileUtil.getNameSuffix(file.getOriginalFilename())
             );
-        } catch (Exception e) {
-            log.error("<PdfServiceImpl.docToPdf.uploadFile failed, {} {} >", e, e.getStackTrace()[0].toString());
-            return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT, ErrorInfo.newErrorInfo().property("file")
-                    .HttpStatus(HttpStatus.FILE_UPLOAD_ERROR).build());
-        }
+          if(orig==null) {
+              return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT, ErrorInfo.newErrorInfo().property("file")
+                      .HttpStatus(HttpStatus.FILE_UPLOAD_ERROR).build());
+          }
         boolean flag = false;
         try {
             dest = new File(getDownPath(dateDir,
