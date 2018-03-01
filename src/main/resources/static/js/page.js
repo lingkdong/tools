@@ -1,5 +1,7 @@
 $(function () {
     headSearch=$("#header-search-input");
+    pageAvatar=$("#page-avatar");
+    pageAvatarData=$("#page-avatar-data");
     var value=$(headSearch).val();
     $(headSearch).focus().val("").val(value);
     $(document).mouseup(function(e){
@@ -12,12 +14,13 @@ $(function () {
            loginOut();
            stopEvent(event);
     })
+    initAvatar();
 })
-var LOGIN_OUT_BASE_URL = PRE_FOX_ANON_BASE+"/user/";
+var PAGE_BASE_URL = PRE_FOX_ANON_BASE+"/user/";
 function loginOut() {
     $.ajax({
         type: "post",
-        url: LOGIN_OUT_BASE_URL+"login-out.json",
+        url: PAGE_BASE_URL+"login-out.json",
         async: true,
         dataType: "json",
         data: {
@@ -27,6 +30,39 @@ function loginOut() {
                 location.reload();
             }else {
                 alertServerError();
+            }
+        },
+        error: function (result) {
+            alertServerError();
+        },
+        complete: function () {
+        }
+    });
+}
+
+function initAvatar() {
+    if(isExist(pageAvatar)&&isExist(pageAvatarData)){
+        var data=$(pageAvatarData).html();
+        changeAvatarData(data);
+    }
+}
+function changeAvatarData(data) {
+    if(!(isBlank(data)||data.trim()=="null")){
+        $(pageAvatar).attr("src","data:img/png;base64,"+data).show();
+    }
+}
+function refreshAvatar() {
+    $.ajax({
+        type: "post",
+        url: PRE_FOX_AUTHC_BASE+"/user/get-avatar.json",
+        async: true,
+        dataType: "json",
+        data: {
+        },
+        success: function (result) {
+            if (HttpStatus.OK == result.status) {
+                var data=result.data;
+                changeAvatarData(data);
             }
         },
         error: function (result) {

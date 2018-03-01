@@ -50,13 +50,16 @@ public class UserServiceImpl implements UserService {
     private PrefoxEmailTemp prefoxEmailTemp;
     @Value("${prefox.file.upload.basic}")
     private String upBasic;
-    private final static List<String>AVATAR_TYPE= Arrays.asList(Constant.JPG,
+    private final static List<String> AVATAR_TYPE = Arrays.asList(Constant.JPG,
             Constant.JPEG,
             Constant.PNG,
             Constant.GIF
     );
-    private int small=48;
-    private int large=200;
+    private int small = 48;
+    private int large = 200;
+    private String small_flag = "_small";
+    private String large_flag = "_large";
+
     @Override
     public boolean _nameUnique(String name, Long userId) {
         User user = userDao.findFirstByUsername(name);
@@ -191,6 +194,9 @@ public class UserServiceImpl implements UserService {
                     ("favicon.ico")) {
                 data = savedRequest.getRequestUrl();
             }
+            //获取当前用户
+            User sessionUser = Worker.getCurrentUser();
+            sessionUser.setPicBase64(avatarBase64(sessionUser.getPicture()));
             return Worker.OK(data);
         } catch (DisabledAccountException de) {
             return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT, ErrorInfo.newErrorInfo().property("username")
@@ -333,15 +339,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Page<UsersDto> findUsersDto(FindUsersDto findUsersDto, Pageable pageable) {
-        Page users = findUsers(findUsersDto,pageable);
-        if(pageable.getPageNumber()>=users.getTotalPages()){
-            pageable=new PageRequest(users.getTotalPages()-1,pageable.getPageSize(),pageable.getSort());
-            users = findUsers(findUsersDto,pageable);
+        Page users = findUsers(findUsersDto, pageable);
+        if (pageable.getPageNumber() >= users.getTotalPages()) {
+            pageable = new PageRequest(users.getTotalPages() - 1, pageable.getPageSize(), pageable.getSort());
+            users = findUsers(findUsersDto, pageable);
         }
         if (users.hasContent()) {
             List<UsersDto> usersDtos = new ArrayList<>();
             for (User item : (List<User>) users.getContent()) {
-                usersDtos.add(BeanUtil.cast(UsersDto.class, item));
+                UsersDto usersDto=BeanUtil.cast(UsersDto.class, item);
+                usersDto.setPicture(avatarBase64(usersDto.getPicture()));
+                usersDtos.add(usersDto);
             }
             Page<UsersDto> result = new PageImpl<>(usersDtos, new PageRequest(users.getNumber(), users.getSize
                     ()), users.getTotalElements());
@@ -359,13 +367,10 @@ public class UserServiceImpl implements UserService {
         if (user == null) return new BaseResponseDTO(HttpStatus.LOGIN_EXPIRED);
         ViewChangeDto changeDto = new ViewChangeDto();
         BeanUtil.copy(changeDto, user);
-        if(StringUtils.isNotBlank(changeDto.getPicture())){
-            File avatar=new File(upBasic+File.separator+changeDto.getPicture());
-            if(avatar.exists()){
-                changeDto.setPicture(FileUtil.FileBase64(avatar));
-            }else {
-                changeDto.setPicture(null);
-            }
+        if (StringUtils.isNotBlank(changeDto.getPicture())) {
+            String avatar = largeAvatarBase64(changeDto.getPicture());
+            if (StringUtils.isBlank(avatar)) avatar = sessionUser.getPicBase64();
+            changeDto.setPicture(avatar);
         }
         return Worker.OK(changeDto);
     }
@@ -413,33 +418,63 @@ public class UserServiceImpl implements UserService {
         }
         User sessionUser = Worker.getCurrentUser();
         if (sessionUser == null) return new BaseResponseDTO(HttpStatus.LOGIN_EXPIRED);
-        String avatarDir=getAvatarDir(sessionUser.getId());
-        File orig=FileUtil.uploadFile(file,upBasic+File.separator+avatarDir,Constant.AVATAR+type);
-        if(orig==null){
+        String avatarDir = getAvatarDir(sessionUser.getId());
+        File orig = FileUtil.uploadFile(file, upBasic + File.separator + avatarDir, Constant.AVATAR + type);
+        if (orig == null) {
             return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT, ErrorInfo.newErrorInfo().property("avatar")
                     .HttpStatus(HttpStatus.FILE_UPLOAD_ERROR).build());
         }
-        File largeFile=ImgUtil.doCompress(orig.getAbsolutePath(),large,large,1f,"_large",false);
+        File largeFile = ImgUtil.doCompress(orig.getAbsolutePath(), large, large, large_flag, false);
         //compress
-        File smallFile=ImgUtil.doCompress(orig.getAbsolutePath(),small,small,1f,"_small",false);
-        if(largeFile==null||smallFile==null){
+        File smallFile = ImgUtil.doCompress(orig.getAbsolutePath(), small, small, small_flag, false);
+        if (largeFile == null || smallFile == null) {
             return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT, ErrorInfo.newErrorInfo().property("avatar")
                     .HttpStatus(HttpStatus.FILE_UPLOAD_ERROR).build());
         }
         orig.delete();
-        return Worker.OK(avatarDir+File.separator+smallFile.getName());
+        String avatarPath = avatarDir + File.separator + smallFile.getName();
+        sessionUser.setPicBase64(avatarBase64(avatarPath));
+        return Worker.OK(avatarPath);
     }
 
-    private  Page<User> findUsers(FindUsersDto findUsersDto, Pageable pageable){
+    @Override
+    public BaseResponseDTO getAvatar() {
+        User sessionUser = Worker.getCurrentUser();
+        if (sessionUser == null) return new BaseResponseDTO(HttpStatus.LOGIN_EXPIRED);
+        return Worker.OK(avatarBase64(sessionUser.getPicture()));
+    }
+
+    private Page<User> findUsers(FindUsersDto findUsersDto, Pageable pageable) {
         return (StringUtils.isBlank(findUsersDto.getUsername())) ? userDao.findAllByOrderByScoreDesc(pageable) : userDao
                 .findByUsernameContainingOrderByScoreDesc(findUsersDto.getUsername(), pageable);
     }
 
-    private String getAvatarDir(Long userId){
+    private String getAvatarDir(Long userId) {
         return Constant.USERS
-                +File.separator
-                +userId
-                +File.separator
-                +Constant.IMG;
+                + File.separator
+                + userId
+                + File.separator
+                + Constant.IMG;
+    }
+
+    private String avatarBase64(String avatarPath) {
+        if (StringUtils.isNotBlank(avatarPath)) {
+            File avatar = new File(upBasic + File.separator + avatarPath);
+            if (avatar.exists()) {
+                return FileUtil.base64(avatar);
+            }
+        }
+        return null;
+    }
+
+    private String largeAvatarBase64(String avatarPath) {
+        if (StringUtils.isNotBlank(avatarPath)) {
+            avatarPath = avatarPath.replace(small_flag, large_flag);
+            File avatar = new File(upBasic + File.separator + avatarPath);
+            if (avatar.exists()) {
+                return FileUtil.base64(avatar);
+            }
+        }
+        return null;
     }
 }

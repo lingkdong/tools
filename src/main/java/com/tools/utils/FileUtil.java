@@ -57,7 +57,7 @@ public class FileUtil {
         return fileName.substring(fileName.lastIndexOf("."));
     }
 
-    public static String FileBase64(File file) {
+    public static String base64(File file) {
         InputStream in = null;
         byte[] data = null;
         //读取图片字节数组

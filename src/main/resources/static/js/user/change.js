@@ -47,19 +47,19 @@ var type_array = new Array("jpg", "jpeg", "png", "gif");
 function getPath(obj, fileQuery, transImg) {
     var value = fileQuery.value;
     if (isBlank(value)) {
-        return true;
+        return 0;
     }
     var fileType = value.substring(value.lastIndexOf(".") + 1).toLowerCase();
     if (!isInArray(type_array, fileType)) {
         addErrorMsg(msgContainer, "只支持" + type_array.toString().toLocaleUpperCase() + "类型图片")
-        return false;
+        return -1;
     }
     if (isIE && !fileQuery.files) {  // IE浏览器判断
         var filePath = obj.value;
         var fileSystem = new ActiveXObject("Scripting.FileSystemObject");
         var file = fileSystem.GetFile(filePath);
         if (isLargeSize(file.Size)) {
-            return false;
+            return -1;
         }
         if (obj.select) {
             obj.select();
@@ -75,7 +75,7 @@ function getPath(obj, fileQuery, transImg) {
     } else {
         var file = fileQuery.files[0];
         if (isLargeSize(file.size)) {
-            return false;
+            return -1;
         }
         var reader = new FileReader();
         reader.onload = function (e) {
@@ -84,7 +84,7 @@ function getPath(obj, fileQuery, transImg) {
         reader.readAsDataURL(file);
     }
     msgContainer.html("");
-    return true;
+    return 1;
 }
 
 function fileDetect(obj) {
@@ -94,8 +94,8 @@ function fileDetect(obj) {
 
 function isLargeSize(fileSize) {
     var size = fileSize / 1024;
-    if (size > 1000) {
-        addErrorMsg(msgContainer, "图片不能大于1M");
+    if (size > 2000) {
+        addErrorMsg(msgContainer, "图片不能大于2M");
         return true
     }
     return false;
@@ -221,8 +221,9 @@ function detectPhone() {
 }
 
 function sendChange() {
-    var flag=$(file).attr("valid");
-    if (flag=="true") {
+    var flag=parseInt($(file).attr("valid"));
+    //flag>0 图片做了修改，flag=0 图片未修改，flag<0 图片格式或大小有问题
+    if (flag>0) {
         $(avatarForm).attr("action",BASE_CHANGE_URL + "/avatar.json");
         $(avatarForm).ajaxSubmit({
             dataType: "json",
@@ -250,7 +251,7 @@ function sendChange() {
                 $(complete).removeAttr(DISABLED).html("保存修改");
             }
         });
-    }else {
+    }else if(flag==0) {
         sendProfile();
     }
 
@@ -275,7 +276,12 @@ function sendProfile() {
             },
             success: function (result) {
               if(backDetectResult(result)){
-                  alertSuccess("个人资料，保存成功")
+                  alertSuccess("个人资料，保存成功");
+                  var flag=parseInt($(file).attr("valid"));
+                  if (flag>0) {
+                      //refresh avatar
+                      refreshAvatar();
+                  }
               }
             },
             error: function (result) {

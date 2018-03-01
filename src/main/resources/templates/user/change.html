@@ -18,12 +18,12 @@
             <dl class="form-group edit-profile-avatar mr-7 f-right mt-none">
                 <dt><label for="upload-profile-picture">个人头像</label></dt>
                 <dd class="avatar-upload-container clearfix">
-                    <img  class="avatar rounded-2" id="avatar-img" height="200" src="" width="200"
+                    <img  class="avatar rounded-2" id="avatar-img" height="200" width="200"
                           th:src="@{'data:img/png;base64,'+${data.picture}}">
                     <form class="avatar-upload" method="post" enctype="multipart/form-data" id="avatar-form">
                         <label class="position-relative btn o-hid mt-3 width-full text-center">
                             上传新头像
-                            <input id="upload-profile-picture" type="file" name="file"
+                            <input id="upload-profile-picture" type="file" name="file" valid="0"
                                    accept=".png,.jpg,.jpeg,.gif"
                                    class="manual-file-chooser width-full height-full ml-0 js-manual-file-chooser">
                         </label>

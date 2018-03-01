@@ -30,7 +30,7 @@
                     <div class="user-gravatar48">
                         <a href="#">
                             <div class="gravatar-wrapper-48">
-                                <img th:src="${'/img/'+item.picture}">
+                                <img th:src="@{'data:img/png;base64,'+${item.picture}}">
                             </div>
                         </a>
                     </div>

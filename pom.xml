@@ -144,7 +144,6 @@
             <artifactId>jodconverter-local</artifactId>
             <version>4.1.1</version>
         </dependency>
-
     </dependencies>
     <build>
         <plugins>

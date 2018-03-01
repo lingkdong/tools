@@ -50,4 +50,6 @@ public interface UserService {
     BaseResponseDTO change(SaveChangeDto saveChangeDto);
 
     BaseResponseDTO avatar(MultipartFile multipartFile);
+
+    BaseResponseDTO getAvatar();
 }

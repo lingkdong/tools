@@ -16,10 +16,9 @@ public class ImgUtil {
      * @param oldFile 将要压缩的图片
      * @param width 压缩宽
      * @param height 压缩高
-     * @param quality 压缩清晰度 <b>建议为1.0</b>
      * @param equalRatio 是否等比压缩 若true宽高比率将将自动调整
      */
-    public static File  doCompress(String oldFile, int width, int height, float quality, String smallFlag, boolean
+    public static File  doCompress(String oldFile, int width, int height, String smallFlag, boolean
             equalRatio) {
         if (oldFile != null && width > 0 && height > 0) {
             Image srcFile=null;
@@ -42,13 +41,19 @@ public class ImgUtil {
                     new_h = (int) (((double) srcFile.getHeight(null)) / rate);
                 }
 				/* 宽高设定*/
-                BufferedImage tag = new BufferedImage(new_w, new_h, BufferedImage.TYPE_INT_RGB);
-                tag.getGraphics().drawImage(srcFile.getScaledInstance(new_w, new_h,  Image.SCALE_SMOOTH), 0, 0,  null);
+                BufferedImage to = new BufferedImage(new_w, new_h, BufferedImage.TYPE_INT_RGB);
+                Graphics2D g2d = to.createGraphics();
+                to = g2d.getDeviceConfiguration().createCompatibleImage(new_w,new_h, Transparency.TRANSLUCENT);
+                g2d.dispose();
+                g2d = to.createGraphics();
+                g2d.drawImage(srcFile.getScaledInstance(new_w, new_h,  Image.SCALE_SMOOTH), 0, 0,  null);
+                g2d.dispose();
+
 				/*压缩后的文件名 */
                 int index=oldFile.lastIndexOf(".");
                 File newImage=new File(oldFile.substring(0,index)+smallFlag+oldFile.substring(index));
 				/*压缩之后临时存放位置*/
-                ImageIO.write(tag,oldFile.substring(index+1),new FileOutputStream(newImage));
+                ImageIO.write(to,oldFile.substring(index+1),new FileOutputStream(newImage));
                 return newImage;
             } catch (Exception e) {
                 e.printStackTrace();
@@ -58,4 +63,5 @@ public class ImgUtil {
         }
         return null;
     }
+
 }

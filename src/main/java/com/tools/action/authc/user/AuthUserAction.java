@@ -79,5 +79,11 @@ public class AuthUserAction {
     public BaseResponseDTO avatar(MultipartFile file) {
          return userService.avatar(file);
     }
+
+    @PostMapping(value = "/get-avatar")
+    @ResponseBody
+    public BaseResponseDTO getAvatar() {
+        return userService.getAvatar();
+    }
 }
 
