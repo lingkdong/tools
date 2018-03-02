@@ -46,7 +46,6 @@ public class User {
 
     private int score;
 
-    private String picBase64;
     public Long getId() {
         return id;
     }
@@ -167,11 +166,4 @@ public class User {
         this.score = score;
     }
 
-    public String getPicBase64() {
-        return picBase64;
-    }
-
-    public void setPicBase64(String picBase64) {
-        this.picBase64 = picBase64;
-    }
 }

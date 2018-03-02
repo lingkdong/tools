@@ -193,9 +193,6 @@ public class UserServiceImpl implements UserService {
                     ("favicon.ico")) {
                 data = savedRequest.getRequestUrl();
             }
-            //获取当前用户
-            User sessionUser = Worker.getCurrentUser();
-            sessionUser.setPicBase64(avatarBase64(sessionUser.getPicture()));
             return Worker.OK(data);
         } catch (DisabledAccountException de) {
             return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT, ErrorInfo.newErrorInfo().property("username")
@@ -347,7 +344,7 @@ public class UserServiceImpl implements UserService {
             List<UsersDto> usersDtos = new ArrayList<>();
             for (User item : (List<User>) users.getContent()) {
                 UsersDto usersDto=BeanUtil.cast(UsersDto.class, item);
-                usersDto.setPicture(avatarBase64(usersDto.getPicture()));
+                usersDto.setPicture(usersDto.getPicture());
                 usersDtos.add(usersDto);
             }
             Page<UsersDto> result = new PageImpl<>(usersDtos, new PageRequest(users.getNumber(), users.getSize
@@ -366,11 +363,7 @@ public class UserServiceImpl implements UserService {
         if (user == null) return new BaseResponseDTO(HttpStatus.LOGIN_EXPIRED);
         ViewChangeDto changeDto = new ViewChangeDto();
         BeanUtil.copy(changeDto, user);
-        if (StringUtils.isNotBlank(changeDto.getPicture())) {
-            String avatar = largeAvatarBase64(changeDto.getPicture());
-            if (StringUtils.isBlank(avatar)) avatar = sessionUser.getPicBase64();
-            changeDto.setPicture(avatar);
-        }
+        changeDto.setPicture(getLargeAvatar(changeDto.getPicture()));
         return Worker.OK(changeDto);
     }
 
@@ -435,7 +428,6 @@ public class UserServiceImpl implements UserService {
          FileUtil.deleteFilesExcept(upBasic + File.separator + avatarDir,Arrays.asList(largeFile.getName().toLowerCase(),smallFile.getName()
                  .toLowerCase()));
         String avatarPath = avatarDir + File.separator + smallFile.getName();
-        sessionUser.setPicBase64(avatarBase64(avatarPath));
         return Worker.OK(avatarPath);
     }
 
@@ -443,7 +435,7 @@ public class UserServiceImpl implements UserService {
     public BaseResponseDTO getAvatar() {
         User sessionUser = Worker.getCurrentUser();
         if (sessionUser == null) return new BaseResponseDTO(HttpStatus.LOGIN_EXPIRED);
-        return Worker.OK(avatarBase64(sessionUser.getPicture()));
+        return Worker.OK(sessionUser.getPicture());
     }
 
     private Page<User> findUsers(FindUsersDto findUsersDto, Pageable pageable) {
@@ -469,23 +461,9 @@ public class UserServiceImpl implements UserService {
                 + Constant.AVATAR;
     }
 
-    private String avatarBase64(String avatarPath) {
+    private String getLargeAvatar(String avatarPath){
         if (StringUtils.isNotBlank(avatarPath)) {
-            File avatar = new File(upBasic + File.separator + avatarPath);
-            if (avatar.exists()) {
-                return FileUtil.base64(avatar);
-            }
-        }
-        return null;
-    }
-
-    private String largeAvatarBase64(String avatarPath) {
-        if (StringUtils.isNotBlank(avatarPath)) {
-            avatarPath = avatarPath.replace(small_flag, large_flag);
-            File avatar = new File(upBasic + File.separator + avatarPath);
-            if (avatar.exists()) {
-                return FileUtil.base64(avatar);
-            }
+            return avatarPath.replace(small_flag, large_flag);
         }
         return null;
     }
