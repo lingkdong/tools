@@ -5,7 +5,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
- * Created by DT254 on 2017/11/8.
+ * Created by lk on 2017/11/8.
  */
 public class StringUtil {
     private final static char[] codes = new char[]{

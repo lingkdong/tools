@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 /**
- * Created by DT254 on 2018/1/17.
+ * Created by lk on 2018/1/17.
  */
 @Component
 public class PrefoxEmailTemp {

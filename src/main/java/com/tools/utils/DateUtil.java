@@ -8,7 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * Created by DT254 on 2018/2/9.
+ * Created by lk on 2018/2/9.
  */
 @Slf4j
 public class DateUtil {

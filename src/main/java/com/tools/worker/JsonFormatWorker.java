@@ -6,7 +6,7 @@ import com.tools.dto.format.JsonFormat;
 import com.tools.utils.JsonUtils;
 
 /**
- * Created by DT254 on 2017/11/7.
+ * Created by lk on 2017/11/7.
  */
 public class JsonFormatWorker extends FormatWorker {
     private JsonFormat format;

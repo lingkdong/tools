@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * Created by DT254 on 2017/11/22.
+ * Created by lk on 2017/11/22.
  */
 public class TimeUtils {
     public final static String yyyyMMddHHmmssSSS="yyyyMMddHHmmssSSS";

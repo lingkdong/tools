@@ -10,10 +10,10 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Created by DT254 on 2018/1/9.
+ * Created by lk on 2018/1/9.
  */
 public interface UserService {
-    boolean _nameUnique(String name, Long userId);
+    boolean _nameqUnique(String name, Long userId);
 
     boolean _emailUnique(String email, Long userId);
 
@@ -21,16 +21,40 @@ public interface UserService {
 
     BaseResponseDTO emailUnique(String email, Long userId);
 
+    /**
+     * user regist
+     *
+     * @param userBaseDto
+     * @return
+     */
     BaseResponseDTO createUser(UserBaseDto userBaseDto);
 
+    /**
+     * send valid to user email
+     *
+     * @param userBaseDto
+     * @return
+     */
     BaseResponseDTO sendValid(UserBaseDto userBaseDto);
 
     User findByUsernameOrEmail(String username);
 
     User findByUsername(String username);
 
+    /**
+     * user login
+     *
+     * @param loginDto
+     * @return
+     */
     BaseResponseDTO login(LoginDto loginDto);
 
+    /**
+     * regist step2.complete user profile
+     *
+     * @param completeDto
+     * @return
+     */
     BaseResponseDTO complete(CompleteDto completeDto);
 
     BaseResponseDTO getComplete();
@@ -39,17 +63,41 @@ public interface UserService {
 
     BaseResponseDTO passReset(ResetDto resetDto);
 
-    User getUserByToken(HttpServletRequest request,String token);
+    User getUserByToken(HttpServletRequest request, String token);
 
+    /**
+     * change password
+     *
+     * @param passChangeDto
+     * @return
+     */
     BaseResponseDTO changePass(PassChangeDto passChangeDto);
 
     Page<UsersDto> findUsersDto(FindUsersDto findUsersDto, Pageable pageable);
 
+    /**
+     * get user profile
+     *
+     * @return
+     */
     BaseResponseDTO getChange();
 
+    /**
+     * modify user profile
+     *
+     * @param saveChangeDto
+     * @return
+     */
     BaseResponseDTO change(SaveChangeDto saveChangeDto);
 
+    /**
+     * upload user avatar
+     *
+     * @param multipartFile
+     * @return
+     */
     BaseResponseDTO avatar(MultipartFile multipartFile);
 
     BaseResponseDTO getAvatar();
+
 }

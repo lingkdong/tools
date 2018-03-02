@@ -1,7 +1,7 @@
 package com.tools.model;
 
 /**
- * Created by DT254 on 2018/1/17.
+ * Created by lk on 2018/1/17.
  */
 public enum  UserStatus {
     NORMAL((byte)1,"normal"),

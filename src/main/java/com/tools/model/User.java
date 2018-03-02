@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 /**
- * Created by DT254 on 2017/4/12.
+ * Created by lk on 2017/4/12.
  */
 @Entity
 public class User {

@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by DT254 on 2018/1/10.
+ * Created by lk on 2018/1/10.
  */
 public class SessionWorker {
     public final static int HOUR_HALF=60*30;

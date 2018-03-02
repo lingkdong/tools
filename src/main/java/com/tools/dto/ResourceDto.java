@@ -3,7 +3,7 @@ package com.tools.dto;
 import lombok.Builder;
 
 /**
- * Created by DT254 on 2017/11/14.
+ * Created by lk on 2017/11/14.
  */
 public class ResourceDto {
     private Long id;

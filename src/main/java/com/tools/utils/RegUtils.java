@@ -6,7 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by DT254 on 2018/1/9.
+ * Created by lk on 2018/1/9.
  */
 public class RegUtils {
     private static boolean match(String regex, String str) {

@@ -4,7 +4,7 @@ import com.googlecode.htmlcompressor.compressor.YuiJavaScriptCompressor;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * Created by DT254 on 2017/12/13.
+ * Created by lk on 2017/12/13.
  */
 public class JsUtils {
     public static String format(String txt) {

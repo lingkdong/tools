@@ -1,7 +1,7 @@
 package com.tools.dto;
 
 /**
- * Created by DT254 on 2017/11/8.
+ * Created by lk on 2017/11/8.
  */
 public class BaseResponseDTO {
     private Integer status;

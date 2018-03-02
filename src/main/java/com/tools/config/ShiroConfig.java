@@ -12,7 +12,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * Created by DT254 on 2018/1/19.
+ * Created by lk on 2018/1/19.
  */
 @Configuration
 public class ShiroConfig {

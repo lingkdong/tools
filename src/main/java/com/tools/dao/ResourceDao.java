@@ -10,7 +10,7 @@ import java.util.List;
 
 
 /**
- * Created by DT254 on 2017/11/8.
+ * Created by lk on 2017/11/8.
  */
 @CacheConfig(cacheNames = "ResourceCache")
 public interface ResourceDao extends JpaRepository<Resource, Long> {

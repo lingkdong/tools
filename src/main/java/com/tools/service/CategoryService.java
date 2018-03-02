@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 /**
- * Created by DT254 on 2017/11/8.
+ * Created by lk on 2017/11/8.
  */
 public interface CategoryService {
     Page<CategoryDto> find(String searchKey, Pageable pageable);

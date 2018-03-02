@@ -1,7 +1,7 @@
 package com.tools.utils;
 
 /**
- * Created by DT254 on 2018/2/13.
+ * Created by lk on 2018/2/13.
  */
 public class Constant {
     public final static String DOC=".doc";

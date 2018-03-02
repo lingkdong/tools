@@ -1,7 +1,7 @@
 package com.tools.dto;
 
 /**
- * Created by DT254 on 2018/1/16.
+ * Created by lk on 2018/1/16.
  */
 public class ErrorInfo {
     private String property;

@@ -7,7 +7,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 /**
- * Created by DT254 on 2017/11/14.
+ * Created by lk on 2017/11/14.
  */
 @Slf4j
 public class BeanUtil extends BeanUtils {

@@ -7,7 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.*;
 
 /**
- * Created by DT254 on 2018/2/22.
+ * Created by lk on 2018/2/22.
  */
 @Slf4j
 public class FileUtil {

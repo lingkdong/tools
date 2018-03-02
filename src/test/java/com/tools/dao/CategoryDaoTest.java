@@ -12,7 +12,7 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 /**
- * Created by DT254 on 2017/11/10.
+ * Created by lk on 2017/11/10.
  */
 public class CategoryDaoTest extends BaseTest {
     @Autowired

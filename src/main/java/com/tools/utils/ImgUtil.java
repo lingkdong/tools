@@ -8,7 +8,7 @@ import java.io.FileOutputStream;
 import java.util.*;
 
 /**
- * Created by DT254 on 2018/2/28.
+ * Created by lk on 2018/2/28.
  */
 public class ImgUtil {
     private final static java.util.List<String> Transparent_TYPE = Arrays.asList(

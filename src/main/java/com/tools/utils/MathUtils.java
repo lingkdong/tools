@@ -3,7 +3,7 @@ package com.tools.utils;
 import org.apache.commons.lang3.RandomUtils;
 
 /**
- * Created by DT254 on 2017/11/22.
+ * Created by lk on 2017/11/22.
  */
 public class MathUtils {
     public static String getRandom(int num){

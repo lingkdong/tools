@@ -4,7 +4,7 @@ import com.tools.dto.format.Format;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * Created by DT254 on 2017/11/8.
+ * Created by lk on 2017/11/8.
  */
 public class CheckFormat {
     public static boolean inputBlank(Format format){

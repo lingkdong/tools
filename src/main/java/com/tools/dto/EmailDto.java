@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.List;
 
 /**
- * Created by DT254 on 2018/1/13.
+ * Created by lk on 2018/1/13.
  */
 public class EmailDto {
     private String emailTo;
