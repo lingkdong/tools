@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
  * Created by lk on 2018/1/9.
  */
 public interface UserService {
-    boolean _nameqUnique(String name, Long userId);
+    boolean _nameUnique(String name, Long userId);
 
     boolean _emailUnique(String email, Long userId);
 
