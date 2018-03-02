@@ -15,7 +15,6 @@ import com.tools.worker.SessionWorker;
 import com.tools.worker.Worker;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AccountException;
@@ -418,7 +417,7 @@ public class UserServiceImpl implements UserService {
         }
         User sessionUser = Worker.getCurrentUser();
         if (sessionUser == null) return new BaseResponseDTO(HttpStatus.LOGIN_EXPIRED);
-        String avatarDir = getAvatarDir(sessionUser.getId());
+        String avatarDir = getAvatarDir(sessionUser.getId(),sessionUser.getUsername());
         File orig = FileUtil.uploadFile(file, upBasic + File.separator + avatarDir, Constant.AVATAR + type);
         if (orig == null) {
             return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT, ErrorInfo.newErrorInfo().property("avatar")
@@ -432,6 +431,9 @@ public class UserServiceImpl implements UserService {
                     .HttpStatus(HttpStatus.FILE_UPLOAD_ERROR).build());
         }
         orig.delete();
+        //delete pre avatar
+         FileUtil.deleteFilesExcept(upBasic + File.separator + avatarDir,Arrays.asList(largeFile.getName().toLowerCase(),smallFile.getName()
+                 .toLowerCase()));
         String avatarPath = avatarDir + File.separator + smallFile.getName();
         sessionUser.setPicBase64(avatarBase64(avatarPath));
         return Worker.OK(avatarPath);
@@ -449,12 +451,22 @@ public class UserServiceImpl implements UserService {
                 .findByUsernameContainingOrderByScoreDesc(findUsersDto.getUsername(), pageable);
     }
 
-    private String getAvatarDir(Long userId) {
+    /**
+     * users/id/nameHex/img/avatar
+     * @param userId
+     * @param username
+     * @return
+     */
+    private String getAvatarDir(Long userId,String username) {
         return Constant.USERS
                 + File.separator
                 + userId
                 + File.separator
-                + Constant.IMG;
+                +DigestUtils.md2Hex(username).substring(0,8)
+                + File.separator
+                + Constant.IMG
+                + File.separator
+                + Constant.AVATAR;
     }
 
     private String avatarBase64(String avatarPath) {

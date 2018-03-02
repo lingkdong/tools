@@ -5,6 +5,7 @@ import org.apache.commons.codec.binary.Base64;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
+import java.util.List;
 
 /**
  * Created by lk on 2018/2/22.
@@ -68,8 +69,8 @@ public class FileUtil {
             in.close();
         } catch (IOException e) {
             log.error("<FileUtil.FileBase64 failed, {} {} >", e, e.getStackTrace()[0].toString());
-        }finally {
-            if(in!=null){
+        } finally {
+            if (in != null) {
                 try {
                     in.close();
                 } catch (IOException e) {
@@ -80,4 +81,16 @@ public class FileUtil {
         return new String(Base64.encodeBase64(data));
     }
 
+
+    public static boolean deleteFilesExcept(String dir, List<String> excepts) {
+        File[] files = new File(dir).listFiles();
+        if (files != null) {
+            for (File file : files) {
+                if (!excepts.contains(file.getName().toLowerCase())) {
+                    file.delete();
+                }
+            }
+        }
+        return true;
+    }
 }
