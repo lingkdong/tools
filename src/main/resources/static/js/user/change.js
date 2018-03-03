@@ -282,6 +282,7 @@ function sendProfile() {
                       //refresh avatar
                       refreshAvatar();
                   }
+                  $(file).attr("valid",0);
               }
             },
             error: function (result) {
