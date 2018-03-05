@@ -25,6 +25,10 @@ a:hover {
     vertical-align: text-bottom;
 }
 
+.shadow {
+    box-shadow: 2px 2px 4px rgba(12, 13, 14, 0.5) !important;
+}
+
 .octicon {
     display: inline-block;
     vertical-align: text-top;

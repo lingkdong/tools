@@ -398,7 +398,12 @@ public class UserServiceImpl implements UserService {
             //update sessionUser
             BeanUtil.compareAndModify(sessionUser, saveChangeDto);
         }
-        return Worker.OK();
+        Map map=new HashMap();
+        if(StringUtils.isNotBlank(user.getPicture())){
+            map.put("largeImg",getLargeAvatar(user.getPicture()));
+        }
+
+        return Worker.OK(map);
     }
 
     @Override

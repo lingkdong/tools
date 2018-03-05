@@ -14,6 +14,9 @@ spring:
 # Suffix that gets appended to view names when building a URL.
 #     template-resolver-order:  # Order of the template resolver in the chain.
 #     view-names:  # Comma-separated list of view names that can be resolved.
+ mvc:
+  favicon:
+    enabled: false
 
 
 

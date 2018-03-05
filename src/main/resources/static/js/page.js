@@ -48,7 +48,7 @@ function initAvatar() {
 }
 function changeAvatarData(data) {
     if(!(isBlank(data)||data.trim()=="null")){
-        $(pageAvatar).attr("src",NGINX_URL+data.trim()).show();
+        $(pageAvatar).attr("src",NGINX_URL+data.trim()+"?"+Math.random()).show();
     }
 }
 function refreshAvatar() {

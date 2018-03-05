@@ -3,6 +3,7 @@ package com.tools;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.tools.utils.CssFormator;
+import com.tools.utils.ImgUtil;
 import com.tools.utils.StringUtil;
 import org.jodconverter.office.OfficeManager;
 import org.junit.Test;
@@ -93,5 +94,13 @@ public class CodeTest {
 
     @Test
     public void jodconverterCoreTest(){
+    }
+
+    @Test
+    public void image(){
+        File file=new File("E:\\files\\fox1.png");
+        ImgUtil.doCompress("E:\\files\\fox1.png",48,48,"_48",false);
+        ImgUtil.doCompress("E:\\files\\fox1.png",32,32,"_32",false);
+        ImgUtil.doCompress("E:\\files\\fox1.png",100,100,"_100",false);
     }
 }

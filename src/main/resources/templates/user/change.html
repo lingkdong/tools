@@ -18,8 +18,16 @@
             <dl class="form-group edit-profile-avatar mr-7 f-right mt-none">
                 <dt><label for="upload-profile-picture">个人头像</label></dt>
                 <dd class="avatar-upload-container clearfix">
-                    <img  class="avatar rounded-2" id="avatar-img" height="200" width="200"
-                          th:src="${nginxUrl+data.picture}">
+                    <div  class="shadow" style=" height:200px; width:200px" id="img-container">
+                        <img  class="avatar rounded-2" id="avatar-img"  height="200" width="200"
+                              th:attr="
+                              style=${#strings.isEmpty(data.picture)?'display:none':''},
+                              src=${!#strings.isEmpty(data.picture)?nginxUrl+data.picture:''},
+                              data-history=${data.picture}
+                              "
+                             >
+                    </div>
+
                     <form class="avatar-upload" method="post" enctype="multipart/form-data" id="avatar-form">
                         <label class="position-relative btn o-hid mt-3 width-full text-center">
                             上传新头像

@@ -30,7 +30,7 @@
                     <div class="user-gravatar48">
                         <a href="#">
                             <div class="gravatar-wrapper-48">
-                                <img th:src="${nginxUrl+item.picture}">
+                                <img th:if="${!#strings.isEmpty(item.picture)}" th:src="${nginxUrl+item.picture}">
                             </div>
                         </a>
                     </div>
