@@ -12,6 +12,7 @@ $(function () {
     phone = $("#phone");
     userLocal = $("#location");
     complete = $("#complete");
+    imgContainer = $("#img-container");
     $(trueName).keyup(function () {
         detectTrueName();
     });
@@ -47,6 +48,12 @@ var type_array = new Array("jpg", "jpeg", "png", "gif");
 function getPath(obj, fileQuery, transImg) {
     var value = fileQuery.value;
     if (isBlank(value)) {
+        var history=$(img).attr("data-history");
+        if(isBlank(history)){
+            $(img).hide();
+        }else{
+          $(img).attr("src",NGINX_URL+history);
+        }
         return 0;
     }
     var fileType = value.substring(value.lastIndexOf(".") + 1).toLowerCase();
@@ -275,15 +282,20 @@ function sendProfile() {
                 location: $(userLocal).val()
             },
             success: function (result) {
-              if(backDetectResult(result)){
-                  alertSuccess("个人资料，保存成功");
-                  var flag=parseInt($(file).attr("valid"));
-                  if (flag>0) {
-                      //refresh avatar
-                      refreshAvatar();
-                  }
-                  $(file).attr("valid",0);
-              }
+                if (backDetectResult(result)) {
+                    alertSuccess("个人资料，保存成功");
+                    var flag = parseInt($(file).attr("valid"));
+                    if (flag > 0) {
+                        //refresh avatar
+                        refreshAvatar();
+                        $(file).attr("valid",0);
+                        var history=result.data.largeImg;
+                        if(isNotBlank(history)){
+                            $(img).attr("data-history",history);
+                        }
+
+                    }
+                }
             },
             error: function (result) {
                 alertServerError();
