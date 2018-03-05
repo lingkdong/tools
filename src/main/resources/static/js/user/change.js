@@ -1,6 +1,6 @@
 $(function () {
     msgContainer = $("#js-flash-container");
-    avatarForm=$("#avatar-form");
+    avatarForm = $("#avatar-form");
     file = $("#upload-profile-picture");
     img = $("#avatar-img");
     trueName = $("#true_name");
@@ -56,6 +56,7 @@ function getPath(obj, fileQuery, transImg) {
         }
         return 0;
     }
+
     var fileType = value.substring(value.lastIndexOf(".") + 1).toLowerCase();
     if (!isInArray(type_array, fileType)) {
         addErrorMsg(msgContainer, "只支持" + type_array.toString().toLocaleUpperCase() + "类型图片")
@@ -91,6 +92,7 @@ function getPath(obj, fileQuery, transImg) {
         reader.readAsDataURL(file);
     }
     msgContainer.html("");
+    $(img).show();
     return 1;
 }
 
@@ -228,26 +230,26 @@ function detectPhone() {
 }
 
 function sendChange() {
-    var flag=parseInt($(file).attr("valid"));
+    var flag = parseInt($(file).attr("valid"));
     //flag>0 图片做了修改，flag=0 图片未修改，flag<0 图片格式或大小有问题
-    if (flag>0) {
-        $(avatarForm).attr("action",BASE_CHANGE_URL + "/avatar.json");
+    if (flag > 0) {
+        $(avatarForm).attr("action", BASE_CHANGE_URL + "/avatar.json");
         $(avatarForm).ajaxSubmit({
             dataType: "json",
             beforeSend: function () {
                 $(complete).attr(DISABLED, true).html("保存...");
             },
             success: function (result) {
-                if(backDetectResult(result)){
-                    $(file).attr("data-value",result.data);
-                   sendProfile();
-                }else {
-                    var item=result.data;
+                if (backDetectResult(result)) {
+                    $(file).attr("data-value", result.data);
+                    sendProfile();
+                } else {
+                    var item = result.data;
                     switch (item.status) {
                         case HttpStatus.INVALID_FORMAT:
-                            addErrorMsg(msgContainer,"只支持" + type_array.toString().toLocaleUpperCase() + "类型图片")
+                            addErrorMsg(msgContainer, "只支持" + type_array.toString().toLocaleUpperCase() + "类型图片")
                         case HttpStatus.FILE_UPLOAD_ERROR:
-                         alertError("保存失败，请稍后再试")
+                            alertError("保存失败，请稍后再试")
                     }
                 }
             },
@@ -258,7 +260,7 @@ function sendChange() {
                 $(complete).removeAttr(DISABLED).html("保存修改");
             }
         });
-    }else if(flag==0) {
+    } else if (flag == 0) {
         sendProfile();
     }
 
@@ -274,7 +276,7 @@ function sendProfile() {
                 $(complete).attr(DISABLED, true).html("保存...");
             },
             data: {
-                picture:$(file).attr("data-value"),
+                picture: $(file).attr("data-value"),
                 trueName: $(trueName).val().trim(),
                 birthday: makePreZero(birthMonth, 2) + "/" + makePreZero(birthday, 2) + "/" + $(birthYear).val(),
                 male: $(male).val(),
@@ -288,7 +290,6 @@ function sendProfile() {
                     if (flag > 0) {
                         //refresh avatar
                         refreshAvatar();
-                        $(file).attr("valid",0);
                         var history=result.data.largeImg;
                         if(isNotBlank(history)){
                             $(img).attr("data-history",history);
