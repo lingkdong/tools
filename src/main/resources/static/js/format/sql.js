@@ -54,3 +54,14 @@ function sqlCharIn() {
         updateLine();
     }
 }
+
+function sqlLike() {
+    if (!isInputBlank()) {
+        var index=$(input).val().indexOf("\n");
+        var column=$(input).val().substring(0,index);
+        var value=$(input).val().substring(index+1);
+        var _like=column+" like'%";
+        $(input).val("and ("+_like + value.replace(/\r/ig, "%' or "+_like).replace(/\n/ig, "%' or "+_like) + "%')");
+        updateLine();
+    }
+}
