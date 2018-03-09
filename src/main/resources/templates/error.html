@@ -3,19 +3,15 @@
 >
 <head>
     <meta charset="UTF-8"/>
-    <title>password reset</title>
+    <title th:text="${status}"></title>
     <link th:href="@{/css/common.css}" rel="stylesheet" href="../../static/css/common.css"/>
-    <script th:src="@{/js/jquery-3.2.1.min.js}"></script>
-    <script th:src="@{/js/md5.min.js}"></script>
-    <script th:src="@{/js/common.js}"></script>
-    <script th:src="@{/js/user/password-change.js}"></script>
 </head>
 <body class="logged-out env-production page-responsive min-width-0 session-authentication"
 >
 <div class="position-relative js-header-wrapper ">
     <div class="header header-logged-out width-full pt-5 pb-4" role="banner">
         <div class="container clearfix width-full text-center">
-            <a class="header-logo" th:href="@{/tools/anon/index}" aria-label="Homepage"
+            <a class="header-logo" th:href="@{/tools/anon/index}"  aria-label="Homepage"
                data-ga-click="(Logged out) Header, go to homepage, icon:logo-wordmark">
                 <svg version="1.0"
                      width="48px" height="48px" viewBox="0 0 48.000000 48.000000"
@@ -36,6 +32,9 @@
     </div>
 </div>
 
+<div id="start-of-content" class="show-on-focus"></div>
+
+
 <div role="main">
 
     <div id="js-pjax-container" data-pjax-container="">
@@ -47,40 +46,11 @@
             <div accept-charset="UTF-8">
 
                 <div class="auth-form-header p-0">
-                    <h1 th:if="${isValid==true}" th:text="${'更改'+username+'的密码'}"></h1>
-                    <h1 th:if="${isValid==false}" th:text="更改的密码"></h1>
+                    <h1 class="f0" th:text="${status}"></h1>
                 </div>
 
-                <div id="js-flash-container">
-                    <th:block th:if="${isValid==false}">
-                        <div class="flash flash-full flash-error">
-                            <span class="flash-add-info">重置链接无效或已过期</span>
-                        </div>
-                    </th:block>
-                </div>
-
-                <div class="auth-form-body mt-3" th:if="${isValid==true}" id="password-body"
-                     th:attr="data-token=${token}">
-                    <p class="note">
-                        <font style="vertical-align: inherit;">密码必须包含数字、字母、特殊符号且大于等于8位</font>
-                    </p>
-                    <label for="password">
-                        密码
-                    </label>
-                    <input autocapitalize="off" autocorrect="off" autofocus="autofocus" class="form-control input-block"
-                           id="password" name="password" type="password" tabindex="1" />
-                    <label for="confirm">
-                        确认密码
-                    </label>
-                    <input autocapitalize="off" autocorrect="off" autofocus="autofocus" class="form-control input-block"
-                           id="confirm" name="confirm" type="password" tabindex="1" />
-                    <input class="btn btn-primary btn-block" tabindex="3"
-                           id="change" value="更改密码"/>
-                </div>
-                <div class="auth-form-body mt-3" th:if="${isValid==false}"
-                     >
-                    <input class="btn btn-primary btn-block" tabindex="3"
-                           onclick="redirectToReset()" value="重新获取链接"/>
+                <div class="auth-form-body mt-3" id="email-body">
+                    <p th:text="${error}" />
                 </div>
             </div>
         </div>

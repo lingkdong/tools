@@ -800,6 +800,9 @@ dl.form-group > dd .form-control.is-autocheck-errored {
     box-sizing: border-box;
 }
 
+.f0 {
+    font-size: 32px !important
+}
 .f1 {
     font-size: 26px !important
 }

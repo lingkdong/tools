@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 public class ControllerDefaultExceptionHandler {
     @ExceptionHandler(value = Exception.class)
     @ResponseBody
-    public BaseResponseDTO defaultExceptionHander(HttpServletRequest req, Exception e) throws Exception {
+    public Object defaultExceptionHander(HttpServletRequest req, Exception e) throws Exception {
         if (AnnotationUtils.findAnnotation(e.getClass(), ResponseStatus.class) != null) {
             throw e;
         }
