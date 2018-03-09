@@ -15,9 +15,9 @@ import java.util.List;
 @CacheConfig(cacheNames = "ResourceCache")
 public interface ResourceDao extends JpaRepository<Resource, Long> {
    @Cacheable
-   List<Resource> findAllByCategoryIdIn(Collection<Long> CategoryIds);
+   List<Resource> findAllByCategoryIdInOrderBySortNum(Collection<Long> CategoryIds);
    @Cacheable
-   List<Resource> findAllByCategoryId(Long categoryId);
+   List<Resource> findAllByCategoryIdOrderBySortNum(Long categoryId);
    @Cacheable
    Resource findTopByCode(String code);
 }

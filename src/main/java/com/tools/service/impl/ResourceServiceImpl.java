@@ -54,12 +54,12 @@ public class ResourceServiceImpl implements ResourceService {
 
     @Override
     public List<Resource> findAllByCategoryIdIn(Collection<Long> categoryIds) {
-        return resourceDao.findAllByCategoryIdIn(categoryIds);
+        return resourceDao.findAllByCategoryIdInOrderBySortNum(categoryIds);
     }
 
     @Override
     public List<Resource> findAllByCategoryId(Long categoryId) {
-        return resourceDao.findAllByCategoryId(categoryId);
+        return resourceDao.findAllByCategoryIdOrderBySortNum(categoryId);
     }
 
     @Override
