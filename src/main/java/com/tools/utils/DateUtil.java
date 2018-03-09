@@ -5,6 +5,7 @@ import org.apache.commons.lang3.time.DateUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -36,4 +37,21 @@ public class DateUtil {
         return null;
     }
 
+    public static Date getDiffDate(Long diff){
+        Calendar calendar=Calendar.getInstance();
+        if(diff!=null){
+            calendar.add(Calendar.DATE,diff.intValue());
+        }
+        return calendar.getTime();
+    }
+
+    public static Date parseDate(String str){
+        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+        try {
+           return sdf.parse(str);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

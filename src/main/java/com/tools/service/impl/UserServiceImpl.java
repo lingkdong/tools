@@ -9,6 +9,7 @@ import com.tools.dto.user.*;
 import com.tools.model.User;
 import com.tools.model.UserStatus;
 import com.tools.service.EmailService;
+import com.tools.service.FileService;
 import com.tools.service.UserService;
 import com.tools.utils.*;
 import com.tools.worker.SessionWorker;
@@ -47,8 +48,8 @@ public class UserServiceImpl implements UserService {
     private EmailService emailService;
     @Autowired
     private PrefoxEmailTemp prefoxEmailTemp;
-    @Value("${prefox.file.upload.basic}")
-    private String upBasic;
+    @Autowired
+    private FileService fileService;
     private final static List<String> AVATAR_TYPE = Arrays.asList(Constant.JPG,
             Constant.JPEG,
             Constant.PNG,
@@ -416,7 +417,7 @@ public class UserServiceImpl implements UserService {
         User sessionUser = Worker.getCurrentUser();
         if (sessionUser == null) return new BaseResponseDTO(HttpStatus.LOGIN_EXPIRED);
         String avatarDir = getAvatarDir(sessionUser.getId(),sessionUser.getUsername());
-        File orig = FileUtil.uploadFile(file, upBasic + File.separator + avatarDir, Constant.AVATAR + type);
+        File orig = FileUtil.uploadFile(file, fileService.getUploadBase() + File.separator + avatarDir, Constant.AVATAR + type);
         if (orig == null) {
             return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT, ErrorInfo.newErrorInfo().property("avatar")
                     .HttpStatus(HttpStatus.FILE_UPLOAD_ERROR).build());
@@ -430,7 +431,7 @@ public class UserServiceImpl implements UserService {
         }
         orig.delete();
         //delete pre avatar
-         FileUtil.deleteFilesExcept(upBasic + File.separator + avatarDir,Arrays.asList(largeFile.getName().toLowerCase(),smallFile.getName()
+         FileUtil.deleteFilesExcept(fileService.getUploadBase() + File.separator + avatarDir,Arrays.asList(largeFile.getName().toLowerCase(),smallFile.getName()
                  .toLowerCase()));
         String avatarPath = avatarDir + File.separator + smallFile.getName();
         return Worker.OK(avatarPath);

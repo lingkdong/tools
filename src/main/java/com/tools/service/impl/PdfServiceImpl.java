@@ -1,6 +1,7 @@
 package com.tools.service.impl;
 
 import com.tools.dto.*;
+import com.tools.service.FileService;
 import com.tools.service.OpenOfficeService;
 import com.tools.service.PdfService;
 import com.tools.utils.Constant;
@@ -23,12 +24,10 @@ import java.util.*;
 @Service
 @Slf4j
 public class PdfServiceImpl implements PdfService {
-    @Value("${prefox.file.download.temp}")
-    private String downDir;
-    @Value("${prefox.file.upload.temp}")
-    private String upDir;
     @Autowired
     private OpenOfficeService openOfficeService;
+    @Autowired
+    private FileService fileService;
     private final static List<String>WORD_TYPE= Arrays.asList(Constant.DOC,
             Constant.DOCX,
             Constant.TXT,
@@ -81,11 +80,11 @@ public class PdfServiceImpl implements PdfService {
             return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT, ErrorInfo.newErrorInfo().property("file")
                     .HttpStatus(HttpStatus.FILE_EMPTY).build());
         }
-        String dateDir = DateUtil.formatDate(new Date());
+        String dateDir = fileService.getDateDir();
         File orig;
         File dest;
         String namePrefix = FileUtil.getNamePrefix(file.getOriginalFilename());
-            orig = FileUtil.uploadFile(file, upDir + File.separator + dateDir
+            orig = FileUtil.uploadFile(file, fileService.getUploadTemp() + File.separator + dateDir
                     , namePrefix
                             + "_"
                             + convertFileDto.getToken()
@@ -120,8 +119,7 @@ public class PdfServiceImpl implements PdfService {
     }
 
     private String getDownPath(String dateDir, String fileName) {
-        FileUtil.markDir(downDir);
-        return downDir
+        return fileService.getDownloadTemp()
                 + File.separator
                 + dateDir
                 + File.separator
