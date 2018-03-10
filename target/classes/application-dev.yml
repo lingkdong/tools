@@ -1,0 +1,44 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/tools?useUnicode=true&characterEncoding=utf8
+    username: root
+    password: 123456
+  jpa:
+    hibernate:
+    # Hibernate ddl auto
+    #   create          Create the schemaand destory previous data
+    #   validate        Validate the schema, make no changes to the databases
+    #   create-drop     DisableDDL handling
+    #   update           Update the schema if necessary
+      ddl-auto: update
+    show-sql: true
+  thymeleaf:
+    cache: false
+server:
+  port: 8081
+
+prefox:
+ official:
+   email:
+    host: smtp.googlemail.com
+    port: 465
+    from: prefoxchina@gmail.com
+    user: prefoxchina@gmail.com
+    pass: google@109964
+#    host: smtp-mail.outlook.com
+#    port: 587
+#    from: pre_fox@outlook.com
+#    user: pre_fox@outlook.com
+#    pass: outlook@109964
+   website: http://127.0.0.1:8081
+ file:
+  upload:
+   temp: '\usr\local\webapps\prefox\file\upload\temp'
+   basic: '\usr\local\webapps\prefox\file\upload\basic'
+  download:
+   temp: '\usr\local\webapps\prefox\file\download\temp'
+ openOffice:
+   host: 127.0.0.1
+   port: 8100
+   home: 'E:\Program Files (x86)\OpenOffice 4'

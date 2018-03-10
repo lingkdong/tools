@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleSettings">
+    <option name="gradleHome" value="D:\Program Files\gradle-3.4.1" />
+    <option name="linkedProjectPath" value="D:/Projects/spring-framework/build.gradle" />
+    <option name="preferLocalInstallationToWrapper" value="true" />
+    <option name="serviceDirectoryPath" value="D:\gradle_repository" />
+  </component>
+</project>
+
