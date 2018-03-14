@@ -18,7 +18,7 @@ import java.util.Calendar;
  * Created by lk on 2018/1/18.
  */
 @Controller
-@RequestMapping("/tools/authc/user")
+@RequestMapping("/authc/user")
 public class AuthUserAction {
     @Autowired
     private UserService userService;

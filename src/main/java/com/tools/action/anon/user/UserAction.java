@@ -25,7 +25,7 @@ import java.util.Map;
  */
 @Controller
 @Slf4j
-@RequestMapping("/tools/anon/user")
+@RequestMapping("/anon/user")
 public class UserAction {
     @Autowired
     private UserService userService;

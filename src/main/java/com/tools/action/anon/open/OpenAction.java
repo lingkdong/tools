@@ -15,7 +15,7 @@ import java.util.Map;
  * Created by lk on 2017/11/21.
  */
 @Controller
-@RequestMapping("/tools/anon/open")
+@RequestMapping("/anon/open")
 public class OpenAction {
     @PostMapping(value = "/store")
     @ResponseBody

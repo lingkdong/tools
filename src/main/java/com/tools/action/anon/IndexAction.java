@@ -19,7 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
  * Created by lk on 2017/8/30.
  */
 @Controller
-@RequestMapping("/tools/anon")
+@RequestMapping("/anon")
 public class IndexAction extends BaseAction {
     @Autowired
     private CategoryService categoryService;

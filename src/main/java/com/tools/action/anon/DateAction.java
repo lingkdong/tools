@@ -16,7 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
  * Created by lk on 2018/2/9.
  */
 @Controller
-@RequestMapping("/tools/anon/date")
+@RequestMapping("/anon/date")
 public class DateAction extends BaseAction {
     @Autowired
     private DateService dateService;

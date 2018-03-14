@@ -24,20 +24,20 @@ public class ShiroConfig {
         //拦截器.
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap();
         //登出
-        filterChainDefinitionMap.put("/tools/user/logout", "logout");
+        filterChainDefinitionMap.put("/user/logout", "logout");
 
         //<!-- 过滤链定义，从上向下顺序执行，一般将 /**放在最为下边 -->:这是一个坑呢，一不小心代码就不好使了;
         //<!-- authc:所有url都必须认证通过才可以访问; anon:所有url都都可以匿名访问-->
         filterChainDefinitionMap.put("/css/**", "anon");
         filterChainDefinitionMap.put("/js/**", "anon");
         filterChainDefinitionMap.put("/img/**", "anon");
-        filterChainDefinitionMap.put("/tools/anon/**", "anon");
+        filterChainDefinitionMap.put("/anon/**", "anon");
         filterChainDefinitionMap.put("/**", "authc");
 
-        shiroFilterFactoryBean.setLoginUrl("/tools/anon/user/login");
+        shiroFilterFactoryBean.setLoginUrl("/anon/user/login");
 
         //no login rediect to login
-        shiroFilterFactoryBean.setUnauthorizedUrl("/tools/anon/user/login");
+        shiroFilterFactoryBean.setUnauthorizedUrl("/anon/user/login");
 
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;

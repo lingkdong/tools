@@ -15,7 +15,7 @@ import java.util.Arrays;
  * Created by lk on 2017/11/17.
  */
 @RestController
-@RequestMapping("/tools/anon/format")
+@RequestMapping("/anon/format")
 @Slf4j
 public class JsonAction {
     @PostMapping(value = "/json-pretty")

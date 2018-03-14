@@ -17,7 +17,7 @@
     <header class="Header f5">
         <div class="d-flex px-3 flex-justify-between container-lg">
             <div class="d-flex flex-justify-between">
-                <a class="header-logo-invertocat" th:href="@{/tools/anon/index}"
+                <a class="header-logo-invertocat" th:href="@{/anon/index}"
                    aria-label="Homepage">
                     <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                          width="32px" height="32px" viewBox="0 0 32.000000 32.000000"
@@ -39,12 +39,12 @@
                 <div class="d-flex">
                     <div class="">
                         <div class="header-search   js-site-search" role="search">
-                            <form accept-charset="UTF-8" th:action="@{/tools/anon/index}"
+                            <form accept-charset="UTF-8" th:action="@{/anon/index}"
                                   class="js-site-search-form"
                                   method="get">
                                 <div style="margin:0;padding:0;display:inline"></div>
                                 <label class="form-control header-search-wrapper js-chromeless-input-container">
-                                    <a th:href="@{/tools/anon/index}"
+                                    <a th:href="@{/anon/index}"
                                        class="header-search-scope no-underline">/index</a>
                                     <input type="text" th:value="${q}" id="header-search-input"
                                            class="form-control header-search-input js-site-search-focus  "
@@ -57,7 +57,7 @@
                     </div>
                     <ul class="d-flex pl-2 flex-items-center text-bold list-style-none" role="navigation">
                         <li>
-                            <a th:href="@{/tools/anon/users/index}"
+                            <a th:href="@{/anon/users/index}"
                                class="js-selected-navigation-item HeaderNavlink px-2">
                                 用户
                             </a>
@@ -77,11 +77,11 @@
                 </div>
                 <div class="d-flex">
                     <div shiro:guest="" class="user-nav d-flex flex-items-center list-style-none">
-                        <a th:href="@{/tools/anon/user/login}" class="text-bold px-1  HeaderNavlink">
+                        <a th:href="@{/anon/user/login}" class="text-bold px-1  HeaderNavlink">
                             登录
                         </a>
                         <span class="text-gray">or</span>
-                        <a th:href="@{/tools/anon/user/join}" class="text-bold px-1  HeaderNavlink">
+                        <a th:href="@{/anon/user/join}" class="text-bold px-1  HeaderNavlink">
                             注册
                         </a>
                     </div>
@@ -107,7 +107,7 @@
 
                                     <li class="dropdown-divider"></li>
 
-                                    <li><a class="dropdown-item" th:href="@{/tools/authc/user/change}">
+                                    <li><a class="dropdown-item" th:href="@{/authc/user/change}">
                                         个人资料
                                     </a></li>
                                     <li><a class="dropdown-item" href="#">
@@ -154,7 +154,7 @@
             <li><a href="#">Help</a></li>
         </ul>
 
-        <a th:href="@{/tools/anon/index}" aria-label="Homepage" class="footer-octicon" title="Prefox">
+        <a th:href="@{/anon/index}" aria-label="Homepage" class="footer-octicon" title="Prefox">
             <!--<svg aria-hidden="true" class="octicon octicon-mark-github" height="24" version="1.1" viewBox="0 0 16 16" width="24"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path></svg>-->
             <svg version="1.0"
                  width="24px" height="24px"

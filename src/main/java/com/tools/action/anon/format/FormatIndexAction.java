@@ -11,7 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
  * Created by lk on 2017/11/17.
  */
 @Controller
-@RequestMapping("/tools/anon/format")
+@RequestMapping("/anon/format")
 public class FormatIndexAction extends BaseAction {
     @GetMapping(value="/{type}/index")
     public ModelAndView index(@PathVariable(value = "type") String type) {

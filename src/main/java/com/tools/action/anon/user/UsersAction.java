@@ -17,7 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 @Slf4j
-@RequestMapping("/tools/anon/users")
+@RequestMapping("/anon/users")
 public class UsersAction {
     @Autowired
     private UserService userService;

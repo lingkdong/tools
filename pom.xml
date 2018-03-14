@@ -4,17 +4,18 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.sunny</groupId>
-    <artifactId>boot</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <artifactId>tools</artifactId>
+    <version>1.0.0</version>
+    <packaging>war</packaging>
 
-    <name>boot</name>
+    <name>tools</name>
     <description>tools project by Spring Boot</description>
     <profiles>
         <profile>
             <id>dev</id>
             <properties>
                 <activatedProperties>dev</activatedProperties>
+                <tomact.scope>compile</tomact.scope>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -24,12 +25,14 @@
             <id>prod</id>
             <properties>
                 <activatedProperties>prod</activatedProperties>
+                <tomcat.scope>provided</tomcat.scope>
             </properties>
         </profile>
         <profile>
             <id>testing</id>
             <properties>
                 <activatedProperties>testing</activatedProperties>
+                <tomcat.scope>provided</tomcat.scope>
             </properties>
         </profile>
     </profiles>
@@ -61,6 +64,25 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
+            <exclusions>
+                <!--ignore own tomcat-->
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>${tomcat.scope}</scope>
+        </dependency>
+        <!--ignore own tomcat then need servlet-api-->
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-servlet-api</artifactId>
+            <version>8.5.29</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.shiro</groupId>
@@ -146,12 +168,31 @@
         </dependency>
     </dependencies>
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                     <!--ignore test -->
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+            <plugin>
+                <!--ignore web.xml-->
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
             </plugin>
         </plugins>
+        <finalName>${project.name}</finalName>
     </build>
 
 

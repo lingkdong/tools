@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
  * Created by lk on 2017/11/17.
  */
 @RestController
-@RequestMapping("/tools/anon/format")
+@RequestMapping("/anon/format")
 public class HtmlAction {
     @PostMapping(value = "/html-pretty")
     public Object pretty(HtmlFormat format) {

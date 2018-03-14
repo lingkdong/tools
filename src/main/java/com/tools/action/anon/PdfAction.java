@@ -28,7 +28,7 @@ import java.util.Date;
  * Created by lk on 2018/2/12.
  */
 @Controller
-@RequestMapping("/tools/anon/pdf")
+@RequestMapping("/anon/pdf")
 @Slf4j
 public class PdfAction extends BaseAction {
     @Autowired

@@ -17,7 +17,7 @@ spring:
  mvc:
   favicon:
     enabled: false
-
-
+server:
+    context-path: /@project.name@
 
 

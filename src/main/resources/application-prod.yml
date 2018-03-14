@@ -3,18 +3,42 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/tools?useUnicode=true&characterEncoding=utf8
     username: root
-    password: 123456
+    password: mysql@76!123
   jpa:
     hibernate:
-      ddl-auto: none
+    # Hibernate ddl auto
+    #   create          Create the schemaand destory previous data
+    #   validate        Validate the schema, make no changes to the databases
+    #   create-drop     DisableDDL handling
+    #   update           Update the schema if necessary
+      ddl-auto: update
     show-sql: true
   thymeleaf:
-    cache: true
+    cache: false
 server:
-  port: 8081
+  port: 80
 
 prefox:
- email:
-  from: prefox@outllok.com
-
-
+ official:
+   email:
+    host: smtp.googlemail.com
+    port: 465
+    from: prefoxchina@gmail.com
+    user: prefoxchina@gmail.com
+    pass: google@109964
+#    host: smtp-mail.outlook.com
+#    port: 587
+#    from: pre_fox@outlook.com
+#    user: pre_fox@outlook.com
+#    pass: outlook@109964
+   website: http://111.230.23.211/@project.name@
+ file:
+  upload:
+   temp: '\usr\local\webapps\prefox\file\upload\temp'
+   basic: '\usr\local\webapps\prefox\file\upload\basic'
+  download:
+   temp: '\usr\local\webapps\prefox\file\download\temp'
+ openOffice:
+   host: 127.0.0.1
+   port: 8100
+   home: '\opt\openoffice4'
