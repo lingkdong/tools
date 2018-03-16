@@ -90,7 +90,8 @@
                             <details
                                     class="dropdown-details details-reset js-dropdown-details d-flex pl-2 flex-items-center">
                                 <summary class="HeaderNavlink name mt-1 outline-none">
-                                      <span id="page-avatar-data" style="display: none">
+                                      <span id="page-avatar-data" style="display: none"
+                                            th:attr="data-nginx=${nginxUrl}">
                                           <shiro:principal property="picture"></shiro:principal>
                                     </span>
                                     <img id="page-avatar" class="f-left" height="20" width="20" style="display: none"/>

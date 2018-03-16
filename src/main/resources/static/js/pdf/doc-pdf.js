@@ -18,9 +18,9 @@ $(function () {
     })
 })
 var type_array=new Array("doc","docx","txt","rtf","html","wpd")
-var uploadIcon_Select = '<img src="/img/word-80.png"/><img src="/img/right-arrow.png"/><img' +
-    ' src="/img/pdf-80.png"/>';
-var uploadIcon_Success = '<img src="/img/word-96.png"/>';
+var uploadIcon_Select = '<img src="/tools/img/word-80.png"/><img src="/tools/img/right-arrow.png"/><img' +
+    ' src="/tools/img/pdf-80.png"/>';
+var uploadIcon_Success = '<img src="/tools/img/word-96.png"/>';
 function fileDetect(obj) {
     if (isBlank(obj.value)) {
         uploadSelect();

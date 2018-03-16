@@ -1,7 +1,9 @@
 package com.tools.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 
 import javax.annotation.Resource;
@@ -13,8 +15,9 @@ import java.util.Map;
  */
 @Configuration
 public class ThymeleafConfig {
-    private static final String nginxUrl="http://127.0.0.1:9090/";
-    @Resource
+    @Value("${prefox.nginx}")
+    private  String nginxUrl;
+    @Autowired
     private void thymeleafStatic(ThymeleafViewResolver viewResolver) {
         if(viewResolver != null) {
             Map<String, Object> vars = new HashMap<>();

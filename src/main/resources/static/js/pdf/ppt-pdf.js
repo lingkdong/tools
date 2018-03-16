@@ -18,9 +18,9 @@ $(function () {
     })
 })
 var type_array=new Array("ppt","pptx")
-var uploadIcon_Select = '<img src="/img/ppt-80.png" class="wh-80"/><img src="/img/right-arrow.png"/><img' +
-    ' src="/img/pdf-80.png"/>';
-var uploadIcon_Success = '<img src="/img/ppt-96.png" class="wh-96"/>';
+var uploadIcon_Select = '<img src="/tools/img/ppt-80.png" class="wh-80"/><img src="/tools/img/right-arrow.png"/><img' +
+    ' src="/tools/img/pdf-80.png"/>';
+var uploadIcon_Success = '<img src="/tools/img/ppt-96.png" class="wh-96"/>';
 function fileDetect(obj) {
     if (isBlank(obj.value)) {
         uploadSelect();

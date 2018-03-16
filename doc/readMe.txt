@@ -46,3 +46,7 @@ grant all privileges on *.* to root@'%'identified by '@76!123';
 2.
 // 解决 openoffice启动问题
 http://ziry.me/view/103
+
+//nginx 远程访问报错
+    No route to host
+解决方案：重启防火墙

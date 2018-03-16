@@ -642,15 +642,15 @@ dl.form-group > dd .form-control.is-autocheck-loading, dl.form-group > dd .form-
 }
 
 .is-autocheck-loading-16 {
-    background-image: url("/img/loading_16.gif")
+    background-image: url("../img/loading_16.gif")
 }
 
 dl.form-group > dd .form-control.is-autocheck-successful {
-    background-image: url("/img/success.png")
+    background-image: url("../img/success.png")
 }
 
 dl.form-group > dd .form-control.is-autocheck-errored {
-    background-image: url("/img/error.png")
+    background-image: url("../img/error.png")
 }
 
 .dropdown-caret {
@@ -1890,13 +1890,13 @@ label {
 .img-pdf-80 {
     width: 80px;
     height: 80px;
-    background: url("/img/pdf-80.png") no-repeat;
+    background: url("../img/pdf-80.png") no-repeat;
 }
 
 .img-word-80 {
     width: 80px;
     height: 80px;
-    background: url("/img/word-80.png") no-repeat;
+    background: url("../img/word-80.png") no-repeat;
 }
 
 .Box {

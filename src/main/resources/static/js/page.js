@@ -42,13 +42,16 @@ function loginOut() {
 
 function initAvatar() {
     if(isExist(pageAvatar)&&isExist(pageAvatarData)){
-        var data=$(pageAvatarData).html();
-        changeAvatarData(data);
+        var data=$(pageAvatarData).attr("data-nginx");
+        var avatar=$(pageAvatarData).html().trim();
+        if(isNotBlank(data)&&isNotBlank(avatar)&&avatar!="null"){
+            changeAvatarData(data+avatar);
+        }
     }
 }
 function changeAvatarData(data) {
     if(!(isBlank(data)||data.trim()=="null")){
-        $(pageAvatar).attr("src",NGINX_URL+data.trim()+"?"+Math.random()).show();
+        $(pageAvatar).attr("src",data.trim()+"?"+Math.random()).show();
     }
 }
 function refreshAvatar() {

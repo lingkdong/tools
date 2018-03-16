@@ -318,7 +318,6 @@ var PRE_FOX_AUTHC_BASE = "/tools/authc";
 var PRE_FOX_ANON_BASE = "/tools/anon";
 var PRE_FOX_INDEX = PRE_FOX_ANON_BASE + "/index";
 var PRE_FOX_LOGIN = PRE_FOX_ANON_BASE + "/user/login";
-var NGINX_URL="http://127.0.0.1:9090/";
 function jump_index() {
     window.location.href = PRE_FOX_INDEX;
 }

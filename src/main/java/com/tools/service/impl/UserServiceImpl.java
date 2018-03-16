@@ -50,6 +50,8 @@ public class UserServiceImpl implements UserService {
     private PrefoxEmailTemp prefoxEmailTemp;
     @Autowired
     private FileService fileService;
+    @Value("${prefox.nginx}")
+    private String nginxUrl;
     private final static List<String> AVATAR_TYPE = Arrays.asList(Constant.JPG,
             Constant.JPEG,
             Constant.PNG,
@@ -441,7 +443,10 @@ public class UserServiceImpl implements UserService {
     public BaseResponseDTO getAvatar() {
         User sessionUser = Worker.getCurrentUser();
         if (sessionUser == null) return new BaseResponseDTO(HttpStatus.LOGIN_EXPIRED);
-        return Worker.OK(sessionUser.getPicture());
+        if(StringUtils.isNotBlank(sessionUser.getPicture())){
+            return Worker.OK(nginxUrl+sessionUser.getPicture());
+        }
+        return Worker.OK();
     }
 
     private Page<User> findUsers(FindUsersDto findUsersDto, Pageable pageable) {
