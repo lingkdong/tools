@@ -29,8 +29,8 @@ function format_raw(type) {
             async: true,
             dataType: "text",
             data: {
-                v: $(input).val(),
-                type: type,
+                "v": $(input).val(),
+                "type": type,
             },
             success: function (result) {
                 window.open(OPEN_BASE_URL + "show.html?version=" + result);
@@ -52,7 +52,7 @@ function format_pretty(type) {
             async: true,
             dataType: "json",
             data: {
-                input: $(input).val()
+                "input": $(input).val()
             },
             success: function (result) {
                 if (HttpStatus.PARAM_INCORRECT == result.status) {
@@ -78,7 +78,7 @@ function format_compress(type) {
             async: true,
             dataType: "json",
             data: {
-                input: $(input).val()
+                "input": $(input).val()
             },
             success: function (result) {
                 if (HttpStatus.PARAM_INCORRECT == result.status) {

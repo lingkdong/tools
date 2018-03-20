@@ -7,8 +7,8 @@ function pretty() {
             async: true,
             dataType: "json",
             data: {
-                input: $(input).val(),
-                dbType: $("#dbType").val()
+                "input": $(input).val(),
+                "dbType": $("#dbType").val()
             },
             success: function (result) {
                 if (HttpStatus.PARAM_INCORRECT == result.status) {

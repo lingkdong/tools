@@ -31,7 +31,7 @@ prefox:
 #    from: pre_fox@outlook.com
 #    user: pre_fox@outlook.com
 #    pass: outlook@109964
-   website: http://111.230.23.211/@project.name@
+   website: http://prefox.site/@project.name@
  file:
   upload:
    temp: /usr/local/webapps/prefox/file/upload/temp

@@ -276,12 +276,12 @@ function sendProfile() {
                 $(complete).attr(DISABLED, true).html("保存...");
             },
             data: {
-                picture: $(file).attr("data-value"),
-                trueName: $(trueName).val().trim(),
-                birthday: makePreZero(birthMonth, 2) + "/" + makePreZero(birthday, 2) + "/" + $(birthYear).val(),
-                male: $(male).val(),
-                skillTag: $(skillTag).val(),
-                location: $(userLocal).val()
+                "picture": $(file).attr("data-value"),
+                "trueName": $(trueName).val().trim(),
+                "birthday": makePreZero(birthMonth, 2) + "/" + makePreZero(birthday, 2) + "/" + $(birthYear).val(),
+                "male": $(male).val(),
+                "skillTag": $(skillTag).val(),
+                "location": $(userLocal).val()
             },
             success: function (result) {
                 if (backDetectResult(result)) {

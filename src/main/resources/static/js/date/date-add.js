@@ -103,9 +103,9 @@ function dateAdd() {
             async: true,
             dataType: "json",
             data: {
-                startDate: _startDate,
-                operator: $(operator).val(),
-                differ: $(differ).val()
+                "startDate": _startDate,
+                "operator": $(operator).val(),
+                "differ": $(differ).val()
             },
             beforeSend: function () {
                 $(calculate).attr(DISABLED, DISABLED).attr("计算中...")
