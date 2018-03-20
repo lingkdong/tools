@@ -149,7 +149,7 @@ function nameUnique() {
         type: "post",
         url: JOIN_BASE_URL + "name-unique.json",
         async: false,
-        dataType: "text",
+        dataType: "json",
         data: {
             "username": $(username).val()
         },
@@ -170,7 +170,7 @@ function emailUnique() {
         type: "post",
         url: JOIN_BASE_URL + "email-unique.json",
         async: false,
-        dataType: "text",
+        dataType: "json",
         data: {
             "email": $(email).val()
         },
@@ -227,7 +227,7 @@ function sendValid() {
         type: "post",
         url: JOIN_BASE_URL + "send-valid.json",
         async: true,
-        dataType: "text",
+        dataType: "json",
         data: {
             "username": $(username).val(),
             "password": md5($(password).val()),
