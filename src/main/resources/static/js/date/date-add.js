@@ -114,6 +114,9 @@ function dateAdd() {
                 if (backDetectResult(result) == true) {
                     var startDate = result.data.startDate;
                     var endDate = result.data.endDate;
+                    if(isNotBlank(endDate)){
+                        endDate=endDate.replace("AD","").replace("BC","公元前");
+                    }
                     addSuccessMsg(msgContainer, '<p>' + startDate + ' ' + result.data.operator + ' ' + result.data.differ + '</p>' +
                         '<span class="fw-bold fs-3">' + endDate + '</span>')
                 }
