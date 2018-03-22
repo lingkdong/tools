@@ -339,7 +339,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Page<UsersDto> findUsersDto(FindUsersDto findUsersDto, Pageable pageable) {
         Page users = findUsers(findUsersDto, pageable);
-        if (pageable.getPageNumber() >= users.getTotalPages()) {
+        if (pageable.getPageNumber() >= users.getTotalPages()&&(users.getTotalPages() - 1)>=0) {
             pageable = new PageRequest(users.getTotalPages() - 1, pageable.getPageSize(), pageable.getSort());
             users = findUsers(findUsersDto, pageable);
         }
