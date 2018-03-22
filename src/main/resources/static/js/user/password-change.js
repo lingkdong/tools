@@ -40,8 +40,8 @@ function sendChange() {
             async: true,
             dataType: "json",
             data: {
-                "password":  md5($(password).val()),
-                "token":$(passwordBody).attr("data-token")
+                password:  md5($(password).val()),
+                token:$(passwordBody).attr("data-token")
             },
             beforeSend: function () {
                 $(change).attr(DISABLED, true).html("更改密码...");

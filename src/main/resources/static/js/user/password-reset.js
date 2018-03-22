@@ -17,7 +17,7 @@ function sendReset() {
             async: true,
             dataType: "json",
             data: {
-                "email": $(email).val(),
+                email: $(email).val(),
             },
             beforeSend: function () {
                 $(reset).attr(DISABLED, true).html("邮件发送中...");

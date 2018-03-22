@@ -97,8 +97,8 @@ function dateBetween() {
             async: true,
             dataType: "json",
             data: {
-                "startDate": _startDate,
-                "endDate": _endDate
+                startDate: _startDate,
+                endDate: _endDate
             },
             beforeSend: function () {
                 $(calculate).attr(DISABLED, DISABLED).html("计算中...")

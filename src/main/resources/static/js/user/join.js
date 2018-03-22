@@ -123,10 +123,10 @@ function signUp() {
             async: true,
             dataType: "json",
             data: {
-                "username": $(username).val(),
-                "password": md5($(password).val()),
-                "email": $(email).val(),
-                "validCode": $(validCode).val()
+                username: $(username).val(),
+                password: md5($(password).val()),
+                email: $(email).val(),
+                validCode: $(validCode).val()
             },
             success: function (result) {
                 if (backDetectResult(result));
@@ -149,9 +149,9 @@ function nameUnique() {
         type: "post",
         url: JOIN_BASE_URL + "name-unique.json",
         async: false,
-        dataType: "text",
+        dataType: "json",
         data: {
-            "username": $(username).val()
+            username: $(username).val()
         },
         success: function (result) {
             flag = backDetectResult(result);
@@ -170,9 +170,9 @@ function emailUnique() {
         type: "post",
         url: JOIN_BASE_URL + "email-unique.json",
         async: false,
-        dataType: "text",
+        dataType: "json",
         data: {
-            "email": $(email).val()
+            email: $(email).val()
         },
         success: function (result) {
             flag = backDetectResult(result);
@@ -229,9 +229,9 @@ function sendValid() {
         async: true,
         dataType: "text",
         data: {
-            "username": $(username).val(),
-            "password": md5($(password).val()),
-            "email": $(email).val()
+            username: $(username).val(),
+            password: md5($(password).val()),
+            email: $(email).val()
         },
         beforeSend: function () {
         },

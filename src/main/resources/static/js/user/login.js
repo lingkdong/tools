@@ -25,8 +25,8 @@ function sendLogin() {
             async: true,
             dataType: "json",
             data: {
-                "username": $(username).val(),
-                "password": md5($(password).val())
+                username: $(username).val(),
+                password: md5($(password).val())
             },
             beforeSend: function () {
                 $(login).attr(DISABLED, true);

@@ -10,9 +10,9 @@ function dashboard_more(obj) {
         url: INDEX_BASE_URL+"search.json",
         dataType: "json",
         data:{
-            "q":$(obj).attr("data-q"),
-            "page":number,
-            "size":$(obj).attr("data-size")
+            q:$(obj).attr("data-q"),
+            page:number,
+            size:$(obj).attr("data-size")
         },
         success: function (result) {
             if(result&&result.status==HttpStatus.OK&&result.data){
