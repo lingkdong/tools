@@ -24,9 +24,4 @@ public class BootApplication extends SpringBootServletInitializer{
 //		factory.setLocation(uploadPath);
 		return factory.createMultipartConfig();
 	}
-//
-//	@Override
-//	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-//		return builder.sources(BootApplication.class);
-//	}
 }

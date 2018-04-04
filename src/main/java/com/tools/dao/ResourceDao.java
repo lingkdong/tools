@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Created by lk on 2017/11/8.
  */
-@CacheConfig(cacheNames = "ResourceCache")
+@CacheConfig(cacheNames = "ResourceCache",keyGenerator = "keyGenerator")
 public interface ResourceDao extends JpaRepository<Resource, Long> {
    @Cacheable
    List<Resource> findAllByCategoryIdInOrderBySortNum(Collection<Long> CategoryIds);

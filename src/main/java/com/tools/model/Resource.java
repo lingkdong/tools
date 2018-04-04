@@ -1,13 +1,14 @@
 package com.tools.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by lk on 2017/11/7.
  */
 @Entity
-public class Resource {
+public class Resource implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO )
     private Long id;

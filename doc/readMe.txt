@@ -50,3 +50,8 @@ http://ziry.me/view/103
 //nginx 远程访问报错
     No route to host
 解决方案：重启防火墙
+
+// open port
+firewall-cmd --zone=public --add-port=22/tcp --permanent
+firewall-cmd --list-ports
+systemctl restart firewalld.service;//设置后需重启防火墙
