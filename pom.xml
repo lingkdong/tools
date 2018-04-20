@@ -180,15 +180,6 @@
         </resources>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
-                <configuration>
-                     <!--ignore test -->
-                    <skip>true</skip>
-                </configuration>
-            </plugin>
-            <plugin>
                 <!--ignore web.xml-->
                 <artifactId>maven-war-plugin</artifactId>
                 <configuration>

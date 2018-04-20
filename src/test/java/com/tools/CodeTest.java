@@ -7,6 +7,7 @@ import com.tools.utils.ImgUtil;
 import com.tools.utils.StringUtil;
 import org.jodconverter.office.OfficeManager;
 import org.junit.Test;
+import org.springframework.aop.support.AopUtils;
 
 import java.io.*;
 import java.util.HashMap;
@@ -94,6 +95,9 @@ public class CodeTest {
 
     @Test
     public void jodconverterCoreTest(){
+        Object obj=new Object();
+        ;
+        System.out.println(AopUtils.getTargetClass(obj).getName());
     }
 
     @Test
