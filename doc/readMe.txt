@@ -49,6 +49,7 @@ http://ziry.me/view/103
 
 //nginx 远程访问报错
     No route to host
+
 解决方案：重启防火墙
 
 // open port

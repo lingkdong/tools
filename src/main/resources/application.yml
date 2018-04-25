@@ -17,6 +17,10 @@ spring:
  mvc:
   favicon:
     enabled: false
+ http:
+   multipart:
+     max-file-size: 2MB
+     max-request-size: 2MB
 server:
     context-path: /@project.name@
 

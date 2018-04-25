@@ -15,13 +15,4 @@ public class BootApplication extends SpringBootServletInitializer{
 	public static void main(String[] args) {
 		SpringApplication.run(BootApplication.class, args);
 	}
-	@Bean
-	public MultipartConfigElement multipartConfigElement() {
-		MultipartConfigFactory factory = new MultipartConfigFactory();
-		factory.setMaxFileSize("2MB"); //KB,MB
-		factory.setMaxRequestSize("2MB");
-		//Sets the directory location where files will be stored.
-//		factory.setLocation(uploadPath);
-		return factory.createMultipartConfig();
-	}
 }

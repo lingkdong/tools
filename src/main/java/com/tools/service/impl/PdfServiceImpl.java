@@ -23,6 +23,7 @@ import java.util.*;
  */
 @Service
 @Slf4j
+@Deprecated
 public class PdfServiceImpl implements PdfService {
     @Autowired
     private OpenOfficeService openOfficeService;
