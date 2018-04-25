@@ -56,3 +56,7 @@ http://ziry.me/view/103
 firewall-cmd --zone=public --add-port=22/tcp --permanent
 firewall-cmd --list-ports
 systemctl restart firewalld.service;//设置后需重启防火墙
+
+//ascII 码在线验证
+//简历模板
+//在线API
