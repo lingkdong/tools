@@ -32,7 +32,8 @@ var HttpStatus = {
     USER_NOT_EXIST: 4002,
     FILE_EMPTY: 4015,
     FILE_UPLOAD_ERROR: 4016,
-    FILE_CONVERT_ERROR: 4017
+    FILE_CONVERT_ERROR: 4017,
+    NOT_ASCII:4018
 }
 var FlashType = {
     SUCCESS: "success",
@@ -311,6 +312,8 @@ function backErrorTxt(property, status) {
             return property + "错误";
         case HttpStatus.NOT_EXIST:
             return property + "不存在";
+        case HttpStatus.NOT_ASCII:
+            return property + "非ascII";
 
     }
 }
@@ -347,6 +350,26 @@ function isInArray(arr,value){
         if(value === arr[i]){
             return true;
         }
+    }
+    return false;
+}
+
+// back program detect result
+function backDetectResult(result) {
+    if (HttpStatus.OK == result.status) {
+        return true;
+    } else if (HttpStatus.PARAM_INCORRECT == result.status) {
+        var data = result.data;
+        if (data instanceof Array) {
+            for (var i = 0; i < data.length; i++) {
+                backError(data[i]);
+            }
+        } else {
+            backError(data);
+        }
+
+    } else if (HttpStatus.INTERNAL_SERVER_ERROR == result.status) {
+        alertServerError();
     }
     return false;
 }

@@ -44,6 +44,7 @@ public enum HttpStatus {
     FILE_EMPTY(4015, "file empty"),
     FILE_UPLOAD_ERROR(4016, "file upload error"),
     FILE_CONVERT_ERROR(4017, "file convert error"),
+    NOT_ASCII(4018, "is not ascII."),
 
     // 5xxx  Server Error
     SERVER_ERROR(5000, "Server Error"),

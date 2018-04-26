@@ -131,26 +131,6 @@ function dateAdd() {
     }
 }
 
-// back program detect result
-function backDetectResult(result) {
-    if (HttpStatus.OK == result.status) {
-        return true;
-    } else if (HttpStatus.PARAM_INCORRECT == result.status) {
-        var data = result.data;
-        if (data instanceof Array) {
-            for (var i = 0; i < data.length; i++) {
-                backError(data[i]);
-            }
-        } else {
-            backError(data);
-        }
-
-    } else if (HttpStatus.INTERNAL_SERVER_ERROR == result.status) {
-        alertServerError();
-    }
-    return false;
-}
-
 function backError(item) {
     switch (item.property) {
         case 'startDate':
