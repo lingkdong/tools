@@ -1,6 +1,7 @@
 $(function () {
     character=$("#character");
     $(character).keyup(function (event) {
+        clearCharacterFocus();
         findAscII()
         stopEvent(event)
     });
@@ -24,7 +25,6 @@ function detectCharacter(obj) {
 
 function findAscII() {
    if(detectCharacter(character)){
-       clearCharacterFocus();
        var value=$(character).val();
        var find=$("th[name='character-"+value+"']");
        if(isExist(find)){
