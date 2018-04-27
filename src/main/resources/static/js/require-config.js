@@ -1,7 +1,7 @@
 require.config({
     paths: {
-        "beautify-css": "/js/format/beautify-css" ,
-        "beautify-html": "/js/format/beautify-html" ,
-        "beautify": "/js/format/beautify",
+        "beautify-css": "/tools/js/format/beautify-css" ,
+        "beautify-html": "/tools/js/format/beautify-html" ,
+        "beautify": "/tools/js/format/beautify",
     }
 });
