@@ -38,7 +38,7 @@ function getAscII() {
                character:$(character).val()
            },
            beforeSend: function () {
-               $(calculate).attr(DISABLED, DISABLED).attr("获取中...")
+               $(calculate).attr(DISABLED, DISABLED).html("获取中...")
            },
            success: function (result) {
                if (backDetectResult(result) == true) {
@@ -52,7 +52,7 @@ function getAscII() {
                alertServerError();
            },
            complete: function () {
-               $(calculate).removeAttr(DISABLED).attr("获取")
+               $(calculate).removeAttr(DISABLED).html("获取")
            }
        });
    }

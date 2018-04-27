@@ -68,7 +68,9 @@ details:not([open]) > *:not(summary) {
 .details-reset > summary::-webkit-details-marker {
     display: none
 }
-
+.border-green{
+   border:2px solid #28a745!important;
+}
 .border-top {
     border-top: 1px #e1e4e8 solid !important
 }

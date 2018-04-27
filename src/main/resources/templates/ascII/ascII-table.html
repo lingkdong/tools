@@ -6,6 +6,7 @@
     <meta charset="UTF-8"/>
     <title>ascII-table</title>
     <link th:href="@{/css/ascII.css}" rel="stylesheet"/>
+    <script th:src="@{/js/ascII/ascII-table.js }"></script>
 </head>
 <body>
 <div th:fragment="content" th:remove="tag">
@@ -27,31 +28,34 @@
     </div>
     <div class="setup-form">
         <dl class="form-group ">
-            <dt class="input-label"><label name="start">常用asII码表
-            </label></dt>
+            <dd><input class="form-control w-150" id="character" placeholder="输入控制字符"
+                       name="character" maxlength="1"/>
+            </dd>
+        </dl>
+        <dl class="form-group mt-4">
             <dd>
                 <table>
                     <tr>
-                        <th>控制字符</th>
-                        <th>(space)</th>
-                        <th>!</th>
-                        <th>"</th>
-                        <th>#</th>
-                        <th>$</th>
-                        <th>%</th>
-                        <th>&</th>
-                        <th>'</th>
-                        <th>(</th>
-                        <th>)</th>
-                        <th>*</th>
-                        <th>+</th>
-                        <th>,</th>
-                        <th>-</th>
-                        <th>.</th>
-                        <th>/</th>
-                        <th>0</th>
-                        <th>1</th>
-                        <th>2</th>
+                        <th class="character">控制字符</th>
+                        <th name="character- ">(space)</th>
+                        <th name="character-!">!</th>
+                        <th value='character-"'>"</th>
+                        <th name="character-#">#</th>
+                        <th name="character-$">$</th>
+                        <th name="character-%">%</th>
+                        <th name="character-&">&</th>
+                        <th name="character-'">'</th>
+                        <th name="character-(">(</th>
+                        <th name="character-)">)</th>
+                        <th name="character-*">*</th>
+                        <th name="character-+">+</th>
+                        <th name="character-,">,</th>
+                        <th name="character--">-</th>
+                        <th name="character-.">.</th>
+                        <th name="character-/">/</th>
+                        <th name="character-0">0</th>
+                        <th name="character-1">1</th>
+                        <th name="character-2">2</th>
                     </tr>
                     <tr style=" background-color: #f6f8fa">
                         <td>ascII码值</td>
@@ -59,27 +63,27 @@
                             <td align="center" th:text="${item}"></td>
                         </th:block>
                     </tr>
-                    <tr>
+                    <tr class="character">
                         <th>控制字符</th>
-                        <th>3</th>
-                        <th>4</th>
-                        <th>5</th>
-                        <th>6</th>
-                        <th>7</th>
-                        <th>8</th>
-                        <th>9</th>
-                        <th>:</th>
-                        <th>;</th>
-                        <th><</th>
-                        <th>=</th>
-                        <th>></th>
-                        <th>?</th>
-                        <th>@</th>
-                        <th>A</th>
-                        <th>B</th>
-                        <th>C</th>
-                        <th>D</th>
-                        <th>E</th>
+                        <th name="character-3">3</th>
+                        <th name="character-4">4</th>
+                        <th name="character-5">5</th>
+                        <th name="character-6">6</th>
+                        <th name="character-7">7</th>
+                        <th name="character-8">8</th>
+                        <th name="character-9">9</th>
+                        <th name="character-:">:</th>
+                        <th name="character-;">;</th>
+                        <th name="character-<"><</th>
+                        <th name="character-=">=</th>
+                        <th name="character->">></th>
+                        <th name="character-?">?</th>
+                        <th name="character-@">@</th>
+                        <th name="character-A">A</th>
+                        <th name="character-B">B</th>
+                        <th name="character-C">C</th>
+                        <th name="character-D">D</th>
+                        <th name="character-E">E</th>
                     </tr>
                     <tr style=" background-color: #f6f8fa">
                         <td>ascII码值</td>
@@ -87,27 +91,27 @@
                             <td align="center" th:text="${item}"></td>
                         </th:block>
                     </tr>
-                    <tr>
+                    <tr class="character">
                         <th>控制字符</th>
-                        <th>F</th>
-                        <th>G</th>
-                        <th>H</th>
-                        <th>I</th>
-                        <th>J</th>
-                        <th>K</th>
-                        <th>L</th>
-                        <th>M</th>
-                        <th>N</th>
-                        <th>O</th>
-                        <th>P</th>
-                        <th>Q</th>
-                        <th>R</th>
-                        <th>S</th>
-                        <th>T</th>
-                        <th>U</th>
-                        <th>V</th>
-                        <th>W</th>
-                        <th>X</th>
+                        <th name="character-F">F</th>
+                        <th name="character-G">G</th>
+                        <th name="character-H">H</th>
+                        <th name="character-I">I</th>
+                        <th name="character-J">J</th>
+                        <th name="character-F">K</th>
+                        <th name="character-K">L</th>
+                        <th name="character-M">M</th>
+                        <th name="character-N">N</th>
+                        <th name="character-O">O</th>
+                        <th name="character-P">P</th>
+                        <th name="character-Q">Q</th>
+                        <th name="character-R">R</th>
+                        <th name="character-S">S</th>
+                        <th name="character-T">T</th>
+                        <th name="character-U">U</th>
+                        <th name="character-V">V</th>
+                        <th name="character-W">W</th>
+                        <th name="character-X">X</th>
                     </tr>
                     <tr style=" background-color: #f6f8fa">
                         <td>ascII码值</td>
@@ -115,27 +119,27 @@
                             <td align="center" th:text="${item}"></td>
                         </th:block>
                     </tr>
-                    <tr>
+                    <tr class="character">
                         <th>控制字符</th>
-                        <th>Y</th>
-                        <th>Z</th>
-                        <th>[</th>
-                        <th>\</th>
-                        <th>]</th>
-                        <th>^</th>
-                        <th>_</th>
-                        <th>`</th>
-                        <th>a</th>
-                        <th>b</th>
-                        <th>c</th>
-                        <th>d</th>
-                        <th>e</th>
-                        <th>f</th>
-                        <th>g</th>
-                        <th>h</th>
-                        <th>i</th>
-                        <th>j</th>
-                        <th>k</th>
+                        <th name="character-Y">Y</th>
+                        <th name="character-Z">Z</th>
+                        <th name="character-[">[</th>
+                        <th name="character-\">\</th>
+                        <th name="character-]">]</th>
+                        <th name="character-^">^</th>
+                        <th name="character-_">_</th>
+                        <th name="character-`">`</th>
+                        <th name="character-a">a</th>
+                        <th name="character-b">b</th>
+                        <th name="character-c">c</th>
+                        <th name="character-d">d</th>
+                        <th name="character-e">e</th>
+                        <th name="character-f">f</th>
+                        <th name="character-g">g</th>
+                        <th name="character-h">h</th>
+                        <th name="character-i">i</th>
+                        <th name="character-j">j</th>
+                        <th name="character-k">k</th>
                     </tr>
                     <tr style=" background-color: #f6f8fa">
                         <td>ascII码值</td>
@@ -143,27 +147,27 @@
                             <td align="center" th:text="${item}"></td>
                         </th:block>
                     </tr>
-                    <tr>
+                    <tr class="character">
                         <th>控制字符</th>
-                        <th>l</th>
-                        <th>m</th>
-                        <th>n</th>
-                        <th>o</th>
-                        <th>p</th>
-                        <th>q</th>
-                        <th>r</th>
-                        <th>s</th>
-                        <th>t</th>
-                        <th>u</th>
-                        <th>v</th>
-                        <th>w</th>
-                        <th>x</th>
-                        <th>y</th>
-                        <th>z</th>
-                        <th>{</th>
-                        <th>|</th>
-                        <th>}</th>
-                        <th>~</th>
+                        <th name="character-l">l</th>
+                        <th name="character-m">m</th>
+                        <th name="character-n">n</th>
+                        <th name="character-o">o</th>
+                        <th name="character-p">p</th>
+                        <th name="character-q">q</th>
+                        <th name="character-r">r</th>
+                        <th name="character-s">s</th>
+                        <th name="character-t">t</th>
+                        <th name="character-u">u</th>
+                        <th name="character-v">v</th>
+                        <th name="character-w">w</th>
+                        <th name="character-x">x</th>
+                        <th name="character-y">y</th>
+                        <th name="character-z">z</th>
+                        <th name="character-{">{</th>
+                        <th name="character-|">|</th>
+                        <th name="character-}">}</th>
+                        <th name="character-~">~</th>
                     </tr>
                     <tr style=" background-color: #f6f8fa">
                         <td>ascII码值</td>
