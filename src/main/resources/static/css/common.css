@@ -118,12 +118,15 @@ details:not([open]) > *:not(summary) {
 .pl-2 {
     padding-left: 8px !important
 }
+
 .pl-3 {
     padding-left: 16px !important
 }
+
 .pl-4 {
     padding-left: 32px !important
 }
+
 .pl-5 {
     padding-left: 64px !important
 }
@@ -812,6 +815,7 @@ dl.form-group > dd .form-control.is-autocheck-errored {
 .f0 {
     font-size: 32px !important
 }
+
 .f1 {
     font-size: 26px !important
 }
@@ -1935,3 +1939,25 @@ label {
     cursor: pointer
 }
 
+table {
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+td, th {
+    padding: 0
+}
+
+table td,th {
+    padding: 6px 13px;
+    border: 1px solid #dfe2e5
+}
+
+table tr {
+    background-color: #fff;
+    border-top: 1px solid #c6cbd1
+}
+
+tr:nth-child(2n) {
+    background-color: #f6f8fa
+}

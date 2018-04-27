@@ -2,6 +2,9 @@ $(function () {
     msgContainer = $("#js-flash-container");
     character=$("#character");
     calculate = $("#calculate");
+    $(character).keyup(function (event) {
+        detectCharacter(this);
+    });
     $(calculate).click(function (event) {
         getAscII()
         stopEvent(event)
@@ -14,6 +17,9 @@ function detectCharacter(obj) {
     var value = $(obj).val();
     if (""==value) {
         item_error(obj, "字符不能为空")
+        return false;
+    }else if(value.length>1){
+        item_error(obj, "请输入单个字符")
         return false;
     }
     //success
@@ -38,8 +44,7 @@ function getAscII() {
                if (backDetectResult(result) == true) {
                    var ascII = result.data;
                    addSuccessMsg(msgContainer,
-                       '<p>java code:</p>' +
-                       '<p class="fs-2">(int) ' + $(character).val()+' =</p>' +
+                       '<p class="fs-2">'+$(character).val()+' =</p>' +
                        '<span class="fw-bold fs-3">' + ascII + '</span>')
                }
            },
@@ -56,7 +61,7 @@ function getAscII() {
 function backError(item) {
     switch (item.property) {
         case 'character':
-            item_error($(trueName), backErrorTxt("字符", item.status));
+            item_error($(character), backErrorTxt("字符", item.status));
             break;
     }
 }
