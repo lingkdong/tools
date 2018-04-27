@@ -32,7 +32,7 @@ function findAscII() {
                $(find[i]).addClass("border-green")
            }
        }else {
-           item_error(character, "表格中未查询到您输入的字符");
+           item_error(character, "未查询到您输入的字符,请注意中英文切换");
        }
    }
 }
