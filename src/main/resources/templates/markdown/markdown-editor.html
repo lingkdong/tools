@@ -14,7 +14,46 @@
 </head>
 <body id="toplevel">
 <div id="in">
-    <form><textarea id="code"># Markdown Editor</textarea></form>
+    <form>
+        <textarea id="code"># Markdown Editor
+
+
+## 标题2
+###### 标题6
+*斜体*
+**加粗**
+
+* 列表 1
+* 列表 2
+   * 列表 2.1
+
+1. 列表 1
+2. 列表 2
+
+
+ 链接：[GitHub](http://github.com)
+
+ 引用(两个空格以后 点击换行 可以实现换行)：
+>在Java中，最基本的互斥同步手段就是synchronized关键字  ，
+>synchronized关键字经过编译
+>之后，会在同步块的前后分别形成
+>monitorenter和monitorexit这两个字节码指令
+
+反斜杠转义 \* \# \[
+
+
+```代码块
+function test() {
+console.log("look ma`, no spaces");
+}
+```
+表格：
+数据库| 版本
+------------ | -------------
+mysql     |1.0
+sql server  | 2.0
+    </textarea>
+    </form>
 </div>
 <div id="out" class="markdown-body"></div>
 <div id="menu">
@@ -41,26 +80,32 @@
     <div id="navcontent">
         <a id="logo" href="/tools/anon/index">
             <p id="title" class="left">
-               # Prefox
+                # Prefox
             </p>
         </a>
-        <p id="openbutton" title="打开本地Markdown文件" class="navbutton left"
+        <p id="openbutton" title="打开本地MD文件" class="navbutton left"
            onclick="document.getElementById('fileInput').click();"><i class="material-icons">open_in_browser</i></p>
         <input id="fileInput" type="file" class="hidden" accept=".md,.mdown,.txt,.markdown"/>
-        <p id="savebutton" title="保存到本地" class="navbutton left" onclick="showMenu()"><i class="material-icons">
+        <p id="savebutton" title="保存到本地 ctrl+shift+s" class="navbutton left" onclick="showMenu()"><i
+                class="material-icons">
             file_download</i>
         </p>
-        <p id="browsersavebutton" title="浏览器保存" class="navbutton left" onclick="saveInBrowser()"><i
+        <p id="browsersavebutton" title="浏览器保存 ctrl+s" class="navbutton left" onclick="saveInBrowser()"><i
                 class="material-icons">save</i></p>
         <!--<p id="sharebutton" title="Generate Shareable Link" class="navbutton left" onclick="updateHash()"><i-->
-                <!--class="material-icons">share</i></p>-->
+        <!--class="material-icons">share</i></p>-->
         <p id="nightbutton" title="夜间模式" class="navbutton left" onclick="toggleNightMode(this)"><i
                 class="material-icons">invert_colors</i></p>
         <p id="readbutton" title="只读模式" class="navbutton left" onclick="toggleReadMode(this)"><i
                 class="material-icons">chrome_reader_mode</i></p>
         <p id="newbutton" title="清空" class="navbutton left" onclick="clearEditor()">
             清空
+        </p>
+        <a  href="/tools/markdown/markdown-help.png" target="_blank">
+            <p class="navbutton left">
+               帮助
             </p>
+        </a>
         <!--<p id="sharebutton" class="navbutton left selected hidden">Share</p>-->
     </div>
 </div>
