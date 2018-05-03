@@ -28,6 +28,9 @@ public class Resource implements Serializable{
 
     private Long categoryId;
 
+    @Column(length = 50)
+    private String target;
+
     public Long getId() {
         return id;
     }
@@ -90,5 +93,13 @@ public class Resource implements Serializable{
 
     public void setCategoryId(Long categoryId) {
         this.categoryId = categoryId;
+    }
+
+    public String getTarget() {
+        return target;
+    }
+
+    public void setTarget(String target) {
+        this.target = target;
     }
 }

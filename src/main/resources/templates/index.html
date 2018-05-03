@@ -16,7 +16,8 @@
             <span class="f6" th:utext="${item.description}"/>
             <div class="f4">
                 <th:block th:each="sub:${item.resourceDtos}">
-                   <a class="btn btn-outline mt-2"  th:href="${sub.url}" th:text="${sub.name}"/>
+                   <a class="btn btn-outline mt-2" th:target="${sub.target}" th:href="${sub.url}"
+                      th:text="${sub.name}"/>
                 </th:block>
             </div>
         </div>
