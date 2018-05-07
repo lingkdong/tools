@@ -15,7 +15,7 @@
             <id>dev</id>
             <properties>
                 <activatedProperties>dev</activatedProperties>
-                <tomact.scope>compile</tomact.scope>
+                <tomcat.scope>compile</tomcat.scope>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -201,10 +201,51 @@
                 </configuration>
             </plugin>
             <plugin>
+                <groupId>com.samaxes.maven</groupId>
+                <artifactId>minify-maven-plugin</artifactId>
+                <version>1.7.2</version>
+                <executions>
+                    <execution>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>minify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <charset>UTF-8</charset>
+                    <skipMerge>true</skipMerge>
+                    <webappSourceDir>${project.basedir}/src/main</webappSourceDir>
+                    <cssSourceDir>resources</cssSourceDir>
+                    <jsSourceDir>resources</jsSourceDir>
+                    <jsEngine>CLOSURE</jsEngine>
+                    <closureLanguage>ECMASCRIPT5</closureLanguage>
+                    <nosuffix>true</nosuffix>
+                    <webappTargetDir>${project.build.directory}/minify</webappTargetDir>
+                    <cssSourceIncludes>
+                        <cssSourceInclude>**/*.css</cssSourceInclude>
+                    </cssSourceIncludes>
+                    <cssSourceExcludes>
+                        <cssSourceExclude>**/*.min.css</cssSourceExclude>
+                    </cssSourceExcludes>
+                    <jsSourceIncludes>
+                        <jsSourceInclude>**/*.js</jsSourceInclude>
+                    </jsSourceIncludes>
+                    <jsSourceExcludes>
+                        <jsSourceExclude>**/*.min.js</jsSourceExclude>
+                    </jsSourceExcludes>
+                </configuration>
+            </plugin>
+            <plugin>
                 <!--ignore web.xml-->
                 <artifactId>maven-war-plugin</artifactId>
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
+                    <webResources>
+                        <resource>
+                            <directory>${project.build.directory}/minify</directory>
+                        </resource>
+                    </webResources>
                 </configuration>
             </plugin>
         </plugins>
