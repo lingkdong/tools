@@ -60,3 +60,44 @@ systemctl restart firewalld.service;//设置后需重启防火墙
 //ascII 码在线验证
 //简历模板
 //在线API
+
+//markdown
+
+# Markdown Editor
+
+
+## 标题2
+###### 标题6
+*斜体*
+**加粗**
+
+* 列表 1
+* 列表 2
+   * 列表 2.1
+
+1. 列表 1
+2. 列表 2
+
+
+ 链接：[GitHub](http://github.com)
+
+ 引用(两个空格以后 点击换行 可以实现换行)：
+>在Java中，最基本的互斥同步手段就是synchronized关键字  ，
+>synchronized关键字经过编译
+>之后，会在同步块的前后分别形成
+>monitorenter和monitorexit这两个字节码指令
+
+反斜杠转义 \* \# \[
+
+
+```代码块
+function test() {
+console.log("look ma`, no spaces");
+}
+```
+表格：
+
+|数据库| 版本|
+------------ | -------------
+mysql     |1.0
+sql server  | 2.0
