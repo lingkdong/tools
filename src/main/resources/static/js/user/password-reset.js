@@ -17,7 +17,7 @@ function sendReset() {
             async: true,
             dataType: "json",
             data: {
-                "email": $(email).val(),
+                email: $(email).val(),
             },
             beforeSend: function () {
                 $(reset).attr(DISABLED, true).html("邮件发送中...");
@@ -52,26 +52,6 @@ function detectEmail() {
     }
     return true;
 }
-
-function backDetectResult(result) {
-    if (HttpStatus.OK == result.status) {
-        return true;
-    } else if (HttpStatus.PARAM_INCORRECT == result.status) {
-        var data = result.data;
-        if (data instanceof Array) {
-            for (var i = 0; i < data.length; i++) {
-                backError(data[i]);
-            }
-        } else {
-            backError(data);
-        }
-
-    } else if (HttpStatus.INTERNAL_SERVER_ERROR == result.status) {
-        alertServerError();
-    }
-    return false;
-}
-
 
 function backError(item) {
     switch (item.property) {

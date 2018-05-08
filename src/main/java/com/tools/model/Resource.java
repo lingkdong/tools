@@ -1,13 +1,14 @@
 package com.tools.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by lk on 2017/11/7.
  */
 @Entity
-public class Resource {
+public class Resource implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO )
     private Long id;
@@ -26,6 +27,9 @@ public class Resource {
     private Integer sortNum;
 
     private Long categoryId;
+
+    @Column(length = 50)
+    private String target;
 
     public Long getId() {
         return id;
@@ -89,5 +93,13 @@ public class Resource {
 
     public void setCategoryId(Long categoryId) {
         this.categoryId = categoryId;
+    }
+
+    public String getTarget() {
+        return target;
+    }
+
+    public void setTarget(String target) {
+        this.target = target;
     }
 }

@@ -15,6 +15,16 @@ spring:
     show-sql: true
   thymeleaf:
     cache: false
+  redis:
+    database: 1
+    host: 127.0.0.1
+    pool:
+      max-active: 8
+      max-idle: 8
+      max-wait: -1
+      min-idle: 0
+    timeout: 0
+    password: redis76!123
 server:
   port: 80
 

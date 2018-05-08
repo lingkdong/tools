@@ -11,13 +11,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 /**
  * Created by lk on 2017/11/8.
  */
-@CacheConfig(cacheNames = "CategoryCache")
+@CacheConfig(cacheNames = "CategoryCache",keyGenerator = "keyGenerator")
 public interface CategoryDao extends JpaRepository<Category, Long> {
     Page<Category> findByNameContainingOrCodeContainingOrTagsContainingOrderBySortNum(String searchName,
                                                                                       String searchCode,
                                                                                       String tag,
                                                                                       Pageable pageable);
-
     Page<Category> findAllByOrderBySortNum(Pageable pageable);
 
     @Cacheable

@@ -6,6 +6,8 @@ INSERT INTO `tools`.`resource` (`id`, `category_id`, `code`, `create_time`, `las
 INSERT INTO `tools`.`resource` (`id`, `category_id`, `code`, `create_time`, `last_update_time`, `name`, `sort_num`, `url`) VALUES ('6', '1', 'xml', '2017-12-08 15:23:22', '2017-12-08 15:23:24', 'XML', '6', '/tools/anon/format/xml/index.html');
 INSERT INTO `tools`.`resource` (`id`, `category_id`, `code`, `create_time`, `last_update_time`, `name`, `sort_num`, `url`) VALUES ('7', '2', 'date-between', '2018-02-09 14:50:21', '2018-02-09 14:50:24', '日期差计算', '1', '/tools/anon/date/date-between/index.html');
 INSERT INTO `tools`.`resource` (`id`, `category_id`, `code`, `create_time`, `last_update_time`, `name`, `sort_num`, `url`) VALUES ('8', '2', 'date-add', '2018-02-09 14:52:45', '2018-02-09 14:52:48', '日期加减', '2', '/tools/anon/date/date-add/index.html');
+/*
 INSERT INTO `tools`.`resource` (`id`, `category_id`, `code`, `create_time`, `last_update_time`, `name`, `sort_num`, `url`) VALUES ('9', '5', 'doc-pdf', '2018-02-11 18:42:06', '2018-02-11 18:42:09', 'Word转换成PDF', '1', '/tools/anon/pdf/doc-pdf/index.html');
 INSERT INTO `tools`.`resource` (`id`, `category_id`, `code`, `create_time`, `last_update_time`, `name`, `sort_num`, `url`) VALUES ('10', '5', 'excel-pdf', '2018-02-26 17:16:16', '2018-02-26 17:16:18', 'Excel转换成PDF', '2', '/tools/anon/pdf/excel-pdf/index.html');
 INSERT INTO `tools`.`resource` (`id`, `category_id`, `code`, `create_time`, `last_update_time`, `name`, `sort_num`, `url`) VALUES ('11', '5', 'ppt-pdf', '2018-02-27 14:43:25', '2018-02-27 14:43:28', 'PPT转换成PDF', '3', '/tools/anon/pdf/ppt-pdf/index.html');
+*/

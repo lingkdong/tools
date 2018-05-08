@@ -10,9 +10,9 @@ function dashboard_more(obj) {
         url: INDEX_BASE_URL+"search.json",
         dataType: "json",
         data:{
-            "q":$(obj).attr("data-q"),
-            "page":number,
-            "size":$(obj).attr("data-size")
+            q:$(obj).attr("data-q"),
+            page:number,
+            size:$(obj).attr("data-size")
         },
         success: function (result) {
             if(result&&result.status==HttpStatus.OK&&result.data){
@@ -23,7 +23,7 @@ function dashboard_more(obj) {
                         var innerHtml = '';
                         if (item.resourceDtos && item.resourceDtos.length > 0) {
                             $.each(item.resourceDtos, function (subIndex,sub) {
-                                innerHtml += '<a class="btn btn-outline mt-2" target="_blank" href="' + sub.url + '">'+sub.name+'</a> '
+                                innerHtml += '<a class="btn btn-outline mt-2" target="'+sub.target+'" href="' + sub.url + '">'+sub.name+'</a> '
                             })
                         }
                         var description=(item.description)?item.description:'';

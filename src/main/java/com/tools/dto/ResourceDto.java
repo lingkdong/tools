@@ -1,16 +1,18 @@
 package com.tools.dto;
 
-import lombok.Builder;
+import lombok.Data;
 
 /**
  * Created by lk on 2017/11/14.
  */
+@Data
 public class ResourceDto {
     private Long id;
     private String name;
     private String code;
     private Long categoryId;
     private String url;
+    private String target;
 
     public ResourceDto() {
     }
@@ -21,50 +23,11 @@ public class ResourceDto {
         this.code = builder.code;
         this.categoryId = builder.categoryId;
         this.url = builder.url;
+        this.target = builder.target;
     }
 
     public static Builder newResourceDto() {
         return new Builder();
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public Long getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(Long categoryId) {
-        this.categoryId = categoryId;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
     }
 
     public static final class Builder {
@@ -73,6 +36,7 @@ public class ResourceDto {
         private String code;
         private Long categoryId;
         private String url;
+        private String target;
 
         private Builder() {
         }
@@ -103,6 +67,11 @@ public class ResourceDto {
 
         public Builder url(String url) {
             this.url = url;
+            return this;
+        }
+
+        public Builder target(String target) {
+            this.target = target;
             return this;
         }
     }

@@ -103,9 +103,9 @@ function dateAdd() {
             async: true,
             dataType: "json",
             data: {
-                "startDate": _startDate,
-                "operator": $(operator).val(),
-                "differ": $(differ).val()
+                startDate: _startDate,
+                operator: $(operator).val(),
+                differ: $(differ).val()
             },
             beforeSend: function () {
                 $(calculate).attr(DISABLED, DISABLED).attr("计算中...")
@@ -129,26 +129,6 @@ function dateAdd() {
             }
         });
     }
-}
-
-// back program detect result
-function backDetectResult(result) {
-    if (HttpStatus.OK == result.status) {
-        return true;
-    } else if (HttpStatus.PARAM_INCORRECT == result.status) {
-        var data = result.data;
-        if (data instanceof Array) {
-            for (var i = 0; i < data.length; i++) {
-                backError(data[i]);
-            }
-        } else {
-            backError(data);
-        }
-
-    } else if (HttpStatus.INTERNAL_SERVER_ERROR == result.status) {
-        alertServerError();
-    }
-    return false;
 }
 
 function backError(item) {

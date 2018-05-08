@@ -7,6 +7,7 @@ import com.tools.utils.ImgUtil;
 import com.tools.utils.StringUtil;
 import org.jodconverter.office.OfficeManager;
 import org.junit.Test;
+import org.springframework.aop.support.AopUtils;
 
 import java.io.*;
 import java.util.HashMap;
@@ -18,31 +19,33 @@ import java.util.Map;
 public class CodeTest {
     public static void main(String[] args) {
         try {
-            addTitle("E:\\Derby_jira\\Trivago\\trivago_report.txt",readTitle("E:\\trivago_report.txt"));
+            addTitle("E:\\Derby_jira\\Trivago\\trivago_report.txt", readTitle("E:\\trivago_report.txt"));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
     @Test
-    public void testGson(){
-        Map<String,Object> map=new HashMap<>();
-        map.put("key","000101");
-        map.put("name","json");
-        map.put("value","json_long_java");
+    public void testGson() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("key", "000101");
+        map.put("name", "json");
+        map.put("value", "json_long_java");
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        String json=gson.toJson(map);
+        String json = gson.toJson(map);
         System.out.println(json);
 
     }
+
     public static final String readTitle(String filePath) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(
                 new FileInputStream(filePath)));
 
         for (String line = br.readLine(); line != null; line = br.readLine()) {
-           return line;
+            return line;
         }
         br.close();
-       return "";
+        return "";
     }
 
     public static void addTitle(String filePath, String title) {
@@ -56,8 +59,8 @@ public class CodeTest {
             randomFile.writeBytes(title);
         } catch (IOException e) {
             e.printStackTrace();
-        } finally{
-            if(randomFile != null){
+        } finally {
+            if (randomFile != null) {
                 try {
                     randomFile.close();
                 } catch (IOException e) {
@@ -69,8 +72,8 @@ public class CodeTest {
 
 
     @Test
-    public void CssCompressorTest(){
-        String txt="{display:inline-block;font:normal normal normal 14px/1 FontAwesome;font-size:inherit;" +
+    public void CssCompressorTest() {
+        String txt = "{display:inline-block;font:normal normal normal 14px/1 FontAwesome;font-size:inherit;" +
                 "text-rendering:auto;;;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}" +
                 ".fa-lg.test{font-size:1.33333333em;line-height:.75em;vertical-align:-15%;}.fa-2x{font-size:2em}" +
                 ".fa-3x{font-size:3em;;}";
@@ -86,21 +89,45 @@ public class CodeTest {
     }
 
     @Test
-    public void testValid(){
+    public void testValid() {
 //        System.out.println(StringUtil.getValidCode(1000));
-        int test=0x7fffffff;
+        int test = 0x7fffffff;
         System.out.println(test);
     }
 
     @Test
-    public void jodconverterCoreTest(){
+    public void jodconverterCoreTest() {
+        Object obj = new Object();
+        ;
+        System.out.println(AopUtils.getTargetClass(obj).getName());
     }
 
     @Test
-    public void image(){
-        File file=new File("E:\\files\\fox1.png");
-        ImgUtil.doCompress("E:\\files\\fox1.png",48,48,"_48",false);
-        ImgUtil.doCompress("E:\\files\\fox1.png",32,32,"_32",false);
-        ImgUtil.doCompress("E:\\files\\fox1.png",100,100,"_100",false);
+    public void image() {
+        File file = new File("E:\\files\\fox1.png");
+        ImgUtil.doCompress("E:\\files\\fox1.png", 48, 48, "_48", false);
+        ImgUtil.doCompress("E:\\files\\fox1.png", 32, 32, "_32", false);
+        ImgUtil.doCompress("E:\\files\\fox1.png", 100, 100, "_100", false);
+    }
+
+    @Test
+    public void testChar() {
+//        for (int i = 33; i < 50; i++) {
+//            char c = (char) i;
+//            System.out.print("<th>" + String.valueOf(c) + "</th>");
+//            System.out.println();
+//        }
+        for (int i = 108; i < 127; i++) {
+            char c = (char) i;
+            System.out.print("<th>" + String.valueOf(c) + "</th>");
+            System.out.println();
+        }
+//        for (int i = 98; i < 127; i++) {
+//            char c = (char) i;
+//            System.out.print("<th>" + String.valueOf(c) + "</th>");
+//            System.out.println();
+//        }
+
+
     }
 }

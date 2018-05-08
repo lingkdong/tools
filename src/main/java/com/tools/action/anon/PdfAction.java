@@ -30,6 +30,7 @@ import java.util.Date;
 @Controller
 @RequestMapping("/anon/pdf")
 @Slf4j
+@Deprecated
 public class PdfAction extends BaseAction {
     @Autowired
     private PdfService pdfService;

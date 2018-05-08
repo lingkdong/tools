@@ -40,8 +40,8 @@ function sendChange() {
             async: true,
             dataType: "json",
             data: {
-                "password":  md5($(password).val()),
-                "token":$(passwordBody).attr("data-token")
+                password:  md5($(password).val()),
+                token:$(passwordBody).attr("data-token")
             },
             beforeSend: function () {
                 $(change).attr(DISABLED, true).html("更改密码...");
@@ -60,25 +60,6 @@ function sendChange() {
             }
         });
     }
-}
-
-function backDetectResult(result) {
-    if (HttpStatus.OK == result.status) {
-        return true;
-    } else if (HttpStatus.PARAM_INCORRECT == result.status) {
-        var data = result.data;
-        if (data instanceof Array) {
-            for (var i = 0; i < data.length; i++) {
-                backError(data[i]);
-            }
-        } else {
-            backError(data);
-        }
-
-    } else if (HttpStatus.INTERNAL_SERVER_ERROR == result.status) {
-        alertServerError();
-    }
-    return false;
 }
 
 function backError(item) {

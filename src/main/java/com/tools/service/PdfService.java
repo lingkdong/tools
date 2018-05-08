@@ -9,6 +9,7 @@ import java.io.File;
 /**
  * Created by lk on 2018/2/22.
  */
+@Deprecated
 public interface PdfService {
     BaseResponseDTO docToPdf(ConvertFileDto convertFileDto);
 
