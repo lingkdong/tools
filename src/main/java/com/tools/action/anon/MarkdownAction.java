@@ -5,13 +5,12 @@ import com.tools.dto.BaseResponseDTO;
 import com.tools.dto.HttpStatus;
 import com.tools.dto.MarkdownDto;
 import com.tools.service.MarkdownService;
+import com.tools.worker.Worker;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
@@ -24,6 +23,7 @@ import java.io.InputStream;
  */
 @Controller
 @RequestMapping("/anon/markdown")
+@Slf4j
 public class MarkdownAction extends BaseAction{
     @Autowired
     private MarkdownService markdownService;
@@ -32,23 +32,19 @@ public class MarkdownAction extends BaseAction{
         return getResource(type,"markdown/"+type);
     }
 
-    @GetMapping(value = "/download-pdf")
+    @PostMapping(value = "/download-pdf")
     @ResponseBody
     public Object download(MarkdownDto markdownDto, HttpServletResponse response) {
-//        try {
-//            File file=pdfService.getFile(downloadDto);
-//            if(file==null) return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT,"file not found");
-//            response.addHeader("Content-disposition", "attachment;filename=\""+ new String(downloadDto.getName().getBytes
-//                    ("gbk"), "iso-8859-1")+"\"");
-//            response.setContentType("application/download;charset=UTF-8");
-//            InputStream is = new FileInputStream(file);
-//            IOUtils.copy(is, response.getOutputStream());
-//            response.flushBuffer();
-//            is.close();
-//        } catch (Exception e) {
-//            log.error("<PdfAction.download failed, {} {} >", e, e.getStackTrace()[0].toString());
-//            return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT,"download error");
-//        }
-        return  new BaseResponseDTO(HttpStatus.PARAM_INCORRECT);
+        try {
+            BaseResponseDTO dto=markdownService.downloadPdf(markdownDto.getContent());
+            if (!Worker.isOK(dto)) return dto;
+            response.addHeader("Content-disposition", "attachment;filename=\"" + new String(markdownDto.getName().getBytes
+                    ("gbk"), "iso-8859-1") + ".pdf\"");
+            response.setContentType("application/download;charset=UTF-8");
+            return dto.getData();
+        } catch (Exception e) {
+            log.error("<MarkdownAction.download failed, {} {} >", e, e.getStackTrace()[0].toString());
+            return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT,"download error");
+        }
     }
 }
