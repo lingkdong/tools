@@ -39,10 +39,19 @@ public class RegUtils {
         return false;
     }
 
-    public static boolean isDate(String str){
+    public static boolean isDate(String str) {
         if (StringUtils.isNotBlank(str)) {
             String regex = "\\d{4}-\\d{2}-\\d{2}";
             return match(regex, str);
+        }
+        return false;
+    }
+
+    public static boolean isContainChinese(String str) {
+        Pattern p = Pattern.compile("[\u4e00-\u9fa5]");
+        Matcher m = p.matcher(str);
+        if (m.find()) {
+            return true;
         }
         return false;
     }

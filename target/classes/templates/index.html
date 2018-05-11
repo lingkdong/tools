@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="page">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Tools</title>
+    <link th:href="@{/css/index.css}" rel="stylesheet"/>
+    <script th:src="@{/js/index.js}"></script>
+</head>
+<body>
+<div th:fragment="content" th:remove="tag">
+    <th:block th:each="item:${page.content}">
+        <div class="newsfeed-placeholder p-5 mb-4">
+            <h3 class="h2 lh-condensed mb-2 " th:text="${item.name}"/>
+            <span class="f6" th:utext="${item.description}"/>
+            <div class="f4">
+                <th:block th:each="sub:${item.resourceDtos}">
+                   <a class="btn btn-outline mt-2" th:target="${sub.target}" th:href="${sub.url}"
+                      th:text="${sub.name}"/>
+                </th:block>
+            </div>
+        </div>
+    </th:block>
+    <div class="more-repos-link" id="more-div">
+
+    <button th:if="${page.last==false}" type="submit"
+            class="btn-link width-full  js-more-repos-link outline-none fw-bold-5"
+            th:attr="
+            data-q=${q},
+            data-number=${page.number},
+            data-size=${page.size},
+            data-last=${page.last},
+            data-totalPages=${page.totalPages},
+            data-totalElements=${page.totalElements}
+             "
+            data-disable-with="Loading more…" onclick="dashboard_more(this)">加载更多…</button>
+    </div>
+</div>
+
+</body>
+</html>

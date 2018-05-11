@@ -53,3 +53,6 @@ prefox:
    port: 8100
    home: E:/Program Files (x86)/OpenOffice 4
  nginx: http://127.0.0.1:9090/
+
+fonts:
+  simsun: C:\Windows\Fonts\simsun.ttc

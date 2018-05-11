@@ -9,6 +9,7 @@ import java.util.Map;
  */
 public class SessionWorker {
     public final static int HOUR_HALF=60*30;
+    public final static int TEN_MINUTE=60*10;
     public final static int HOUR_1=60*60;
     public static HttpSession setInterval(final HttpSession session, int interval) {
         session.setMaxInactiveInterval(interval);

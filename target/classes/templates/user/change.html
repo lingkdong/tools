@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="page">
+<head>
+    <meta charset="UTF-8"/>
+    <title th:text="profile"></title>
+    <script th:src="@{/js/jquery.form.js }"></script>
+    <script th:src="@{/js/user/change.js}"></script>
+</head>
+<body>
+<div th:fragment="content" th:remove="tag">
+    <div class="setup-wrapper">
+        <h2 class="f2-light mb-1">
+            个人资料
+        </h2>
+        <div class="setup-main o-hid pl-5">
+            <dl class="form-group edit-profile-avatar mr-7 f-right mt-none">
+                <dt><label for="upload-profile-picture">个人头像</label></dt>
+                <dd class="avatar-upload-container clearfix">
+                    <div  class="shadow" style=" height:200px; width:200px" id="img-container">
+                        <img  class="avatar rounded-2" id="avatar-img"  height="200" width="200"
+                              th:attr="
+                              style=${#strings.isEmpty(data.picture)?'display:none':''},
+                              src=${!#strings.isEmpty(data.picture)?nginxUrl+data.picture:''},
+                              data-history=${data.picture}
+                              "
+                             >
+                    </div>
+
+                    <form class="avatar-upload" method="post" enctype="multipart/form-data" id="avatar-form">
+                        <label class="position-relative btn o-hid mt-3 width-full text-center">
+                            上传新头像
+                            <input id="upload-profile-picture" type="file" name="file" valid="0"
+                                   accept=".png,.jpg,.jpeg,.gif"
+                                   class="manual-file-chooser width-full height-full ml-0 js-manual-file-chooser">
+                        </label>
+                        <div id="js-flash-container" class="mt-3">
+
+                        </div>
+
+                    </form> <!-- /.avatar-upload -->
+                </dd>
+            </dl>
+            <div class="setup-form-container w-445 f-left">
+                <div accept-charset="UTF-8" autocomplete="off" class="setup-form js-signup-form"
+                     id="signup-form" method="post">
+                    <ul  class="Box list-style-none">
+                        <li class="Box-row p-2" th:text="${data.username}"></li>
+                        <li class="Box-row p-2" th:text="${data.email}"></li>
+                    </ul>
+
+                    <dl class="form-group">
+                        <dt class="input-label"><label autocapitalize="off" autofocus="autofocus">
+                            真实姓名</label></dt>
+                        <dd><input autocapitalize="off" autofocus="autofocus" class="form-control"
+                                   id="true_name" name="truename" maxlength="30" type="text"
+                                   th:value="${data.trueName}"/>
+                            <p class="note">设置您的真实姓名</p>
+                        </dd>
+                    </dl>
+
+                    <dl class="form-group ">
+                        <dt class="input-label"><label name="birth">生日
+                        </label></dt>
+                        <dd><input class="form-control w-150" id="birth-year" placeholder="年"
+                                   name="birth-year" maxlength="4" th:value="${birthYear}"/>
+                            <select id="birth-month" class="form-control btn btn-sm select w-120">
+                                th
+                                <th:block th:each="item:${#numbers.sequence(1,12)}">
+                                    <option th:value="${item}" th:text="${item+'月'}"
+                                            th:selected="${item==birthMonth}"/>
+                                </th:block>
+                            </select>
+                            <input class="form-control w-150" id="birth-day" placeholder="日"
+                                   name="birth-day" maxlength="2" th:value="${birthday}"/>
+                            <p class="note">设置您的生日信息.</p>
+                        </dd>
+                    </dl>
+                    <dl class="form-group">
+                        <dt class="input-label"><label autocapitalize="off" for="male"
+                                                       name="male">性别</label></dt>
+                        <dd>
+                            <select id="male" class="form-control btn btn-sm select w-150">
+                                <option value="1" th:selected="${data.male==true}">男</option>
+                                <option value="0" th:selected="${data.male==false}">女</option>
+                            </select>
+                            <p class="note">请选择您的性别.</p></dd>
+                    </dl>
+                    <dl class="form-group">
+                        <dt class="input-label"><label autocapitalize="off" for="skillTag"
+                                                       name="valid">技能标签</label></dt>
+                        <dd>
+                            <input autocapitalize="off" class="form-control" id="skillTag" name="skillTag"
+                                   maxlength="50"
+                                   type="text" th:value="${data.skillTag}"/>
+                            <p class="note">设置您的技能标签.</p>
+                        </dd>
+                    </dl>
+                    <dl class="form-group">
+                        <dt class="input-label"><label autocapitalize="off" autofocus="autofocus">
+                            手机</label></dt>
+                        <dd><input autocapitalize="off" autofocus="autofocus" class="form-control"
+                                   id="phone" name="phone" maxlength="11" type="text" th:value="${data.phone}"/>
+                            <p class="note">设置您的手机号码</p>
+                        </dd>
+                    </dl>
+                    <dl class="form-group">
+                        <dt class="input-label"><label autocapitalize="off" for="location"
+                                                       name="valid">位置</label></dt>
+                        <dd>
+                            <input autocapitalize="off" class="form-control" id="location" name="location"
+                                   maxlength="50"
+                                   type="text" th:value="${data.location}"/>
+                            <p class="note">设置您的位置.</p>
+                        </dd>
+                    </dl>
+
+                    <button class="btn btn-primary" id="complete">
+                        保存修改
+                    </button>
+
+                </div>
+            </div> <!-- /.setup-form-container -->
+        </div> <!-- /.setup-main -->
+
+    </div>
+</div>
+</body>
+</html>
