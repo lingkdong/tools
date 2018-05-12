@@ -325,7 +325,7 @@ function start() {
 start();
 
 function markdownToPdf(){
-    var content=editor.getValue();
+    var content=document.getElementById('out').innerHTML;
     var name=document.title;
     $.ajax({
         type: "post",
@@ -334,7 +334,7 @@ function markdownToPdf(){
         dataType: "json",
         data: {
             name: name,
-            content: content
+            html: content
         },
         success: function (result) {
             if (backDetectResult(result));
@@ -354,7 +354,7 @@ function markdownToPdf(){
 
 function backError(item) {
     switch (item.property) {
-        case 'email':
+        case 'content':
             var error = "";
             if (HttpStatus.IS_BLANK == item.status) {
                 error = "文档内容为空";

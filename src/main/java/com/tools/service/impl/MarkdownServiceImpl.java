@@ -20,13 +20,12 @@ public class MarkdownServiceImpl implements MarkdownService{
     @Value("${fonts.simsun}")
     private String simsun;
     @Override
-    public BaseResponseDTO downloadPdf(String markdown){
-        BaseResponseDTO dto = Worker.isBlank2("content", markdown);
+    public BaseResponseDTO downloadPdf(String html){
+        BaseResponseDTO dto = Worker.isBlank2("content", html);
         if (!Worker.isOK(dto)) return dto;
         try {
-            if(RegUtils.isContainChinese(markdown)){
-                StringBuilder html = new StringBuilder();
-                html.append("<!DOCTYPE html>\n" +
+            if(RegUtils.isContainChinese(html)){
+                html=new StringBuilder("<!DOCTYPE html>\n" +
                         "<html>\n" +
                         "<head>\n" +
                         "    <meta charset=\"UTF-8\"/>\n" +
@@ -38,13 +37,14 @@ public class MarkdownServiceImpl implements MarkdownService{
                         "    </style>\n" +
                         "</head>\n" +
                         "<body>")
-                        .append(MarkdownUtil.markdownToHtml(markdown)
+                        .append(html
                         ).append
                         ("</body>\n" +
-                                "</html>");
-                return Worker.OK(MarkdownUtil.htmlToPdf(html.toString(),Arrays.asList(simsun))) ;
+                                "</html>").toString();
+
+                return Worker.OK(MarkdownUtil.htmlToPdf(html,Arrays.asList(simsun))) ;
             } else {
-                return Worker.OK(MarkdownUtil.markdownToPdf(markdown));
+                return Worker.OK(MarkdownUtil.htmlToPdf(html));
             }
         } catch (ToolException e) {
           return new BaseResponseDTO(HttpStatus.INTERNAL_SERVER_ERROR);

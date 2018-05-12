@@ -43,7 +43,7 @@ public class MarkdownAction extends BaseAction{
     @ResponseBody
     public Object store(MarkdownDto markdownDto,HttpServletRequest request) {
         try {
-            BaseResponseDTO dto=markdownService.downloadPdf(markdownDto.getContent());
+            BaseResponseDTO dto=markdownService.downloadPdf(markdownDto.getHtml());
             if (!Worker.isOK(dto)) return dto;
             String token= TimeUtils.format(new Date(), TimeUtils.yyyyMMddHHmmssSSS)+ MathUtils.getRandom(6);
             Map<String,Object> obj=new HashMap<>();
