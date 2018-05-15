@@ -53,3 +53,7 @@ prefox:
    port: 8100
    home: /opt/openoffice4
  nginx: http://111.230.23.211:9090/
+
+fonts:
+  simsun: /usr/local/tools/data/simsun.ttc
+
