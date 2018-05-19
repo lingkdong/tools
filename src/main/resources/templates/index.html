@@ -11,22 +11,36 @@
 <body>
 <div th:fragment="content" th:remove="tag">
     <th:block th:each="item:${page.content}">
-        <div class="newsfeed-placeholder p-5 mb-4">
+        <div class="newsfeed-placeholder p-4 mb-4">
+           <!-- <div th:if="${! #lists.isEmpty(item.resourceDtos)}" class="f-right p-4">
+                <button type="submit" class="btn btn-sm btn-with-count js-toggler-target"
+                        title="收 藏"
+                        data-ga-click="Repository, click star button, action:files#disambiguate; text:Star">
+                    <svg class="octicon octicon-star" viewBox="0 0 14 16" version="1.1" width="14" height="16"
+                         aria-hidden="true">
+                        <path fill-rule="evenodd"
+                              d="M14 6l-4.9-.64L7 1 4.9 5.36 0 6l3.6 3.26L2.67 14 7 11.67 11.33 14l-.93-4.74L14 6z"></path>
+                    </svg>
+                    Star
+                </button>
+            </div>-->
             <h3 class="h2 lh-condensed mb-2 " th:text="${item.name}"/>
             <span class="f6" th:utext="${item.description}"/>
+
             <div class="f4">
                 <th:block th:each="sub:${item.resourceDtos}">
-                   <a class="btn btn-outline mt-2" th:target="${sub.target}" th:href="${sub.url}"
-                      th:text="${sub.name}"/>
+                    <a class="btn btn-outline mt-2" th:target="${sub.target}" th:href="${sub.url}"
+                       th:text="${sub.name}"/>
                 </th:block>
             </div>
+
         </div>
     </th:block>
     <div class="more-repos-link" id="more-div">
 
-    <button th:if="${page.last==false}" type="submit"
-            class="btn-link width-full  js-more-repos-link outline-none fw-bold-5"
-            th:attr="
+        <button th:if="${page.last==false}" type="submit"
+                class="btn-link width-full  js-more-repos-link outline-none fw-bold-5"
+                th:attr="
             data-q=${q},
             data-number=${page.number},
             data-size=${page.size},
@@ -34,7 +48,8 @@
             data-totalPages=${page.totalPages},
             data-totalElements=${page.totalElements}
              "
-            data-disable-with="Loading more…" onclick="dashboard_more(this)">加载更多…</button>
+                data-disable-with="Loading more…" onclick="dashboard_more(this)">加载更多…
+        </button>
     </div>
 </div>
 

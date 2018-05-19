@@ -5,12 +5,15 @@ import com.google.gson.GsonBuilder;
 import com.tools.utils.CssFormator;
 import com.tools.utils.ImgUtil;
 import com.tools.utils.StringUtil;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.jodconverter.office.OfficeManager;
 import org.junit.Test;
 import org.springframework.aop.support.AopUtils;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -129,5 +132,22 @@ public class CodeTest {
 //        }
 
 
+    }
+
+    @Test
+    public void testPage(){
+        int pageSize=7;
+        List<Integer> list=new ArrayList<>();
+        for(int i=1;i<21;i++){
+            list.add(Integer.valueOf(i));
+        }
+        //page test
+        Double pages=Math.ceil(Double.valueOf(list.size())/Double.valueOf(pageSize)) ;
+        for(int page=0;page<pages.intValue();page++){
+            int toIndex=(page+1)*pageSize;
+            List<Integer>sub=list.subList(page * pageSize, (toIndex>list.size())?list.size():toIndex) ;
+            sub.stream().forEach(item->System.out.println(item));
+            System.out.println("page"+(page+1));
+        }
     }
 }

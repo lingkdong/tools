@@ -68,9 +68,11 @@ details:not([open]) > *:not(summary) {
 .details-reset > summary::-webkit-details-marker {
     display: none
 }
-.border-green{
-   border:2px solid #28a745!important;
+
+.border-green {
+    border: 2px solid #28a745 !important;
 }
+
 .border-top {
     border-top: 1px #e1e4e8 solid !important
 }
@@ -883,6 +885,10 @@ dl.form-group > dd .form-control.is-autocheck-errored {
 .px-3 {
     padding-right: 16px !important;
     padding-left: 16px !important
+}
+
+.pr-3 {
+    padding-right: 16px !important;
 }
 
 .px-1 {
@@ -1950,7 +1956,7 @@ td, th {
     padding: 0
 }
 
-table td,th {
+table td, th {
     padding: 6px 13px;
     border: 1px solid #dfe2e5
 }
@@ -1962,4 +1968,8 @@ table tr {
 
 tr:nth-child(2n) {
     background-color: #f6f8fa
+}
+
+.display-inline {
+    display: inline-block !important;
 }

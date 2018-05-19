@@ -33,7 +33,7 @@ var HttpStatus = {
     FILE_EMPTY: 4015,
     FILE_UPLOAD_ERROR: 4016,
     FILE_CONVERT_ERROR: 4017,
-    NOT_ASCII:4018
+    NOT_ASCII: 4018
 }
 var FlashType = {
     SUCCESS: "success",
@@ -330,7 +330,7 @@ function jump_page(url) {
 }
 
 function open_blank(url) {
-    window.open (url,"_blank" ) ;
+    window.open(url, "_blank");
 }
 function makePreZero(obj, len) {
     var value = $(obj).val() + "";
@@ -342,12 +342,12 @@ function makePreZero(obj, len) {
     return zero + value;
 }
 function isIE() {
-    return (!+[1,])
+    return (!+[1, ])
 }
 
-function isInArray(arr,value){
-    for(var i = 0; i < arr.length; i++){
-        if(value === arr[i]){
+function isInArray(arr, value) {
+    for (var i = 0; i < arr.length; i++) {
+        if (value === arr[i]) {
             return true;
         }
     }
@@ -373,3 +373,43 @@ function backDetectResult(result) {
     }
     return false;
 }
+
+function bookmark(url, title) {
+    if (!url) {
+        url = window.location
+    }
+    if (!title) {
+        title = document.title
+    }
+    var browser = navigator.userAgent.toLowerCase();
+    if (window.sidebar) { // Mozilla, Firefox, Netscape
+        window.sidebar.addPanel(title, url, "");
+    } else if (window.external) { // IE or chrome
+        if (browser.indexOf('chrome') == -1) { // ie
+            window.external.AddFavorite(url, title);
+        } else { // chrome
+            //Please Press CTRL+D (or Command+D for macs) to bookmark this page
+            alertError('请按CTRL+D(Mac按Command+D) 来添加标签');
+        }
+    } else if (window.opera && window.print) { // Opera - automatically adds to sidebar if rel=sidebar in the tag
+        return true;
+    } else if (browser.indexOf('konqueror') != -1) { // Konqueror
+        //Please press CTRL+B to bookmark this page.
+        alertError('请按CTRL+B来添加标签');
+    } else if (browser.indexOf('webkit') != -1) { // safari
+        //Please press CTRL+B (or Command+D for macs) to bookmark this page
+        alertError('请按CTRL+B(按Command+D) 来添加标签');
+    } else {
+        alertError('您的浏览器不支持该操作.');
+    }
+}
+$(function () {
+    $('body').on("click", ".bookmarks", function () {
+        var url = $(this).attr("data-url");
+        var name = $(this).attr("data-name");
+        if (isNotBlank(url)) {
+            url = window.location.host + url;
+        }
+        bookmark(url,name);
+    })
+})
