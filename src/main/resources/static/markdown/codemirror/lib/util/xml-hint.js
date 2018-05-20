@@ -1,3 +1,137 @@
-(function(){CodeMirror.xmlHints=[];CodeMirror.xmlHint=function(d,f){if(0<f.length){var b=d.getCursor();d.replaceSelection(f);b={line:b.line,ch:b.ch+1};d.setCursor(b)}b=editor.getTokenAt;editor.getTokenAt=function(){return"disabled"};CodeMirror.simpleHint(d,l);editor.getTokenAt=b};var l=function(d){var f=d.getCursor();if(0<f.ch){for(var b=d.getRange({line:0,ch:0},f),e=d="",a=b.length-1;0<=a;a--)if(" "==b[a]||"\x3c"==b[a]){e=b[a];break}else d=b[a]+d;a=b=b.slice(0,b.length-d.length);b="";if(0<=a.length){for(var h=
-/<([^!?][^\s/>]*).*?>/g,c=[],g;null!=(g=h.exec(a));)c.push({tag:g[1],selfclose:"/\x3e"===g[0].slice(g[0].length-2)});h=c.length-1;for(g=0;0<=h;h--){var k=c[h];"/"==k.tag[0]?g++:!1==k.selfclose&&(0<g?g--:b="\x3c"+k.tag+"\x3e"+b)}a:{c=a.lastIndexOf("\x3c");if(a.lastIndexOf("\x3e")<c&&(a=a.slice(c),"\x3c"!=a)){c=a.indexOf(" ");0>c&&(c=a.indexOf("\t"));0>c&&(c=a.indexOf("\n"));0>c&&(c=a.length);a=a.slice(0,c);break a}a=""}b+=a}e=CodeMirror.xmlHints[b+e];if("undefined"===typeof e)e=[""];else for(e=e.slice(0),
-a=e.length-1;0<=a;a--)0!=e[a].indexOf(d)&&e.splice(a,1);return{list:e,from:{line:f.line,ch:f.ch-d.length},to:f}}}})();
+
+(function() {
+
+    CodeMirror.xmlHints = [];
+
+    CodeMirror.xmlHint = function(cm, simbol) {
+
+        if(simbol.length > 0) {
+            var cursor = cm.getCursor();
+            cm.replaceSelection(simbol);
+            cursor = {line: cursor.line, ch: cursor.ch + 1};
+            cm.setCursor(cursor);
+        }
+
+        // dirty hack for simple-hint to receive getHint event on space
+        var getTokenAt = editor.getTokenAt;
+
+        editor.getTokenAt = function() { return 'disabled'; };
+        CodeMirror.simpleHint(cm, getHint);
+
+        editor.getTokenAt = getTokenAt;
+    };
+
+    var getHint = function(cm) {
+
+        var cursor = cm.getCursor();
+
+        if (cursor.ch > 0) {
+
+            var text = cm.getRange({line: 0, ch: 0}, cursor);
+            var typed = '';
+            var simbol = '';
+            for(var i = text.length - 1; i >= 0; i--) {
+                if(text[i] == ' ' || text[i] == '<') {
+                    simbol = text[i];
+                    break;
+                }
+                else {
+                    typed = text[i] + typed;
+                }
+            }
+
+            text = text.slice(0, text.length - typed.length);
+
+            var path = getActiveElement(cm, text) + simbol;
+            var hints = CodeMirror.xmlHints[path];
+
+            if(typeof hints === 'undefined')
+                hints = [''];
+            else {
+                hints = hints.slice(0);
+                for (var i = hints.length - 1; i >= 0; i--) {
+                    if(hints[i].indexOf(typed) != 0)
+                        hints.splice(i, 1);
+                }
+            }
+
+            return {
+                list: hints,
+                from: { line: cursor.line, ch: cursor.ch - typed.length },
+                to: cursor
+            };
+        };
+    };
+
+    var getActiveElement = function(codeMirror, text) {
+
+        var element = '';
+
+        if(text.length >= 0) {
+
+            var regex = new RegExp('<([^!?][^\\s/>]*).*?>', 'g');
+
+            var matches = [];
+            var match;
+            while ((match = regex.exec(text)) != null) {
+                matches.push({
+                    tag: match[1],
+                    selfclose: (match[0].slice(match[0].length - 2) === '/>')
+                });
+            }
+
+            for (var i = matches.length - 1, skip = 0; i >= 0; i--) {
+
+                var item = matches[i];
+
+                if (item.tag[0] == '/')
+                {
+                    skip++;
+                }
+                else if (item.selfclose == false)
+                {
+                    if (skip > 0)
+                    {
+                        skip--;
+                    }
+                    else
+                    {
+                        element = '<' + item.tag + '>' + element;
+                    }
+                }
+            }
+
+            element += getOpenTag(text);
+        }
+
+        return element;
+    };
+
+    var getOpenTag = function(text) {
+
+        var open = text.lastIndexOf('<');
+        var close = text.lastIndexOf('>');
+
+        if (close < open)
+        {
+            text = text.slice(open);
+
+            if(text != '<') {
+
+                var space = text.indexOf(' ');
+                if(space < 0)
+                    space = text.indexOf('\t');
+                if(space < 0)
+                    space = text.indexOf('\n');
+
+                if (space < 0)
+                    space = text.length;
+
+                return text.slice(0, space);
+            }
+        }
+
+        return '';
+    };
+
+})();

@@ -1,11 +1,303 @@
-(function(t){"object"===typeof exports&&"undefined"!==typeof module?module.exports=t():"function"===typeof define&&define.amd?define([],t):("undefined"!==typeof window?window:"undefined"!==typeof global?global:"undefined"!==typeof self?self:this).markdownitFootnote=t()})(function(){return function v(m,p,q){function r(l,n){if(!p[l]){if(!m[l]){var b="function"==typeof require&&require;if(!n&&b)return b(l,!0);if(s)return s(l,!0);b=Error("Cannot find module '"+l+"'");throw b.code="MODULE_NOT_FOUND",b;
-}b=p[l]={exports:{}};m[l][0].call(b.exports,function(b){var a=m[l][1][b];return r(a?a:b)},b,b.exports,v,m,p,q)}return p[l].exports}for(var s="function"==typeof require&&require,n=0;n<q.length;n++)r(q[n]);return r}({1:[function(v,m,p){function q(b,h){var a=Number(b[h].meta.id+1).toString(),u="fnref"+a;0<b[h].meta.subId&&(u+=":"+b[h].meta.subId);return'\x3csup class\x3d"footnote-ref"\x3e\x3ca href\x3d"#fn'+a+'" id\x3d"'+u+'"\x3e['+a+"]\x3c/a\x3e\x3c/sup\x3e"}function r(b,h,a){return(a.xhtmlOut?'\x3chr class\x3d"footnotes-sep" /\x3e\n':
-'\x3chr class\x3d"footnotes-sep"\x3e\n')+'\x3csection class\x3d"footnotes"\x3e\n\x3col class\x3d"footnotes-list"\x3e\n'}function s(){return"\x3c/ol\x3e\n\x3c/section\x3e\n"}function n(b,h){return'\x3cli id\x3d"fn'+Number(b[h].meta.id+1).toString()+'"  class\x3d"footnote-item"\x3e'}function l(){return"\x3c/li\x3e\n"}function w(b,h){var a="fnref"+Number(b[h].meta.id+1).toString();0<b[h].meta.subId&&(a+=":"+b[h].meta.subId);return' \x3ca href\x3d"#'+a+'" class\x3d"footnote-backref"\x3e↩\x3c/a\x3e'}m.exports=
-function(b){var h=b.helpers.parseLinkLabel;b.renderer.rules.footnote_ref=q;b.renderer.rules.footnote_block_open=r;b.renderer.rules.footnote_block_close=s;b.renderer.rules.footnote_open=n;b.renderer.rules.footnote_close=l;b.renderer.rules.footnote_anchor=w;b.block.ruler.before("reference","footnote_def",function(a,b,g,d){var c,k,e;c=a.bMarks[b]+a.tShift[b];k=a.eMarks[b];if(c+4>k||91!==a.src.charCodeAt(c)||94!==a.src.charCodeAt(c+1))return!1;for(e=c+2;e<k;e++){if(32===a.src.charCodeAt(e))return!1;if(93===
-a.src.charCodeAt(e))break}if(e===c+2||e+1>=k||58!==a.src.charCodeAt(++e))return!1;if(d)return!0;e++;a.env.footnotes||(a.env.footnotes={});a.env.footnotes.refs||(a.env.footnotes.refs={});d=a.src.slice(c+2,e-2);a.env.footnotes.refs[":"+d]=-1;c=new a.Token("footnote_reference_open","",1);c.meta={label:d};c.level=a.level++;a.tokens.push(c);d=a.bMarks[b];c=a.tShift[b];k=a.parentType;a.tShift[b]=a.skipSpaces(e)-e;a.bMarks[b]=e;a.blkIndent+=4;a.parentType="footnote";a.tShift[b]<a.blkIndent&&(a.tShift[b]+=
-a.blkIndent,a.bMarks[b]-=a.blkIndent);a.md.block.tokenize(a,b,g,!0);a.parentType=k;a.blkIndent-=4;a.tShift[b]=c;a.bMarks[b]=d;c=new a.Token("footnote_reference_close","",-1);c.level=--a.level;a.tokens.push(c);return!0},{alt:["paragraph","reference"]});b.inline.ruler.after("image","footnote_inline",function(a,b){var g,d,c,k=a.posMax;d=a.pos;if(d+2>=k||94!==a.src.charCodeAt(d)||91!==a.src.charCodeAt(d+1))return!1;g=d+2;d=h(a,d+1);if(0>d)return!1;b||(a.env.footnotes||(a.env.footnotes={}),a.env.footnotes.list||
-(a.env.footnotes.list=[]),c=a.env.footnotes.list.length,a.pos=g,a.posMax=d,g=a.push("footnote_ref","",0),g.meta={id:c},g=a.tokens.length,a.md.inline.tokenize(a),a.env.footnotes.list[c]={tokens:a.tokens.splice(g)});a.pos=d+1;a.posMax=k;return!0});b.inline.ruler.after("footnote_inline","footnote_ref",function(a,b){var g,d,c,k,e=a.posMax;c=a.pos;if(c+3>e||!a.env.footnotes||!a.env.footnotes.refs||91!==a.src.charCodeAt(c)||94!==a.src.charCodeAt(c+1))return!1;for(d=c+2;d<e;d++){if(32===a.src.charCodeAt(d)||
-10===a.src.charCodeAt(d))return!1;if(93===a.src.charCodeAt(d))break}if(d===c+2||d>=e)return!1;d++;g=a.src.slice(c+2,d-1);if("undefined"===typeof a.env.footnotes.refs[":"+g])return!1;b||(a.env.footnotes.list||(a.env.footnotes.list=[]),0>a.env.footnotes.refs[":"+g]?(c=a.env.footnotes.list.length,a.env.footnotes.list[c]={label:g,count:0},a.env.footnotes.refs[":"+g]=c):c=a.env.footnotes.refs[":"+g],g=a.env.footnotes.list[c].count,a.env.footnotes.list[c].count++,k=a.push("footnote_ref","",0),k.meta={id:c,
-subId:g});a.pos=d;a.posMax=e;return!0});b.core.ruler.after("inline","footnote_tail",function(a){var b,g,d,c,k,e,f,h,l,n,m=!1,p={};if(a.env.footnotes&&(a.tokens=a.tokens.filter(function(a){if("footnote_reference_open"===a.type)return m=!0,l=[],n=a.meta.label,!1;if("footnote_reference_close"===a.type)return m=!1,p[":"+n]=l,!1;m&&l.push(a);return!m}),a.env.footnotes.list)){e=a.env.footnotes.list;f=new a.Token("footnote_block_open","",1);a.tokens.push(f);b=0;for(g=e.length;b<g;b++){f=new a.Token("footnote_open",
-"",1);f.meta={id:b};a.tokens.push(f);e[b].tokens?(h=[],f=new a.Token("paragraph_open","p",1),f.block=!0,h.push(f),f=new a.Token("inline","",0),f.children=e[b].tokens,f.content="",h.push(f),f=new a.Token("paragraph_close","p",-1),f.block=!0,h.push(f)):e[b].label&&(h=p[":"+e[b].label]);a.tokens=a.tokens.concat(h);k="paragraph_close"===a.tokens[a.tokens.length-1].type?a.tokens.pop():null;c=0<e[b].count?e[b].count:1;for(d=0;d<c;d++)f=new a.Token("footnote_anchor","",0),f.meta={id:b,subId:d},a.tokens.push(f);
-k&&a.tokens.push(k);f=new a.Token("footnote_close","",-1);a.tokens.push(f)}f=new a.Token("footnote_block_close","",-1);a.tokens.push(f)}})}},{}]},{},[1])(1)});
+/*! markdown-it-footnote 1.0.0 https://github.com//markdown-it/markdown-it-footnote @license MIT */(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.markdownitFootnote = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+// Process footnotes
+//
+'use strict';
+
+////////////////////////////////////////////////////////////////////////////////
+// Renderer partials
+
+function _footnote_ref(tokens, idx) {
+  var n = Number(tokens[idx].meta.id + 1).toString();
+  var id = 'fnref' + n;
+  if (tokens[idx].meta.subId > 0) {
+    id += ':' + tokens[idx].meta.subId;
+  }
+  return '<sup class="footnote-ref"><a href="#fn' + n + '" id="' + id + '">[' + n + ']</a></sup>';
+}
+function _footnote_block_open(tokens, idx, options) {
+  return (options.xhtmlOut ? '<hr class="footnotes-sep" />\n' : '<hr class="footnotes-sep">\n') +
+         '<section class="footnotes">\n' +
+         '<ol class="footnotes-list">\n';
+}
+function _footnote_block_close() {
+  return '</ol>\n</section>\n';
+}
+function _footnote_open(tokens, idx) {
+  var id = Number(tokens[idx].meta.id + 1).toString();
+  return '<li id="fn' + id + '"  class="footnote-item">';
+}
+function _footnote_close() {
+  return '</li>\n';
+}
+function _footnote_anchor(tokens, idx) {
+  var n = Number(tokens[idx].meta.id + 1).toString();
+  var id = 'fnref' + n;
+  if (tokens[idx].meta.subId > 0) {
+    id += ':' + tokens[idx].meta.subId;
+  }
+  return ' <a href="#' + id + '" class="footnote-backref">\u21a9</a>'; /* ↩ */
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+
+module.exports = function sub_plugin(md) {
+  var parseLinkLabel = md.helpers.parseLinkLabel;
+
+  md.renderer.rules.footnote_ref          = _footnote_ref;
+  md.renderer.rules.footnote_block_open   = _footnote_block_open;
+  md.renderer.rules.footnote_block_close  = _footnote_block_close;
+  md.renderer.rules.footnote_open         = _footnote_open;
+  md.renderer.rules.footnote_close        = _footnote_close;
+  md.renderer.rules.footnote_anchor       = _footnote_anchor;
+
+  // Process footnote block definition
+  function footnote_def(state, startLine, endLine, silent) {
+    var oldBMark, oldTShift, oldParentType, pos, label, token,
+        start = state.bMarks[startLine] + state.tShift[startLine],
+        max = state.eMarks[startLine];
+
+    // line should be at least 5 chars - "[^x]:"
+    if (start + 4 > max) { return false; }
+
+    if (state.src.charCodeAt(start) !== 0x5B/* [ */) { return false; }
+    if (state.src.charCodeAt(start + 1) !== 0x5E/* ^ */) { return false; }
+
+    for (pos = start + 2; pos < max; pos++) {
+      if (state.src.charCodeAt(pos) === 0x20) { return false; }
+      if (state.src.charCodeAt(pos) === 0x5D /* ] */) {
+        break;
+      }
+    }
+
+    if (pos === start + 2) { return false; } // no empty footnote labels
+    if (pos + 1 >= max || state.src.charCodeAt(++pos) !== 0x3A /* : */) { return false; }
+    if (silent) { return true; }
+    pos++;
+
+    if (!state.env.footnotes) { state.env.footnotes = {}; }
+    if (!state.env.footnotes.refs) { state.env.footnotes.refs = {}; }
+    label = state.src.slice(start + 2, pos - 2);
+    state.env.footnotes.refs[':' + label] = -1;
+
+    token       = new state.Token('footnote_reference_open', '', 1);
+    token.meta  = { label: label };
+    token.level = state.level++;
+    state.tokens.push(token);
+
+    oldBMark = state.bMarks[startLine];
+    oldTShift = state.tShift[startLine];
+    oldParentType = state.parentType;
+    state.tShift[startLine] = state.skipSpaces(pos) - pos;
+    state.bMarks[startLine] = pos;
+    state.blkIndent += 4;
+    state.parentType = 'footnote';
+
+    if (state.tShift[startLine] < state.blkIndent) {
+      state.tShift[startLine] += state.blkIndent;
+      state.bMarks[startLine] -= state.blkIndent;
+    }
+
+    state.md.block.tokenize(state, startLine, endLine, true);
+
+    state.parentType = oldParentType;
+    state.blkIndent -= 4;
+    state.tShift[startLine] = oldTShift;
+    state.bMarks[startLine] = oldBMark;
+
+    token       = new state.Token('footnote_reference_close', '', -1);
+    token.level = --state.level;
+    state.tokens.push(token);
+
+    return true;
+  }
+
+  // Process inline footnotes (^[...])
+  function footnote_inline(state, silent) {
+    var labelStart,
+        labelEnd,
+        footnoteId,
+        oldLength,
+        token,
+        max = state.posMax,
+        start = state.pos;
+
+    if (start + 2 >= max) { return false; }
+    if (state.src.charCodeAt(start) !== 0x5E/* ^ */) { return false; }
+    if (state.src.charCodeAt(start + 1) !== 0x5B/* [ */) { return false; }
+
+    labelStart = start + 2;
+    labelEnd = parseLinkLabel(state, start + 1);
+
+    // parser failed to find ']', so it's not a valid note
+    if (labelEnd < 0) { return false; }
+
+    // We found the end of the link, and know for a fact it's a valid link;
+    // so all that's left to do is to call tokenizer.
+    //
+    if (!silent) {
+      if (!state.env.footnotes) { state.env.footnotes = {}; }
+      if (!state.env.footnotes.list) { state.env.footnotes.list = []; }
+      footnoteId = state.env.footnotes.list.length;
+
+      state.pos = labelStart;
+      state.posMax = labelEnd;
+
+      token      = state.push('footnote_ref', '', 0);
+      token.meta = { id: footnoteId };
+
+      oldLength = state.tokens.length;
+      state.md.inline.tokenize(state);
+      state.env.footnotes.list[footnoteId] = { tokens: state.tokens.splice(oldLength) };
+    }
+
+    state.pos = labelEnd + 1;
+    state.posMax = max;
+    return true;
+  }
+
+  // Process footnote references ([^...])
+  function footnote_ref(state, silent) {
+    var label,
+        pos,
+        footnoteId,
+        footnoteSubId,
+        token,
+        max = state.posMax,
+        start = state.pos;
+
+    // should be at least 4 chars - "[^x]"
+    if (start + 3 > max) { return false; }
+
+    if (!state.env.footnotes || !state.env.footnotes.refs) { return false; }
+    if (state.src.charCodeAt(start) !== 0x5B/* [ */) { return false; }
+    if (state.src.charCodeAt(start + 1) !== 0x5E/* ^ */) { return false; }
+
+    for (pos = start + 2; pos < max; pos++) {
+      if (state.src.charCodeAt(pos) === 0x20) { return false; }
+      if (state.src.charCodeAt(pos) === 0x0A) { return false; }
+      if (state.src.charCodeAt(pos) === 0x5D /* ] */) {
+        break;
+      }
+    }
+
+    if (pos === start + 2) { return false; } // no empty footnote labels
+    if (pos >= max) { return false; }
+    pos++;
+
+    label = state.src.slice(start + 2, pos - 1);
+    if (typeof state.env.footnotes.refs[':' + label] === 'undefined') { return false; }
+
+    if (!silent) {
+      if (!state.env.footnotes.list) { state.env.footnotes.list = []; }
+
+      if (state.env.footnotes.refs[':' + label] < 0) {
+        footnoteId = state.env.footnotes.list.length;
+        state.env.footnotes.list[footnoteId] = { label: label, count: 0 };
+        state.env.footnotes.refs[':' + label] = footnoteId;
+      } else {
+        footnoteId = state.env.footnotes.refs[':' + label];
+      }
+
+      footnoteSubId = state.env.footnotes.list[footnoteId].count;
+      state.env.footnotes.list[footnoteId].count++;
+
+      token      = state.push('footnote_ref', '', 0);
+      token.meta = { id: footnoteId, subId: footnoteSubId };
+    }
+
+    state.pos = pos;
+    state.posMax = max;
+    return true;
+  }
+
+  // Glue footnote tokens to end of token stream
+  function footnote_tail(state) {
+    var i, l, j, t, lastParagraph, list, token, tokens, current, currentLabel,
+        insideRef = false,
+        refTokens = {};
+
+    if (!state.env.footnotes) { return; }
+
+    state.tokens = state.tokens.filter(function(tok) {
+      if (tok.type === 'footnote_reference_open') {
+        insideRef = true;
+        current = [];
+        currentLabel = tok.meta.label;
+        return false;
+      }
+      if (tok.type === 'footnote_reference_close') {
+        insideRef = false;
+        // prepend ':' to avoid conflict with Object.prototype members
+        refTokens[':' + currentLabel] = current;
+        return false;
+      }
+      if (insideRef) { current.push(tok); }
+      return !insideRef;
+    });
+
+    if (!state.env.footnotes.list) { return; }
+    list = state.env.footnotes.list;
+
+    token = new state.Token('footnote_block_open', '', 1);
+    state.tokens.push(token);
+
+    for (i = 0, l = list.length; i < l; i++) {
+      token      = new state.Token('footnote_open', '', 1);
+      token.meta = { id: i };
+      state.tokens.push(token);
+
+      if (list[i].tokens) {
+        tokens = [];
+
+        token          = new state.Token('paragraph_open', 'p', 1);
+        token.block    = true;
+        tokens.push(token);
+
+        token          = new state.Token('inline', '', 0);
+        token.children = list[i].tokens;
+        token.content  = '';
+        tokens.push(token);
+
+        token          = new state.Token('paragraph_close', 'p', -1);
+        token.block    = true;
+        tokens.push(token);
+
+      } else if (list[i].label) {
+        tokens = refTokens[':' + list[i].label];
+      }
+
+      state.tokens = state.tokens.concat(tokens);
+      if (state.tokens[state.tokens.length - 1].type === 'paragraph_close') {
+        lastParagraph = state.tokens.pop();
+      } else {
+        lastParagraph = null;
+      }
+
+      t = list[i].count > 0 ? list[i].count : 1;
+      for (j = 0; j < t; j++) {
+        token      = new state.Token('footnote_anchor', '', 0);
+        token.meta = { id: i, subId: j };
+        state.tokens.push(token);
+      }
+
+      if (lastParagraph) {
+        state.tokens.push(lastParagraph);
+      }
+
+      token = new state.Token('footnote_close', '', -1);
+      state.tokens.push(token);
+    }
+
+    token = new state.Token('footnote_block_close', '', -1);
+    state.tokens.push(token);
+  }
+
+  md.block.ruler.before('reference', 'footnote_def', footnote_def, { alt: [ 'paragraph', 'reference' ] });
+  md.inline.ruler.after('image', 'footnote_inline', footnote_inline);
+  md.inline.ruler.after('footnote_inline', 'footnote_ref', footnote_ref);
+  md.core.ruler.after('inline', 'footnote_tail', footnote_tail);
+};
+
+},{}]},{},[1])(1)
+});

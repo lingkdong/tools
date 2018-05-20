@@ -1,2 +1,53 @@
-CodeMirror.runMode=function(g,h,e,k){function m(a){return a.replace(/[<&]/,function(a){return"\x3c"==a?"\x26lt;":"\x26amp;"})}h=CodeMirror.getMode(CodeMirror.defaults,h);var n=1==e.nodeType,p=k&&k.tabSize||CodeMirror.defaults.tabSize;if(n){var q=e,l=[],a=0;e=function(b,e){if("\n"==b)l.push("\x3cbr\x3e"),a=0;else{for(var f="",d=0;;){var c=b.indexOf("\t",d);if(-1==c){f+=m(b.slice(d));a+=b.length-d;break}else{a+=c-d;f+=m(b.slice(d,c));d=p-a%p;a+=d;for(var g=0;g<d;++g)f+=" ";d=c+1}}e?l.push('\x3cspan class\x3d"cm-'+
-m(e)+'"\x3e'+f+"\x3c/span\x3e"):l.push(f)}}}g=CodeMirror.splitLines(g);k=CodeMirror.startState(h);for(var c=0,r=g.length;c<r;++c){c&&e("\n");for(var b=new CodeMirror.StringStream(g[c]);!b.eol();){var s=h.token(b,k);e(b.current(),s,c,b.start);b.start=b.pos}}n&&(q.innerHTML=l.join(""))};
+CodeMirror.runMode = function(string, modespec, callback, options) {
+  function esc(str) {
+    return str.replace(/[<&]/, function(ch) { return ch == "<" ? "&lt;" : "&amp;"; });
+  }
+
+  var mode = CodeMirror.getMode(CodeMirror.defaults, modespec);
+  var isNode = callback.nodeType == 1;
+  var tabSize = (options && options.tabSize) || CodeMirror.defaults.tabSize;
+  if (isNode) {
+    var node = callback, accum = [], col = 0;
+    callback = function(text, style) {
+      if (text == "\n") {
+        accum.push("<br>");
+        col = 0;
+        return;
+      }
+      var escaped = "";
+      // HTML-escape and replace tabs
+      for (var pos = 0;;) {
+        var idx = text.indexOf("\t", pos);
+        if (idx == -1) {
+          escaped += esc(text.slice(pos));
+          col += text.length - pos;
+          break;
+        } else {
+          col += idx - pos;
+          escaped += esc(text.slice(pos, idx));
+          var size = tabSize - col % tabSize;
+          col += size;
+          for (var i = 0; i < size; ++i) escaped += " ";
+          pos = idx + 1;
+        }
+      }
+
+      if (style) 
+        accum.push("<span class=\"cm-" + esc(style) + "\">" + escaped + "</span>");
+      else
+        accum.push(escaped);
+    };
+  }
+  var lines = CodeMirror.splitLines(string), state = CodeMirror.startState(mode);
+  for (var i = 0, e = lines.length; i < e; ++i) {
+    if (i) callback("\n");
+    var stream = new CodeMirror.StringStream(lines[i]);
+    while (!stream.eol()) {
+      var style = mode.token(stream, state);
+      callback(stream.current(), style, i, stream.start);
+      stream.start = stream.pos;
+    }
+  }
+  if (isNode)
+    node.innerHTML = accum.join("");
+};

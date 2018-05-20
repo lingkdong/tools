@@ -1,6 +1,123 @@
-(function(){function e(a,d){for(var b=0,c=a.length;b<c;++b)d(a[b])}function h(a,d,b){d=a.getCursor();b=a=b(a,d);/^[\w$_]*$/.test(a.string)||(a=b={start:d.ch,end:d.ch,string:"",state:a.state,className:":"==a.string?"pig-type":null});if(!c)var c=[];c.push(b);c=m(a,c);c=c.sort();1==c.length&&c.push(" ");return{list:c,from:{line:d.line,ch:a.start},to:{line:d.line,ch:a.end}}}function m(a,d){function b(b){var a;if(a=0==b.indexOf(h)){a:if(Array.prototype.indexOf)a=-1!=c.indexOf(b);else{for(a=c.length;a--;)if(c[a]===
-b){a=!0;break a}a=!1}a=!a}a&&c.push(b)}var c=[],h=a.string;if(d){var g=d.pop(),f;for("pig-word"==g.className?f=g.string:"pig-type"==g.className&&(f=":"+g.string);null!=f&&d.length;)f=f[d.pop().string];null!=f&&(":"==f?e(k,b):(e(n,b),e(p,b),e(q,b),e(r,b),e(k,b),e(l,b),e(s,b)))}return c}CodeMirror.pigHint=function(a){return h(a,l,function(a,b){return a.getTokenAt(b)})};var l="VOID IMPORT RETURNS DEFINE LOAD FILTER FOREACH ORDER CUBE DISTINCT COGROUP JOIN CROSS UNION SPLIT INTO IF OTHERWISE ALL AS BY USING INNER OUTER ONSCHEMA PARALLEL PARTITION GROUP AND OR NOT GENERATE FLATTEN ASC DESC IS STREAM THROUGH STORE MAPREDUCE SHIP CACHE INPUT OUTPUT STDERROR STDIN STDOUT LIMIT SAMPLE LEFT RIGHT FULL EQ GT LT GTE LTE NEQ MATCHES TRUE FALSE".split(" "),
-s="void import returns define load filter foreach order cube distinct cogroup join cross union split into if otherwise all as by using inner outer onschema parallel partition group and or not generate flatten asc desc is stream through store mapreduce ship cache input output stderror stdin stdout limit sample left right full eq gt lt gte lte neq matches true false".split(" "),r="BOOLEAN INT LONG FLOAT DOUBLE CHARARRAY BYTEARRAY BAG TUPLE MAP".split(" "),k="boolean int long float double chararray bytearray bag tuple map".split(" "),
-n="ABS() ACOS() ARITY() ASIN() ATAN() AVG() BAGSIZE() BINSTORAGE() BLOOM() BUILDBLOOM() CBRT() CEIL() CONCAT() COR() COS() COSH() COUNT() COUNT_STAR() COV() CONSTANTSIZE() CUBEDIMENSIONS() DIFF() DISTINCT() DOUBLEABS() DOUBLEAVG() DOUBLEBASE() DOUBLEMAX() DOUBLEMIN() DOUBLEROUND() DOUBLESUM() EXP() FLOOR() FLOATABS() FLOATAVG() FLOATMAX() FLOATMIN() FLOATROUND() FLOATSUM() GENERICINVOKER() INDEXOF() INTABS() INTAVG() INTMAX() INTMIN() INTSUM() INVOKEFORDOUBLE() INVOKEFORFLOAT() INVOKEFORINT() INVOKEFORLONG() INVOKEFORSTRING() INVOKER() ISEMPTY() JSONLOADER() JSONMETADATA() JSONSTORAGE() LAST_INDEX_OF() LCFIRST() LOG() LOG10() LOWER() LONGABS() LONGAVG() LONGMAX() LONGMIN() LONGSUM() MAX() MIN() MAPSIZE() MONITOREDUDF() NONDETERMINISTIC() OUTPUTSCHEMA() () PIGSTORAGE() PIGSTREAMING() RANDOM() REGEX_EXTRACT() REGEX_EXTRACT_ALL() REPLACE() ROUND() SIN() SINH() SIZE() SQRT() STRSPLIT() SUBSTRING() SUM() STRINGCONCAT() STRINGMAX() STRINGMIN() STRINGSIZE() TAN() TANH() TOBAG() TOKENIZE() TOMAP() TOP() TOTUPLE() TRIM() TEXTLOADER() TUPLESIZE() UCFIRST() UPPER() UTF8STORAGECONVERTER".split(" "),
-p="abs() acos() arity() asin() atan() avg() bagsize() binstorage() bloom() buildbloom() cbrt() ceil() concat() cor() cos() cosh() count() count_star() cov() constantsize() cubedimensions() diff() distinct() doubleabs() doubleavg() doublebase() doublemax() doublemin() doubleround() doublesum() exp() floor() floatabs() floatavg() floatmax() floatmin() floatround() floatsum() genericinvoker() indexof() intabs() intavg() intmax() intmin() intsum() invokefordouble() invokeforfloat() invokeforint() invokeforlong() invokeforstring() invoker() isempty() jsonloader() jsonmetadata() jsonstorage() last_index_of() lcfirst() log() log10() lower() longabs() longavg() longmax() longmin() longsum() max() min() mapsize() monitoredudf() nondeterministic() outputschema() () pigstorage() pigstreaming() random() regex_extract() regex_extract_all() replace() round() sin() sinh() size() sqrt() strsplit() substring() sum() stringconcat() stringmax() stringmin() stringsize() tan() tanh() tobag() tokenize() tomap() top() totuple() trim() textloader() tuplesize() ucfirst() upper() utf8storageconverter".split(" "),
-q="BagSize() BinStorage() Bloom() BuildBloom() ConstantSize() CubeDimensions() DoubleAbs() DoubleAvg() DoubleBase() DoubleMax() DoubleMin() DoubleRound() DoubleSum() FloatAbs() FloatAvg() FloatMax() FloatMin() FloatRound() FloatSum() GenericInvoker() IntAbs() IntAvg() IntMax() IntMin() IntSum() InvokeForDouble() InvokeForFloat() InvokeForInt() InvokeForLong() InvokeForString() Invoker() IsEmpty() JsonLoader() JsonMetadata() JsonStorage() LongAbs() LongAvg() LongMax() LongMin() LongSum() MapSize() MonitoredUDF() Nondeterministic() OutputSchema() PigStorage() PigStreaming() StringConcat() StringMax() StringMin() StringSize() TextLoader() TupleSize() Utf8StorageConverter".split(" ")})();
+(function () {
+  function forEach(arr, f) {
+    for (var i = 0, e = arr.length; i < e; ++i) f(arr[i]);
+  }
+  
+  function arrayContains(arr, item) {
+    if (!Array.prototype.indexOf) {
+      var i = arr.length;
+      while (i--) {
+        if (arr[i] === item) {
+          return true;
+        }
+      }
+      return false;
+    }
+    return arr.indexOf(item) != -1;
+  }
+
+  function scriptHint(editor, keywords, getToken) {
+    // Find the token at the cursor
+    var cur = editor.getCursor(), token = getToken(editor, cur), tprop = token;
+    // If it's not a 'word-style' token, ignore the token.
+
+    if (!/^[\w$_]*$/.test(token.string)) {
+        token = tprop = {start: cur.ch, end: cur.ch, string: "", state: token.state,
+                         className: token.string == ":" ? "pig-type" : null};
+    }
+      
+    if (!context) var context = [];
+    context.push(tprop);
+    
+    var completionList = getCompletions(token, context); 
+    completionList = completionList.sort();
+    //prevent autocomplete for last word, instead show dropdown with one word
+    if(completionList.length == 1) {
+      completionList.push(" ");
+    }
+
+    return {list: completionList,
+              from: {line: cur.line, ch: token.start},
+              to: {line: cur.line, ch: token.end}};
+  }
+  
+  CodeMirror.pigHint = function(editor) {
+    return scriptHint(editor, pigKeywordsU, function (e, cur) {return e.getTokenAt(cur);});
+  };
+ 
+ function toTitleCase(str) {
+    return str.replace(/(?:^|\s)\w/g, function(match) {
+        return match.toUpperCase();
+    });
+ }
+  
+  var pigKeywords = "VOID IMPORT RETURNS DEFINE LOAD FILTER FOREACH ORDER CUBE DISTINCT COGROUP "
+  + "JOIN CROSS UNION SPLIT INTO IF OTHERWISE ALL AS BY USING INNER OUTER ONSCHEMA PARALLEL "
+  + "PARTITION GROUP AND OR NOT GENERATE FLATTEN ASC DESC IS STREAM THROUGH STORE MAPREDUCE "
+  + "SHIP CACHE INPUT OUTPUT STDERROR STDIN STDOUT LIMIT SAMPLE LEFT RIGHT FULL EQ GT LT GTE LTE " 
+  + "NEQ MATCHES TRUE FALSE";
+  var pigKeywordsU = pigKeywords.split(" ");
+  var pigKeywordsL = pigKeywords.toLowerCase().split(" ");
+  
+  var pigTypes = "BOOLEAN INT LONG FLOAT DOUBLE CHARARRAY BYTEARRAY BAG TUPLE MAP";
+  var pigTypesU = pigTypes.split(" ");
+  var pigTypesL = pigTypes.toLowerCase().split(" ");
+  
+  var pigBuiltins = "ABS ACOS ARITY ASIN ATAN AVG BAGSIZE BINSTORAGE BLOOM BUILDBLOOM CBRT CEIL " 
+  + "CONCAT COR COS COSH COUNT COUNT_STAR COV CONSTANTSIZE CUBEDIMENSIONS DIFF DISTINCT DOUBLEABS "
+  + "DOUBLEAVG DOUBLEBASE DOUBLEMAX DOUBLEMIN DOUBLEROUND DOUBLESUM EXP FLOOR FLOATABS FLOATAVG "
+  + "FLOATMAX FLOATMIN FLOATROUND FLOATSUM GENERICINVOKER INDEXOF INTABS INTAVG INTMAX INTMIN "
+  + "INTSUM INVOKEFORDOUBLE INVOKEFORFLOAT INVOKEFORINT INVOKEFORLONG INVOKEFORSTRING INVOKER "
+  + "ISEMPTY JSONLOADER JSONMETADATA JSONSTORAGE LAST_INDEX_OF LCFIRST LOG LOG10 LOWER LONGABS "
+  + "LONGAVG LONGMAX LONGMIN LONGSUM MAX MIN MAPSIZE MONITOREDUDF NONDETERMINISTIC OUTPUTSCHEMA  "
+  + "PIGSTORAGE PIGSTREAMING RANDOM REGEX_EXTRACT REGEX_EXTRACT_ALL REPLACE ROUND SIN SINH SIZE "
+  + "SQRT STRSPLIT SUBSTRING SUM STRINGCONCAT STRINGMAX STRINGMIN STRINGSIZE TAN TANH TOBAG "
+  + "TOKENIZE TOMAP TOP TOTUPLE TRIM TEXTLOADER TUPLESIZE UCFIRST UPPER UTF8STORAGECONVERTER";  
+  var pigBuiltinsU = pigBuiltins.split(" ").join("() ").split(" ");  
+  var pigBuiltinsL = pigBuiltins.toLowerCase().split(" ").join("() ").split(" ");   
+  var pigBuiltinsC = ("BagSize BinStorage Bloom BuildBloom ConstantSize CubeDimensions DoubleAbs "
+  + "DoubleAvg DoubleBase DoubleMax DoubleMin DoubleRound DoubleSum FloatAbs FloatAvg FloatMax "
+  + "FloatMin FloatRound FloatSum GenericInvoker IntAbs IntAvg IntMax IntMin IntSum "
+  + "InvokeForDouble InvokeForFloat InvokeForInt InvokeForLong InvokeForString Invoker "
+  + "IsEmpty JsonLoader JsonMetadata JsonStorage LongAbs LongAvg LongMax LongMin LongSum MapSize "
+  + "MonitoredUDF Nondeterministic OutputSchema PigStorage PigStreaming StringConcat StringMax "
+  + "StringMin StringSize TextLoader TupleSize Utf8StorageConverter").split(" ").join("() ").split(" ");
+                    
+  function getCompletions(token, context) {
+    var found = [], start = token.string;
+    function maybeAdd(str) {
+      if (str.indexOf(start) == 0 && !arrayContains(found, str)) found.push(str);
+    }
+    
+    function gatherCompletions(obj) {
+      if(obj == ":") {
+        forEach(pigTypesL, maybeAdd);
+      }
+      else {
+        forEach(pigBuiltinsU, maybeAdd);
+        forEach(pigBuiltinsL, maybeAdd);
+        forEach(pigBuiltinsC, maybeAdd);
+        forEach(pigTypesU, maybeAdd);
+        forEach(pigTypesL, maybeAdd);
+        forEach(pigKeywordsU, maybeAdd);
+        forEach(pigKeywordsL, maybeAdd);
+      }
+    }
+
+    if (context) {
+      // If this is a property, see if it belongs to some object we can
+      // find in the current environment.
+      var obj = context.pop(), base;
+
+      if (obj.className == "pig-word") 
+          base = obj.string;
+      else if(obj.className == "pig-type")
+          base = ":" + obj.string;
+        
+      while (base != null && context.length)
+        base = base[context.pop().string];
+      if (base != null) gatherCompletions(base);
+    }
+    return found;
+  }
+})();

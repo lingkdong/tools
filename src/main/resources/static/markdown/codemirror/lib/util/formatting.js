@@ -1,6 +1,193 @@
-(function(){function u(d){for(var e=[/for\s*?\((.*?)\)/,/\"(.*?)(\"|$)/,/\'(.*?)(\'|$)/,/\/\*(.*?)(\*\/|$)/,/\/\/.*/],f=[],a=0;a<e.length;a++)for(var c=0;c<d.length;){var b=d.substr(c).match(e[a]);if(null!=b)f.push({start:c+b.index,end:c+b.index+b[0].length}),c+=b.index+Math.max(1,b[0].length);else break}f.sort(function(a,b){return a.start-b.start});return f}CodeMirror.extendMode("css",{commentStart:"/*",commentEnd:"*/",wordWrapChars:[";","\\{","\\}"],autoFormatLineBreaks:function(d){return d.replace(/(;|\{|\})([^\r\n])/g,
-"$1\n$2")}});CodeMirror.extendMode("javascript",{commentStart:"/*",commentEnd:"*/",wordWrapChars:[";","\\{","\\}"],autoFormatLineBreaks:function(d){var e=0,f=/(;|\{|\})([^\r\n;])/g,a=u(d);if(null!=a){for(var c="",b=0;b<a.length;b++)a[b].start>e&&(c+=d.substring(e,a[b].start).replace(f,"$1\n$2"),e=a[b].start),a[b].start<=e&&a[b].end>=e&&(c+=d.substring(e,a[b].end),e=a[b].end);e<d.length&&(c+=d.substr(e).replace(f,"$1\n$2"));return c}return d.replace(f,"$1\n$2")}});CodeMirror.extendMode("xml",{commentStart:"\x3c!--",
-commentEnd:"--\x3e",wordWrapChars:["\x3e"],autoFormatLineBreaks:function(d){d=d.split("\n");for(var e=/(^\s*?<|^[^<]*?)(.+)(>\s*?$|[^>]*?$)/,f=/</g,a=/(>)([^\r\n])/g,c=0;c<d.length;c++){var b=d[c].match(e);null!=b&&3<b.length&&(d[c]=b[1]+b[2].replace(f,"\n$\x26").replace(a,"$1\n$2")+b[3])}return d.join("\n")}});CodeMirror.defineExtension("commentRange",function(d,e,f){var a=CodeMirror.innerMode(this.getMode(),this.getTokenAt(e).state).mode,c=this;this.operation(function(){if(d)c.replaceRange(a.commentEnd,
-f),c.replaceRange(a.commentStart,e),e.line==f.line&&e.ch==f.ch&&c.setCursor(e.line,e.ch+a.commentStart.length);else{var b=c.getRange(e,f),p=b.indexOf(a.commentStart),g=b.lastIndexOf(a.commentEnd);-1<p&&-1<g&&g>p&&(b=b.substr(0,p)+b.substring(p+a.commentStart.length,g)+b.substr(g+a.commentEnd.length));c.replaceRange(b,e,f)}})});CodeMirror.defineExtension("autoIndentRange",function(d,e){var f=this;this.operation(function(){for(var a=d.line;a<=e.line;a++)f.indentLine(a,"smart")})});CodeMirror.defineExtension("autoFormatRange",
-function(d,e){var f=this;f.operation(function(){for(var a=d.line,c=e.line;a<=c;++a){var b={line:a,ch:a==d.line?d.ch:0},p={line:a,ch:a==c?e.ch:null},g;var m=f,q=a,h=b.ch;g=p.ch;var k=m.getMode(),l=m.getLine(q);null==g&&(g=l.length);if(k.innerMode){var m=m.getTokenAt({line:q,ch:h}).state,q=CodeMirror.innerMode(k,m).mode,r=[],n=new CodeMirror.StringStream(l);for(n.pos=n.start=h;;){k.token(n,m);var t=CodeMirror.innerMode(k,m).mode;if(t!=q){var s=n.start;"xml"==q.name&&"\x3e"==l.charAt(n.pos-1)&&(s=n.pos);
-r.push({from:h,to:s,mode:q});h=s;q=t}if(n.pos>=g)break;n.start=n.pos}h<g&&r.push({from:h,to:g,mode:q});g=r}else g=[{from:h,to:g,mode:k}];h="";k=f.getRange(b,p);for(l=0;l<g.length;++l)m=1<g.length?k.slice(g[l].from,g[l].to):k,h&&(h+="\n"),h=g[l].mode.autoFormatLineBreaks?h+g[l].mode.autoFormatLineBreaks(m):h+k;if(h!=k){g=0;for(k=h.indexOf("\n");-1!=k;k=h.indexOf("\n",k+1),++g);f.replaceRange(h,b,p);a+=g;c+=g}}for(a=d.line+1;a<=c;++a)f.indentLine(a,"smart");f.setSelection(d,f.getCursor(!1))})})})();
+// ============== Formatting extensions ============================
+(function() {
+  // Define extensions for a few modes
+  CodeMirror.extendMode("css", {
+    commentStart: "/*",
+    commentEnd: "*/",
+    wordWrapChars: [";", "\\{", "\\}"],
+    autoFormatLineBreaks: function (text) {
+      return text.replace(new RegExp("(;|\\{|\\})([^\r\n])", "g"), "$1\n$2");
+    }
+  });
+
+  function jsNonBreakableBlocks(text) {
+    var nonBreakableRegexes = [/for\s*?\((.*?)\)/,
+                               /\"(.*?)(\"|$)/,
+                               /\'(.*?)(\'|$)/,
+                               /\/\*(.*?)(\*\/|$)/,
+                               /\/\/.*/];
+    var nonBreakableBlocks = [];
+    for (var i = 0; i < nonBreakableRegexes.length; i++) {
+      var curPos = 0;
+      while (curPos < text.length) {
+        var m = text.substr(curPos).match(nonBreakableRegexes[i]);
+        if (m != null) {
+          nonBreakableBlocks.push({
+            start: curPos + m.index,
+            end: curPos + m.index + m[0].length
+          });
+          curPos += m.index + Math.max(1, m[0].length);
+        }
+        else { // No more matches
+          break;
+        }
+      }
+    }
+    nonBreakableBlocks.sort(function (a, b) {
+      return a.start - b.start;
+    });
+
+    return nonBreakableBlocks;
+  }
+
+  CodeMirror.extendMode("javascript", {
+    commentStart: "/*",
+    commentEnd: "*/",
+    wordWrapChars: [";", "\\{", "\\}"],
+
+    autoFormatLineBreaks: function (text) {
+      var curPos = 0;
+      var reLinesSplitter = /(;|\{|\})([^\r\n;])/g;
+      var nonBreakableBlocks = jsNonBreakableBlocks(text);
+      if (nonBreakableBlocks != null) {
+        var res = "";
+        for (var i = 0; i < nonBreakableBlocks.length; i++) {
+          if (nonBreakableBlocks[i].start > curPos) { // Break lines till the block
+            res += text.substring(curPos, nonBreakableBlocks[i].start).replace(reLinesSplitter, "$1\n$2");
+            curPos = nonBreakableBlocks[i].start;
+          }
+          if (nonBreakableBlocks[i].start <= curPos
+              && nonBreakableBlocks[i].end >= curPos) { // Skip non-breakable block
+            res += text.substring(curPos, nonBreakableBlocks[i].end);
+            curPos = nonBreakableBlocks[i].end;
+          }
+        }
+        if (curPos < text.length)
+          res += text.substr(curPos).replace(reLinesSplitter, "$1\n$2");
+        return res;
+      } else {
+        return text.replace(reLinesSplitter, "$1\n$2");
+      }
+    }
+  });
+
+  CodeMirror.extendMode("xml", {
+    commentStart: "<!--",
+    commentEnd: "-->",
+    wordWrapChars: [">"],
+
+    autoFormatLineBreaks: function (text) {
+      var lines = text.split("\n");
+      var reProcessedPortion = new RegExp("(^\\s*?<|^[^<]*?)(.+)(>\\s*?$|[^>]*?$)");
+      var reOpenBrackets = new RegExp("<", "g");
+      var reCloseBrackets = new RegExp("(>)([^\r\n])", "g");
+      for (var i = 0; i < lines.length; i++) {
+        var mToProcess = lines[i].match(reProcessedPortion);
+        if (mToProcess != null && mToProcess.length > 3) { // The line starts with whitespaces and ends with whitespaces
+          lines[i] = mToProcess[1]
+            + mToProcess[2].replace(reOpenBrackets, "\n$&").replace(reCloseBrackets, "$1\n$2")
+            + mToProcess[3];
+          continue;
+        }
+      }
+      return lines.join("\n");
+    }
+  });
+
+  function localModeAt(cm, pos) {
+    return CodeMirror.innerMode(cm.getMode(), cm.getTokenAt(pos).state).mode;
+  }
+
+  function enumerateModesBetween(cm, line, start, end) {
+    var outer = cm.getMode(), text = cm.getLine(line);
+    if (end == null) end = text.length;
+    if (!outer.innerMode) return [{from: start, to: end, mode: outer}];
+    var state = cm.getTokenAt({line: line, ch: start}).state;
+    var mode = CodeMirror.innerMode(outer, state).mode;
+    var found = [], stream = new CodeMirror.StringStream(text);
+    stream.pos = stream.start = start;
+    for (;;) {
+      outer.token(stream, state);
+      var curMode = CodeMirror.innerMode(outer, state).mode;
+      if (curMode != mode) {
+        var cut = stream.start;
+        // Crappy heuristic to deal with the fact that a change in
+        // mode can occur both at the end and the start of a token,
+        // and we don't know which it was.
+        if (mode.name == "xml" && text.charAt(stream.pos - 1) == ">") cut = stream.pos;
+        found.push({from: start, to: cut, mode: mode});
+        start = cut;
+        mode = curMode;
+      }
+      if (stream.pos >= end) break;
+      stream.start = stream.pos;
+    }
+    if (start < end) found.push({from: start, to: end, mode: mode});
+    return found;
+  }
+
+  // Comment/uncomment the specified range
+  CodeMirror.defineExtension("commentRange", function (isComment, from, to) {
+    var curMode = localModeAt(this, from), cm = this;
+    this.operation(function() {
+      if (isComment) { // Comment range
+        cm.replaceRange(curMode.commentEnd, to);
+        cm.replaceRange(curMode.commentStart, from);
+        if (from.line == to.line && from.ch == to.ch) // An empty comment inserted - put cursor inside
+          cm.setCursor(from.line, from.ch + curMode.commentStart.length);
+      } else { // Uncomment range
+        var selText = cm.getRange(from, to);
+        var startIndex = selText.indexOf(curMode.commentStart);
+        var endIndex = selText.lastIndexOf(curMode.commentEnd);
+        if (startIndex > -1 && endIndex > -1 && endIndex > startIndex) {
+          // Take string till comment start
+          selText = selText.substr(0, startIndex)
+          // From comment start till comment end
+            + selText.substring(startIndex + curMode.commentStart.length, endIndex)
+          // From comment end till string end
+            + selText.substr(endIndex + curMode.commentEnd.length);
+        }
+        cm.replaceRange(selText, from, to);
+      }
+    });
+  });
+
+  // Applies automatic mode-aware indentation to the specified range
+  CodeMirror.defineExtension("autoIndentRange", function (from, to) {
+    var cmInstance = this;
+    this.operation(function () {
+      for (var i = from.line; i <= to.line; i++) {
+        cmInstance.indentLine(i, "smart");
+      }
+    });
+  });
+
+  // Applies automatic formatting to the specified range
+  CodeMirror.defineExtension("autoFormatRange", function (from, to) {
+    var cm = this;
+    cm.operation(function () {
+      for (var cur = from.line, end = to.line; cur <= end; ++cur) {
+        var f = {line: cur, ch: cur == from.line ? from.ch : 0};
+        var t = {line: cur, ch: cur == end ? to.ch : null};
+        var modes = enumerateModesBetween(cm, cur, f.ch, t.ch), mangled = "";
+        var text = cm.getRange(f, t);
+        for (var i = 0; i < modes.length; ++i) {
+          var part = modes.length > 1 ? text.slice(modes[i].from, modes[i].to) : text;
+          if (mangled) mangled += "\n";
+          if (modes[i].mode.autoFormatLineBreaks) {
+            mangled += modes[i].mode.autoFormatLineBreaks(part);
+          } else mangled += text;
+        }
+        if (mangled != text) {
+          for (var count = 0, pos = mangled.indexOf("\n"); pos != -1; pos = mangled.indexOf("\n", pos + 1), ++count) {}
+          cm.replaceRange(mangled, f, t);
+          cur += count;
+          end += count;
+        }
+      }
+      for (var cur = from.line + 1; cur <= end; ++cur)
+        cm.indentLine(cur, "smart");
+      cm.setSelection(from, cm.getCursor(false));
+    });
+  });
+})();

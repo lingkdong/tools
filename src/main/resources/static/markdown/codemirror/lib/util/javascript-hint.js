@@ -1,5 +1,134 @@
-(function(){function k(b,e){for(var a=0,d=b.length;a<d;++a)e(b[a])}function l(b,e,a){var d=b.getCursor(),g=a(b,d),c=g;for(/^[\w$_]*$/.test(g.string)||(g=c={start:d.ch,end:d.ch,string:"",state:g.state,className:"."==g.string?"property":null});"property"==c.className;){c=a(b,{line:d.line,ch:c.start});if("."!=c.string)return;c=a(b,{line:d.line,ch:c.start});if(")"==c.string){var h=1;do switch(c=a(b,{line:d.line,ch:c.start}),c.string){case ")":h++;break;case "(":h--}while(0<h);c=a(b,{line:d.line,ch:c.start});
-if("variable"==c.className)c.className="function";else return}if(!f)var f=[];f.push(c)}return{list:m(g,f,e),from:{line:d.line,ch:g.start},to:{line:d.line,ch:g.end}}}function n(b,e){var a=b.getTokenAt(e);e.ch==a.start+1&&"."==a.string.charAt(0)?(a.end=a.start,a.string=".",a.className="property"):/^\.[\w$_]*$/.test(a.string)&&(a.className="property",a.start++,a.string=a.string.replace(/\./,""));return a}function m(b,e,a){function d(a){var b;if(b=0==a.indexOf(h)){a:if(Array.prototype.indexOf)b=-1!=c.indexOf(a);
-else{for(b=c.length;b--;)if(c[b]===a){b=!0;break a}b=!1}b=!b}b&&c.push(a)}function g(a){"string"==typeof a?k(p,d):a instanceof Array?k(q,d):a instanceof Function&&k(r,d);for(var b in a)d(b)}var c=[],h=b.string;if(e){a=e.pop();var f;for("variable"==a.className?f=window[a.string]:"string"==a.className?f="":"atom"==a.className?f=1:"function"==a.className&&(null==window.jQuery||"$"!=a.string&&"jQuery"!=a.string||"function"!=typeof window.jQuery?null!=window._&&"_"==a.string&&"function"==typeof window._&&
-(f=window._()):f=window.jQuery());null!=f&&e.length;)f=f[e.pop().string];null!=f&&g(f)}else{for(e=b.state.localVars;e;e=e.next)d(e.name);g(window);k(a,d)}return c}CodeMirror.javascriptHint=function(b){return l(b,s,function(b,a){return b.getTokenAt(a)})};CodeMirror.coffeescriptHint=function(b){return l(b,t,n)};var p="charAt charCodeAt indexOf lastIndexOf substring substr slice trim trimLeft trimRight toUpperCase toLowerCase split concat match replace search".split(" "),q="length concat join splice push pop shift unshift slice reverse sort indexOf lastIndexOf every some filter forEach map reduce reduceRight ".split(" "),
-r=["prototype","apply","call","bind"],s="break case catch continue debugger default delete do else false finally for function if in instanceof new null return switch throw true try typeof var void while with".split(" "),t="and break catch class continue delete do else extends false finally for if in instanceof isnt new no not null of off on or return switch then throw true try typeof until void while with yes".split(" ")})();
+(function () {
+  function forEach(arr, f) {
+    for (var i = 0, e = arr.length; i < e; ++i) f(arr[i]);
+  }
+  
+  function arrayContains(arr, item) {
+    if (!Array.prototype.indexOf) {
+      var i = arr.length;
+      while (i--) {
+        if (arr[i] === item) {
+          return true;
+        }
+      }
+      return false;
+    }
+    return arr.indexOf(item) != -1;
+  }
+
+  function scriptHint(editor, keywords, getToken) {
+    // Find the token at the cursor
+    var cur = editor.getCursor(), token = getToken(editor, cur), tprop = token;
+    // If it's not a 'word-style' token, ignore the token.
+		if (!/^[\w$_]*$/.test(token.string)) {
+      token = tprop = {start: cur.ch, end: cur.ch, string: "", state: token.state,
+                       className: token.string == "." ? "property" : null};
+    }
+    // If it is a property, find out what it is a property of.
+    while (tprop.className == "property") {
+      tprop = getToken(editor, {line: cur.line, ch: tprop.start});
+      if (tprop.string != ".") return;
+      tprop = getToken(editor, {line: cur.line, ch: tprop.start});
+      if (tprop.string == ')') {
+        var level = 1;
+        do {
+          tprop = getToken(editor, {line: cur.line, ch: tprop.start});
+          switch (tprop.string) {
+          case ')': level++; break;
+          case '(': level--; break;
+          default: break;
+          }
+        } while (level > 0);
+        tprop = getToken(editor, {line: cur.line, ch: tprop.start});
+				if (tprop.className == 'variable')
+					tprop.className = 'function';
+				else return; // no clue
+      }
+      if (!context) var context = [];
+      context.push(tprop);
+    }
+    return {list: getCompletions(token, context, keywords),
+            from: {line: cur.line, ch: token.start},
+            to: {line: cur.line, ch: token.end}};
+  }
+
+  CodeMirror.javascriptHint = function(editor) {
+    return scriptHint(editor, javascriptKeywords,
+                      function (e, cur) {return e.getTokenAt(cur);});
+  };
+
+  function getCoffeeScriptToken(editor, cur) {
+  // This getToken, it is for coffeescript, imitates the behavior of
+  // getTokenAt method in javascript.js, that is, returning "property"
+  // type and treat "." as indepenent token.
+    var token = editor.getTokenAt(cur);
+    if (cur.ch == token.start + 1 && token.string.charAt(0) == '.') {
+      token.end = token.start;
+      token.string = '.';
+      token.className = "property";
+    }
+    else if (/^\.[\w$_]*$/.test(token.string)) {
+      token.className = "property";
+      token.start++;
+      token.string = token.string.replace(/\./, '');
+    }
+    return token;
+  }
+
+  CodeMirror.coffeescriptHint = function(editor) {
+    return scriptHint(editor, coffeescriptKeywords, getCoffeeScriptToken);
+  };
+
+  var stringProps = ("charAt charCodeAt indexOf lastIndexOf substring substr slice trim trimLeft trimRight " +
+                     "toUpperCase toLowerCase split concat match replace search").split(" ");
+  var arrayProps = ("length concat join splice push pop shift unshift slice reverse sort indexOf " +
+                    "lastIndexOf every some filter forEach map reduce reduceRight ").split(" ");
+  var funcProps = "prototype apply call bind".split(" ");
+  var javascriptKeywords = ("break case catch continue debugger default delete do else false finally for function " +
+                  "if in instanceof new null return switch throw true try typeof var void while with").split(" ");
+  var coffeescriptKeywords = ("and break catch class continue delete do else extends false finally for " +
+                  "if in instanceof isnt new no not null of off on or return switch then throw true try typeof until void while with yes").split(" ");
+
+  function getCompletions(token, context, keywords) {
+    var found = [], start = token.string;
+    function maybeAdd(str) {
+      if (str.indexOf(start) == 0 && !arrayContains(found, str)) found.push(str);
+    }
+    function gatherCompletions(obj) {
+      if (typeof obj == "string") forEach(stringProps, maybeAdd);
+      else if (obj instanceof Array) forEach(arrayProps, maybeAdd);
+      else if (obj instanceof Function) forEach(funcProps, maybeAdd);
+      for (var name in obj) maybeAdd(name);
+    }
+
+    if (context) {
+      // If this is a property, see if it belongs to some object we can
+      // find in the current environment.
+      var obj = context.pop(), base;
+      if (obj.className == "variable")
+        base = window[obj.string];
+      else if (obj.className == "string")
+        base = "";
+      else if (obj.className == "atom")
+        base = 1;
+      else if (obj.className == "function") {
+        if (window.jQuery != null && (obj.string == '$' || obj.string == 'jQuery') &&
+            (typeof window.jQuery == 'function'))
+          base = window.jQuery();
+        else if (window._ != null && (obj.string == '_') && (typeof window._ == 'function'))
+          base = window._();
+      }
+      while (base != null && context.length)
+        base = base[context.pop().string];
+      if (base != null) gatherCompletions(base);
+    }
+    else {
+      // If not, just look in the window object and any local scope
+      // (reading into JS mode internals to get at the local variables)
+      for (var v = token.state.localVars; v; v = v.next) maybeAdd(v.name);
+      gatherCompletions(window);
+      forEach(keywords, maybeAdd);
+    }
+    return found;
+  }
+})();
