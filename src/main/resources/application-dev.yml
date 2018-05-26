@@ -31,11 +31,16 @@ server:
 prefox:
  official:
    email:
-    host: smtp.googlemail.com
-    port: 465
-    from: prefoxchina@gmail.com
-    user: prefoxchina@gmail.com
-    pass: google@109964
+    host: smtp.mxhichina.com
+    port: 25
+    from: master@prefox.site
+    user: master@prefox.site
+    pass: prefox@76!123
+#    host: smtp.googlemail.com
+#    port: 465
+#    from: prefoxchina@gmail.com
+#    user: prefoxchina@gmail.com
+#    pass: google@109964
 #    host: smtp-mail.outlook.com
 #    port: 587
 #    from: pre_fox@outlook.com
