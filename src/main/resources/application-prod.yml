@@ -33,9 +33,9 @@ prefox:
    email:
     host: smtp.mxhichina.com
     port: 25
-    from: master@prefox.site
-    user: master@prefox.site
-    pass: prefox@76!123
+    from: prefox@prefox.site
+    user: prefox@prefox.site
+    pass: prefox76!123
 #    host: smtp.googlemail.com
 #    port: 465
 #    from: prefoxchina@gmail.com
