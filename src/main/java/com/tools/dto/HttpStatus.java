@@ -4,6 +4,7 @@ package com.tools.dto;
  * Created by lk on 2017/11/8.
  */
 public enum HttpStatus {
+    NOT_FOUND(404, "Not Found"),
 
     OK(2000, "Success"),
 

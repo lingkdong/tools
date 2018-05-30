@@ -73,8 +73,6 @@ public interface UserService {
      */
     BaseResponseDTO changePass(PassChangeDto passChangeDto);
 
-    Page<UsersDto> findUsersDto(FindUsersDto findUsersDto, Pageable pageable);
-
     /**
      * get user profile
      *

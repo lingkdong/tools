@@ -18,6 +18,12 @@ function isExist(obj) {
     return !(obj == undefined || obj == null || obj.length == 0);
 }
 
+function strCut(value,size){
+  if(isNotBlank(value)&&value.length>size){
+    return value.substring(0,size)
+  }
+  return value;
+}
 var HttpStatus = {
     OK: 2000,
     IS_BLANK: 4008,

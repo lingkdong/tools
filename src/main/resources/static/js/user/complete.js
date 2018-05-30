@@ -168,8 +168,8 @@ function sendComplete() {
                 trueName: $(trueName).val().trim(),
                 birthday: makePreZero(birthMonth,2)+"/" + makePreZero(birthday,2)+"/"+$(birthYear).val(),
                 male: $(male).val(),
-                skillTag: $(skillTag).val(),
-                location: $(userLocal).val()
+                skillTag: $(skillTag).val().trim(),
+                location: $(userLocal).val().trim()
             },
             success: function (result) {
                 if (backDetectResult(result)==true)

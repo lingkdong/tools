@@ -44,7 +44,8 @@ public class User implements Serializable {
     @Column(name = "skill_tag", length = 50)
     private String skillTag;
     private String location;
-
+    @Column(name = "bio", length = 300)
+    private String bio;
     private int score;
 
     public Long getId() {
@@ -167,4 +168,11 @@ public class User implements Serializable {
         this.score = score;
     }
 
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
 }

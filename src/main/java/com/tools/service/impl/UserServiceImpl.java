@@ -335,28 +335,6 @@ public class UserServiceImpl implements UserService {
         user.setStatus(UserStatus.NORMAL.code());
         return user;
     }
-
-    @Override
-    public Page<UsersDto> findUsersDto(FindUsersDto findUsersDto, Pageable pageable) {
-        Page users = findUsers(findUsersDto, pageable);
-        if (pageable.getPageNumber() >= users.getTotalPages()&&(users.getTotalPages() - 1)>=0) {
-            pageable = new PageRequest(users.getTotalPages() - 1, pageable.getPageSize(), pageable.getSort());
-            users = findUsers(findUsersDto, pageable);
-        }
-        if (users.hasContent()) {
-            List<UsersDto> usersDtos = new ArrayList<>();
-            for (User item : (List<User>) users.getContent()) {
-                UsersDto usersDto=BeanUtil.cast(UsersDto.class, item);
-                usersDto.setPicture(usersDto.getPicture());
-                usersDtos.add(usersDto);
-            }
-            Page<UsersDto> result = new PageImpl<>(usersDtos, new PageRequest(users.getNumber(), users.getSize
-                    ()), users.getTotalElements());
-            return result;
-        }
-        return users;
-    }
-
     @Override
     public BaseResponseDTO getChange() {
         //获取当前用户
@@ -389,6 +367,12 @@ public class UserServiceImpl implements UserService {
         if (StringUtils.isNotBlank(saveChangeDto.getPhone())) {
             if (!RegUtils.isPhone(saveChangeDto.getPhone())) errorInfos.add(ErrorInfo
                     .newErrorInfo().property("phone").HttpStatus(HttpStatus.INVALID_FORMAT).build());
+        }
+        //can blank ,but length need<250
+        if(StringUtils.isNotBlank(saveChangeDto.getBio())){
+            if(saveChangeDto.getBio().length()>250){
+                saveChangeDto.setBio(saveChangeDto.getBio().substring(0,250));
+            }
         }
         if (CollectionUtils.isNotEmpty(errorInfos)) return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT, errorInfos);
         //获取当前用户
@@ -447,11 +431,6 @@ public class UserServiceImpl implements UserService {
             return Worker.OK(nginxUrl+sessionUser.getPicture());
         }
         return Worker.OK();
-    }
-
-    private Page<User> findUsers(FindUsersDto findUsersDto, Pageable pageable) {
-        return (StringUtils.isBlank(findUsersDto.getUsername())) ? userDao.findAllByOrderByScoreDesc(pageable) : userDao
-                .findByUsernameContainingOrderByScoreDesc(findUsersDto.getUsername(), pageable);
     }
 
     /**
