@@ -28,7 +28,7 @@ function dashboard_more(obj) {
                         }
                         var description=(item.description)?item.description:'';
                         html += '<div class="newsfeed-placeholder p-4 mb-4">'
-                            + '<h3 class="h2 lh-condensed mb-2" >'+item.name+'</h3>'
+                            + '<h2 class="lh-condensed mb-2" >'+item.name+'</h2>'
                             + '<span class="f6">'+description+'</span>'
                             + '<div class="f4">'
                             + innerHtml
