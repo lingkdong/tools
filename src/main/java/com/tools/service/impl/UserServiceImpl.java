@@ -25,10 +25,6 @@ import org.apache.shiro.web.util.SavedRequest;
 import org.apache.shiro.web.util.WebUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -36,6 +32,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.util.*;
+
+import static com.tools.utils.AvatarConstant.*;
 
 /**
  * Created by lk on 2018/1/9.
@@ -52,15 +50,7 @@ public class UserServiceImpl implements UserService {
     private FileService fileService;
     @Value("${prefox.nginx}")
     private String nginxUrl;
-    private final static List<String> AVATAR_TYPE = Arrays.asList(Constant.JPG,
-            Constant.JPEG,
-            Constant.PNG,
-            Constant.GIF
-    );
-    private int small = 48;
-    private int large = 200;
-    private String small_flag = "_small";
-    private String large_flag = "_large";
+
 
     @Override
     public boolean _nameUnique(String name, Long userId) {
@@ -439,28 +429,4 @@ public class UserServiceImpl implements UserService {
         return Worker.OK();
     }
 
-    /**
-     * users/id/nameHex/img/avatar
-     * @param userId
-     * @param username
-     * @return
-     */
-    private String getAvatarDir(Long userId,String username) {
-        return Constant.USERS
-                + File.separator
-                + userId
-                + File.separator
-                +DigestUtils.md2Hex(username).substring(0,8)
-                + File.separator
-                + Constant.IMG
-                + File.separator
-                + Constant.AVATAR;
-    }
-
-    private String getLargeAvatar(String avatarPath){
-        if (StringUtils.isNotBlank(avatarPath)) {
-            return avatarPath.replace(small_flag, large_flag);
-        }
-        return null;
-    }
 }

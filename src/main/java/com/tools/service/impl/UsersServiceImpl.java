@@ -17,7 +17,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
+import static com.tools.utils.AvatarConstant.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,6 +61,7 @@ public class UsersServiceImpl implements UsersService {
             return new BaseResponseDTO(HttpStatus.NOT_FOUND);
         }
         UsersCardDto detailDto = BeanUtil.cast(UsersCardDto.class, user);
+        detailDto.setPicture(getLargeAvatar(detailDto.getPicture()));
         //update viewed times
         user.setView(user.getView()+1);
         userDao.save(user);
