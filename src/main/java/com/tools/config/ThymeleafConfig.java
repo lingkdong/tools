@@ -3,10 +3,7 @@ package com.tools.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
-
-import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
 

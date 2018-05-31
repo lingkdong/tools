@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="page">
+<head>
+    <meta charset="UTF-8"/>
+    <title>User Card</title>
+    <link th:href="@{/css/users.css}" rel="stylesheet"/>
+    <script th:src="@{/js/user/users.js }"></script>
+</head>
+<body>
+<div th:fragment="content" th:remove="tag">
+
+    <div class="user-card o-hid">
+        <div class="one-third f-left">
+            <div class="avatar-div shadow  m-2" style=" height:200px; width:200px">
+                <img class="avatar rounded-2" id="avatar-img" height="200" width="200"
+                     th:attr="style=${#strings.isEmpty(data.picture)?'display:none':''},
+                              src=${!#strings.isEmpty(data.picture)?nginxUrl+data.picture:''},
+                              data-history=${data.picture}
+                              ">
+            </div>
+        </div>
+
+        <div class="two-third fr">
+            <h1 th:text="${data.username}"></h1>
+            <div class="bio" th:text="${data.bio}"></div>
+            <ul class="list-style-none mt-3 color-grey2">
+                <li class="py-1 cursor-p" th:title="${'地址: '+data.location}">
+                    <svg aria-hidden="true" class="va-bottom svg-icon iconLocation" width="18" height="18"
+                         viewBox="0 0 18 18">
+                        <path d="M8.1 17.7S2 9.9 2 6.38A6.44 6.44 0 0 1 8.5 0C12.09 0 15 2.86 15 6.38 15 9.91 8.9 17.7 8.9 17.7c-.22.29-.58.29-.8 0zm.4-8.45a2.75 2.75 0 1 0 0-5.5 2.75 2.75 0 0 0 0 5.5z"></path>
+                    </svg>
+                    <span>   [[${data.location}]]</span>
+                </li>
+                <li class="py-1 cursor-p" th:title="${'加入日期: '+#dates.format(data.createTime,'yyyy-MM-dd')}">
+                    <svg aria-hidden="true" class="va-bottom svg-icon iconHistory" width="19" height="18"
+                         viewBox="0 0 19 18">
+                        <path d="M3 9a8 8 0 1 1 3.73 6.77L8.2 14.3A6 6 0 1 0 5 9l3.01-.01-4 4-4-4h3zm7-4h1.01L11 9.36l3.22 2.1-.6.93L10 10V5z"></path>
+                    </svg>
+                    <span>   [[${#dates.format(data.createTime,'yyyy-MM-dd')}]]</span>
+                </li>
+                <li class="py-1 cursor-p" th:title="${data.view+ '次被查看'}">
+                    <svg aria-hidden="true" class="va-bottom svg-icon iconEye" width="18" height="18"
+                         viewBox="0 0 18 18">
+                        <path d="M9.06 3C4 3 1 9 1 9s3 6 8.06 6C14 15 17 9 17 9s-3-6-7.94-6zM9 13a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm2-4a2 2 0 0 1-2 2 2 2 0 0 1-2-2 2 2 0 0 1 2-2 2 2 0 0 1 2 2z"></path>
+                    </svg>
+                    <span>   [[${+data.view+'次被查看'}]]</span>
+                </li>
+            </ul>
+            <h3>Tags</h3>
+            <span class="textarea-wrap">[[${data.skillTag}]]</span>
+        </div>
+    </div>
+</div>
+</body>
+</html>

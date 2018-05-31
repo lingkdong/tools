@@ -1,8 +1,11 @@
 package com.tools.action.anon.user;
 
+import com.tools.action.BaseAction;
+import com.tools.dto.BaseResponseDTO;
 import com.tools.dto.user.FindUsersDto;
 import com.tools.dto.user.UsersDto;
 import com.tools.service.UsersService;
+import com.tools.worker.Worker;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,7 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @Slf4j
 @RequestMapping("/anon/users")
-public class UsersAction {
+public class UsersAction extends BaseAction {
     @Autowired
     private UsersService usersService;
     @RequestMapping(value = "/index")
@@ -33,9 +36,14 @@ public class UsersAction {
         return mv;
     }
 
-    @GetMapping(value="/Detail/{username}")
+    @GetMapping(value="/card/{username}")
     public ModelAndView index(@PathVariable(value = "username") String username){
-        ModelAndView mv = new ModelAndView("users/users");
+        BaseResponseDTO dto=usersService.findUsersDto(username);
+        if(!Worker.isOK(dto)){
+            return errorPage(dto.getStatus(),dto.getMessage());
+        }
+        ModelAndView mv = new ModelAndView("users/users-card");
+        mv.addObject("data",dto.getData());
         return mv;
     }
 }

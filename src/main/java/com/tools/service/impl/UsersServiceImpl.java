@@ -4,6 +4,7 @@ import com.tools.dao.UserDao;
 import com.tools.dto.BaseResponseDTO;
 import com.tools.dto.HttpStatus;
 import com.tools.dto.user.FindUsersDto;
+import com.tools.dto.user.UsersCardDto;
 import com.tools.dto.user.UsersDto;
 import com.tools.model.User;
 import com.tools.service.UsersService;
@@ -52,15 +53,18 @@ public class UsersServiceImpl implements UsersService {
 
     @Override
     public BaseResponseDTO findUsersDto(String username) {
-       if(StringUtils.isBlank(username)){
-           return new BaseResponseDTO(HttpStatus.NOT_FOUND);
-       }
-       User user=userDao.findFirstByUsername(username);
-       if(user==null){
-           return new BaseResponseDTO(HttpStatus.NOT_FOUND);
-       }
-
-        return null;
+        if (StringUtils.isBlank(username)) {
+            return new BaseResponseDTO(HttpStatus.NOT_FOUND);
+        }
+        User user = userDao.findFirstByUsername(username);
+        if (user == null) {
+            return new BaseResponseDTO(HttpStatus.NOT_FOUND);
+        }
+        UsersCardDto detailDto = BeanUtil.cast(UsersCardDto.class, user);
+        //update viewed times
+        user.setView(user.getView()+1);
+        userDao.save(user);
+        return Worker.OK(detailDto);
     }
 
     private Page<User> findUsers(FindUsersDto findUsersDto, Pageable pageable) {

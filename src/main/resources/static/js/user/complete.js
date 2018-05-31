@@ -7,6 +7,7 @@ $(function () {
     skillTag = $("#skillTag");
     phone = $("#phone");
     userLocal = $("#location");
+     bio = $("#bio");
     complete = $("#complete");
     $(trueName).keyup(function () {
         detectTrueName();
@@ -169,7 +170,8 @@ function sendComplete() {
                 birthday: makePreZero(birthMonth,2)+"/" + makePreZero(birthday,2)+"/"+$(birthYear).val(),
                 male: $(male).val(),
                 skillTag: $(skillTag).val().trim(),
-                location: $(userLocal).val().trim()
+                location: $(userLocal).val().trim(),
+                bio:strCut($(bio).val().trim(),250)
             },
             success: function (result) {
                 if (backDetectResult(result)==true)

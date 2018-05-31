@@ -27,15 +27,13 @@
         <th:block th:each="item:${page.content}">
             <li class="f-left px-1 py-1 w-percent-25">
                 <div class="user-info  user-hover">
-                    <div class="user-gravatar48">
-                        <a href="#">
-                            <div class="gravatar-wrapper-48">
-                                <img th:if="${!#strings.isEmpty(item.picture)}" th:src="${nginxUrl+item.picture}">
-                            </div>
-                        </a>
+                    <div class="user-gravatar48 cursor-p card" th:attr="data-name=${item.username}">
+                        <div class="gravatar-wrapper-48">
+                            <img th:if="${!#strings.isEmpty(item.picture)}" th:src="${nginxUrl+item.picture}">
+                        </div>
                     </div>
                     <div class="user-details">
-                        <a href="#" th:text="${item.username}"/>
+                        <a  class="cursor-p card" th:attr="data-name=${item.username}" th:text="${item.username}"/>
                         <span class="user-location" th:text="${item.location}"/>
                         <div class="-flair">
                             <span class="fw-bold" th:text="${item.score}"/>

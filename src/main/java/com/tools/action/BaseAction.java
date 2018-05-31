@@ -16,7 +16,7 @@ public class BaseAction {
     @Autowired
     private CategoryService categoryService;
 
-    public ModelAndView getResource(String resourceCode,String viewName){
+    protected ModelAndView getResource(String resourceCode,String viewName){
         Resource resource= resourceService.findByCode(resourceCode);
         CategoryDto categoryDto=categoryService.findDtoById(resource.getCategoryId());
         ModelAndView mv=new ModelAndView(viewName);
@@ -24,4 +24,12 @@ public class BaseAction {
         mv.addObject("type",resourceCode);
         return mv;
     }
+
+    protected ModelAndView errorPage(int status,String error){
+        ModelAndView mv=new ModelAndView("error");
+        mv.addObject("status",status);
+        mv.addObject("error",error);
+        return mv;
+    }
+
 }

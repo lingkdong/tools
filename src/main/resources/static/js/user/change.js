@@ -270,7 +270,7 @@ function sendProfile() {
     if (detectTrueName() && detectBirthYear() && detectBirthMonth() && detectBirthDay() && detectMale() && detectSkillTag() && detectPhone()) {
         $.ajax({
             type: "post",
-            url: BASE_CHANGE_URL + "/send-change.json",
+            url: BASE_CHANGE_URL + "/.json",
             async: true,
             dataType: "json",
             beforeSend: function () {

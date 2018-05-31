@@ -15,4 +15,5 @@ public class CompleteDto {
     private String skillTag;
     private String phone;
     private String location;
+    private String bio;
 }

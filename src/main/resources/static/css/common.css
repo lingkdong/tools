@@ -65,6 +65,14 @@ details:not([open]) > *:not(summary) {
     height: 96px !important;
 }
 
+.one-third{
+width: 33.333333%;
+}
+
+.two-third{
+width: 66.666666%;
+}
+
 .details-reset > summary::-webkit-details-marker {
     display: none
 }
@@ -118,7 +126,9 @@ details:not([open]) > *:not(summary) {
 .text-bold {
     font-weight: 600 !important
 }
-
+.va-bottom{
+vertical-align:bottom!important;
+}
 .pl-2 {
     padding-left: 8px !important
 }
@@ -345,6 +355,14 @@ a.tabnav-extra:hover {
     padding-top: 32px !important
 }
 
+.pb-1{
+ padding-bottom: 4px !important
+}
+
+.pl-1{
+ padding-bottom: 4px !important
+}
+
 .pb-4 {
     padding-bottom: 24px !important
 }
@@ -395,6 +413,13 @@ a.tabnav-extra:hover {
 
 .b-radius-10 {
     border-radius: 10px
+}
+.m-2{
+margin: 8px !important
+}
+
+.ml-1 {
+    margin-left: 4px !important
 }
 
 .ml-2 {
@@ -949,7 +974,9 @@ dl.form-group > dd .form-control.is-autocheck-errored {
 .color-grey2 {
     color: #586069 !important;
 }
-
+.svg-icon:not(.native) * {
+    fill: currentColor;
+}
 .file {
     position: relative;
     margin-top: 16px;

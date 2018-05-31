@@ -227,6 +227,12 @@ public class UserServiceImpl implements UserService {
             if (!RegUtils.isPhone(completeDto.getPhone())) errorInfos.add(ErrorInfo
                     .newErrorInfo().property("phone").HttpStatus(HttpStatus.INVALID_FORMAT).build());
         }
+        //can blank ,but length need<250
+        if(StringUtils.isNotBlank(completeDto.getBio())){
+            if(completeDto.getBio().length()>250){
+                completeDto.setBio(completeDto.getBio().substring(0,250));
+            }
+        }
         if (CollectionUtils.isNotEmpty(errorInfos)) return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT, errorInfos);
         //获取当前用户
         User sessionUser = Worker.getCurrentUser();

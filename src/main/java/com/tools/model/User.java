@@ -47,7 +47,7 @@ public class User implements Serializable {
     @Column(name = "bio", length = 300)
     private String bio;
     private int score;
-
+    private int view;
     public Long getId() {
         return id;
     }
@@ -174,5 +174,13 @@ public class User implements Serializable {
 
     public void setBio(String bio) {
         this.bio = bio;
+    }
+
+    public int getView() {
+        return view;
+    }
+
+    public void setView(int view) {
+        this.view = view;
     }
 }

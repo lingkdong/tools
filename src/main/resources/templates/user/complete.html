@@ -109,7 +109,16 @@
                             <p class="note">设置您的位置.</p>
                         </dd>
                     </dl>
+                    <dl class="form-group">
+                        <dt class="input-label"><label autocapitalize="off" for="bio" >个人简述</label></dt>
+                        <dd>
+                            <textarea autocapitalize="off" class="form-control" id="bio" name="bio"
+                                      maxlength="250" rows="3"
+                                      type="text">[[${complete.bio}]]</textarea>
 
+                            <p class="note">限250字以内</p>
+                        </dd>
+                    </dl>
                     <button class="btn btn-primary" id="complete">
                         保存资料
                     </button>
