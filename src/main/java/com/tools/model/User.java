@@ -48,6 +48,8 @@ public class User implements Serializable {
     private String bio;
     private int score;
     private int view;
+    @Column(name = "type",length = 2)
+    private Byte type;//1 admin ，2 normal
     public Long getId() {
         return id;
     }
@@ -182,5 +184,13 @@ public class User implements Serializable {
 
     public void setView(int view) {
         this.view = view;
+    }
+
+    public Byte getType() {
+        return type;
+    }
+
+    public void setType(Byte type) {
+        this.type = type;
     }
 }
