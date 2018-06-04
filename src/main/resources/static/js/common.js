@@ -1,3 +1,9 @@
+$(function(){
+  if (window.sidebar) {
+  $(".bookmarks").attr("href",window.location)
+                 .attr("title",document.title);
+  }
+})
 function _copy(obj) {
     obj.select(); // 选择对象
     document.execCommand("Copy");
@@ -381,32 +387,36 @@ function backDetectResult(result) {
 }
 
 function bookmark(url, title) {
-    if (!url) {
-        url = window.location
-    }
-    if (!title) {
-        title = document.title
-    }
-    var browser = navigator.userAgent.toLowerCase();
-    if (window.sidebar) { // Mozilla, Firefox, Netscape
-        window.sidebar.addPanel(title, url, "");
-    } else if (window.external) { // IE or chrome
-        if (browser.indexOf('chrome') == -1) { // ie
-            window.external.AddFavorite(url, title);
-        } else { // chrome
-            //Please Press CTRL+D (or Command+D for macs) to bookmark this page
-            alertError('请按CTRL+D(Mac按Command+D) 来添加标签');
+   try{
+        if (!url) {
+            url = window.location
         }
-    } else if (window.opera && window.print) { // Opera - automatically adds to sidebar if rel=sidebar in the tag
-        return true;
-    } else if (browser.indexOf('konqueror') != -1) { // Konqueror
-        //Please press CTRL+B to bookmark this page.
-        alertError('请按CTRL+B来添加标签');
-    } else if (browser.indexOf('webkit') != -1) { // safari
-        //Please press CTRL+B (or Command+D for macs) to bookmark this page
-        alertError('请按CTRL+B(按Command+D) 来添加标签');
-    } else {
-        alertError('您的浏览器不支持该操作.');
+        if (!title) {
+            title = document.title
+        }
+        var browser = navigator.userAgent.toLowerCase();
+        if (window.sidebar) { // Mozilla, Firefox, Netscape
+//            window.sidebar.addPanel(title, url, "");
+        } else if (window.external) { // IE or chrome
+            if (browser.indexOf('chrome') == -1) { // ie
+                window.external.AddFavorite(url, title);
+            } else { // chrome
+                //Please Press CTRL+D (or Command+D for macs) to bookmark this page
+                alertError('请按CTRL+D(Mac按Command+D) 来添加标签');
+            }
+        } else if (window.opera && window.print) { // Opera - automatically adds to sidebar if rel=sidebar in the tag
+            return true;
+        } else if (browser.indexOf('konqueror') != -1) { // Konqueror
+            //Please press CTRL+B to bookmark this page.
+            alertError('请按CTRL+B来添加标签');
+        } else if (browser.indexOf('webkit') != -1) { // safari
+            //Please press CTRL+B (or Command+D for macs) to bookmark this page
+            alertError('请按CTRL+B(按Command+D) 来添加标签');
+        } else {
+            alertError('您的浏览器不支持该操作.');
+        }
+    }catch{
+       alertError('请按CTRL+D(Mac按Command+D) 来添加标签');
     }
 }
 $(function () {
