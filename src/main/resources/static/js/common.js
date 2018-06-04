@@ -415,7 +415,7 @@ function bookmark(url, title) {
         } else {
             alertError('您的浏览器不支持该操作.');
         }
-    }catch{
+    }catch(error){
        alertError('请按CTRL+D(Mac按Command+D) 来添加标签');
     }
 }
