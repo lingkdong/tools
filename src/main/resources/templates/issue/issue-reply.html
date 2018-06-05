@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="page">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Issue Reply</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/summernote/dist/summernote.css}" rel="stylesheet">
+    <link th:href="@{/css/issue/issue-reply.css}" rel="stylesheet"/>
+    <script th:src="@{/js/bootstrap.min.js }"></script>
+    <script th:src="@{/summernote/dist/summernote.min.js }"></script>
+    <script th:src="@{/js/issue/issue-reply.js }"></script>
+</head>
+<body>
+<div th:fragment="content" th:remove="tag">
+    <div class="summernote"></div>
+</div>
+</body>
+</html>
