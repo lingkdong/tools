@@ -14,7 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 @RequestMapping("/anon/issue")
-public class IssueReply {
+public class IssueReplyAction {
     @RequestMapping(value = "/{issueId}")
     public ModelAndView index(@PathVariable(value = "issueId") Long issueId) {
         ModelAndView mv = new ModelAndView("issue/issue-reply");
