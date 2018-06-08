@@ -1,4 +1,6 @@
 $(function () {
+    msgContainer = $("#js-flash-container");
+    avatarForm = $("#avatar-form");
     trueName = $("#true_name");
     birthYear = $("#birth-year");
     birthMonth = $("#birth-month");
@@ -9,6 +11,8 @@ $(function () {
     userLocal = $("#location");
      bio = $("#bio");
     complete = $("#complete");
+    file = $("#upload-profile-picture");
+    img = $("#avatar-img");
     $(trueName).keyup(function () {
         detectTrueName();
     });
@@ -31,9 +35,14 @@ $(function () {
         detectPhone();
     });
     $(complete).click(function (event) {
-        sendComplete();
+        sendImageThenComplete();
         stopEvent(event);
-    })
+    });
+    $(file).change(function (event) {
+        var flag = fileDetect(this)
+        $(file).attr("valid", flag)
+        stopEvent(event);
+    });
 
 });
 
@@ -156,16 +165,106 @@ function detectPhone() {
     }
     return true;
 }
-function sendComplete() {
-    $(complete).attr("disabled", true).html("保存...");
-    if (detectTrueName() && detectBirthYear() && detectBirthMonth() && detectBirthDay() && detectMale() && detectSkillTag() && detectPhone()) {
+function getPath(obj, fileQuery, transImg) {
+    var value = fileQuery.value;
+    if (isBlank(value)) {
+        var history=$(img).attr("data-history");
+        if(isBlank(history)){
+            $(img).hide();
+        }else{
+            $(img).attr("src",NGINX_URL+history);
+        }
+        return 0;
+    }
 
+    var fileType = value.substring(value.lastIndexOf(".") + 1).toLowerCase();
+    if (!isInArray(type_array, fileType)) {
+        addErrorMsg(msgContainer, "只支持" + type_array.toString().toLocaleUpperCase() + "类型图片")
+        return -1;
+    }
+    if (isIE && !fileQuery.files) {  // IE浏览器判断
+        var filePath = obj.value;
+        var fileSystem = new ActiveXObject("Scripting.FileSystemObject");
+        var file = fileSystem.GetFile(filePath);
+        if (isLargeSize(file.Size)) {
+            return -1;
+        }
+        if (obj.select) {
+            obj.select();
+            var path = document.selection.createRange().text;
+            obj.removeAttribute("src");
+            obj.setAttribute("src", transImg);
+            obj.style.filter =
+                "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='" + path + "', sizingMethod='scale');";  // IE通过滤镜的方式实现图片显示
+        } else {
+            obj.src = value;
+        }
+
+    } else {
+        var file = fileQuery.files[0];
+        if (isLargeSize(file.size)) {
+            return -1;
+        }
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            obj.setAttribute("src", e.target.result);
+        }
+        reader.readAsDataURL(file);
+    }
+    msgContainer.html("");
+    $(img).show();
+    return 1;
+}
+
+function fileDetect(obj) {
+    var file_img = document.getElementById("avatar-img");
+    return getPath(file_img, obj, file_img);
+}
+function sendImageThenComplete() {
+    var flag = parseInt($(file).attr("valid"));
+    //flag>0 图片做了修改，flag=0 图片未修改，flag<0 图片格式或大小有问题
+    if (flag > 0) {
+        $(avatarForm).attr("action", BASE_COMPLETE_URL+"avatar.json");
+        $(avatarForm).ajaxSubmit({
+            dataType: "json",
+            beforeSend: function () {
+                $(complete).attr(DISABLED, true).html("保存...");
+            },
+            success: function (result) {
+                if (backDetectResult(result)) {
+                    $(file).attr("data-value", result.data);
+                    sendComplete();
+                } else {
+                    var item = result.data;
+                    switch (item.status) {
+                        case HttpStatus.INVALID_FORMAT:
+                            addErrorMsg(msgContainer, "只支持" + type_array.toString().toLocaleUpperCase() + "类型图片")
+                        case HttpStatus.FILE_UPLOAD_ERROR:
+                            alertError("保存失败，请稍后再试")
+                    }
+                }
+            },
+            error: function (result) {
+                alertServerError();
+            },
+            complete: function () {
+                $(complete).removeAttr(DISABLED).html("保存修改");
+            }
+        });
+    } else if (flag == 0) {
+        sendComplete();
+    }
+
+}
+function sendComplete() {
+    if (detectTrueName() && detectBirthYear() && detectBirthMonth() && detectBirthDay() && detectMale() && detectSkillTag() && detectPhone()) {
         $.ajax({
             type: "post",
             url: BASE_COMPLETE_URL+"send-complete.json",
             async: true,
             dataType: "json",
             data: {
+                picture: $(file).attr("data-value"),
                 trueName: $(trueName).val().trim(),
                 birthday: makePreZero(birthMonth,2)+"/" + makePreZero(birthday,2)+"/"+$(birthYear).val(),
                 male: $(male).val(),
@@ -176,7 +275,7 @@ function sendComplete() {
             success: function (result) {
                 if (backDetectResult(result)==true)
                 {
-                    jump_index();
+                    jump_page(PRE_FOX_ANON_BASE+"/users/card/"+result.data);
                 }
             },
             error: function (result) {
@@ -186,7 +285,6 @@ function sendComplete() {
             }
         });
     }
-    $(complete).removeAttr("disabled").html("保存资料");
 }
 // back program detect result
 function backDetectResult(result) {

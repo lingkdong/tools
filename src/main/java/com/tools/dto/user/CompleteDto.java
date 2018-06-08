@@ -16,4 +16,5 @@ public class CompleteDto {
     private String phone;
     private String location;
     private String bio;
+    private String picture;
 }

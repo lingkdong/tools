@@ -234,7 +234,7 @@ public class UserServiceImpl implements UserService {
             //update sessionUser
             BeanUtil.compareAndModify(sessionUser, completeDto);
         }
-        return Worker.OK();
+        return Worker.OK(user.getUsername());
     }
 
     @Override

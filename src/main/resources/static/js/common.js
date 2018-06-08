@@ -429,3 +429,12 @@ $(function () {
         bookmark(url,name);
     })
 })
+var type_array = new Array("jpg", "jpeg", "png", "gif");
+function isLargeSize(fileSize) {
+    var size = fileSize / 1024;
+    if (size > 2000) {
+        addErrorMsg(msgContainer, "图片不能大于2M");
+        return true
+    }
+    return false;
+}
