@@ -218,9 +218,9 @@ public class UserServiceImpl implements UserService {
                     .newErrorInfo().property("phone").HttpStatus(HttpStatus.INVALID_FORMAT).build());
         }
         //can blank ,but length need<250
-        if(StringUtils.isNotBlank(completeDto.getBio())){
-            if(completeDto.getBio().length()>250){
-                completeDto.setBio(completeDto.getBio().substring(0,250));
+        if (StringUtils.isNotBlank(completeDto.getBio())) {
+            if (completeDto.getBio().length() > 250) {
+                completeDto.setBio(completeDto.getBio().substring(0, 250));
             }
         }
         if (CollectionUtils.isNotEmpty(errorInfos)) return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT, errorInfos);
@@ -272,20 +272,22 @@ public class UserServiceImpl implements UserService {
                 .append(DigestUtils.md5Hex(StringUtil.getPassword(16)))
                 .append(DigestUtils.md5Hex(StringUtil.getPassword(16)))
                 .append(DigestUtils.md5Hex(StringUtil.getPassword(16)));
-        msg.append("以下为您的密码重置链接：").append(System.lineSeparator())
-                .append
-                        ("<a href=\"" + PrefoxEmailTemp.CHANGE_PASS_URL + token + "\" target=\"_blank\">")
-                .append(PrefoxEmailTemp.CHANGE_PASS_URL + token).append("</a>")
+        msg.append("我们收到了对账户").append(user.getEmail()).append("的密码重置请求。")
                 .append(System.lineSeparator())
-                .append("链接有效期为1小时。若链接已过期，获得新的密码重置连接，请访问 ")
+                .append("若您发起了此请求，")
+                .append(
+                        "<a href=\"" + PrefoxEmailTemp.CHANGE_PASS_URL + token + "\" target=\"_blank\">")
+                .append("请点击这里进行密码重置").append("</a>")
+                .append(System.lineSeparator())
+                .append("链接有效期为1小时。若链接已过期，")
                 .append("<a href=\"" + PrefoxEmailTemp.RESET_PASS_URL + "\" target=\"_blank\">")
-                .append(PrefoxEmailTemp.RESET_PASS_URL).append("</a>");
+                .append("获得新的重置连接").append("</a>");
         ;
         Boolean flag = emailService.sendHtmlEmail(EmailDto.newEmailDto()
                 .subjet("Prefox密码重置")
                 .emailTo(resetDto.getEmail())
                 .msg(prefoxEmailTemp.buildHtmlMsg(String.format("%s，您好：", user.getUsername()),
-                        "密码重置链接", msg.toString()))
+                        "密码重置", msg.toString()))
                 .build()
         );
         if (!Boolean.TRUE.equals(flag)) return new BaseResponseDTO(HttpStatus.INTERNAL_SERVER_ERROR,
@@ -331,6 +333,7 @@ public class UserServiceImpl implements UserService {
         user.setStatus(UserStatus.NORMAL.code());
         return user;
     }
+
     @Override
     public BaseResponseDTO getChange() {
         //获取当前用户
@@ -365,9 +368,9 @@ public class UserServiceImpl implements UserService {
                     .newErrorInfo().property("phone").HttpStatus(HttpStatus.INVALID_FORMAT).build());
         }
         //can blank ,but length need<250
-        if(StringUtils.isNotBlank(saveChangeDto.getBio())){
-            if(saveChangeDto.getBio().length()>250){
-                saveChangeDto.setBio(saveChangeDto.getBio().substring(0,250));
+        if (StringUtils.isNotBlank(saveChangeDto.getBio())) {
+            if (saveChangeDto.getBio().length() > 250) {
+                saveChangeDto.setBio(saveChangeDto.getBio().substring(0, 250));
             }
         }
         if (CollectionUtils.isNotEmpty(errorInfos)) return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT, errorInfos);
@@ -381,9 +384,9 @@ public class UserServiceImpl implements UserService {
             //update sessionUser
             BeanUtil.compareAndModify(sessionUser, saveChangeDto);
         }
-        Map map=new HashMap();
-        if(StringUtils.isNotBlank(user.getPicture())){
-            map.put("largeImg",getLargeAvatar(user.getPicture()));
+        Map map = new HashMap();
+        if (StringUtils.isNotBlank(user.getPicture())) {
+            map.put("largeImg", getLargeAvatar(user.getPicture()));
         }
 
         return Worker.OK(map);
@@ -398,7 +401,7 @@ public class UserServiceImpl implements UserService {
         }
         User sessionUser = Worker.getCurrentUser();
         if (sessionUser == null) return new BaseResponseDTO(HttpStatus.LOGIN_EXPIRED);
-        String avatarDir = getAvatarDir(sessionUser.getId(),sessionUser.getUsername());
+        String avatarDir = getAvatarDir(sessionUser.getId(), sessionUser.getUsername());
         File orig = FileUtil.uploadFile(file, fileService.getUploadBase() + File.separator + avatarDir, Constant.AVATAR + type);
         if (orig == null) {
             return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT, ErrorInfo.newErrorInfo().property("avatar")
@@ -413,8 +416,8 @@ public class UserServiceImpl implements UserService {
         }
         orig.delete();
         //delete pre avatar
-         FileUtil.deleteFilesExcept(fileService.getUploadBase() + File.separator + avatarDir,Arrays.asList(largeFile.getName().toLowerCase(),smallFile.getName()
-                 .toLowerCase()));
+        FileUtil.deleteFilesExcept(fileService.getUploadBase() + File.separator + avatarDir, Arrays.asList(largeFile.getName().toLowerCase(), smallFile.getName()
+                .toLowerCase()));
         String avatarPath = avatarDir + File.separator + smallFile.getName();
         return Worker.OK(avatarPath);
     }
@@ -423,8 +426,8 @@ public class UserServiceImpl implements UserService {
     public BaseResponseDTO getAvatar() {
         User sessionUser = Worker.getCurrentUser();
         if (sessionUser == null) return new BaseResponseDTO(HttpStatus.LOGIN_EXPIRED);
-        if(StringUtils.isNotBlank(sessionUser.getPicture())){
-            return Worker.OK(nginxUrl+sessionUser.getPicture());
+        if (StringUtils.isNotBlank(sessionUser.getPicture())) {
+            return Worker.OK(nginxUrl + sessionUser.getPicture());
         }
         return Worker.OK();
     }

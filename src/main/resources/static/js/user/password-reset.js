@@ -66,5 +66,5 @@ function backError(item) {
             break;
     }
 }
-var reset_success_html='<label for="return"> 重置链接已发送至您的邮箱，请检查邮箱。如果几分钟内仍未收到收到重置邮件，请检查您的邮箱垃圾桶。 </label><input' +
+var reset_success_html='<label for="return"> 重置链接已发送至您的邮箱，请检查邮箱。如果几分钟内仍未收到收到重置邮件，请检查您的邮件垃圾箱。 </label><input' +
     ' class="btn btn-primary btn-block" tabindex="3" id="return" onclick="jump_index()" value="返回登录"/>';

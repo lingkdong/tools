@@ -30,8 +30,8 @@ public class PrefoxEmailTemp {
             ".mr-3{margin-right:16px !important}.mb-4{margin-bottom:40px !important}a{background-color:transparent;" +
             "-webkit-text-decoration-skip:objects;color:#0366d6;text-decoration:none}\n" +
             ".top-logo svg{width:35px;height:35px}.foot-logo svg{width:24px;height:24px}.fr{float:right}\n" +
-            ".fl{float:left}.summary{font-size:32px;font-weight:300;font-family:'Helvetica Neue',Helvetica,Arial," +
-            "sans-serif;color:#999}</style><div class=\"container-lg px-3 border-bottom\"><div " +
+            ".fl{float:left}.summary{font-size:25px;font-weight:300;font-family:'Helvetica Neue',Helvetica,Arial," +
+            "sans-serif;}</style><div class=\"container-lg px-3 border-bottom\"><div " +
             "aria-label=\"Homepage\" class=\"top-logo\" title=\"Prefox\"><svg version=\"1.0\" width=\"35px\" " +
             "height=\"35px\" viewBox=\"0 0 35.000000 35.000000\" preserveAspectRatio=\"xMidYMid meet\"><g " +
             "transform=\"translate(0.000000,35.000000) scale(0.100000,-0.100000)\" fill=\"rgb(51, 51, 51)\" " +
