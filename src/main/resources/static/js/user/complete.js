@@ -174,6 +174,7 @@ function getPath(obj, fileQuery, transImg) {
         }else{
             $(img).attr("src",NGINX_URL+history);
         }
+        addWarnMsg(msgContainer, "您未选择任何图片");
         return 0;
     }
 

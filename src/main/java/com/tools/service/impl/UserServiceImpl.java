@@ -246,6 +246,7 @@ public class UserServiceImpl implements UserService {
         if (user == null) return new BaseResponseDTO(HttpStatus.LOGIN_EXPIRED);
         CompleteDto completeDto = new CompleteDto();
         BeanUtil.copy(completeDto, user);
+        completeDto.setPicture(getLargeAvatar(completeDto.getPicture()));
         return Worker.OK(completeDto);
     }
 
@@ -407,9 +408,10 @@ public class UserServiceImpl implements UserService {
             return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT, ErrorInfo.newErrorInfo().property("avatar")
                     .HttpStatus(HttpStatus.FILE_UPLOAD_ERROR).build());
         }
-        File largeFile = ImgUtil.doCompress(orig.getAbsolutePath(), large, large, large_flag, false);
+        String token="_"+MathUtils.getRandom(6);
+        File largeFile = ImgUtil.doCompress(orig.getAbsolutePath(), large, large, token+large_flag, false);
         //compress
-        File smallFile = ImgUtil.doCompress(orig.getAbsolutePath(), small, small, small_flag, false);
+        File smallFile = ImgUtil.doCompress(orig.getAbsolutePath(), small, small, token+small_flag, false);
         if (largeFile == null || smallFile == null) {
             return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT, ErrorInfo.newErrorInfo().property("avatar")
                     .HttpStatus(HttpStatus.FILE_UPLOAD_ERROR).build());

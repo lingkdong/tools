@@ -55,6 +55,7 @@ function getPath(obj, fileQuery, transImg) {
         }else{
           $(img).attr("src",NGINX_URL+history);
         }
+        addWarnMsg(msgContainer, "您未选择新的头像，程序已恢复您保存的最后记录");
         return 0;
     }
 
@@ -225,7 +226,7 @@ function detectPhone() {
 function sendChange() {
     var flag = parseInt($(file).attr("valid"));
     //flag>0 图片做了修改，flag=0 图片未修改，flag<0 图片格式或大小有问题
-    if (flag > 0) {
+    if (flag > 0 && isNotBlank($(file).val())) {
         $(avatarForm).attr("action", BASE_CHANGE_URL + "/avatar.json");
         $(avatarForm).ajaxSubmit({
             dataType: "json",

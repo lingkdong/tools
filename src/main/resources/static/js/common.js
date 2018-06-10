@@ -143,7 +143,7 @@ function alertMsg(type, msg) {
             ' onclick="closeParent(this)"><svg aria-hidden="true" class="octicon octicon-x" height="16"' +
             ' version="1.1" viewBox="0 0 12 16" width="12"><path fill-rule="evenodd" d="M7.48 8l3.75 3.75-1.48' +
             ' 1.48L6 9.48l-3.75 3.75-1.48-1.48L4.52 8 .77 4.25l1.48-1.48L6 6.52l3.75-3.75 1.48' +
-            ' 1.48z"></path></svg></button><span class="flash-info">' + msg + '</span></div>';
+            ' 1.48z"></path></svg></button><div class="flash-info mr-3">' + msg + '</div></div>';
         $(parent).append(html);
         setTimeout(function () {
             $("#pop-msg").fadeOut(3000)
@@ -181,7 +181,7 @@ function addMsg(parent, type, msg) {
         } else {
             var html = '<div class="flash flash-full flash-' + type + '" style="border-radius: 5px"><button class="flash-close' +
                 ' js-flash-close outline-none" onclick="closeParent(this)" type="button" aria-label="Dismiss this message"><svg aria-hidden="true" class="octicon octicon-x" height="16" version="1.1" viewBox="0 0 12 16" width="12"><path fill-rule="evenodd" d="M7.48 8l3.75 3.75-1.48 1.48L6 9.48l-3.75 3.75-1.48-1.48L4.52 8 .77 4.25l1.48-1.48L6 6.52l3.75-3.75 1.48 1.48z"></path></svg></button> ' +
-                '<span class="flash-add-info">' + msg + '</span></div>';
+                '<div class="flash-add-info mr-3">' + msg + '</div></div>';
             $(parent).html(html)
         }
     }

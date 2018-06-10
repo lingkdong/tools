@@ -2,6 +2,8 @@ $(function () {
     headSearch=$("#header-search-input");
     pageAvatar=$("#page-avatar");
     pageAvatarData=$("#page-avatar-data");
+    pageHidden=$("#page-hidden");
+    NGINX_URL=$(pageHidden).attr("data-nginx");
     var value=$(headSearch).val();
     $(headSearch).focus().val("").val(value);
     $(document).mouseup(function(e){
