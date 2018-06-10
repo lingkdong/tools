@@ -378,8 +378,8 @@ a.tabnav-extra:hover {
 .w-250 {
     width: 250px !important;
 }
-.m-h-150 {
-    min-height: 150px !important;
+.m-h-100 {
+    min-height: 100px !important;
 }
 
 .w-445 {

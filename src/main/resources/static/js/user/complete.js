@@ -275,7 +275,8 @@ function sendComplete() {
             success: function (result) {
                 if (backDetectResult(result)==true)
                 {
-                    jump_page(PRE_FOX_ANON_BASE+"/users/card/"+result.data);
+                    alertSuccess("注册成功，即将跳转至首页")
+                    setTimeout("jump_index()",3000);
                 }
             },
             error: function (result) {

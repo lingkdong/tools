@@ -137,7 +137,7 @@ function alertMsg(type, msg) {
         $(pop).remove();
     }
     if ((!isBlank(type)) && isExist(parent)) {
-        var html = '<div id="pop-msg" class="w-250 flash b-radius-5 flash-' + type + '" style="position: fixed;' +
+        var html = '<div id="pop-msg" class="w-250 m-h-100 flash b-radius-5 flash-' + type + '" style="position: fixed;' +
             ' right: 2%; bottom: 2%;"><button class="pd-18 flash-close js-flash-close outline-none"' +
             ' type="button"' +
             ' onclick="closeParent(this)"><svg aria-hidden="true" class="octicon octicon-x" height="16"' +
