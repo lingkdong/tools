@@ -2,19 +2,22 @@ package com.tools;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.tools.dto.CategoryDto;
 import com.tools.utils.CssFormator;
+import com.tools.utils.DateUtil;
 import com.tools.utils.ImgUtil;
 import com.tools.utils.StringUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.jodconverter.office.OfficeManager;
 import org.junit.Test;
 import org.springframework.aop.support.AopUtils;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 /**
  * Created by lk on 2017/12/8.
@@ -150,4 +153,46 @@ public class CodeTest {
             System.out.println("page"+(page+1));
         }
     }
+
+    @Test
+    public void testMapKey(){
+        List<CategoryDto> list= Arrays.asList(
+                CategoryDto.newCategoryDto().id(1L).name("test1").description("one") .build(),
+                CategoryDto.newCategoryDto().id(2L).name("test2").description("two") .build(),
+                CategoryDto.newCategoryDto().id(3L).name("test3").description("three") .build()
+                );
+        Map<Long,CategoryDto> map=list.stream().collect(Collectors.toMap(CategoryDto::getId,Function.identity()));
+        System.out.println(map.size());
+        Set<Long> ids=new HashSet<>(map.keySet());
+        ids.remove(1L);
+        ids.remove(2L);
+
+        System.out.println(map.size());
+
+        ids=list.stream().map(CategoryDto::getId).collect(Collectors.toSet());
+        ids.remove(1L);
+        ids.remove(2L);
+        System.out.println(list.size());
+    }
+
+    @Test
+    public void testStringBuilder(){
+        StringBuilder stringBuilder=new StringBuilder();
+        System.out.println(stringBuilder.toString());
+    }
+    @Test
+    public void testDate(){
+        Date date=new Date();
+        System.out.println(DateUtil.formatDate(date,"yyyy-MM-dd 00:00:00"));
+        Date date1=DateUtil.parseDate(DateUtil.formatDate(date,"yyyy-MM-dd"));
+        System.out.println(111);
+    }
+    private static final String SEND_DUPLICATE = "send_duplicate";
+
+    @Test
+    public void testSplit(){
+
+    }
+
+
 }
