@@ -1,7 +1,7 @@
 package com.tools.config;
 
 import com.tools.model.User;
-import com.tools.model.UserStatus;
+import com.tools.constants.UserStatus;
 import com.tools.service.UserService;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;

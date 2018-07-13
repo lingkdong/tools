@@ -7,7 +7,7 @@ import com.tools.dto.ErrorInfo;
 import com.tools.dto.HttpStatus;
 import com.tools.dto.user.*;
 import com.tools.model.User;
-import com.tools.model.UserStatus;
+import com.tools.constants.UserStatus;
 import com.tools.service.EmailService;
 import com.tools.service.FileService;
 import com.tools.service.UserService;

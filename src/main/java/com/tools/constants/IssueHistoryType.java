@@ -1,4 +1,4 @@
-package com.tools.model;
+package com.tools.constants;
 
 /**
  * Created with IntelliJ IDEA.
@@ -7,9 +7,9 @@ package com.tools.model;
  * Time: 下午11:39
  * To change this template use File | Settings | File Templates.
  */
-public enum IssueReplyStatus {
-    NORMAL((byte) 1, "normal"),
-    DELETED((byte) 2, "deleted");
+public enum IssueHistoryType {
+    TITLE_CHANGED((byte) 1, "title changed"),
+    COMMENT_CHANGED((byte) 2, "comment changed");
     private final Byte code;
 
     private final String detail;
@@ -25,7 +25,7 @@ public enum IssueReplyStatus {
         return this.detail;
     }
 
-    IssueReplyStatus(Byte code, String detail) {
+    IssueHistoryType(Byte code, String detail) {
         this.code = code;
         this.detail = detail;
     }

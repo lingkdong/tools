@@ -1,15 +1,15 @@
-package com.tools.model;
+package com.tools.constants;
 
 /**
  * Created with IntelliJ IDEA.
  * User: lkdong
  * Date: 18-6-3
- * Time: 下午11:39
+ * Time: 下午7:17
  * To change this template use File | Settings | File Templates.
  */
-public enum  IssueStatus {
-    OPEN((byte) 1, "open"),
-    CLOSED((byte) 2, "closed");
+public enum UserType {
+    ADMIN((byte) 1, "admin"),
+    NORMAL((byte) 2, "normal");
     private final Byte code;
 
     private final String detail;
@@ -25,7 +25,7 @@ public enum  IssueStatus {
         return this.detail;
     }
 
-    IssueStatus(Byte code, String detail) {
+    UserType(Byte code, String detail) {
         this.code = code;
         this.detail = detail;
     }

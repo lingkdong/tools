@@ -1,4 +1,4 @@
-package com.tools.model;
+package com.tools.constants;
 
 /**
  * Created by lk on 2018/1/17.

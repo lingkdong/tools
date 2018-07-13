@@ -12,7 +12,7 @@ import java.util.Date;
  * To change this template use File | Settings | File Templates.
  */
 @Entity
-public class IssueReply implements Serializable {
+public class Comment implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -24,8 +24,6 @@ public class IssueReply implements Serializable {
     private String comment;
     @Column(nullable = false)
     private Byte type;// 1. comment 2.closed 3.reopen
-    @Column(nullable = false)
-    private Byte status;//1.normal 2.deleted
     private Date createTime;
     private Date lastUpdateTime;
 
@@ -67,14 +65,6 @@ public class IssueReply implements Serializable {
 
     public void setType(Byte type) {
         this.type = type;
-    }
-
-    public Byte getStatus() {
-        return status;
-    }
-
-    public void setStatus(Byte status) {
-        this.status = status;
     }
 
     public Date getCreateTime() {

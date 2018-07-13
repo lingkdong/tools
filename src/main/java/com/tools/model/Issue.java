@@ -21,7 +21,7 @@ public class Issue implements Serializable {
     @Column(nullable = false)
     private String title;
     @Column(length = 800)
-    private String comment;
+    private String body;
     @Column(nullable = false)
     private Byte status;//open, closed
     private Long commentCount;
@@ -44,12 +44,12 @@ public class Issue implements Serializable {
         this.title = title;
     }
 
-    public String getComment() {
-        return comment;
+    public String getBody() {
+        return body;
     }
 
-    public void setComment(String comment) {
-        this.comment = comment;
+    public void setBody(String body) {
+        this.body = body;
     }
 
     public Byte getStatus() {
