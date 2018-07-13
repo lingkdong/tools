@@ -29,7 +29,7 @@ public class UsersAction extends BaseAction {
     @RequestMapping(value = "/index")
     public ModelAndView index(FindUsersDto findUsersDto,@PageableDefault(value = 28) Pageable pageable) {
         ModelAndView mv = new ModelAndView("users/users");
-        /*index begain at 0 but web show 1 so now -1*/
+        /*index begin at 0 but web show 1 so now -1*/
         Page<UsersDto> page=usersService.findUsersDto(findUsersDto,pageable.previousOrFirst());
         mv.addObject("page",page);
         mv.addObject("findUsers",findUsersDto);

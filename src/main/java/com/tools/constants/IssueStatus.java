@@ -8,9 +8,9 @@ package com.tools.constants;
  * Time: 下午11:39
  * To change this template use File | Settings | File Templates.
  */
-public enum  IssueStatus {
+public enum IssueStatus {
     OPEN((byte) 1, "open"),
-    CLOSED((byte) 2, "closed");
+    CLOSED((byte) 2, "close");
     private final Byte code;
 
     private final String detail;

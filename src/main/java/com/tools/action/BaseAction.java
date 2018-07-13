@@ -7,6 +7,8 @@ import com.tools.service.ResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Calendar;
+
 /**
  * Created by lk on 2017/11/17.
  */
@@ -32,4 +34,9 @@ public class BaseAction {
         return mv;
     }
 
+    protected void addBirthAttribute(final ModelAndView mv, final Calendar birth){
+        mv.addObject("birthYear",birth.get(Calendar.YEAR));
+        mv.addObject("birthMonth",birth.get(Calendar.MONTH)+1);
+        mv.addObject("birthday",birth.get(Calendar.DATE));
+    }
 }

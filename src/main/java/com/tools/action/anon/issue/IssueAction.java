@@ -14,10 +14,10 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 @RequestMapping("/anon/issue")
-public class IssueReplyAction {
+public class IssueAction {
     @RequestMapping(value = "/{issueId}")
     public ModelAndView index(@PathVariable(value = "issueId") Long issueId) {
-        ModelAndView mv = new ModelAndView("issue/issue-reply");
+        ModelAndView mv = new ModelAndView("issue/issue");
         return mv;
     }
 

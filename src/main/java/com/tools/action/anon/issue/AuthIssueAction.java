@@ -1,4 +1,4 @@
-package com.tools.action.authc.user;
+package com.tools.action.anon.issue;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
