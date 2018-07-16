@@ -17,9 +17,5 @@ public interface UserDao extends JpaRepository<User, Long> {
 
     User findFirstByUsernameOrEmail(String username, String email);
 
-    Page<User> findAllByOrderByScoreDesc(Pageable pageable);
-
-    Page<User> findByUsernameContainingOrderByScoreDesc(String username,Pageable pageable);
-
-//    Page<User> findAll(Example example, Pageable pageable);
+    Page<User> findAll(Example example, Pageable pageable);
 }

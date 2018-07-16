@@ -69,17 +69,16 @@ public class UsersServiceImpl implements UsersService {
     }
 
     private Page<User> findUsers(FindUsersDto findUsersDto, Pageable pageable) {
-        //todo
-//        User user = new User();
-//        user.setUsername(findUsersDto.getUsername());
-//        ExampleMatcher exampleMatcher = ExampleMatcher.matching()
-//                .withMatcher("username", ExampleMatcher.GenericPropertyMatchers.contains())
-//                .withIgnoreNullValues()
-//                .withIgnoreCase();
-//        Example<User> example = Example.of(user, exampleMatcher);
-//        Object o = userDao.findAll(example, pageable);
-        return (StringUtils.isBlank(findUsersDto.getUsername())) ? userDao.findAllByOrderByScoreDesc(pageable) : userDao
-                .findByUsernameContainingOrderByScoreDesc(findUsersDto.getUsername(), pageable);
+        User user = new User();
+        ExampleMatcher exampleMatcher = ExampleMatcher.matching()
+                .withMatcher("username", ExampleMatcher.GenericPropertyMatchers.contains())
+                .withIgnoreNullValues()
+                .withIgnoreCase()
+                .withIgnorePaths("score","view")//ignore basic data type:int
+                ;
+        user.setUsername(findUsersDto.getUsername());
+        Example<User> example = Example.of(user, exampleMatcher);
+        return userDao.findAll(example,pageable);
     }
 
 

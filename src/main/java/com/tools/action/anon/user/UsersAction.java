@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,24 +27,26 @@ import org.springframework.web.servlet.ModelAndView;
 public class UsersAction extends BaseAction {
     @Autowired
     private UsersService usersService;
+
     @RequestMapping(value = "/index")
-    public ModelAndView index(FindUsersDto findUsersDto,@PageableDefault(value = 28) Pageable pageable) {
+    public ModelAndView index(FindUsersDto findUsersDto
+            , @PageableDefault(value = 28, sort = {"score"}, direction = Sort.Direction.DESC) Pageable pageable) {
         ModelAndView mv = new ModelAndView("users/users");
         /*index begin at 0 but web show 1 so now -1*/
-        Page<UsersDto> page=usersService.findUsersDto(findUsersDto,pageable.previousOrFirst());
-        mv.addObject("page",page);
-        mv.addObject("findUsers",findUsersDto);
+        Page<UsersDto> page = usersService.findUsersDto(findUsersDto, pageable.previousOrFirst());
+        mv.addObject("page", page);
+        mv.addObject("findUsers", findUsersDto);
         return mv;
     }
 
-    @GetMapping(value="/card/{username}")
-    public ModelAndView index(@PathVariable(value = "username") String username){
-        BaseResponseDTO dto=usersService.findUsersDto(username);
-        if(!Worker.isOK(dto)){
-            return errorPage(dto.getStatus(),dto.getMessage());
+    @GetMapping(value = "/card/{username}")
+    public ModelAndView index(@PathVariable(value = "username") String username) {
+        BaseResponseDTO dto = usersService.findUsersDto(username);
+        if (!Worker.isOK(dto)) {
+            return errorPage(dto.getStatus(), dto.getMessage());
         }
         ModelAndView mv = new ModelAndView("users/users-card");
-        mv.addObject("data",dto.getData());
+        mv.addObject("data", dto.getData());
         return mv;
     }
 }
