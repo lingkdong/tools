@@ -25,6 +25,7 @@ spring:
       min-idle: 0
     timeout: 0
     password: redis76!123
+    port: 6639
 server:
   port: 8081
 
