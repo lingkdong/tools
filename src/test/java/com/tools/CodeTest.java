@@ -3,10 +3,8 @@ package com.tools;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.tools.dto.CategoryDto;
-import com.tools.utils.CssFormator;
-import com.tools.utils.DateUtil;
-import com.tools.utils.ImgUtil;
-import com.tools.utils.StringUtil;
+import com.tools.utils.*;
+import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.jodconverter.office.OfficeManager;
@@ -194,5 +192,13 @@ public class CodeTest {
 
     }
 
+    @Test
+    public void getCpuNum(){
+        // get cpu
+        System.out.println(Runtime.getRuntime().availableProcessors());
+    }
 
+    @Test
+    public void testMap(){
+    }
 }
