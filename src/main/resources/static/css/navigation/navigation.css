@@ -1,0 +1,57 @@
+#tags_list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between
+}
+
+#tags_list .excerpt,#tags_list .stats-row {
+    padding-top: 4px;
+    padding-right: 8px;
+    font-size: 12px;
+    color: #848d95
+}
+
+#tags_list .excerpt {
+    box-sizing: content-box;
+    font-size: 12px;
+    height: 39px;
+    line-height: 14px;
+    overflow: hidden;
+    margin-bottom: 4px
+}
+
+#tags_list .stats-row,#tags_list .stats-row a,#tags_list .stats-row a:visited {
+    font-size: 11px;
+    color: #3b4045
+}
+
+#tags_list .stats-row .caption {
+    color: #848d95
+}
+
+#tags_list .tags-browser {
+    width: 25%
+}
+
+#tags_list .tag-cell {
+    border-bottom: 1px dotted #e4e6e8;
+    padding: 8px 4px 12px 4px
+}
+
+#tags_list .edit-link {
+    float: right;
+    margin-right: 18px;
+    display: none;
+    font-size: 11px
+}
+
+#tags_list .pager {
+    order: 1;
+    flex-grow: 1;
+    text-align: right;
+    margin-bottom: 0
+}
+
+#tags-browser {
+    width: 100%
+}

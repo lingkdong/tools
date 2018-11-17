@@ -17,7 +17,7 @@
         </svg>
         <span class="author" itemprop="author" th:text="${categoryDto.name}"></span>
     </h1>
-    <div class="tabnav mb-4">
+    <div class="tabnav mb-4 mt-5">
         <nav class="tabnav-tabs" aria-label="Navigate your dashboard">
             <th:block th:each="item:${categoryDto.resourceDtos}">
                 <a th:href="${item.url}" th:class="${item.code==type}?'tabnav-tab selected':'tabnav-tab'"

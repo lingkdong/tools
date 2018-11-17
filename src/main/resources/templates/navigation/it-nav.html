@@ -4,8 +4,9 @@
       layout:decorate="page">
 <head>
     <meta charset="UTF-8"/>
-    <title>get-ascII</title>
-    <script th:src="@{/js/ascII/ascII.js }"></script>
+    <title th:text="${type}"></title>
+    <link th:href="@{/css/navigation/navigation.css}" rel="stylesheet"/>
+    <script th:src="@{/js/navigation/navigation.js }"></script>
 </head>
 <body>
 <div th:fragment="content" th:remove="tag">
@@ -17,27 +18,33 @@
         </svg>
         <span class="author" itemprop="author" th:text="${categoryDto.name}"></span>
     </h1>
+
     <div class="tabnav mb-4 mt-5">
         <nav class="tabnav-tabs" aria-label="Navigate your dashboard">
-            <th:block th:each="item:${categoryDto.resourceDtos}">
+            <th:block th:each="item:${categoryDto.resourceDtos}" >
                 <a th:href="${item.url}" th:class="${item.code==type}?'tabnav-tab selected':'tabnav-tab'"
                    th:text="${item.name}"></a>
             </th:block>
         </nav>
     </div>
-    <div class="setup-form">
-        <dl class="form-group ">
-            <dt class="input-label"><label name="start">输入字符
-            </label></dt>
-            <dd><input class="form-control w-150" id="character" placeholder="如：A"
-                       name="character" maxlength="1" value="A"/>
-                <button class="btn btn-primary" id="calculate">
-                    获取
-                </button>
-            </dd>
-        </dl>
-        <div id="js-flash-container" class="mt-3" style="width: 440px">
+    <div name="main-bar">
+        <div id="tags_list">
+            <div id="tags-browser" class="grid-layout">
+                <th:block th:each="sub:${siteNavDtos}">
+                    <div class="grid-layout--cell tag-cell">
+                        <a th:href="${sub.url}" class="post-tag" th:title="${sub.title}" rel="tag">
+                            <img src="" height="16" width="18" alt="" class="sponsor-tag-img">
+                            [[${sub.name}]]
+                        </a>
+                        <div class="excerpt"> [[${sub.content}]]</div>
+                        <div class="grid jc-space-between">
+                        </div>
+                    </div>
+                </th:block>
+                <div class="grid-layout--cell tag-cell">
+                </div>
 
+            </div>
         </div>
     </div>
 </div>

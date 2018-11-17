@@ -185,7 +185,7 @@ ul, ol {
 }
 
 .container-lg {
-    max-width: 1012px;
+    max-width: 1264px;
     margin-right: auto;
     margin-left: auto
 }
@@ -225,11 +225,11 @@ a:active, a:hover {
 }
 
 .page-content {
-    padding-top: 20px
+    padding-top: 40px
 }
 
 .container {
-    width: 980px;
+    width: 1264px;
     margin-right: auto;
     margin-left: auto
 }
@@ -326,7 +326,6 @@ a.tabnav-extra:hover {
 .mr-2 {
     margin-right: 8px !important
 }
-
 .mb-2 {
     margin-bottom: 8px !important
 }
@@ -444,7 +443,9 @@ margin: 8px !important
 .mt-4 {
     margin-top: 24px !important
 }
-
+.mt-5 {
+    margin-top: 32px !important
+}
 .mt-6 {
     margin-top: 40px !important
 }
@@ -965,7 +966,6 @@ dl.form-group > dd .form-control.is-autocheck-errored {
 .head-h1 {
     position: relative;
     max-width: 635px;
-    padding-left: 18px;
     font-size: 18px;
     line-height: 26px;
 }
@@ -2002,4 +2002,24 @@ tr:nth-child(2n) {
 
 .display-inline {
     display: inline-block !important;
+}
+
+.grid-layout {
+    display: flex;
+    flex-wrap: wrap;
+    box-sizing: border-box
+}
+
+.grid-layout>.grid-layout--cell {
+    flex: 1 1 25%;
+    min-width: 250px;
+    width: auto
+}
+
+@supports (display: grid) {
+    .grid-layout {
+        display:grid;
+        grid-gap: 8px;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr))
+    }
 }

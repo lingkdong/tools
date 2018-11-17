@@ -200,5 +200,8 @@ public class CodeTest {
 
     @Test
     public void testMap(){
+        String createIpAddr=null;
+        createIpAddr = createIpAddr == null ? null : createIpAddr.trim();
+        System.out.println(createIpAddr);
     }
 }
