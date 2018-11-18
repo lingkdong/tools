@@ -1,3 +1,34 @@
+.excerpt {
+    padding: 0;
+    padding-bottom: 5px;
+    margin: 0;
+    color: #3b4045
+}
+
+.excerpt .started {
+    float: right;
+    width: 185px;
+    height: 55px;
+    margin-top: 5px
+}
+
+.excerpt p {
+    margin-bottom: 3px
+}
+
+.excerpt .tags {
+    width: 410px;
+    margin-top: 5px
+}
+
+.tags {
+    line-height: 18px;
+    float: left
+}
+
+.tags a:hover {
+    text-decoration: none
+}
 #tags_list {
     display: flex;
     flex-wrap: wrap;
@@ -54,4 +85,55 @@
 
 #tags-browser {
     width: 100%
+}
+
+img.sponsor-tag-img {
+    border: none;
+    opacity: 1;
+    width: 18px;
+    height: 16px;
+    vertical-align: top;
+    padding-right: 4px;
+    margin-top: -2px;
+    box-sizing: content-box !important
+}
+.post-tag,.moderator-tag,.required-tag,.disliked-tag,.favorite-tag,.company-tag,.geo-tag,.geo-tag,.container .chosen-choices .search-choice,.container .chosen-container-multi .chosen-choices li.search-choice {
+    position: relative;
+    display: inline-block;
+    padding: .4em .5em;
+    margin: 2px 2px 2px 0;
+    font-size: 11px;
+    line-height: 1;
+    white-space: nowrap;
+    text-decoration: none;
+    text-align: center;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 3px;
+    transition: all .15s ease-in-out
+}
+
+.post-tag:hover,.moderator-tag:hover,.required-tag:hover,.disliked-tag:hover,.favorite-tag:hover,.company-tag:hover,.geo-tag:hover {
+    text-decoration: none
+}
+
+.post-tag img,.moderator-tag img,.required-tag img,.disliked-tag img,.favorite-tag img,.company-tag img,.geo-tag img {
+    margin-bottom: 0
+}
+
+.post-tag img.sponsor-tag-img,.moderator-tag img.sponsor-tag-img,.required-tag img.sponsor-tag-img,.disliked-tag img.sponsor-tag-img,.favorite-tag img.sponsor-tag-img,.company-tag img.sponsor-tag-img,.geo-tag img.sponsor-tag-img {
+    margin-top: -2px;
+    margin-bottom: -2px
+}
+
+.post-tag,.geo-tag,.container .chosen-choices .search-choice,.container .chosen-container-multi .chosen-choices li.search-choice {
+    color: #39739d;
+    background-color: #E1ECF4;
+    border-color: #E1ECF4
+}
+
+.post-tag:hover {
+    color: #33658a;
+    background-color: #cee0ed;
+    border-color: #cee0ed
 }

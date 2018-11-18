@@ -33,7 +33,9 @@
                 <th:block th:each="sub:${siteNavDtos}">
                     <div class="grid-layout--cell tag-cell">
                         <a th:href="${sub.url}" class="post-tag" th:title="${sub.title}" rel="tag">
-                            <img src="" height="16" width="18" alt="" class="sponsor-tag-img">
+                            <!--<img th: height="16" width="18" alt="" class="sponsor-tag-img">-->
+                            <img  class="sponsor-tag-img" th:if="${!#strings.isEmpty(sub.icon)}"
+                                  th:src="${nginxUrl+sub.icon}">
                             [[${sub.name}]]
                         </a>
                         <div class="excerpt"> [[${sub.content}]]</div>
@@ -41,9 +43,6 @@
                         </div>
                     </div>
                 </th:block>
-                <div class="grid-layout--cell tag-cell">
-                </div>
-
             </div>
         </div>
     </div>

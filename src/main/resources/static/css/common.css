@@ -185,7 +185,7 @@ ul, ol {
 }
 
 .container-lg {
-    max-width: 1264px;
+    max-width: 80%;
     margin-right: auto;
     margin-left: auto
 }
@@ -229,7 +229,7 @@ a:active, a:hover {
 }
 
 .container {
-    width: 1264px;
+    width: 80%;
     margin-right: auto;
     margin-left: auto
 }
