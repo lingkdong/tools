@@ -7,7 +7,7 @@ function pretty() {
             async: true,
             dataType: "json",
             data: {
-                input: $(input).val(),
+                input: $(input).val().trim(),
                 dbType: $("#dbType").val()
             },
             success: function (result) {
