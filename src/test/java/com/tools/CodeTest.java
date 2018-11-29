@@ -3,8 +3,10 @@ package com.tools;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.tools.dto.CategoryDto;
+import com.tools.dto.ResourceDto;
 import com.tools.utils.*;
 import org.apache.commons.collections.MapUtils;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.jodconverter.office.OfficeManager;
@@ -204,4 +206,30 @@ public class CodeTest {
         createIpAddr = createIpAddr == null ? null : createIpAddr.trim();
         System.out.println(createIpAddr);
     }
+
+    @Test
+    public void testJava8(){
+        //join
+        List<String> list=new ArrayList<>(Arrays.asList("one","two"));
+        list.add("three");
+        String  s=list.stream().collect(Collectors.joining("_"));
+        System.out.println("join:"+s);
+
+        //group by
+        List<ResourceDto> list1=new ArrayList<>(Arrays.asList(
+                ResourceDto.newResourceDto().categoryId(1L).code("1.1").build(),
+                ResourceDto.newResourceDto().categoryId(1L).code("1.2").build(),
+                ResourceDto.newResourceDto().categoryId(1L).code("1.3").build(),
+                ResourceDto.newResourceDto().categoryId(2L).code("2.1").build(),
+                ResourceDto.newResourceDto().categoryId(2L).code("2.2").build(),
+                ResourceDto.newResourceDto().categoryId(2L).code("2.3").build(),
+                ResourceDto.newResourceDto().categoryId(3L).code("3.1").build()
+        ));
+        Map map= list1.stream().collect(Collectors.groupingBy(ResourceDto::getCategoryId));
+        System.out.println("group:"+map);
+    }
+    public void writeFile(List<String> list,File file) throws IOException {
+        FileUtils.writeStringToFile(file, list.stream().collect(Collectors.joining("\r\n")));
+    }
+
 }

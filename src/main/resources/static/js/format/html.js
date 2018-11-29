@@ -2,7 +2,7 @@ var TYPE = "html";
 function pretty() {
     require(['beautify-html'], function (html_beautify) {
         if (!isInputBlank()) {
-            var result = html_beautify.html_beautify($(input).val());
+            var result = html_beautify.html_beautify($(input).val().trim());
             $(input).val(result);
             updateLine();
         }

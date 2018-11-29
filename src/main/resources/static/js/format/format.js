@@ -29,7 +29,7 @@ function format_raw(type) {
             async: true,
             dataType: "text",
             data: {
-                v: $(input).val(),
+                v: $(input).val().trim(),
                 type: type,
             },
             success: function (result) {
@@ -52,7 +52,7 @@ function format_pretty(type) {
             async: true,
             dataType: "json",
             data: {
-                input: $(input).val()
+                input: $(input).val().trim()
             },
             success: function (result) {
                 if (HttpStatus.PARAM_INCORRECT == result.status) {

@@ -2,7 +2,7 @@ var TYPE = "js";
 function pretty() {
     require(['beautify'], function (beautify) {
         if (!isInputBlank()) {
-            var result = beautify.js_beautify($(input).val());
+            var result = beautify.js_beautify($(input).val().trim());
             $(input).val(result);
             updateLine();
         }

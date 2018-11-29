@@ -26,15 +26,17 @@ public class IndexAction extends BaseAction {
     @GetMapping(value = "/index")
     public ModelAndView index(@RequestParam(value = "q", required = false) String searchKey) {
         ModelAndView mv=new ModelAndView("index");
+        if(StringUtils.isNotBlank(searchKey)) searchKey=searchKey.trim();
         Page<CategoryDto> page = categoryService.find(searchKey, new PageRequest(0,5));
         mv.addObject("page",page);
-        if(StringUtils.isNotBlank(searchKey)) mv.addObject("q",searchKey);
+        mv.addObject("q",searchKey);
         return mv;
     }
     @PostMapping(value = "/search")
     @ResponseBody
     public BaseResponseDTO search(@RequestParam(value = "q", required = false) String searchKey, Pageable
             pageable) {
+        if(StringUtils.isNotBlank(searchKey)) searchKey=searchKey.trim();
         Page<CategoryDto> categories = categoryService.find(searchKey, pageable);
         return new BaseResponseDTO(HttpStatus.OK, categories);
     }

@@ -43,14 +43,14 @@ function raw() {
 
 function sqlIn() {
     if (!isInputBlank()) {
-        $(input).val("in (" + $(input).val().replace(/\r/ig, ",").replace(/\n/ig, ",") + ")");
+        $(input).val("in (" + $(input).val().trim().replace(/\r/ig, ",").replace(/\n/ig, ",") + ")");
         updateLine();
     }
 }
 
 function sqlCharIn() {
     if (!isInputBlank()) {
-        $(input).val("in ('" + $(input).val().replace(/\r/ig, "','").replace(/\n/ig, "','") + "')");
+        $(input).val("in ('" + $(input).val().trim().replace(/\r/ig, "','").replace(/\n/ig, "','") + "')");
         updateLine();
     }
 }
