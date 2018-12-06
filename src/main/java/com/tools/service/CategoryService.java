@@ -1,6 +1,7 @@
 package com.tools.service;
 
 import com.tools.dto.CategoryDto;
+import com.tools.dto.CategoryTreeInfo;
 import com.tools.model.Category;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,4 +18,5 @@ public interface CategoryService {
 
     CategoryDto findDtoById(Long id);
 
+    List<CategoryTreeInfo> getCategoryTree();
 }

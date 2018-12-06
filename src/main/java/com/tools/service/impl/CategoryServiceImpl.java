@@ -1,10 +1,12 @@
 package com.tools.service.impl;
 
 import com.tools.dao.CategoryDao;
+import com.tools.dao.JdbcDao;
 import com.tools.dto.CategoryDto;
+import com.tools.dto.CategoryTreeInfo;
 import com.tools.dto.ResourceDto;
+import com.tools.dto.ResourceTreeInfo;
 import com.tools.model.Category;
-import com.tools.model.Resource;
 import com.tools.service.CategoryService;
 import com.tools.service.ResourceService;
 import com.tools.utils.BeanUtil;
@@ -29,7 +31,8 @@ public class CategoryServiceImpl implements CategoryService {
     private CategoryDao categoryDao;
     @Autowired
     private ResourceService resourceService;
-
+    @Autowired
+    private JdbcDao jdbcDao;
     @Override
     public Page<CategoryDto> find(String searchKey, Pageable pageable) {
         Page categories = (StringUtils.isBlank(searchKey)) ? categoryDao.findAllByOrderBySortNum(pageable)
@@ -74,6 +77,41 @@ public class CategoryServiceImpl implements CategoryService {
         BeanUtil.copy(dto, category);
         dto.setResourceDtos(resourceService.toDto(resourceService.findAllByCategoryId(category.getId())));
         return dto;
+    }
+
+    public List<CategoryTreeInfo> getCategoryTree(){
+        List<Map<String, Object>> resourceInfos =jdbcDao.findAllResourceInfo();
+        if(CollectionUtils.isNotEmpty(resourceInfos)){
+            Map<Long,CategoryTreeInfo> map=new HashMap<>();
+            resourceInfos.stream().forEach(item->{
+                Long cateId=MapUtils.getLong(item,"cate_id");
+                if(cateId!=null){
+                    CategoryTreeInfo treeInfo=map.get(cateId);
+                    ResourceTreeInfo child = ResourceTreeInfo.newResourceInfo()
+                            .code(MapUtils.getString(item, "code"))
+                            .name(MapUtils.getString(item, "name"))
+                            .url(MapUtils.getString(item, "url"))
+                            .target(MapUtils.getString(item, "target"))
+                            .build();
+                    if(treeInfo==null){
+                        map.put(cateId,
+                                CategoryTreeInfo.newCategoryTreeDto()
+                                .categoryCode(MapUtils.getString(item,"cat_code"))
+                                .categoryName(MapUtils.getString(item,"cat_name"))
+                                .categoryId(cateId)
+                                .children(new ArrayList(Arrays.asList(child)))
+                                .build()
+                        );
+                    }else {
+                        treeInfo.getChildren().add(child);
+                    }
+
+                }
+            });
+
+            return new ArrayList<>(map.values());
+        }
+        return Collections.EMPTY_LIST;
     }
 
 }

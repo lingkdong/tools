@@ -1,8 +1,8 @@
 package com.tools.service;
 
+import com.google.gson.GsonBuilder;
 import com.tools.BaseTest;
 import com.tools.dto.CategoryDto;
-import com.tools.utils.StringUtil;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,5 +18,10 @@ public class CategoryServiceTest extends BaseTest{
         System.out.println("................size:"+categories.getTotalElements()+"....................");
     }
 
+    @Test
+    public void getCategoryTree(){
+        Object obj=categoryService.getCategoryTree();
+        System.out.println(new GsonBuilder().create().toJson(obj));
+    }
 
 }
