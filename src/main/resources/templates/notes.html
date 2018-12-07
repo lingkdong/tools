@@ -7,6 +7,11 @@
     <title>Title</title>
 </head>
 <body>
+<div th:switch="${#authentication}? ${#authorization.expression('isAuthenticated()')} : ${false}">
+    <span th:case="${false}">User is not logged in</span>
+    <span th:case="${true}">Logged in user</span>
+    <span th:case="*">Should never happen, but who knows...</span>
+</div>
       <!--attr的使用方法-->
       <span   th:attr="data-number=${page.number},
             data-size=${page.size},

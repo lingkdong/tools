@@ -1,0 +1,25 @@
+.filter-item {
+    border-radius: 3px;
+    color: #586069;
+    cursor: pointer;
+    display: block;
+    font-size: 14px;
+    margin-bottom: 5px;
+    overflow: hidden;
+    padding: 8px 10px;
+    position: relative;
+    text-decoration: none;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.filter-item:hover {
+    background-color: #0561c9!important;
+    text-decoration: none;
+    color: #fff;
+    border-left: 1px;
+}
+.filter-item.selected {
+    border-right: none;
+    color: #fff;
+    background-color: #0366d6;
+}

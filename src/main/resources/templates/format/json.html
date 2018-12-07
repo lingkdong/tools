@@ -14,7 +14,10 @@
 </head>
 <body>
 <div th:fragment="content" th:remove="tag">
-    <div th:include="resource-nav :: resource-nav-html"></div>
+    <div name="two-grid" class="d-flex">
+    <div th:replace="category-nav ::category-nav-html"></div>
+    <div class="w-percent-85 pl-4-5">
+    <div th:replace="resource-nav :: resource-nav-html"></div>
     <div class="file border-bottom-none">
         <div class="file-header">
             <div class="file-actions">
@@ -51,9 +54,11 @@
 
 
         <div itemprop="text" class="blob-wrapper data type-java">
-            <textarea type="text" id="text" class="text width-full height-670 border-none"></textarea>
+            <textarea type="text" id="text" class="text width-full height-770 border-none"></textarea>
         </div>
 
+    </div>
+    </div>
     </div>
 </div>
 </body>

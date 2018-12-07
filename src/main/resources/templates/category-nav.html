@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<body>
+    <nav  th:fragment="category-nav-html" class="pr-4 pt-5 w-percent-15 br display-block">
+        <h4 class="d-block">类别</h4>
+        <ul class="list-style-none" style="margin-left: -10px">
+            <th:block th:each="item:${leftTree}">
+                <li>
+                    <a  class="filter-item py-1">
+                        <span th:text="${item.categoryName}"></span>
+                    </a>
+                </li>
+                <th:block th:each="sub:${item.children}">
+                    <li
+                            th:class="${#strings.concat( item.categoryCode+'_sub ml-3 ',(categoryDto.code == item.categoryCode)?'d-block':'d-none')}">
+                        <a th:href="${sub.url}" th:target="${sub.target}"
+                           th:class="${#strings.concat('filter-item py-1 ',(type==sub.code)?'selected':'' )}">
+                            <span th:text="${sub.name}"></span>
+                        </a>
+                    </li>
+                </th:block>
+            </th:block>
+        </ul>
+    </nav>
+</body>
+</html>

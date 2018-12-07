@@ -10,7 +10,7 @@
 </head>
 <body>
 <div th:fragment="content" th:remove="tag">
-    <div th:include="resource-nav :: resource-nav-html"></div>
+    <div th:replace="resource-nav :: resource-nav-html"></div>
     <div name="main-bar">
         <div id="tags_list">
             <div id="tags-browser" class="grid-layout">

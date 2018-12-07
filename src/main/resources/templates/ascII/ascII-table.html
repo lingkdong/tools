@@ -10,7 +10,7 @@
 </head>
 <body>
 <div th:fragment="content" th:remove="tag">
-    <div th:include="resource-nav :: resource-nav-html"></div>
+    <div th:replace="resource-nav :: resource-nav-html"></div>
     <div class="setup-form">
         <dl class="form-group ">
             <dd><input class="form-control w-150" id="character" placeholder="输入控制字符"

@@ -141,6 +141,9 @@ vertical-align:bottom!important;
     padding-left: 32px !important
 }
 
+.pl-4-5 {
+    padding-left: 48px !important
+}
 .pl-5 {
     padding-left: 64px !important
 }
@@ -272,13 +275,14 @@ a:active, a:hover {
 
 .tabnav-tab.selected {
     color: #24292e;
-    background-color: #fff;
+    background-color: #fafbfc;
     border-color: #d1d5da;
     border-radius: 3px 3px 0 0
 }
 
 .tabnav-tab:hover, .tabnav-tab:focus {
     color: #24292e;
+    background-color: #eaecef!important;
     text-decoration: none
 }
 
@@ -404,7 +408,16 @@ a.tabnav-extra:hover {
 .h-80 {
     height: 80px !important;
 }
+.br{
+    border-right: 1px solid #e1e4e8;
+}
 
+.overflow-auto {
+    overflow: auto!important;
+}
+.list-style-none {
+    list-style: none!important;
+}
 .b-radius-5 {
     border-radius: 5px !important;
 }
@@ -426,6 +439,9 @@ margin: 8px !important
 
 .ml-2 {
     margin-left: 8px !important
+}
+.ml-3 {
+    margin-left: 16px !important
 }
 
 .mt-2 {
@@ -920,6 +936,10 @@ dl.form-group > dd .form-control.is-autocheck-errored {
     padding-right: 16px !important;
 }
 
+.pr-4 {
+    padding-right: 32px !important;
+}
+
 .px-1 {
     padding-right: 4px !important;
     padding-left: 4px !important
@@ -933,10 +953,25 @@ dl.form-group > dd .form-control.is-autocheck-errored {
 .w-percent-25 {
     width: 25% !important;
 }
+.w-percent-15 {
+    width: 15% !important;
+}
+.w-percent-85 {
+    width: 85% !important;
+}
 
 .d-flex {
     display: -webkit-box !important;
     display: flex !important
+}
+.d-block{
+    display: block!important;
+}
+.d-inline {
+    display: inline-block !important;
+}
+.d-none {
+    display: none !important;
 }
 
 .height-400 {
@@ -947,8 +982,8 @@ dl.form-group > dd .form-control.is-autocheck-errored {
     height: 600px;
 }
 
-.height-670 {
-    height: 670px;
+.height-770 {
+    height: 770px;
 }
 
 .height-700 {
@@ -1998,10 +2033,6 @@ table tr {
 
 tr:nth-child(2n) {
     background-color: #f6f8fa
-}
-
-.display-inline {
-    display: inline-block !important;
 }
 
 .grid-layout {

@@ -10,7 +10,7 @@
 </head>
 <body>
 <div th:fragment="content" th:remove="tag">
-    <div th:include="resource-nav :: resource-nav-html"></div>
+    <div th:replace="resource-nav :: resource-nav-html"></div>
     <form class="setup-form" id="convert-form" method="post" enctype="multipart/form-data">
         <dl class="form-group">
             <dt class="input-label"><label autocapitalize="off" autofocus="autofocus">

@@ -2,7 +2,6 @@ package com.tools.dto;
 
 import lombok.Data;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

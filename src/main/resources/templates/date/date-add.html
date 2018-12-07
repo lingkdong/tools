@@ -9,7 +9,7 @@
 </head>
 <body>
 <div th:fragment="content" th:remove="tag">
-    <div th:include="resource-nav :: resource-nav-html"></div>
+    <div th:replace="resource-nav :: resource-nav-html"></div>
     <div class="setup-form">
         <dl class="form-group "
             th:with="now_date=${#strings.arraySplit(#dates.format(#dates.createNow(),'yyyy-MM-dd'),'-')}" >
