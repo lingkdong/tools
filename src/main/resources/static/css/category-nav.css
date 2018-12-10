@@ -23,3 +23,25 @@
     color: #fff;
     background-color: #0366d6;
 }
+.left-nav {
+    border-radius: 3px;
+    color: #586069;
+    cursor: pointer;
+    display: block;
+    font-size: 14px;
+    margin-bottom: 5px;
+    overflow: hidden;
+    padding: 8px 10px;
+    position: relative;
+    text-decoration: none;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.left-nav.selected{
+    background: #f4f4f4;
+}
+
+.left-nav:hover {
+    background-color: #eaecef!important;
+    text-decoration: none!important;
+}

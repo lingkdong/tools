@@ -10,29 +10,34 @@
 </head>
 <body>
 <div th:fragment="content" th:remove="tag">
-    <div th:replace="resource-nav :: resource-nav-html"></div>
-    <form class="setup-form" id="convert-form" method="post" enctype="multipart/form-data">
-        <dl class="form-group">
-            <dt class="input-label"><label autocapitalize="off" autofocus="autofocus">
-                请选择PPT文件  (支持 PPT,PPTX 转成 PDF)</label></dt>
-            <dd class="h-200 width-full btn btn-outline2 text-center fs-3 " id="upload-div">
-                <input  autofocus="autofocus" class="upload cursor-p"
-                       id="file" name="file" type="file"  accept=".ppt,.pptx" valid="false"/>
-                <div class="mb-4 mt-4" id="upload-icon">
-                    <img th:src="@{/img/ppt-80.png}" class="wh-80"/>
-                    <img th:src="@{/img/right-arrow.png}"/>
-                    <img th:src="@{/img/pdf-80.png}"/>
-                </div>
-                <label id="upload-info">选择PPT文件</label>
-            </dd>
-        </dl>
-        <button class="btn btn-primary" id="convert">
-            转换
-        </button>
-        <div id="js-flash-container" class="mt-3">
+    <div name="two-grid" class="d-flex">
+        <div th:replace="category-nav ::category-nav-html"></div>
+        <div class="w-percent-85 pl-4-5">
+            <div th:replace="resource-nav :: resource-nav-html"></div>
+            <form class="setup-form" id="convert-form" method="post" enctype="multipart/form-data">
+                <dl class="form-group">
+                    <dt class="input-label"><label autocapitalize="off" autofocus="autofocus">
+                        请选择PPT文件 (支持 PPT,PPTX 转成 PDF)</label></dt>
+                    <dd class="h-200 width-full btn btn-outline2 text-center fs-3 " id="upload-div">
+                        <input autofocus="autofocus" class="upload cursor-p"
+                               id="file" name="file" type="file" accept=".ppt,.pptx" valid="false"/>
+                        <div class="mb-4 mt-4" id="upload-icon">
+                            <img th:src="@{/img/ppt-80.png}" class="wh-80"/>
+                            <img th:src="@{/img/right-arrow.png}"/>
+                            <img th:src="@{/img/pdf-80.png}"/>
+                        </div>
+                        <label id="upload-info">选择PPT文件</label>
+                    </dd>
+                </dl>
+                <button class="btn btn-primary" id="convert">
+                    转换
+                </button>
+                <div id="js-flash-container" class="mt-3">
 
+                </div>
+            </form>
         </div>
-    </form>
+    </div>
 </div>
 </body>
 </html>

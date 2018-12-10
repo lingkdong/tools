@@ -9,43 +9,48 @@
 </head>
 <body>
 <div th:fragment="content" th:remove="tag">
-    <div th:replace="resource-nav :: resource-nav-html"></div>
-    <div class="setup-form">
-        <dl class="form-group "
-            th:with="now_date=${#strings.arraySplit(#dates.format(#dates.createNow(),'yyyy-MM-dd'),'-')}">
-            <dt class="input-label"><label name="start">开始日期
-            </label></dt>
-            <dd><input class="form-control w-150" id="start-year" placeholder="年"
-                       name="start-year" maxlength="4" th:value="${now_date[0]}"/>
-                <select id="start-month" class="form-control btn btn-sm select w-120">
-                    <th:block th:each="item:${#numbers.sequence(1,12)}">
-                        <option th:value="${item}" th:text="${item+'月'}"
-                                th:selected="${item==now_date[1]||'0'+item==now_date[1]}"/>
-                    </th:block>
-                </select>
-                <input class="form-control w-150" id="start-day" placeholder="日"
-                       name="start-day" maxlength="2" th:value="${now_date[2]}"/>
-            </dd>
-        </dl>
-        <dl class="form-group ">
-            <dt class="input-label"><label name="end">结束日期
-            </label></dt>
-            <dd><input class="form-control w-150" id="end-year" placeholder="年"
-                       name="end-year" maxlength="4" value="2018"/>
-                <select id="end-month" class="form-control btn btn-sm select w-120">
-                    <th:block th:each="item:${#numbers.sequence(1,12)}">
-                        <option th:value="${item}" th:text="${item+'月'}"/>
-                    </th:block>
-                </select>
-                <input class="form-control w-150" id="end-day" placeholder="日"
-                       name="end-day" maxlength="2" value="01"/>
-            </dd>
-        </dl>
-        <button class="btn btn-primary" id="calculate">
-            计算
-        </button>
-        <div id="js-flash-container" class="mt-3" style="width: 440px">
+    <div name="two-grid" class="d-flex">
+        <div th:replace="category-nav ::category-nav-html"></div>
+        <div class="w-percent-85 pl-4-5">
+            <div th:replace="resource-nav :: resource-nav-html"></div>
+            <div class="setup-form">
+                <dl class="form-group "
+                    th:with="now_date=${#strings.arraySplit(#dates.format(#dates.createNow(),'yyyy-MM-dd'),'-')}">
+                    <dt class="input-label"><label name="start">开始日期
+                    </label></dt>
+                    <dd><input class="form-control w-150" id="start-year" placeholder="年"
+                               name="start-year" maxlength="4" th:value="${now_date[0]}"/>
+                        <select id="start-month" class="form-control btn btn-sm select w-120">
+                            <th:block th:each="item:${#numbers.sequence(1,12)}">
+                                <option th:value="${item}" th:text="${item+'月'}"
+                                        th:selected="${item==now_date[1]||'0'+item==now_date[1]}"/>
+                            </th:block>
+                        </select>
+                        <input class="form-control w-150" id="start-day" placeholder="日"
+                               name="start-day" maxlength="2" th:value="${now_date[2]}"/>
+                    </dd>
+                </dl>
+                <dl class="form-group ">
+                    <dt class="input-label"><label name="end">结束日期
+                    </label></dt>
+                    <dd><input class="form-control w-150" id="end-year" placeholder="年"
+                               name="end-year" maxlength="4" value="2018"/>
+                        <select id="end-month" class="form-control btn btn-sm select w-120">
+                            <th:block th:each="item:${#numbers.sequence(1,12)}">
+                                <option th:value="${item}" th:text="${item+'月'}"/>
+                            </th:block>
+                        </select>
+                        <input class="form-control w-150" id="end-day" placeholder="日"
+                               name="end-day" maxlength="2" value="01"/>
+                    </dd>
+                </dl>
+                <button class="btn btn-primary" id="calculate">
+                    计算
+                </button>
+                <div id="js-flash-container" class="mt-3" style="width: 440px">
 
+                </div>
+            </div>
         </div>
     </div>
 </div>

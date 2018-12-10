@@ -2,34 +2,40 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="page">
-<head>
-    <meta charset="UTF-8"/>
-    <title th:text="${type}"></title>
-    <link th:href="@{/css/navigation/navigation.css}" rel="stylesheet"/>
-    <script th:src="@{/js/navigation/navigation.js }"></script>
-</head>
-<body>
-<div th:fragment="content" th:remove="tag">
-    <div th:replace="resource-nav :: resource-nav-html"></div>
-    <div name="main-bar">
-        <div id="tags_list">
-            <div id="tags-browser" class="grid-layout">
-                <th:block th:each="sub:${siteNavDtos}">
-                    <div class="grid-layout--cell tag-cell">
-                        <a th:href="${sub.url}" class="post-tag" th:title="${sub.title}" rel="tag" target="_blank">
-                            <!--<img th: height="16" width="18" alt="" class="sponsor-tag-img">-->
-                            <img  class="sponsor-tag-img" th:if="${!#strings.isEmpty(sub.icon)}"
-                                  th:src="${nginxUrl+sub.icon}">
-                            [[${sub.name}]]
-                        </a>
-                        <div class="excerpt"> [[${sub.content}]]</div>
-                        <div class="grid jc-space-between">
+    <head>
+        <meta charset="UTF-8"/>
+        <title th:text="${type}"></title>
+        <link th:href="@{/css/navigation/navigation.css}" rel="stylesheet"/>
+        <script th:src="@{/js/navigation/navigation.js }"></script>
+    </head>
+    <body>
+        <div th:fragment="content" th:remove="tag">
+            <div name="two-grid" class="d-flex">
+                <div th:replace="category-nav ::category-nav-html"></div>
+                <div class="w-percent-85 pl-4-5">
+                    <div th:replace="resource-nav :: resource-nav-html"></div>
+                    <div name="main-bar">
+                        <div id="tags_list">
+                            <div id="tags-browser" class="grid-layout">
+                                <th:block th:each="sub:${siteNavDtos}">
+                                    <div class="grid-layout--cell tag-cell">
+                                        <a th:href="${sub.url}" class="post-tag" th:title="${sub.title}" rel="tag"
+                                           target="_blank">
+                                            <!--<img th: height="16" width="18" alt="" class="sponsor-tag-img">-->
+                                            <img class="sponsor-tag-img" th:if="${!#strings.isEmpty(sub.icon)}"
+                                                 th:src="${nginxUrl+sub.icon}">
+                                            [[${sub.name}]]
+                                        </a>
+                                        <div class="excerpt">[[${sub.content}]]</div>
+                                        <div class="grid jc-space-between">
+                                        </div>
+                                    </div>
+                                </th:block>
+                            </div>
                         </div>
                     </div>
-                </th:block>
+                </div>
             </div>
         </div>
-    </div>
-</div>
-</body>
+    </body>
 </html>

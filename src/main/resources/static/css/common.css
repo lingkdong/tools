@@ -2054,3 +2054,13 @@ tr:nth-child(2n) {
         grid-template-columns: repeat(auto-fill, minmax(250px, 1fr))
     }
 }
+
+span{
+    moz-user-select: -moz-none;
+    -moz-user-select: none;
+    -o-user-select:none;
+    -khtml-user-select:none;
+    -webkit-user-select:none;
+    -ms-user-select:none;
+    user-select:none
+}

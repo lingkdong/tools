@@ -9,20 +9,25 @@
 </head>
 <body>
 <div th:fragment="content" th:remove="tag">
-    <div th:replace="resource-nav :: resource-nav-html"></div>
-    <div class="setup-form">
-        <dl class="form-group ">
-            <dt class="input-label"><label name="start">输入字符
-            </label></dt>
-            <dd><input class="form-control w-150" id="character" placeholder="如：A"
-                       name="character" maxlength="1" value="A"/>
-                <button class="btn btn-primary" id="calculate">
-                    获取
-                </button>
-            </dd>
-        </dl>
-        <div id="js-flash-container" class="mt-3" style="width: 440px">
+    <div name="two-grid" class="d-flex">
+        <div th:replace="category-nav ::category-nav-html"></div>
+        <div class="w-percent-85 pl-4-5">
+            <div th:replace="resource-nav :: resource-nav-html"></div>
+            <div class="setup-form">
+                <dl class="form-group ">
+                    <dt class="input-label"><label name="start">输入字符
+                    </label></dt>
+                    <dd><input class="form-control w-150" id="character" placeholder="如：A"
+                               name="character" maxlength="1" value="A"/>
+                        <button class="btn btn-primary" id="calculate">
+                            获取
+                        </button>
+                    </dd>
+                </dl>
+                <div id="js-flash-container" class="mt-3" style="width: 440px">
 
+                </div>
+            </div>
         </div>
     </div>
 </div>
