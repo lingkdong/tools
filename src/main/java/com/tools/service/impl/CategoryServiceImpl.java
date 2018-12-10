@@ -82,7 +82,7 @@ public class CategoryServiceImpl implements CategoryService {
     public List<CategoryTreeInfo> getCategoryTree(){
         List<Map<String, Object>> resourceInfos =jdbcDao.findAllResourceInfo();
         if(CollectionUtils.isNotEmpty(resourceInfos)){
-            Map<Long,CategoryTreeInfo> map=new HashMap<>();
+            Map<Long,CategoryTreeInfo> map=new LinkedHashMap<>();
             resourceInfos.stream().forEach(item->{
                 Long cateId=MapUtils.getLong(item,"cate_id");
                 if(cateId!=null){
