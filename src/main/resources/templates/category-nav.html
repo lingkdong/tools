@@ -12,6 +12,7 @@
             <th:block th:each="item:${leftTree}">
                 <li>
                     <a  th:attr="data-categoryCode=${item.categoryCode}"
+                        th:title="${item.categoryName}"
                         th:class="${#strings.concat('left-nav py-1 left-category',(categoryDto.code == item.categoryCode)?' selected open':'')}">
                         <span th:text="${item.categoryName}"></span>
                     </a>
@@ -20,6 +21,7 @@
                     <li th:name="${item.categoryCode+'_sub'}"
                             th:class="${#strings.concat('ml-3',(categoryDto.code == item.categoryCode)?' d-block':' d-none')}">
                         <a th:href="${sub.url}" th:target="${sub.target}"
+                           th:title="${sub.name}"
                            th:class="${#strings.concat('filter-item py-1 ',(type==sub.code)?' selected':'' )}">
                             <span th:text="${sub.name}"></span>
                         </a>
