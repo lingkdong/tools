@@ -15,7 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @Date: 2018/7/13 14:43
  **/
 @Controller
-@RequestMapping("/auth/issues")
+@RequestMapping("/anon/issues")
 public class IssuesAction {
     @RequestMapping(value = "/list")
     public ModelAndView list(@RequestBody IssuesParam param,@PageableDefault(value = 25) Pageable pageable) {

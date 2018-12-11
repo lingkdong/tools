@@ -5,18 +5,18 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Issue Reply</title>
-    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
-    <link th:href="@{/summernote/dist/summernote.css}" rel="stylesheet">
+    <link th:href="@{/simditor/styles/simditor.css}" rel="stylesheet"/>
     <link th:href="@{/css/issue/issue.css}" rel="stylesheet"/>
-    <script th:src="@{/js/bootstrap.min.js }"></script>
-    <script th:src="@{/summernote/dist/summernote.js }"></script>
+    <script th:src="@{/simditor/scripts/module.js }"></script>
+    <script th:src="@{/simditor/scripts/hotkeys.js }"></script>
+    <script th:src="@{/simditor/scripts/uploader.js }"></script>
+    <script th:src="@{/simditor/scripts/simditor.js }"></script>
     <script th:src="@{/js/issue/issue.js }"></script>
+
 </head>
 <body>
 <div th:fragment="content" th:remove="tag">
-    <div class="summernote-parent">
-        <div class="summernote"></div>
-    </div>
+    <textarea id="editor" placeholder="添加评论" autofocus></textarea>
 </div>
 </body>
 </html>
