@@ -4,12 +4,92 @@
       layout:decorate="page">
 <head>
     <meta charset="UTF-8"/>
-    <title>Issue Reply</title>
+    <title>Issues</title>
     <link th:href="@{/css/issue/issues.css}" rel="stylesheet"/>
     <script th:src="@{/js/issue/issues.js }"></script>
 </head>
 <body>
 <div th:fragment="content" th:remove="tag">
+    <h1 class="head-h1">
+        <svg aria-hidden="true" class="octicon octicon-repo  color-grey" height="25" version="1.1" viewBox="0 0 12 16"
+             width="12">
+            <path fill-rule="evenodd"
+                  d="M4 9H3V8h1v1zm0-3H3v1h1V6zm0-2H3v1h1V4zm0-2H3v1h1V2zm8-1v12c0 .55-.45 1-1 1H6v2l-1.5-1.5L3 16v-2H1c-.55 0-1-.45-1-1V1c0-.55.45-1 1-1h10c.55 0 1 .45 1 1zm-1 10H1v2h2v-1h3v1h5v-2zm0-10H2v9h9V1z"></path>
+        </svg>
+        <span class="author" itemprop="author" th:text="问题"></span>
+    </h1>
+    <div class="py-3 border-top">
+        <label class="fw-normal">查找：</label>
+        <input class="form-control w-320" id="find-user" th:value="${issuesParam.title}"
+               th:attr="data-username=${issuesParam.title}"/>
+        <button class="btn btn-primary f-right" id="create-issue">
+            新建问题
+        </button>
+    </div>
+    <div class="table-list-header" id="js-issues-toolbar">
+
+        <div class="table-list-filters">
+
+            <div class="table-list-header-toggle states f-left pl-3">
+                <a href="/zxing/zxing/issues?q=is%3Aopen+is%3Aissue" class="btn-link selected">
+                    <svg class="octicon octicon-issue-opened" viewBox="0 0 14 16" version="1.1" width="14" height="16"
+                         aria-hidden="true">
+                        <path fill-rule="evenodd"
+                              d="M7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 0 1 1.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7zm1 3H6v5h2V4zm0 6H6v2h2v-2z"></path>
+                    </svg>
+                    7 Open
+                </a>
+                <a href="/zxing/zxing/issues?q=is%3Aissue+is%3Aclosed" class="btn-link ">
+                    <svg class="octicon octicon-check" viewBox="0 0 12 16" version="1.1" width="12" height="16"
+                         aria-hidden="true">
+                        <path fill-rule="evenodd" d="M12 5l-8 8-4-4 1.5-1.5L4 10l6.5-6.5L12 5z"></path>
+                    </svg>
+                    853 Closed
+                </a>
+
+            </div>
+
+            <div class="table-list-header-toggle f-right">
+                <details class="details-reset details-overlay select-menu f-left">
+                    <summary class="btn-link select-menu-button" aria-haspopup="menu">
+                        排序<span class="sort-label"></span>
+                    </summary>
+                    <details-menu class="select-menu-modal p-absolute right-0" style="z-index: 1000;" aria-label="Sort by" role="menu">
+                        <div class="select-menu-header">
+                            <span class="select-menu-title">排序规则</span>
+                        </div>
+                        <div class="select-menu-list">
+                            <a href="create-desc" class="select-menu-item" aria-checked="true" role="menuitemradio">
+                                <svg class="octicon octicon-check select-menu-item-icon" viewBox="0 0 12 16" version="1.1" width="12" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M12 5l-8 8-4-4 1.5-1.5L4 10l6.5-6.5L12 5z"></path></svg>
+                                <div class="select-menu-item-text">最近创建</div>
+                            </a>
+                            <a href="create-asc" class="select-menu-item" aria-checked="false" role="menuitemradio">
+                                <svg class="octicon octicon-check select-menu-item-icon" viewBox="0 0 12 16" version="1.1" width="12" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M12 5l-8 8-4-4 1.5-1.5L4 10l6.5-6.5L12 5z"></path></svg>
+                                <div class="select-menu-item-text">最久创建</div>
+                            </a>
+                            <a href="comments-desc" class="select-menu-item" aria-checked="false" role="menuitemradio">
+                                <svg class="octicon octicon-check select-menu-item-icon" viewBox="0 0 12 16" version="1.1" width="12" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M12 5l-8 8-4-4 1.5-1.5L4 10l6.5-6.5L12 5z"></path></svg>
+                                <div class="select-menu-item-text">最多评论</div>
+                            </a>
+                            <a href="comments-asc" class="select-menu-item" aria-checked="false" role="menuitemradio">
+                                <svg class="octicon octicon-check select-menu-item-icon" viewBox="0 0 12 16" version="1.1" width="12" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M12 5l-8 8-4-4 1.5-1.5L4 10l6.5-6.5L12 5z"></path></svg>
+                                <div class="select-menu-item-text">最少评论</div>
+                            </a>
+                            <a href="updated-desc" class="select-menu-item" aria-checked="false" role="menuitemradio">
+                                <svg class="octicon octicon-check select-menu-item-icon" viewBox="0 0 12 16" version="1.1" width="12" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M12 5l-8 8-4-4 1.5-1.5L4 10l6.5-6.5L12 5z"></path></svg>
+                                <div class="select-menu-item-text">最新更新</div>
+                            </a>
+                            <a href="updated-asc" class="select-menu-item" aria-checked="false" role="menuitemradio">
+                                <svg class="octicon octicon-check select-menu-item-icon" viewBox="0 0 12 16" version="1.1" width="12" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M12 5l-8 8-4-4 1.5-1.5L4 10l6.5-6.5L12 5z"></path></svg>
+                                <div class="select-menu-item-text">最久更新</div>
+                            </a>
+                        </div>
+                    </details-menu>
+                </details>
+            </div>
+        </div>
+
+    </div>
 </div>
 </body>
 </html>

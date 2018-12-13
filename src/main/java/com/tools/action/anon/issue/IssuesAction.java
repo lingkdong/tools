@@ -18,9 +18,11 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/anon/issues")
 public class IssuesAction {
     @RequestMapping(value = "/list")
-    public ModelAndView list(@RequestBody IssuesParam param,@PageableDefault(value = 25) Pageable pageable) {
+    public ModelAndView list(IssuesParam issuesParam,
+                             @PageableDefault(value = 25) Pageable pageable) {
         /*index begin at 0 but web show 1 so now -1*/
         ModelAndView mv = new ModelAndView("issue/issues");
+        mv.addObject("issuesParam",issuesParam);
         return mv;
     }
 }

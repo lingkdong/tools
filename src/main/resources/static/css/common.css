@@ -8,7 +8,18 @@ body {
     background-color: #fff;
     margin: 0
 }
-
+span{
+    moz-user-select: -moz-none;
+    -moz-user-select: none;
+    -o-user-select:none;
+    -khtml-user-select:none;
+    -webkit-user-select:none;
+    -ms-user-select:none;
+    user-select:none
+}
+.right-0 {
+    right: 0!important;
+}
 svg:not(:root) {
     overflow: hidden;
 }
@@ -380,6 +391,10 @@ a.tabnav-extra:hover {
 
 .w-250 {
     width: 250px !important;
+}
+
+.w-320 {
+    width: 320px !important;
 }
 .m-h-100 {
     min-height: 100px !important;
@@ -973,7 +988,9 @@ dl.form-group > dd .form-control.is-autocheck-errored {
 .d-none {
     display: none !important;
 }
-
+.p-absolute{
+    position: absolute!important;
+}
 .height-400 {
     height: 400px;
 }
@@ -2055,12 +2072,143 @@ tr:nth-child(2n) {
     }
 }
 
-span{
-    moz-user-select: -moz-none;
-    -moz-user-select: none;
-    -o-user-select:none;
-    -khtml-user-select:none;
-    -webkit-user-select:none;
-    -ms-user-select:none;
-    user-select:none
+
+
+.table-list-header {
+    background-color: #f6f8fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 3px 3px 0 0;
+    margin-top: 20px;
+    position: relative;
 }
+.table-list-header:after {
+    clear: both;
+    content: "";
+    display: table;
+}
+.table-list-header:before {
+    content: "";
+    display: table;
+}
+
+.table-list-header-toggle .btn-link+.btn-link {
+    margin-left: 10px;
+}
+
+.table-list-header-toggle .btn-link {
+    color: #586069;
+}
+.table-list-header .btn-link {
+    display: inline-block;
+    font-weight: 400;
+    padding-bottom: 13px;
+    padding-top: 13px;
+    position: relative;
+}
+.table-list-header-toggle .btn-link.selected, .table-list-header-toggle .btn-link.selected:hover {
+    color: #24292e;
+}
+
+.table-list-header-toggle.states .selected {
+    font-weight: 600;
+}
+.table-list-header-toggle .select-menu {
+    position: relative;
+}
+.table-list-header-toggle .select-menu-button {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.select-menu-button:after {
+    border: 4px solid transparent;
+    border-top-color: currentcolor;
+    content: "";
+    display: inline-block;
+    height: 0;
+    vertical-align: -2px;
+    width: 0;
+}
+
+.select-menu-modal {
+    background-clip: padding-box;
+    background-color: #fff;
+    border: 1px solid rgba(27,31,35,.15);
+    border-radius: 3px;
+    box-shadow: 0 3px 12px rgba(27,31,35,.15);
+    color: #586069;
+    font-size: 12px;
+    margin-bottom: 20px;
+    margin-top: 4px;
+    overflow: hidden;
+    position: relative;
+    width: 300px;
+}
+select-menu-divider, .select-menu-header {
+    background: #f6f8fa;
+    border-bottom: 1px solid #e1e4e8;
+    line-height: 16px;
+    padding: 8px 10px;
+}
+.select-menu-header .select-menu-title {
+    color: #24292e;
+    font-weight: 600;
+}
+
+.select-menu-list {
+    max-height: 400px;
+    overflow: auto;
+    position: relative;
+}
+.select-menu-item {
+    border-bottom: 1px solid #eaecef;
+    color: inherit;
+    cursor: pointer;
+    display: block;
+    overflow: hidden;
+    padding: 8px 8px 8px 30px;
+    background-color: #fff;
+    border-left: 0;
+    border-right: 0;
+    border-top: 0;
+    text-align: left;
+}
+
+.table-list-header-toggle .select-menu-item[aria-checked=true] {
+    font-weight: 600;
+}
+.select-menu-item.selected, details-menu .select-menu-item[aria-checked=true], details-menu .select-menu-item[aria-selected=true] {
+    color: #24292e;
+}
+
+.select-menu-item-text {
+    display: block;
+    text-align: left;
+}
+
+.select-menu-item .octicon-check, .select-menu-item input[type=radio]:not(:checked)+.octicon-check {
+    visibility: hidden;
+}
+.select-menu-item.selected .octicon-check, details-menu .select-menu-item[aria-checked=true] .octicon-check, details-menu .select-menu-item[aria-selected=true] .octicon-check {
+    visibility: visible;
+}
+.select-menu-item .octicon {
+    vertical-align: middle;
+}
+
+.select-menu-item-icon {
+    float: left;
+    margin-left: -20px;
+}
+.details-overlay[open]>summary:before {
+    background: transparent;
+    bottom: 0;
+    content: " ";
+    cursor: default;
+    display: block;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 80;
+}
+
