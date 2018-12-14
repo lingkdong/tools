@@ -20,6 +20,8 @@ public class Issue implements Serializable {
     private Long userId;
     @Column(nullable = false)
     private String title;
+    @Column(length = 50)
+    private String label;
     @Column(length = 800)
     private String body;
     @Column(nullable = false)
@@ -36,12 +38,28 @@ public class Issue implements Serializable {
         this.id = id;
     }
 
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
     public String getTitle() {
         return title;
     }
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
     }
 
     public String getBody() {
