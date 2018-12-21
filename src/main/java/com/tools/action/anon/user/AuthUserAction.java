@@ -5,7 +5,7 @@ import com.tools.dto.BaseResponseDTO;
 import com.tools.dto.HttpStatus;
 import com.tools.dto.user.ViewChangeDto;
 import com.tools.dto.user.CompleteDto;
-import com.tools.dto.user.SaveChangeDto;
+import com.tools.dto.user.SaveChangeParam;
 import com.tools.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -67,8 +67,8 @@ public class AuthUserAction extends BaseAction {
 
     @PostMapping(value = "send-change")
     @ResponseBody
-    public BaseResponseDTO sendChange(SaveChangeDto saveChangeDto) {
-        return userService.change(saveChangeDto);
+    public BaseResponseDTO sendChange(SaveChangeParam saveChangeParam) {
+        return userService.change(saveChangeParam);
     }
 
     @PostMapping(value = "/avatar")

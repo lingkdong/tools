@@ -1,24 +1,19 @@
 package com.tools.action.anon.user;
 
 import com.tools.dto.BaseResponseDTO;
-import com.tools.dto.user.LoginDto;
-import com.tools.dto.user.PassChangeDto;
-import com.tools.dto.user.ResetDto;
-import com.tools.dto.user.UserBaseDto;
+import com.tools.dto.user.LoginParam;
+import com.tools.dto.user.PassChangeParam;
+import com.tools.dto.user.ResetParam;
+import com.tools.dto.user.UserBaseParam;
 import com.tools.model.User;
 import com.tools.service.UserService;
-import com.tools.worker.Worker;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.web.util.SavedRequest;
-import org.apache.shiro.web.util.WebUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Map;
 
 /**
  * Created by lk on 2018/1/9.
@@ -44,23 +39,23 @@ public class UserAction {
 
     @PostMapping(value = "create")
     @ResponseBody
-    public BaseResponseDTO createUser(UserBaseDto userBaseDto, HttpServletRequest request) {
-        userBaseDto.setRequest(request);
-        return userService.createUser(userBaseDto);
+    public BaseResponseDTO createUser(UserBaseParam userBaseParam, HttpServletRequest request) {
+        userBaseParam.setRequest(request);
+        return userService.createUser(userBaseParam);
     }
 
     @PostMapping(value = "send-valid")
     @ResponseBody
-    public BaseResponseDTO sendValid(UserBaseDto userBaseDto, HttpServletRequest request) {
-        userBaseDto.setRequest(request);
-        return userService.sendValid(userBaseDto);
+    public BaseResponseDTO sendValid(UserBaseParam userBaseParam, HttpServletRequest request) {
+        userBaseParam.setRequest(request);
+        return userService.sendValid(userBaseParam);
     }
 
     @PostMapping(value = "send-login")
     @ResponseBody
-    public BaseResponseDTO sendLogin(LoginDto loginDto, HttpServletRequest request) {
-        loginDto.setRequest(request);
-        return userService.login(loginDto);
+    public BaseResponseDTO sendLogin(LoginParam loginParam, HttpServletRequest request) {
+        loginParam.setRequest(request);
+        return userService.login(loginParam);
     }
 
     @GetMapping(value = "/join")
@@ -89,9 +84,9 @@ public class UserAction {
 
     @PostMapping(value = "send-password-reset")
     @ResponseBody
-    public BaseResponseDTO sendReset(ResetDto resetDto,HttpServletRequest request) {
-        resetDto.setRequest(request);
-        return userService.passReset(resetDto);
+    public BaseResponseDTO sendReset(ResetParam resetParam, HttpServletRequest request) {
+        resetParam.setRequest(request);
+        return userService.passReset(resetParam);
     }
 
     @RequestMapping(value = "/password-change/{token}")
@@ -114,9 +109,9 @@ public class UserAction {
 
     @PostMapping(value = "send-password-change")
     @ResponseBody
-    public BaseResponseDTO sendChangePass(PassChangeDto passChangeDto,HttpServletRequest request) {
-        passChangeDto.setRequest(request);
-        return  userService.changePass(passChangeDto);
+    public BaseResponseDTO sendChangePass(PassChangeParam passChangeParam, HttpServletRequest request) {
+        passChangeParam.setRequest(request);
+        return  userService.changePass(passChangeParam);
     }
 
 

@@ -4,14 +4,17 @@ $(function () {
     email = $("#user_email");
     validCode = $("#user_valid");
     send = $("#valid_button");
-    $(username).keyup(function () {
+    $(username).keyup(function (event) {
         detectUserName();
+        stopEvent(event);
     });
-    $(password).keyup(function () {
+    $(password).keyup(function (event) {
         detectPassword();
+        stopEvent(event);
     });
-    $(email).keyup(function () {
+    $(email).keyup(function (event) {
         detectEmail();
+        stopEvent(event);
     });
     $(validCode).keyup(function (event) {
         detectValidCode();

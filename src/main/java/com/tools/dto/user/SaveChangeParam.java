@@ -8,7 +8,7 @@ import java.util.Date;
  * Created by lk on 2018/1/26.
  */
 @Data
-public class SaveChangeDto {
+public class SaveChangeParam {
     private String picture;
     private String trueName;
     private Date birthday;

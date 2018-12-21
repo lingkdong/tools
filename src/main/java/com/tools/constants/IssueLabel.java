@@ -8,14 +8,16 @@ package com.tools.constants;
  * Time: 下午11:39
  * To change this template use File | Settings | File Templates.
  */
-public enum IssueStatus {
-    OPEN((byte) 1, "open"),
-    CLOSED((byte) 2, "close");
-    private final Byte code;
+public enum IssueLabel {
+    UNLABELED("unlabeled", "未标记"),
+    BUG("bug", "bug"),
+    ENHANCEMENT("enhancement", "建议"),
+    ;
+    private final String code;
 
     private final String name;
 
-    public Byte code() {
+    public String code() {
         return this.code;
     }
 
@@ -26,15 +28,8 @@ public enum IssueStatus {
         return this.name;
     }
 
-    IssueStatus(Byte code, String name) {
+    IssueLabel(String code, String name) {
         this.code = code;
         this.name = name;
-    }
-
-    public static IssueStatus getIssueStatus(Byte code) {
-        for (IssueStatus item : IssueStatus.values()) {
-            if (item.code.equals(code)) return item;
-        }
-        return null;
     }
 }

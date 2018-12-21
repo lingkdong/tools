@@ -88,54 +88,54 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public BaseResponseDTO createUser(UserBaseDto userBaseDto) {
+    public BaseResponseDTO createUser(UserBaseParam userBaseParam) {
         List<ErrorInfo> errorInfos = new ArrayList<>();
         //username
-        BaseResponseDTO dto = nameUnique(userBaseDto.getUsername(), null);
+        BaseResponseDTO dto = nameUnique(userBaseParam.getUsername(), null);
         if (!Worker.isOK(dto)) errorInfos.add((ErrorInfo) dto.getData());
         //password
-        dto = Worker.isBlank2("password", userBaseDto.getPassword());
+        dto = Worker.isBlank2("password", userBaseParam.getPassword());
         if (!Worker.isOK(dto)) errorInfos.add((ErrorInfo) dto.getData());
         //email
-        dto = emailUnique(userBaseDto.getEmail(), null);
+        dto = emailUnique(userBaseParam.getEmail(), null);
         if (!Worker.isOK(dto)) errorInfos.add((ErrorInfo) dto.getData());
         //validCode
-        dto = Worker.isBlank2("validCode", userBaseDto.getValidCode());
+        dto = Worker.isBlank2("validCode", userBaseParam.getValidCode());
         if (!Worker.isOK(dto)) errorInfos.add((ErrorInfo) dto.getData());
         if (CollectionUtils.isNotEmpty(errorInfos)) return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT, errorInfos);
 
         //comapre valid code with session
-        HttpSession session = userBaseDto.getRequest().getSession();
-        String code = (String) session.getAttribute(userBaseDto.getEmail());
+        HttpSession session = userBaseParam.getRequest().getSession();
+        String code = (String) session.getAttribute(userBaseParam.getEmail());
         if (code == null) {
             return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT, ErrorInfo.newErrorInfo().property("validCode")
                     .HttpStatus(HttpStatus.IS_EXPIRED).build());
         }
-        if (!userBaseDto.getValidCode().equalsIgnoreCase(code))
+        if (!userBaseParam.getValidCode().equalsIgnoreCase(code))
             return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT, ErrorInfo.newErrorInfo().property("validCode")
                     .HttpStatus(HttpStatus
                             .PARAM_INCORRECT).build());
         //save
-        userDao.save(buildUser(userBaseDto));
-        session.removeAttribute(userBaseDto.getEmail());
+        userDao.save(buildUser(userBaseParam));
+        session.removeAttribute(userBaseParam.getEmail());
         //login
-        login(LoginDto.newLoginDto().username(userBaseDto.getUsername()).password(userBaseDto.getPassword()).request
-                (userBaseDto.getRequest()).build());
+        login(LoginParam.newLoginParam().username(userBaseParam.getUsername()).password(userBaseParam.getPassword()).request
+                (userBaseParam.getRequest()).build());
         //auto login by username;
         return Worker.OK();
     }
 
     @Override
-    public BaseResponseDTO sendValid(UserBaseDto userBaseDto) {
+    public BaseResponseDTO sendValid(UserBaseParam userBaseParam) {
         List<ErrorInfo> errorInfos = new ArrayList<>();
         //username
-        BaseResponseDTO dto = nameUnique(userBaseDto.getUsername(), null);
+        BaseResponseDTO dto = nameUnique(userBaseParam.getUsername(), null);
         if (!Worker.isOK(dto)) errorInfos.add((ErrorInfo) dto.getData());
         //password
-        dto = Worker.isBlank2("password", userBaseDto.getPassword());
+        dto = Worker.isBlank2("password", userBaseParam.getPassword());
         if (!Worker.isOK(dto)) errorInfos.add((ErrorInfo) dto.getData());
         //email
-        dto = emailUnique(userBaseDto.getEmail(), null);
+        dto = emailUnique(userBaseParam.getEmail(), null);
         if (!Worker.isOK(dto)) errorInfos.add((ErrorInfo) dto.getData());
         if (CollectionUtils.isNotEmpty(errorInfos)) return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT, errorInfos);
 
@@ -146,15 +146,15 @@ public class UserServiceImpl implements UserService {
 
         Boolean flag = emailService.sendHtmlEmail(EmailDto.newEmailDto()
                 .subjet("Prefox邮箱验证")
-                .emailTo(userBaseDto.getEmail())
-                .msg(prefoxEmailTemp.buildHtmlMsg(String.format("%s，您好：", userBaseDto.getUsername()),
+                .emailTo(userBaseParam.getEmail())
+                .msg(prefoxEmailTemp.buildHtmlMsg(String.format("%s，您好：", userBaseParam.getUsername()),
                         "验证码", msg.toString()))
                 .build()
         );
         if (!Boolean.TRUE.equals(flag)) return new BaseResponseDTO(HttpStatus.INTERNAL_SERVER_ERROR,
                 "The email failed, please try again later.");
 
-        userBaseDto.getRequest().getSession().setAttribute(userBaseDto.getEmail(), validCode);
+        userBaseParam.getRequest().getSession().setAttribute(userBaseParam.getEmail(), validCode);
         return Worker.OK();
     }
 
@@ -169,17 +169,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public BaseResponseDTO login(LoginDto loginDto) {
+    public BaseResponseDTO login(LoginParam loginParam) {
         try {
-            BaseResponseDTO dto = Worker.isBlank2("username", loginDto.getUsername());
+            BaseResponseDTO dto = Worker.isBlank2("username", loginParam.getUsername());
             if (!Worker.isOK(dto)) return dto;
-            dto = Worker.isBlank2("password", loginDto.getPassword());
+            dto = Worker.isBlank2("password", loginParam.getPassword());
             if (!Worker.isOK(dto)) return dto;
-            UsernamePasswordToken token = new UsernamePasswordToken(loginDto.getUsername(), DigestUtils.md5Hex(loginDto
+            UsernamePasswordToken token = new UsernamePasswordToken(loginParam.getUsername(), DigestUtils.md5Hex(loginParam
                     .getPassword()),
-                    loginDto.isRememberMe());
+                    loginParam.isRememberMe());
             SecurityUtils.getSubject().login(token);
-            SavedRequest savedRequest = WebUtils.getSavedRequest(loginDto.getRequest());
+            SavedRequest savedRequest = WebUtils.getSavedRequest(loginParam.getRequest());
             // 获取保存的URL
             Object data = null;
             if (savedRequest != null && savedRequest.getRequestUrl() != null && !savedRequest.getRequestUrl().contains
@@ -257,12 +257,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public BaseResponseDTO passReset(ResetDto resetDto) {
-        HttpSession session = resetDto.getRequest().getSession();
+    public BaseResponseDTO passReset(ResetParam resetParam) {
+        HttpSession session = resetParam.getRequest().getSession();
         String property = "email";
-        BaseResponseDTO dto = Worker.isEmail(resetDto.getEmail());
+        BaseResponseDTO dto = Worker.isEmail(resetParam.getEmail());
         if (!Worker.isOK(dto)) return dto;
-        User user = userDao.findFirstByEmail(resetDto.getEmail());
+        User user = userDao.findFirstByEmail(resetParam.getEmail());
         if (user == null) {
             return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT, ErrorInfo.newErrorInfo
                     ().property(property).HttpStatus(HttpStatus.USER_NOT_EXIST).build());
@@ -286,7 +286,7 @@ public class UserServiceImpl implements UserService {
         ;
         Boolean flag = emailService.sendHtmlEmail(EmailDto.newEmailDto()
                 .subjet("Prefox密码重置")
-                .emailTo(resetDto.getEmail())
+                .emailTo(resetParam.getEmail())
                 .msg(prefoxEmailTemp.buildHtmlMsg(String.format("%s，您好：", user.getUsername()),
                         "密码重置", msg.toString()))
                 .build()
@@ -310,19 +310,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public BaseResponseDTO changePass(PassChangeDto passChangeDto) {
-        User user = getUserByToken(passChangeDto.getRequest(), passChangeDto.getToken());
+    public BaseResponseDTO changePass(PassChangeParam passChangeParam) {
+        User user = getUserByToken(passChangeParam.getRequest(), passChangeParam.getToken());
         if (user == null) return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT, ErrorInfo.newErrorInfo().property
                 ("token").HttpStatus(HttpStatus.PARAM_INCORRECT).build());
-        BaseResponseDTO dto = Worker.isBlank2("password", passChangeDto.getPassword());
+        BaseResponseDTO dto = Worker.isBlank2("password", passChangeParam.getPassword());
         if (!Worker.isOK(dto)) return dto;
-        user.setPassword(DigestUtils.md5Hex(passChangeDto.getPassword()));
+        user.setPassword(DigestUtils.md5Hex(passChangeParam.getPassword()));
         user.setLastUpdateTime(new Date());
         userDao.save(user);
         return Worker.OK();
     }
 
-    private User buildUser(UserBaseDto dto) {
+    private User buildUser(UserBaseParam dto) {
         Date date = new Date();
         User user = new User();
         user.setUsername(dto.getUsername());
@@ -349,29 +349,29 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public BaseResponseDTO change(SaveChangeDto saveChangeDto) {
+    public BaseResponseDTO change(SaveChangeParam saveChangeParam) {
         List<ErrorInfo> errorInfos = new ArrayList<>();
         //trueName
-        BaseResponseDTO dto = Worker.isBlank2("trueName", saveChangeDto.getTrueName());
+        BaseResponseDTO dto = Worker.isBlank2("trueName", saveChangeParam.getTrueName());
         if (!Worker.isOK(dto)) errorInfos.add((ErrorInfo) dto.getData());
         //birthDay
-        dto = Worker.isNull("birthday", saveChangeDto.getBirthday());
+        dto = Worker.isNull("birthday", saveChangeParam.getBirthday());
         if (!Worker.isOK(dto)) errorInfos.add((ErrorInfo) dto.getData());
         //male
-        dto = Worker.isNull("male", saveChangeDto.getMale());
+        dto = Worker.isNull("male", saveChangeParam.getMale());
         if (!Worker.isOK(dto)) errorInfos.add((ErrorInfo) dto.getData());
         //skillTag
-        dto = Worker.isBlank2("skillTag", saveChangeDto.getSkillTag());
+        dto = Worker.isBlank2("skillTag", saveChangeParam.getSkillTag());
         if (!Worker.isOK(dto)) errorInfos.add((ErrorInfo) dto.getData());
         //phone can blank but valid format
-        if (StringUtils.isNotBlank(saveChangeDto.getPhone())) {
-            if (!RegUtils.isPhone(saveChangeDto.getPhone())) errorInfos.add(ErrorInfo
+        if (StringUtils.isNotBlank(saveChangeParam.getPhone())) {
+            if (!RegUtils.isPhone(saveChangeParam.getPhone())) errorInfos.add(ErrorInfo
                     .newErrorInfo().property("phone").HttpStatus(HttpStatus.INVALID_FORMAT).build());
         }
         //can blank ,but length need<250
-        if (StringUtils.isNotBlank(saveChangeDto.getBio())) {
-            if (saveChangeDto.getBio().length() > 250) {
-                saveChangeDto.setBio(saveChangeDto.getBio().substring(0, 250));
+        if (StringUtils.isNotBlank(saveChangeParam.getBio())) {
+            if (saveChangeParam.getBio().length() > 250) {
+                saveChangeParam.setBio(saveChangeParam.getBio().substring(0, 250));
             }
         }
         if (CollectionUtils.isNotEmpty(errorInfos)) return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT, errorInfos);
@@ -380,10 +380,10 @@ public class UserServiceImpl implements UserService {
         if (sessionUser == null) return new BaseResponseDTO(HttpStatus.LOGIN_EXPIRED);
         User user = userDao.findOne(sessionUser.getId());
         if (user == null) return new BaseResponseDTO(HttpStatus.LOGIN_EXPIRED);
-        if (BeanUtil.compareAndModify(user, saveChangeDto)) {
+        if (BeanUtil.compareAndModify(user, saveChangeParam)) {
             userDao.save(user);
             //update sessionUser
-            BeanUtil.compareAndModify(sessionUser, saveChangeDto);
+            BeanUtil.compareAndModify(sessionUser, saveChangeParam);
         }
         Map map = new HashMap();
         if (StringUtils.isNotBlank(user.getPicture())) {

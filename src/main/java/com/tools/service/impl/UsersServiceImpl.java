@@ -3,13 +3,14 @@ package com.tools.service.impl;
 import com.tools.dao.UserDao;
 import com.tools.dto.BaseResponseDTO;
 import com.tools.dto.HttpStatus;
-import com.tools.dto.user.FindUsersDto;
+import com.tools.dto.user.FindUsersParam;
 import com.tools.dto.user.UsersCardDto;
 import com.tools.dto.user.UsersDto;
 import com.tools.model.User;
 import com.tools.service.UsersService;
 import com.tools.utils.BeanUtil;
 import com.tools.worker.Worker;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
@@ -17,8 +18,9 @@ import org.springframework.stereotype.Service;
 
 import static com.tools.utils.AvatarConstant.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * @Author: dongxin
@@ -31,18 +33,16 @@ public class UsersServiceImpl implements UsersService {
     private UserDao userDao;
 
     @Override
-    public Page<UsersDto> findUsersDto(FindUsersDto findUsersDto, Pageable pageable) {
-        Page users = findUsers(findUsersDto, pageable);
+    public Page<UsersDto> findUsersDto(FindUsersParam findUsersParam, Pageable pageable) {
+        Page users = findUsers(findUsersParam, pageable);
         if (pageable.getPageNumber() >= users.getTotalPages() && (users.getTotalPages() - 1) >= 0) {
             pageable = new PageRequest(users.getTotalPages() - 1, pageable.getPageSize(), pageable.getSort());
-            users = findUsers(findUsersDto, pageable);
+            users = findUsers(findUsersParam, pageable);
         }
         if (users.hasContent()) {
             List<UsersDto> usersDtos = new ArrayList<>();
             for (User item : (List<User>) users.getContent()) {
-                UsersDto usersDto = BeanUtil.cast(UsersDto.class, item);
-                usersDto.setPicture(usersDto.getPicture());
-                usersDtos.add(usersDto);
+                usersDtos.add(toDto(item));
             }
             Page<UsersDto> result = new PageImpl<>(usersDtos, new PageRequest(users.getNumber(), users.getSize
                     ()), users.getTotalElements());
@@ -68,7 +68,7 @@ public class UsersServiceImpl implements UsersService {
         return Worker.OK(detailDto);
     }
 
-    private Page<User> findUsers(FindUsersDto findUsersDto, Pageable pageable) {
+    private Page<User> findUsers(FindUsersParam findUsersParam, Pageable pageable) {
         User user = new User();
         ExampleMatcher exampleMatcher = ExampleMatcher.matching()
                 .withMatcher("username", ExampleMatcher.GenericPropertyMatchers.contains())
@@ -76,10 +76,24 @@ public class UsersServiceImpl implements UsersService {
                 .withIgnoreCase()
                 .withIgnorePaths("score","view")//ignore basic data type:int
                 ;
-        user.setUsername(findUsersDto.getUsername());
+        user.setUsername(findUsersParam.getUsername());
         Example<User> example = Example.of(user, exampleMatcher);
         return userDao.findAll(example,pageable);
     }
 
+    public UsersDto toDto(User user){
+        if(user==null) return null;
+        return BeanUtil.cast(UsersDto.class, user);
+    }
 
+    public List<User> findAllByIdIn(Set<Long> userIds){
+        return userDao.findAllByIdIn(userIds);
+    }
+
+    public Map<Long,User> toIdMap(List<User> users){
+        if(CollectionUtils.isNotEmpty(users)){
+            return users.stream().collect(Collectors.toMap(User::getId, Function.identity()));
+        }
+        return Collections.EMPTY_MAP;
+    }
 }

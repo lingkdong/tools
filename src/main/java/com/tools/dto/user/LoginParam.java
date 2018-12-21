@@ -8,25 +8,26 @@ import javax.servlet.http.HttpServletRequest;
  * Created by lk on 2018/1/19.
  */
 @Data
-public class LoginDto {
+public class LoginParam {
     private String username;
     private String password;
     private boolean rememberMe;
     private HttpServletRequest request;
 
-    public LoginDto() {
+    public LoginParam() {
     }
 
-    private LoginDto(Builder builder) {
+    private LoginParam(Builder builder) {
         this.username = builder.username;
         this.password = builder.password;
         this.rememberMe = builder.rememberMe;
         this.request = builder.request;
     }
 
-    public static Builder newLoginDto() {
+    public static Builder newLoginParam() {
         return new Builder();
     }
+
 
     public static final class Builder {
         private String username;
@@ -37,8 +38,8 @@ public class LoginDto {
         private Builder() {
         }
 
-        public LoginDto build() {
-            return new LoginDto(this);
+        public LoginParam build() {
+            return new LoginParam(this);
         }
 
         public Builder username(String username) {

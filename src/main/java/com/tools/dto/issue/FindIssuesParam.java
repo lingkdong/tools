@@ -8,13 +8,13 @@ import lombok.Data;
  * @Date: 2018/7/13 14:50
  **/
 @Data
-public class IssuesParam {
+public class FindIssuesParam {
     /**
      * issue status
      * 1: open
      * 2: close
      */
-   private Byte issueStatus;
+   private Byte status;
    private String title;
-
+   private String label;
 }

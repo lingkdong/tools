@@ -48,7 +48,9 @@ a:hover {
     vertical-align: text-top;
     fill: currentColor;
 }
-
+summary:focus {
+    outline: none;
+}
 details summary {
     cursor: pointer
 }
@@ -93,6 +95,9 @@ details:not([open]) > *:not(summary) {
 
 .border-green {
     border: 2px solid #28a745 !important;
+}
+.color-green {
+   color: #28a745 !important;
 }
 
 .border-top {
@@ -393,6 +398,9 @@ a.tabnav-extra:hover {
 .pt-2 {
     padding-top: 8px !important;
 }
+.pt-2-1 {
+    padding-top:12px !important;
+}
 
 .pt-5 {
     padding-top: 32px !important
@@ -416,7 +424,6 @@ a.tabnav-extra:hover {
 .lh-2 {
     line-height: 1.25 !important;
 }
-
 .w-100 {
     width: 100px !important;
 }
@@ -1585,7 +1592,20 @@ dl.form-group > dd .form-control.is-autocheck-errored {
 .tooltipped {
     position: relative
 }
+.tooltipped-e:before {
+    border-right-color: #1b1f23;
+    bottom: 50%;
+    margin-top: -6px;
+    right: -7px;
+    top: 50%;
+}
 
+.tooltipped-e:after {
+    bottom: 50%;
+    left: 100%;
+    margin-left: 6px;
+    transform: translateY(50%);
+}
 .tooltipped::after {
     position: absolute;
     z-index: 1000000;
@@ -2187,7 +2207,12 @@ tr:nth-child(2n) {
     padding-top: 13px;
     position: relative;
 }
-
+.table-list-header-toggle .btn-link+.btn-link {
+    margin-left: 10px;
+}
+.table-list-header-toggle .btn-link {
+    color: #586069;
+}
 .table-list-header-toggle .btn-link.selected, .table-list-header-toggle .btn-link.selected:hover {
     color: #24292e;
 }
@@ -2266,7 +2291,12 @@ select-menu-divider, .select-menu-header {
     border-top: 0;
     text-align: left;
 }
-
+.sr-only {
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    width: 1px;
+}
 .table-list-header-toggle .select-menu-item[aria-checked=true] {
     font-weight: 600;
 }

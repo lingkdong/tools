@@ -2,7 +2,7 @@ package com.tools.action.anon.user;
 
 import com.tools.action.BaseAction;
 import com.tools.dto.BaseResponseDTO;
-import com.tools.dto.user.FindUsersDto;
+import com.tools.dto.user.FindUsersParam;
 import com.tools.dto.user.UsersDto;
 import com.tools.service.UsersService;
 import com.tools.worker.Worker;
@@ -29,13 +29,13 @@ public class UsersAction extends BaseAction {
     private UsersService usersService;
 
     @RequestMapping(value = "/index")
-    public ModelAndView index(FindUsersDto findUsersDto
+    public ModelAndView index(FindUsersParam findUsersParam
             , @PageableDefault(value = 28, sort = {"score"}, direction = Sort.Direction.DESC) Pageable pageable) {
         ModelAndView mv = new ModelAndView("users/users");
         /*index begin at 0 but web show 1 so now -1*/
-        Page<UsersDto> page = usersService.findUsersDto(findUsersDto, pageable.previousOrFirst());
+        Page<UsersDto> page = usersService.findUsersDto(findUsersParam, pageable.previousOrFirst());
         mv.addObject("page", page);
-        mv.addObject("findUsers", findUsersDto);
+        mv.addObject("findUsers", findUsersParam);
         return mv;
     }
 

@@ -3,8 +3,6 @@ package com.tools.service;
 import com.tools.dto.BaseResponseDTO;
 import com.tools.dto.user.*;
 import com.tools.model.User;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,18 +22,18 @@ public interface UserService {
     /**
      * user regist
      *
-     * @param userBaseDto
+     * @param userBaseParam
      * @return
      */
-    BaseResponseDTO createUser(UserBaseDto userBaseDto);
+    BaseResponseDTO createUser(UserBaseParam userBaseParam);
 
     /**
      * send valid to user email
      *
-     * @param userBaseDto
+     * @param userBaseParam
      * @return
      */
-    BaseResponseDTO sendValid(UserBaseDto userBaseDto);
+    BaseResponseDTO sendValid(UserBaseParam userBaseParam);
 
     User findByUsernameOrEmail(String username);
 
@@ -44,10 +42,10 @@ public interface UserService {
     /**
      * user login
      *
-     * @param loginDto
+     * @param loginParam
      * @return
      */
-    BaseResponseDTO login(LoginDto loginDto);
+    BaseResponseDTO login(LoginParam loginParam);
 
     /**
      * regist step2.complete user profile
@@ -61,17 +59,17 @@ public interface UserService {
 
     BaseResponseDTO loginOut();
 
-    BaseResponseDTO passReset(ResetDto resetDto);
+    BaseResponseDTO passReset(ResetParam resetParam);
 
     User getUserByToken(HttpServletRequest request, String token);
 
     /**
      * change password
      *
-     * @param passChangeDto
+     * @param
      * @return
      */
-    BaseResponseDTO changePass(PassChangeDto passChangeDto);
+    BaseResponseDTO changePass(PassChangeParam passChangeParam);
 
     /**
      * get user profile
@@ -83,10 +81,10 @@ public interface UserService {
     /**
      * modify user profile
      *
-     * @param saveChangeDto
+     * @param saveChangeParam
      * @return
      */
-    BaseResponseDTO change(SaveChangeDto saveChangeDto);
+    BaseResponseDTO change(SaveChangeParam saveChangeParam);
 
     /**
      * upload user avatar

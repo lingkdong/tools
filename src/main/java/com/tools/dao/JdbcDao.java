@@ -29,4 +29,9 @@ public class JdbcDao {
        return jdbcTemplate.queryForList(sql.toString());
     }
 
+    public List<Map<String, Object>> getIssueStatusStatistics(){
+        StringBuilder sql=new StringBuilder();
+        sql.append(" select status,count(1) as totalNum from issue group by status;");
+        return jdbcTemplate.queryForList(sql.toString());
+    }
 }

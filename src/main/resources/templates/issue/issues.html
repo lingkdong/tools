@@ -5,8 +5,9 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Issues</title>
-    <link th:href="@{/css/issue/issues.css}" rel="stylesheet"/>
-    <script th:src="@{/js/issue/issues.js }"></script>
+    <link th:href="@{/css/issue/issue-list.css}" rel="stylesheet"/>
+    <script th:src="@{/js/filter-list.js }"></script>
+    <script th:src="@{/js/issue/issue-list.js }"></script>
 </head>
 <body>
 <div th:fragment="content" th:remove="tag">
@@ -20,8 +21,8 @@
     </h1>
     <div class="py-3 border-top">
         <label class="fw-normal">查找：</label>
-        <input class="form-control w-320" id="find-user" th:value="${issuesParam.title}"
-               th:attr="data-username=${issuesParam.title}"/>
+        <input class="form-control w-320" id="find-user" th:value="${findIssuesParam.title}"
+               th:attr="data-username=${findIssuesParam.title}"/>
         <button class="btn btn-primary f-right" id="create-issue">
             新建问题
         </button>
@@ -31,22 +32,18 @@
         <div class="table-list-filters">
 
             <div class="table-list-header-toggle states f-left pl-3">
-                <a href="/zxing/zxing/issues?q=is%3Aopen+is%3Aissue" class="btn-link selected">
-                    <svg class="octicon octicon-issue-opened" viewBox="0 0 14 16" version="1.1" width="14" height="16"
-                         aria-hidden="true">
-                        <path fill-rule="evenodd"
-                              d="M7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 0 1 1.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7zm1 3H6v5h2V4zm0 6H6v2h2v-2z"></path>
-                    </svg>
-                    7 Open
-                </a>
-                <a href="/zxing/zxing/issues?q=is%3Aissue+is%3Aclosed" class="btn-link ">
-                    <svg class="octicon octicon-check" viewBox="0 0 12 16" version="1.1" width="12" height="16"
-                         aria-hidden="true">
-                        <path fill-rule="evenodd" d="M12 5l-8 8-4-4 1.5-1.5L4 10l6.5-6.5L12 5z"></path>
-                    </svg>
-                    853 Closed
-                </a>
-
+                <th:block th:each="item:${issueStatusDtos}">
+                    <a    data-name="status"
+                            th:attr="data-value=${item.code}  "
+                       th:class="${#strings.concat('btn-link',(findIssuesParam.status == item.code)?' color-green':' svg-hid')}"
+                    >
+                        <svg class="octicon octicon-check" viewBox="0 0 12 16" version="1.1" width="12" height="16"
+                             aria-hidden="true" >
+                            <path fill-rule="evenodd" d="M12 5l-8 8-4-4 1.5-1.5L4 10l6.5-6.5L12 5z"></path>
+                        </svg>
+                        [[${item.totalNum}]] [[${item.name}]]
+                    </a>
+                </th:block>
             </div>
 
             <div class="table-list-header-toggle f-right">
@@ -67,7 +64,7 @@
                         <div class="select-menu-list">
                             <div data-filterable-for="label-filter-field" data-filterable-type="substring">
 
-                                <a href="unlabeled" class="select-menu-item " aria-checked="false"
+                                <a href="unlabeled" class="select-menu-item" aria-checked="false"
                                    role="menuitemcheckbox">
                                     <svg class="octicon octicon-check select-menu-item-icon" viewBox="0 0 12 16" version="1.1" width="12" height="16" aria-hidden="true">
                                         <path fill-rule="evenodd" d="M12 5l-8 8-4-4 1.5-1.5L4 10l6.5-6.5L12 5z"></path>
@@ -172,7 +169,7 @@
                  data-id="316926811" aria-selected="false">
                 <div class="d-table table-fixed width-full Box-row--drag-hide position-relative">
 
-                    <div class="f-left pt-2 pl-3">
+                    <div class="f-left pt-2-1 pl-3">
                       <span class="tooltipped tooltipped-e" aria-label="Open issue">
                         <svg class="octicon octicon-issue-opened open" viewBox="0 0 14 16" version="1.1" width="14" height="16"
                              aria-hidden="true">
