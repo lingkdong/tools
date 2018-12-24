@@ -1,5 +1,6 @@
 package com.tools.service.impl;
 
+import com.tools.constants.IssueLabel;
 import com.tools.constants.IssueStatus;
 import com.tools.dao.IssueDao;
 import com.tools.dao.JdbcDao;
@@ -53,6 +54,8 @@ public class IssueSericeImpl implements IssueService {
             issueList.stream().forEach(item->{
                 ViewIssuesDto dto=BeanUtil.cast(ViewIssuesDto.class,item);
                 dto.setUsersDto(usersService.toDto(userMap.get(item.getUserId())));
+                dto.setIssueStatus(IssueStatus.getIssueStatus(item.getStatus()));
+                dto.setIssueLabel(IssueLabel.getIssueLabel(item.getLabel()));
                 dtos.add(dto);
             });
             Page<ViewIssuesDto> result = new PageImpl<>(dtos, new PageRequest(issues.getNumber(), issues.getSize

@@ -1,5 +1,7 @@
 package com.tools.dto.issue;
 
+import com.tools.constants.IssueLabel;
+import com.tools.constants.IssueStatus;
 import com.tools.dto.user.UsersDto;
 import lombok.Data;
 
@@ -17,7 +19,8 @@ public class ViewIssuesDto {
      * creator
      */
     private UsersDto usersDto;
-    private Byte status;//open, closed
+    private IssueStatus issueStatus;//open, closed
+    private IssueLabel issueLabel;
     private Long commentCount;
     private Date createTime;
     private Date lastUpdateTime;

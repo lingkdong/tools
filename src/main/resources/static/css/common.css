@@ -45,7 +45,6 @@ a:hover {
 
 .octicon {
     display: inline-block;
-    vertical-align: text-top;
     fill: currentColor;
 }
 summary:focus {
@@ -163,6 +162,9 @@ details:not([open]) > *:not(summary) {
 }
 .va-text-top {
     vertical-align: text-top!important;
+}
+.va-text-bottom {
+    vertical-align: text-bottom!important;
 }
 
 .pl-2 {
