@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <body>
-<div th:fragment="page-numbers-html" name="page-numbers-html">
+<div th:fragment="page-numbers-html" name="page-numbers-html" class=" pt-3">
     <link th:href="@{/css/page-numbers.css}" rel="stylesheet"/>
     <div class="pager fr" th:if="${page.totalPages gt 1}" th:with="number=${page.number+1}">
         <a th:if="${number!=1}" rel="prev" th:with="prev=${number-1}"
@@ -18,10 +18,12 @@
                 </th:block>
             </th:block>
             <span class="page-numbers current" th:text="${number}"/>
-            <th:block th:each="item:${#numbers.sequence(number+1,5)}">
-                <a th:title="${'跳转至第'+item+'页'}" th:attr="data-number=${item}">
-                    <span class="page-numbers" th:text="${item}"/>
-                </a>
+            <th:block th:if="${number lt page.totalPages}">
+                <th:block th:each="item:${#numbers.sequence(number+1,(page.totalPages<5)?page.totalPages:5)}">
+                    <a th:title="${'跳转至第'+item+'页'}" th:attr="data-number=${item}">
+                        <span class="page-numbers" th:text="${item}"/>
+                    </a>
+                </th:block>
             </th:block>
             <th:block th:if="${page.totalPages gt 5}">
                 <span class="page-numbers dots">…</span>

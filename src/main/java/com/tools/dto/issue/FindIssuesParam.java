@@ -17,4 +17,5 @@ public class FindIssuesParam {
    private Byte status;
    private String title;
    private String label;
+   private String sort;
 }

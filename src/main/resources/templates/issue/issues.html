@@ -21,7 +21,7 @@
     </h1>
     <div class="py-3 border-top">
         <label class="fw-normal">查找：</label>
-        <input class="form-control w-320" id="find-user" th:value="${findIssuesParam.title}"
+        <input class="form-control w-320" id="find-issue" th:value="${findIssuesParam.title}"
                th:attr="data-username=${findIssuesParam.title}"/>
         <button class="btn btn-primary f-right" id="create-issue">
             新建问题
@@ -33,9 +33,10 @@
 
             <div class="table-list-header-toggle states f-left pl-3">
                 <th:block th:each="item:${issueStatusDtos}">
-                    <a data-name="status"
-                       th:attr="data-value=${item.code}"
-                       th:class="${#strings.concat('btn-link',(findIssuesParam.status == item.code)?' color-green':' svg-hid')}"
+                    <a name="issue-filter"
+                       data-name="status"
+                       th:attr="data-value=${item.code},aria-checked=${(findIssuesParam.status == item.code)?'true':'false'}"
+                       th:class="${#strings.concat('btn-link ',(findIssuesParam.status == item.code)?' color-green':' svg-hid')}"
                     >
                         <svg class="octicon octicon-check" viewBox="0 0 12 16" version="1.1" width="12" height="16"
                              aria-hidden="true">
@@ -65,46 +66,26 @@
                         </div>
                         <div class="select-menu-list">
                             <div data-filterable-for="label-filter-field" data-filterable-type="substring">
-
-                                <a href="unlabeled" class="select-menu-item" aria-checked="false"
-                                   role="menuitemcheckbox">
-                                    <svg class="octicon octicon-check select-menu-item-icon" viewBox="0 0 12 16"
-                                         version="1.1" width="12" height="16" aria-hidden="true">
-                                        <path fill-rule="evenodd" d="M12 5l-8 8-4-4 1.5-1.5L4 10l6.5-6.5L12 5z"></path>
-                                    </svg>
-                                    <div class="select-menu-item-text">
-                                        <strong>未标记</strong>
-                                    </div>
-                                </a>
-
-
-                                <a href="bug" class="select-menu-item label-select-menu-item " aria-checked="false"
-                                   role="menuitemcheckbox">
-                                    <svg class="octicon octicon-check select-menu-item-icon" viewBox="0 0 12 16"
-                                         version="1.1" width="12" height="16" aria-hidden="true">
-                                        <path fill-rule="evenodd" d="M12 5l-8 8-4-4 1.5-1.5L4 10l6.5-6.5L12 5z"></path>
-                                    </svg>
-                                    <div class="select-menu-item-text css-truncate">
-                                        <div class="css-truncate-target">
-                                            <span class="color" style="background-color: #e11d21">&nbsp;</span>
-                                            <span class="name">bug</span>
+                                <th:block th:each="item:${issueLabels}">
+                                    <a name="issue-filter"
+                                       data-name="label"
+                                       th:attr="data-value=${item.code()},aria-checked=${(findIssuesParam.label == item.code())?'true':'false'}"
+                                       class="select-menu-item label-select-menu-item "
+                                        >
+                                        <svg class="octicon octicon-check select-menu-item-icon" viewBox="0 0 12 16"
+                                             version="1.1" width="12" height="16" aria-hidden="true">
+                                            <path fill-rule="evenodd" d="M12 5l-8 8-4-4 1.5-1.5L4 10l6.5-6.5L12 5z"></path>
+                                        </svg>
+                                        <div class="select-menu-item-text css-truncate">
+                                            <div class="css-truncate-target">
+                                                <span class="color"
+                                                      th:style="${'background-color:'+item.getBgColor()}">&nbsp;
+                                                </span>
+                                                <span class="name"> [[${item.getName()}]]</span>
+                                            </div>
                                         </div>
-                                    </div>
-                                </a>
-
-                                <a href="enhancement" class="select-menu-item label-select-menu-item "
-                                   aria-checked="false" role="menuitemcheckbox">
-                                    <svg class="octicon octicon-check select-menu-item-icon" viewBox="0 0 12 16"
-                                         version="1.1" width="12" height="16" aria-hidden="true">
-                                        <path fill-rule="evenodd" d="M12 5l-8 8-4-4 1.5-1.5L4 10l6.5-6.5L12 5z"></path>
-                                    </svg>
-                                    <div class="select-menu-item-text css-truncate">
-                                        <div class="css-truncate-target">
-                                            <span class="color" style="background-color: #009800">&nbsp;</span>
-                                            <span class="name">建议</span>
-                                        </div>
-                                    </div>
-                                </a>
+                                    </a>
+                                </th:block>
                             </div>
                         </div>
                     </details-menu>
@@ -119,48 +100,20 @@
                             <span class="select-menu-title">排序规则</span>
                         </div>
                         <div class="select-menu-list">
-                            <a href="create-desc" class="select-menu-item" aria-checked="true" role="menuitemradio">
-                                <svg class="octicon octicon-check select-menu-item-icon" viewBox="0 0 12 16"
-                                     version="1.1" width="12" height="16" aria-hidden="true">
-                                    <path fill-rule="evenodd" d="M12 5l-8 8-4-4 1.5-1.5L4 10l6.5-6.5L12 5z"></path>
-                                </svg>
-                                <div class="select-menu-item-text">最近创建</div>
-                            </a>
-                            <a href="create-asc" class="select-menu-item" aria-checked="false" role="menuitemradio">
-                                <svg class="octicon octicon-check select-menu-item-icon" viewBox="0 0 12 16"
-                                     version="1.1" width="12" height="16" aria-hidden="true">
-                                    <path fill-rule="evenodd" d="M12 5l-8 8-4-4 1.5-1.5L4 10l6.5-6.5L12 5z"></path>
-                                </svg>
-                                <div class="select-menu-item-text">最久创建</div>
-                            </a>
-                            <a href="comments-desc" class="select-menu-item" aria-checked="false" role="menuitemradio">
-                                <svg class="octicon octicon-check select-menu-item-icon" viewBox="0 0 12 16"
-                                     version="1.1" width="12" height="16" aria-hidden="true">
-                                    <path fill-rule="evenodd" d="M12 5l-8 8-4-4 1.5-1.5L4 10l6.5-6.5L12 5z"></path>
-                                </svg>
-                                <div class="select-menu-item-text">最多评论</div>
-                            </a>
-                            <a href="comments-asc" class="select-menu-item" aria-checked="false" role="menuitemradio">
-                                <svg class="octicon octicon-check select-menu-item-icon" viewBox="0 0 12 16"
-                                     version="1.1" width="12" height="16" aria-hidden="true">
-                                    <path fill-rule="evenodd" d="M12 5l-8 8-4-4 1.5-1.5L4 10l6.5-6.5L12 5z"></path>
-                                </svg>
-                                <div class="select-menu-item-text">最少评论</div>
-                            </a>
-                            <a href="updated-desc" class="select-menu-item" aria-checked="false" role="menuitemradio">
-                                <svg class="octicon octicon-check select-menu-item-icon" viewBox="0 0 12 16"
-                                     version="1.1" width="12" height="16" aria-hidden="true">
-                                    <path fill-rule="evenodd" d="M12 5l-8 8-4-4 1.5-1.5L4 10l6.5-6.5L12 5z"></path>
-                                </svg>
-                                <div class="select-menu-item-text">最新更新</div>
-                            </a>
-                            <a href="updated-asc" class="select-menu-item" aria-checked="false" role="menuitemradio">
-                                <svg class="octicon octicon-check select-menu-item-icon" viewBox="0 0 12 16"
-                                     version="1.1" width="12" height="16" aria-hidden="true">
-                                    <path fill-rule="evenodd" d="M12 5l-8 8-4-4 1.5-1.5L4 10l6.5-6.5L12 5z"></path>
-                                </svg>
-                                <div class="select-menu-item-text">最久更新</div>
-                            </a>
+                            <th:block th:each="item:${issueSorts}">
+                                <a      name="issue-filter"
+                                        data-name="sort"
+                                        th:attr="data-value=${item.code()},aria-checked=${(findIssuesParam.sort == item.code())?'true':'false'}"
+                                        aria-checked="true"
+                                        class="select-menu-item" >
+                                    <svg class="octicon octicon-check select-menu-item-icon" viewBox="0 0 12 16"
+                                         version="1.1" width="12" height="16" aria-hidden="true">
+                                        <path fill-rule="evenodd" d="M12 5l-8 8-4-4 1.5-1.5L4 10l6.5-6.5L12 5z"></path>
+                                    </svg>
+                                    <div class="select-menu-item-text">[[${item.getName()}]]</div>
+                                </a>
+                            </th:block>
+
                         </div>
                     </details-menu>
                 </details>
@@ -195,10 +148,11 @@
                             </a>
                             <span class="labels lh-1">
                             <a class="d-inline IssueLabel va-text-top"
-                               th:style="${#strings.concat('color: #ffffff;background-color:',item.issueLabel.getBgColor())}"
-                               th:title="${item.issueLabel.getName()}"
+                               name="issue-filter"
                                data-name="label"
                                th:attr="data-value=${item.issueLabel.code()}"
+                               th:style="${#strings.concat('color: #ffffff;background-color:',item.issueLabel.getBgColor())}"
+                               th:title="${item.issueLabel.getName()}"
                                >[[${item.issueLabel.getName()}]]</a>
                         </span>
                             <div class="mt-1 text-gray">
@@ -215,6 +169,37 @@
                                          data-nginxUrl=${nginxUrl}"
                                aria-describedby="hovercard-aria-description">[[${item.usersDto.username}]]</a>
                         </span>
+                                <div class="Popover js-hovercard-content position-absolute"
+                                     style="display: block; outline: none; top: 477.5px; left: 672.414px;" tabindex="0">
+                                    <div class="Popover-message Popover-message--large Box box-shadow-large Popover-message--bottom-left"
+                                         style="width:360px;">
+                                        <div class="pb-3 px-3">
+                                            <div class="d-flex mt-3">
+                                                <div class="flex-self-start">
+                                                    <div class="rounded-1 overflow-hidden">
+                                                        <a data-octo-click="hovercard-link-click"
+                                                           data-octo-dimensions="link_type:profile"
+                                                           href="/ablegreen">
+                                                            <img class="d-block" height="60" width="60"
+                                                                 alt="@ablegreen"
+                                                                 src="https://avatars1.githubusercontent.com/u/3934660?s=88&amp;v=4">
+                                                        </a>
+                                                    </div>
+                                                </div>
+
+                                                <div class="overflow-hidden ml-3">
+                                                    <a class="f5 text-bold link-gray-dark no-underline"
+                                                       data-octo-click="hovercard-link-click"
+                                                       data-octo-dimensions="link_type:profile" href="/ablegreen">ablegreen</a>
+                                                    <div class="mt-1">
+                                                        <div></div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <span class="issue-meta-section css-truncate issue-milestone ml-2"> </span>
                             </div>
                         </div>
@@ -236,6 +221,9 @@
             </th:block>
         </div>
     </div>
+
+    <!--page numbers-->
+    <div th:replace="page-numbers ::page-numbers-html"></div>
 </div>
 </body>
 </html>
