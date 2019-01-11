@@ -234,5 +234,85 @@ public class CodeTest {
     public void writeFile(List<String> list,File file) throws IOException {
         FileUtils.writeStringToFile(file, list.stream().collect(Collectors.joining("\r\n")));
     }
+    private List<String> readFile(File file) {
+        try {
+            return FileUtils.readLines(file, Charset.defaultCharset());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Collections.emptyList();
+    }
+    @Test
+    public void getColumns() {
+        String data="";
+        String regex = "column=\"(.*)\"";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(data);
+        List<String> result=new ArrayList<>();
+        while(matcher.find()){
+            String item=matcher.group(0);
+            result.add(item.split("\"")[1]);
+        }
+        System.out.println( result.stream().collect(Collectors.joining(",\r\n")));
+    }
+
+    @Test
+    public void  buildUserTest() throws IOException {
+        List<String> customer =readFile(new File("D:\\data\\test\\article.txt"));
+        Set<String> names=new HashSet<>();
+        customer.stream().forEach(item->{
+            if(StringUtils.isNotBlank(item)){
+                String [] arr=item.split(" ");
+                Arrays.stream(arr).forEach(name->{
+                    if(RegUtils.isUsername(name)){
+                        names.add(name.toLowerCase());
+                    }
+                });
+            }
+        });
+       String sql="INSERT INTO `tools`.`user` (`id`, `bio`, `birthday`, `create_time`, `email`, `last_update_time`, " +
+               "`location`, `male`, `password`, `phone`, `picture`, `score`, `skill_tag`, `status`, `true_name`, `type`, `username`, `view`) " +
+               "VALUES ('%s', 'linux', '1990-01-12 00:00:00', '2018-12-21 15:21:25', '%s@qq.com', '2018-12-21 " +
+               "15:21:25', 'beijing china', 1, 'password'," +
+               " NULL, NULL, '0', 'linux', '1', '%s', NULL, '%s', '1');";
+       List<String> list=new ArrayList<>();
+       List<String> nameList=new ArrayList<>(names);
+       for(int i=0;i<nameList.size();i++){
+           String name=nameList.get(i);
+           list.add(String.format(sql,i+3,name,name,name));
+       }
+       writeFile(list,new File("D:\\data\\test\\nameSql.txt"));
+    }
+    @Test
+    public void  buildIssueTest() throws IOException {
+        List<String> customer =readFile(new File("D:\\data\\test\\article.txt"));
+        Set<String> names=new HashSet<>();
+        customer.stream().forEach(item->{
+            if(StringUtils.isNotBlank(item)){
+                String [] arr=item.split(" ");
+                Arrays.stream(arr).forEach(name->{
+                        names.add(name.toLowerCase());
+                });
+            }
+        });
+       String sql="INSERT INTO `tools`.`issue` (`id`, `body`, `comment_count`, `create_time`, `last_update_time`, `status`, `title`, `user_id`, `label`) " +
+               "VALUES ('%s', '%s', '1', SYSDATE(), SYSDATE(), '1', '%s', '1', '%s');";
+       List<String> list=new ArrayList<>();
+       String [] label=new String[]{"unlabeled","bug","enhancement"};
+       List<String> nameList=new ArrayList<>(names);
+       for(int i=0;i<nameList.size();i++){
+           String name=nameList.get(i);
+           list.add(String.format(sql,i+4,name,name,label[RandomUtils.nextInt(0,3)]));
+       }
+       writeFile(list,new File("D:\\data\\test\\issueSql.txt"));
+    }
+   @Test
+    public void testArray(){
+        Set<String> set=new HashSet<>();
+        set.add("111");
+        set.add("444");
+       String[] arr =set.toArray(new String[0]);
+       System.out.println(Arrays.toString(arr));
+   }
 
 }
