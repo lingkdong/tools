@@ -34,7 +34,7 @@ $(function () {
         showIssueUserCard(this, x, y);
         stopEvent(e);
     })
-    $(".show-issue-user-card").click(function (e) {
+    $(document).on("click",".show-issue-user-card",function (e) {
         redirectToCard(this);
         stopEvent(e);
     })
@@ -176,18 +176,18 @@ function buildUserCard(username, picture, location, skillTag) {
     }
     var info = '  <div class="pb-3 px-3 issue-user-card">' +
         '                                 <div class="d-flex mt-3">' +
-        '                                          <div class="flex-self-start">' +
+        '                                              <div class="flex-self-start">' +
         '                                        <div class="rounded-1 overflow-hidden">' +
-        '                                            <div class="issue-user-name"' +
+        '                                            <div class="issue-user-name show-issue-user-card cursor-p"' +
         '                                                 style="box-shadow: 0px 0px 1px  rgba(12,13,14,0.5);height: 60px;width: 60px"' +
-        '                                                 data-name=' + username + '">' +
+        '                                                 data-username=' + username + '>' +
         img +
         '                                            </div>' +
         '                                        </div>' +
         '                                    </div>' +
         '                                    <div class="overflow-hidden ml-3">' +
-        '                                        <a class="issue-user-name"' +
-        '    attr="data-name=' + username + '">' + username + '</a>' +
+        '                                        <a class="issue-user-name show-issue-user-card cursor-p"' +
+        '    data-username=' + username + '>' + username + '</a>' +
         '                                        <div class="my-1">' +
         '                                            <div class="mt-2 text-gray text-small">' +
         '                                                <svg class="octicon octicon-location" viewBox="0 0 12 16" version="1.1"' +
