@@ -10,6 +10,7 @@
     <script th:src="@{/js/issue/issue-list.js }"></script>
 </head>
 <body>
+
 <div th:fragment="content" th:remove="tag">
     <h1 class="head-h1">
         <svg aria-hidden="true" class="octicon octicon-repo  color-grey" height="25" version="1.1" viewBox="0 0 12 16"
@@ -70,7 +71,7 @@
                                     <a name="issue-filter"
                                        data-name="label"
                                        th:attr="data-value=${item.code()},aria-checked=${(findIssuesParam.label == item.code())?'true':'false'}"
-                                       class="select-menu-item label-select-menu-item "
+                                       class="select-menu-item label-select-menu-item"
                                         >
                                         <svg class="octicon octicon-check select-menu-item-icon" viewBox="0 0 12 16"
                                              version="1.1" width="12" height="16" aria-hidden="true">
@@ -147,7 +148,7 @@
                                 aria-describedby="hovercard-aria-description">   [[${item.title}]]
                             </a>
                             <span class="labels lh-1">
-                            <a class="d-inline IssueLabel va-text-top"
+                            <a class="d-inline IssueLabel va-text-top cursor-p"
                                name="issue-filter"
                                data-name="label"
                                th:attr="data-value=${item.issueLabel.code()}"
@@ -160,46 +161,14 @@
                           #[[${item.id}]]
                             创建于 <create-time >[[${#dates.format(item.createTime, 'yyyy-MM-dd HH:mm:ss')
                             }]]</create-time> 创建者:
-                            <a class="gray-line"
-                                th:attr="data-name=${item.usersDto.username},
-                                         data-location=${item.usersDto.location},
-                                         data-location=${item.usersDto.location},
-                                         data-skillTag=${item.usersDto.skillTag},
-                                         data-picture=${item.usersDto.picture},
-                                         data-nginxUrl=${nginxUrl}"
+                            <a class="gray-line issue-user-name show-issue-user-card cursor-p"
+                                th:attr="data-username=${item.usersDto.username}
+                                ,data-picture=${item.usersDto.picture}
+                                ,data-location=${item.usersDto.location}
+                                ,data-skillTag=${item.usersDto.skillTag}
+                                "
                                aria-describedby="hovercard-aria-description">[[${item.usersDto.username}]]</a>
                         </span>
-                                <div class="Popover js-hovercard-content position-absolute"
-                                     style="display: block; outline: none; top: 477.5px; left: 672.414px;" tabindex="0">
-                                    <div class="Popover-message Popover-message--large Box box-shadow-large Popover-message--bottom-left"
-                                         style="width:360px;">
-                                        <div class="pb-3 px-3">
-                                            <div class="d-flex mt-3">
-                                                <div class="flex-self-start">
-                                                    <div class="rounded-1 overflow-hidden">
-                                                        <a data-octo-click="hovercard-link-click"
-                                                           data-octo-dimensions="link_type:profile"
-                                                           href="/ablegreen">
-                                                            <img class="d-block" height="60" width="60"
-                                                                 alt="@ablegreen"
-                                                                 src="https://avatars1.githubusercontent.com/u/3934660?s=88&amp;v=4">
-                                                        </a>
-                                                    </div>
-                                                </div>
-
-                                                <div class="overflow-hidden ml-3">
-                                                    <a class="f5 text-bold link-gray-dark no-underline"
-                                                       data-octo-click="hovercard-link-click"
-                                                       data-octo-dimensions="link_type:profile" href="/ablegreen">ablegreen</a>
-                                                    <div class="mt-1">
-                                                        <div></div>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                                 <span class="issue-meta-section css-truncate issue-milestone ml-2"> </span>
                             </div>
                         </div>

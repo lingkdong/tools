@@ -531,6 +531,10 @@ a.tabnav-extra:hover {
 .mt-2 {
     margin-top: 8px !important
 }
+.my-1 {
+    margin-top: 4px !important;
+    margin-bottom: 4px !important;
+}
 
 .mt-none {
     margin-top: 0px !important
@@ -538,6 +542,11 @@ a.tabnav-extra:hover {
 
 .mt-3 {
     margin-top: 16px !important
+}
+
+.my-3 {
+    margin-top: 16px !important;
+    margin-bottom: 16px !important
 }
 
 .mt-4 {
@@ -1072,9 +1081,14 @@ dl.form-group > dd .form-control.is-autocheck-errored {
 .d-none {
     display: none !important;
 }
-
+.v-hid {
+    visibility: hidden;
+}
 .p-absolute {
     position: absolute !important;
+}
+.p-fixed {
+    position: fixed !important;
 }
 
 .border-left {

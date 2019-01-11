@@ -3,6 +3,7 @@ $(function(){
   $(".bookmarks").attr("href",window.location)
                  .attr("title",document.title);
   }
+  var nginxUrl=$("#nginxUrl").val();
 })
 function _copy(obj) {
     obj.select(); // 选择对象
