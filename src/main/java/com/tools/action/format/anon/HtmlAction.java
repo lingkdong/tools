@@ -1,4 +1,4 @@
-package com.tools.action.anon.format;
+package com.tools.action.format.anon;
 
 import com.tools.dto.BaseResponseDTO;
 import com.tools.dto.HttpStatus;

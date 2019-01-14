@@ -1,7 +1,7 @@
 package com.tools.worker;
 
 import com.alibaba.druid.sql.SQLUtils;
-import com.tools.detection.CheckFormat;
+import com.tools.utils.CheckFormat;
 import com.tools.dto.format.Format;
 import com.tools.dto.format.SqlFormat;
 

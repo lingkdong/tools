@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="page">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Issue Reply</title>
+    <link th:href="@{/simditor/styles/simditor.css}" rel="stylesheet"/>
+    <link th:href="@{/css/issue/issue.css}" rel="stylesheet"/>
+    <script th:src="@{/simditor/scripts/module.js }"></script>
+    <script th:src="@{/simditor/scripts/hotkeys.js }"></script>
+    <script th:src="@{/simditor/scripts/uploader.js }"></script>
+    <script th:src="@{/simditor/scripts/simditor.js }"></script>
+    <script th:src="@{/js/issue/issue.js }"></script>
+
+</head>
+<body>
+<div th:fragment="content" th:remove="tag">
+    <textarea id="editor" placeholder="添加评论" autofocus></textarea>
+</div>
+</body>
+</html>

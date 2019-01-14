@@ -1,12 +1,8 @@
-package com.tools.action.anon;
+package com.tools.action.format.anon;
 
 import com.tools.action.BaseAction;
-import com.tools.dto.CategoryDto;
 import com.tools.dto.DateCalculateDto;
-import com.tools.model.Resource;
-import com.tools.service.CategoryService;
 import com.tools.service.DateService;
-import com.tools.service.ResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;

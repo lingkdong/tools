@@ -1,9 +1,9 @@
-package com.tools.action.anon.format;
+package com.tools.action.format.anon;
 
 import com.tools.dto.BaseResponseDTO;
 import com.tools.dto.HttpStatus;
-import com.tools.dto.format.CssFormat;
-import com.tools.worker.CssFormatWorker;
+import com.tools.dto.format.JsFormat;
+import com.tools.worker.JsFormatWorker;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,21 +13,20 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/anon/format")
-public class CssAction {
-    @PostMapping(value = "/css-pretty")
-    public Object pretty(CssFormat format) {
+public class JsAction {
+    @PostMapping(value = "/js-pretty")
+    public Object pretty(JsFormat format) {
         try {
-            return new BaseResponseDTO(HttpStatus.OK,new CssFormatWorker(format).pretty().getOutput());
+            return new BaseResponseDTO(HttpStatus.OK,new JsFormatWorker(format).pretty().getOutput());
         } catch (Exception e) {
             return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT);
         }
     }
 
-    @PostMapping(value = "/css-compress")
-    public Object compress(CssFormat format) {
+    @PostMapping(value = "/js-compress")
+    public Object compress(JsFormat format) {
         try {
-
-            return new BaseResponseDTO(HttpStatus.OK,new CssFormatWorker(format).compress().getOutput());
+            return new BaseResponseDTO(HttpStatus.OK,new JsFormatWorker(format).compress().getOutput());
         } catch (Exception e) {
             return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT);
         }

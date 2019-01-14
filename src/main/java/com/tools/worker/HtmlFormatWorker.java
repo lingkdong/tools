@@ -1,6 +1,6 @@
 package com.tools.worker;
 
-import com.tools.detection.CheckFormat;
+import com.tools.utils.CheckFormat;
 import com.tools.dto.format.Format;
 import com.tools.dto.format.HtmlFormat;
 import com.tools.utils.HtmlUtils;

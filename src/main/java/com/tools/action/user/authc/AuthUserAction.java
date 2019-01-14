@@ -1,15 +1,18 @@
-package com.tools.action.anon.user;
+package com.tools.action.user.authc;
 
 import com.tools.action.BaseAction;
 import com.tools.dto.BaseResponseDTO;
 import com.tools.dto.HttpStatus;
-import com.tools.dto.user.ViewChangeDto;
 import com.tools.dto.user.CompleteDto;
 import com.tools.dto.user.SaveChangeParam;
+import com.tools.dto.user.ViewChangeDto;
 import com.tools.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 

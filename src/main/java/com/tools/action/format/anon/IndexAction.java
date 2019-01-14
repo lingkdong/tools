@@ -1,10 +1,9 @@
-package com.tools.action.anon;
+package com.tools.action.format.anon;
 
 import com.tools.action.BaseAction;
 import com.tools.dto.BaseResponseDTO;
 import com.tools.dto.CategoryDto;
 import com.tools.dto.HttpStatus;
-import com.tools.model.Category;
 import com.tools.service.CategoryService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;

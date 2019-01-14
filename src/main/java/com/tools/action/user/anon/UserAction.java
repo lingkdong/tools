@@ -1,4 +1,4 @@
-package com.tools.action.anon.user;
+package com.tools.action.user.anon;
 
 import com.tools.dto.BaseResponseDTO;
 import com.tools.dto.user.LoginParam;

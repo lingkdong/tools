@@ -1,4 +1,4 @@
-package com.tools.detection;
+package com.tools.utils;
 
 import com.tools.dto.format.Format;
 import org.apache.commons.lang3.StringUtils;

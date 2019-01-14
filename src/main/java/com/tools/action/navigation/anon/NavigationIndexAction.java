@@ -1,4 +1,4 @@
-package com.tools.action.anon.navigation;
+package com.tools.action.navigation.anon;
 
 import com.tools.action.BaseAction;
 import com.tools.dto.BaseResponseDTO;

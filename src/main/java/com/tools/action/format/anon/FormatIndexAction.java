@@ -1,4 +1,4 @@
-package com.tools.action.anon.format;
+package com.tools.action.format.anon;
 
 import com.tools.action.BaseAction;
 import org.springframework.stereotype.Controller;
