@@ -20,13 +20,12 @@ public class Issue implements Serializable {
     private Long userId;
     @Column(nullable = false)
     private String title;
-    @Column(length = 50, columnDefinition = "unlabeled")
+    @Column(length = 50)
     private String label;
     @Column(length = 2000)
     private String body;
     @Column(nullable = false)
     private Byte status;//open, closed
-    @Column(columnDefinition = "0")
     private Long commentCount;
     private Date createTime;
     private Date lastUpdateTime;
