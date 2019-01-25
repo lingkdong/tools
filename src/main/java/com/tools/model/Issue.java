@@ -22,7 +22,7 @@ public class Issue implements Serializable {
     private String title;
     @Column(length = 50, columnDefinition = "unlabeled")
     private String label;
-    @Column(length = 800)
+    @Column(length = 2000)
     private String body;
     @Column(nullable = false)
     private Byte status;//open, closed

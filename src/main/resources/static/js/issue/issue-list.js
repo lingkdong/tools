@@ -34,10 +34,7 @@ $(function () {
         showIssueUserCard(this, x, y);
         stopEvent(e);
     })
-    $(document).on("click",".show-issue-user-card",function (e) {
-        redirectToCard(this);
-        stopEvent(e);
-    })
+
     $(document).mouseup(function (e) {
         var _con = $('.Popover');   // 设置目标区域
         if (!_con.is(e.target) && _con.has(e.target).length === 0) {
@@ -206,10 +203,3 @@ function buildUserCard(username, picture, location, skillTag) {
     return info;
 }
 
-function redirectToCard(obj) {
-    var username = $(obj).attr("data-username");
-    if (isNotBlank(username)) {
-        var url = PRE_FOX_ANON_BASE + "/users/card/" + username;
-        jump_page(url);
-    }
-}

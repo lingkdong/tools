@@ -6,17 +6,105 @@
     <meta charset="UTF-8"/>
     <title>Issue Reply</title>
     <link th:href="@{/simditor/styles/simditor.css}" rel="stylesheet"/>
-    <link th:href="@{/css/issue/issue.css}" rel="stylesheet"/>
+    <link th:href="@{/css/issue/new-issue.css}" rel="stylesheet"/>
     <script th:src="@{/simditor/scripts/module.js }"></script>
     <script th:src="@{/simditor/scripts/hotkeys.js }"></script>
     <script th:src="@{/simditor/scripts/uploader.js }"></script>
     <script th:src="@{/simditor/scripts/simditor.js }"></script>
-    <script th:src="@{/js/issue/issue.js }"></script>
+    <script th:src="@{/js/issue/issue-common.js }"></script>
+    <script th:src="@{/js/issue/new-issue.js }"></script>
 
 </head>
 <body>
 <div th:fragment="content" th:remove="tag">
-    <textarea id="editor" placeholder="添加评论" autofocus></textarea>
+    <div class="discussion-timeline">
+        <div class="timeline-comment-wrapper timeline-new-comment composer">
+            <span class="timeline-comment-avatar">
+                <div class="rounded-1 overflow-hidden">
+                    <div class="issue-user-name show-issue-user-card cursor-p"
+                     style="box-shadow: 0px 0px 1px rgba(12,13,14,0.5);height: 48px;width: 48px"
+                        th:attr="data-username=${user.username}" th:title="${user.username}">
+                         <img th:if="${!#strings.isEmpty(user.picture)}"
+                              th:src="${nginxUrl+user.picture}">
+                    </div>
+                </div>
+            </span>
+            <div class="timeline-comment">
+                <div class="discussion-topic-header js-issue-title-input-container">
+                    <input
+                            class="form-control  input-lg  input-contrast required w-percent-85" placeholder="标题"
+                             id="issue_title">
+                    <div class="table-list-header-toggle f-right form-control" style="width:13%">
+                      <details class="details-reset details-overlay f-left select-menu label-select-menu">
+                        <summary class="btn-link select-menu-button" name="label-selected" data-hotkey="l"
+                                 aria-haspopup="menu">
+                           <span class="color"
+                                 th:style="${#strings.concat('background-color:',defaultLabel.getBgColor())}">&nbsp;
+                                                </span>
+                            <span class="name" th:text="${defaultLabel.getName()}"></span>
+                        </summary>
+                          <input type="hidden" id="defaultLabel" name="defaultLabel"
+                                 th:attr="data-value=${defaultLabel.code()}
+                                 ,data-bgColor=${defaultLabel.getBgColor()}
+                                 ,data-labelName=${defaultLabel.getName()
+                                 }">
+                        <details-menu class="select-menu-modal p-absolute right-0" style="z-index: 99;" src="labelType" role="menu">
+                            <div class="select-menu-header">
+                                <span class="select-menu-title">标签选择</span>
+                            </div>
+                            <div class="select-menu-filters">
+                                <div class="select-menu-text-filter">
+                                    <input type="text" id="label-filter-field" class="form-control js-filterable-field" placeholder="Filter labels" aria-label="Filter labels" autocomplete="off" autofocus="">
+                                </div>
+                            </div>
+                            <div class="select-menu-list">
+                                <div data-filterable-for="label-filter-field" data-filterable-type="substring">
+
+                                    <th:block th:each="item:${issueLabels}">
+                                        <a name="issue-filter"
+                                           data-name="label"
+                                           th:attr="data-value=${item.code()},
+                                           data-labelName=${item.getName()},
+                                           data-bgColor=${item.getBgColor()},
+                                           aria-checked=${(defaultLabel.code() == item.code())?'true':'false'}"
+                                           class="select-menu-item label-select-menu-item "
+                                        >
+                                            <svg class="octicon octicon-check select-menu-item-icon" viewBox="0 0 12 16"
+                                                 version="1.1" width="12" height="16" aria-hidden="true">
+                                                <path fill-rule="evenodd" d="M12 5l-8 8-4-4 1.5-1.5L4 10l6.5-6.5L12 5z"></path>
+                                            </svg>
+                                            <div class="select-menu-item-text css-truncate">
+                                                <div class="css-truncate-target">
+                                                <span class="color"
+                                                      th:style="${'background-color:'+item.getBgColor()}">&nbsp;
+                                                </span>
+                                                    <span class="name"> [[${item.getName()}]]</span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </th:block>
+                                </div>
+                            </div>
+                        </details-menu>
+                    </details>
+                    </div>
+                </div>
+                <div class="discussion-topic-text">
+                    <textarea id="editor" placeholder="添加评论" autofocus></textarea>
+                </div>
+                <div class="f-left">
+                    <a class="tabnav-extra" href="/tools/anon/issues/list">
+                        返回列表
+                    </a>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">
+                        创建问题
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 </html>

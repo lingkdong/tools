@@ -7,6 +7,7 @@
     <title>Issues</title>
     <link th:href="@{/css/issue/issue-list.css}" rel="stylesheet"/>
     <script th:src="@{/js/filter-list.js }"></script>
+    <script th:src="@{/js/issue/issue-common.js }"></script>
     <script th:src="@{/js/issue/issue-list.js }"></script>
 </head>
 <body>
@@ -20,7 +21,7 @@
         </svg>
         <span class="author" itemprop="author" th:text="问题"></span>
     </h1>
-    <div class="py-3 border-top">
+    <div class="pt-4 border-top">
         <label class="fw-normal">查找：</label>
         <input class="form-control w-320" id="find-issue" th:value="${findIssuesParam.title}"
                th:attr="data-username=${findIssuesParam.title}"/>

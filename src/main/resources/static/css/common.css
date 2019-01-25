@@ -415,6 +415,9 @@ a.tabnav-extra:hover {
 .pt-3 {
     padding-top: 16px !important;
 }
+.pt-4 {
+    padding-top: 32px !important;
+}
 
 .pt-2-1 {
     padding-top: 12px !important;
@@ -1899,7 +1902,14 @@ label {
     display: block;
     width: 100%
 }
+.input-lg {
+    font-size: 16px;
+    padding: 4px 10px;
+}
 
+.input-contrast {
+    background-color: #fafbfc;
+}
 .btn-block {
     display: block;
     width: 100%;
@@ -2541,4 +2551,103 @@ select-menu-divider, .select-menu-header {
     min-width: 320px;
 }
 
+.discussion-timeline:before {
+    background-color: #e6ebf1;
+    bottom: 0;
+    content: "";
+    display: block;
+    left: 79px;
+    position: absolute;
+    top: 0;
+    width: 2px;
+    z-index: -1;
+}
 
+.discussion-timeline {
+    position: relative;
+    width: 80%;
+}
+.timeline-new-comment {
+    margin-bottom: 0;
+    max-width: 80%;
+}
+
+.timeline-comment-wrapper {
+    border-bottom: 2px solid #fff;
+    border-top: 2px solid #fff;
+    margin-bottom: 15px;
+    margin-top: 15px;
+    padding-left: 60px;
+    position: relative;
+}
+
+div.composer {
+    border: 0;
+    margin-top: 0;
+}
+.timeline-comment-avatar {
+    border-radius: 3px;
+    float: left;
+    margin-left: -60px;
+}
+.timeline-comment {
+     background-color: #fff;
+     border: 1px solid #d1d5da;
+     border-radius: 3px;
+     position: relative;
+}
+
+.discussion-topic-header {
+    padding: 10px;
+    position: relative;
+    word-wrap: break-word;
+}
+.discussion-topic-text {
+    padding: 10px;
+    position: relative;
+}
+.timeline-comment-wrapper>.timeline-comment:after, .timeline-comment-wrapper>.timeline-comment:before, .timeline-new-comment .timeline-comment:after, .timeline-new-comment .timeline-comment:before {
+    border-color: transparent;
+    border-style: solid solid outset;
+    content: " ";
+    display: block;
+    height: 0;
+    left: -16px;
+    pointer-events: none;
+    position: absolute;
+    right: 100%;
+    top: 11px;
+    width: 0;
+}
+.timeline-comment-wrapper>.timeline-comment:after, .timeline-new-comment .timeline-comment:after {
+    border-right-color: #f6f8fa;
+    border-width: 7px;
+    margin-left: 2px;
+    margin-top: 1px;
+}
+
+
+.new-discussion-timeline .composer .timeline-comment:after {
+    border-right-color: #fff;
+}
+.timeline-comment-wrapper>.timeline-comment:before, .timeline-new-comment .timeline-comment:before {
+    border-right-color: #d1d5da;
+    border-width: 8px;
+}
+
+
+.form-actions:before {
+    content: "";
+    display: table;
+}
+.form-actions:after {
+    clear: both;
+    content: "";
+    display: table;
+}
+.form-actions .btn {
+    float: right;
+}
+.timeline-new-comment .form-actions {
+    padding: 0 10px 10px;
+}
