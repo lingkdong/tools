@@ -21,7 +21,6 @@ public class Constant {
     public final static String JPEG=".jpeg";
     public final static String PNG=".png";
     public final static String GIF=".gif";
-    public final static String USERS="users";
     public final static String IMG="img";
     public final static String AVATAR="avatar";
 }

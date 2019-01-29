@@ -30,7 +30,7 @@ public class AvatarConstant {
      * @return
      */
     public static String getAvatarDir(Long userId,String username) {
-        return Constant.USERS
+        return FileChannelEnum.USERS.value()
                 + File.separator
                 + userId
                 + File.separator

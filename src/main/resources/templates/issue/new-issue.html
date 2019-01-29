@@ -11,6 +11,7 @@
     <script th:src="@{/simditor/scripts/hotkeys.js }"></script>
     <script th:src="@{/simditor/scripts/uploader.js }"></script>
     <script th:src="@{/simditor/scripts/simditor.js }"></script>
+    <script th:src="@{/js/filter-list.js }"></script>
     <script th:src="@{/js/issue/issue-common.js }"></script>
     <script th:src="@{/js/issue/new-issue.js }"></script>
 
@@ -41,7 +42,7 @@
                            <span class="color"
                                  th:style="${#strings.concat('background-color:',defaultLabel.getBgColor())}">&nbsp;
                                                 </span>
-                            <span class="name" th:text="${defaultLabel.getName()}"></span>
+                            <span class="name">&nbsp;[[${defaultLabel.getName()}]]</span>
                         </summary>
                           <input type="hidden" id="defaultLabel" name="defaultLabel"
                                  th:attr="data-value=${defaultLabel.code()}
@@ -98,7 +99,7 @@
                     </a>
                 </div>
                 <div class="form-actions">
-                    <button type="submit" class="btn btn-primary">
+                    <button  class="btn btn-primary" id="create-issue">
                         创建问题
                     </button>
                 </div>

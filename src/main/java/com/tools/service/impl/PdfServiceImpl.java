@@ -6,6 +6,7 @@ import com.tools.service.OpenOfficeService;
 import com.tools.service.PdfService;
 import com.tools.utils.Constant;
 import com.tools.utils.DateUtil;
+import com.tools.utils.FileChannelEnum;
 import com.tools.utils.FileUtil;
 import com.tools.worker.Worker;
 import lombok.extern.slf4j.Slf4j;
@@ -85,7 +86,8 @@ public class PdfServiceImpl implements PdfService {
         File orig;
         File dest;
         String namePrefix = FileUtil.getNamePrefix(file.getOriginalFilename());
-            orig = FileUtil.uploadFile(file, fileService.getUploadTemp() + File.separator + dateDir
+            orig = FileUtil.uploadFile(file,
+                    fileService.getUploadTemp() + File.separator + FileChannelEnum.CONVERT.value()+File.separator + dateDir
                     , namePrefix
                             + "_"
                             + convertFileDto.getToken()
@@ -95,7 +97,6 @@ public class PdfServiceImpl implements PdfService {
               return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT, ErrorInfo.newErrorInfo().property("file")
                       .HttpStatus(HttpStatus.FILE_UPLOAD_ERROR).build());
           }
-        boolean flag = false;
         try {
             dest = new File(getDownPath(dateDir,
                     FileUtil.getNamePrefix(orig.getName()) + Constant.PDF));

@@ -12,5 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @Data
 public class UploadFileDto {
-    private MultipartFile[] files;
+    private MultipartFile  file;
+    private String dir;
+    private String fileName;
 }

@@ -1,5 +1,8 @@
 package com.tools.service;
 
+import com.tools.dto.BaseResponseDTO;
+import com.tools.dto.UploadFileDto;
+import com.tools.dto.issue.CreateIssueParam;
 import com.tools.dto.issue.FindIssuesParam;
 import com.tools.dto.issue.ViewIssuesDto;
 import org.springframework.data.domain.Page;
@@ -16,4 +19,8 @@ public interface IssueService {
     Page<ViewIssuesDto> findIssues(FindIssuesParam param, Pageable pageable);
 
     List getStatusStatistics();
+
+    BaseResponseDTO uploadFile(UploadFileDto uploadFileDto);
+
+    BaseResponseDTO createIssue(CreateIssueParam createIssueParam);
 }

@@ -1,5 +1,10 @@
 package com.tools.service;
 
+import com.tools.dto.BaseResponseDTO;
+import com.tools.dto.UploadFileDto;
+
+import java.io.File;
+
 /**
  * Created by lk on 2018/3/9.
  */
@@ -33,5 +38,12 @@ public interface FileService {
 
     boolean delDownTemp();
 
+    BaseResponseDTO detectFileDto(UploadFileDto uploadFileDto);
+
+    BaseResponseDTO doUpload(UploadFileDto fileDto);
+
+    String getTokenFileName(String fileName);
+
+    String getNginxUrl();
 
 }
