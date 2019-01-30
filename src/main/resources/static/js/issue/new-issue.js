@@ -56,6 +56,10 @@ function detect() {
         alertError("标题不能为空");
         return false;
     }
+    if(isNotBlank(issueBody.getValue()) && issueBody.getValue().trim()>1000){
+        alertError("评论内容不能超过1000");
+        return false;
+    }
     return true;
 }
 

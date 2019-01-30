@@ -1,0 +1,194 @@
+h1 {
+    font-size: 32px;
+}
+.gh-header-title {
+    font-weight: 400;
+    line-height: 1.125;
+    margin-bottom: 0;
+    margin-right: 150px;
+    word-wrap: break-word;
+}
+.gh-header-number {
+    color: #a3aab1;
+    font-weight: 300;
+    letter-spacing: -1px;
+}
+
+.gh-header-meta {
+    border-bottom: 1px solid #e6ebf1;
+    color: #586069;
+    font-size: 14px;
+    line-height: 20px;
+    margin-top: 8px;
+    padding-bottom: 20px;
+}
+
+
+.TableObject {
+    display: table;
+}
+
+.gh-header.issue .gh-header-meta {
+    margin-bottom: 15px;
+}
+.TableObject-item {
+    display: table-cell;
+    vertical-align: middle;
+    white-space: nowrap;
+    width: 1%;
+}
+
+.state, .State {
+    background-color: #6a737d;
+    border-radius: 3px;
+    color: #fff;
+    display: inline-block;
+    font-weight: 600;
+    line-height: 20px;
+    padding: 4px 8px;
+    text-align: center;
+}
+.State--green {
+    background-color: #2cbe4e;
+}
+
+.gh-header-meta .State {
+    margin-right: 8px;
+}
+
+
+.TableObject-item--primary {
+    width: 99%;
+}
+
+.gh-header-meta .TableObject-item--primary {
+    white-space: normal;
+    word-wrap: break-word;
+}
+.link-gray {
+    color: #586069!important;
+}
+.text-bold {
+    font-weight: 600!important;
+}
+.avatar-parent-child {
+    position: relative;
+}
+.timeline-comment.current-user {
+    border-color: #d1d5da;
+}
+.timeline-comment-wrapper .timeline-comment.current-user:after, .timeline-comment-wrapper .timeline-comment.current-user:before {
+    border-color: transparent;
+    border-style: solid solid outset;
+    content: " ";
+    display: block;
+    height: 0;
+    left: -16px;
+    pointer-events: none;
+    position: absolute;
+    right: 100%;
+    top: 11px;
+    width: 0;
+}
+
+
+
+.timeline-comment-wrapper .timeline-comment.current-user:after, .timeline-comment-wrapper .timeline-comment.current-user:before {
+    border-color: transparent;
+    border-style: solid solid outset;
+    content: " ";
+    display: block;
+    height: 0;
+    left: -16px;
+    pointer-events: none;
+    position: absolute;
+    right: 100%;
+    top: 11px;
+    width: 0;
+}
+
+timeline-comment-wrapper .timeline-comment.current-user:before {
+    border-right-color: #d1d5da;
+    border-width: 8px;
+}
+.timeline-comment-wrapper .timeline-comment.current-user:before {
+    border-right-color: #d1d5da;
+    border-width: 8px;
+}
+
+.timeline-comment-header {
+    background-color: #f6f8fa;
+    border-bottom: 1px solid #d1d5da;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    color: #586069;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+
+.clearfix:before {
+    content: "";
+    display: table;
+}
+
+.clearfix:after {
+    clear: both;
+    content: "";
+    display: table;
+}
+
+
+.timeline-comment.current-user .timeline-comment-header {
+    background-color: #f6f8fa;
+    border-bottom-color: #d1d5da;
+}
+.text-normal {
+    font-weight: 400!important;
+}
+
+b, strong {
+    font-weight: 600;
+}
+
+table tr {
+     background-color: #fff;
+     border-top: 0px;
+}
+.markdown-body {
+    font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+    font-size: 16px;
+    line-height: 1.5;
+    word-wrap: break-word;
+}
+
+.markdown-body:before {
+    content: "";
+    display: table;
+}
+
+.markdown-body:after {
+    clear: both;
+    content: "";
+    display: table;
+}
+.comment-body {
+    font-size: 14px;
+    overflow: visible;
+    width: 100%;
+}
+table td, th {
+    padding: 6px 13px;
+     border: 0px;
+}
+
+.timeline-comment-wrapper .timeline-comment.current-user:after {
+    border-right-color: #f6f8fa;
+    border-width: 7px;
+    margin-left: 2px;
+    margin-top: 1px;
+}
+
+.issue-body{
+    border: 1px solid #dfe2e5;
+}

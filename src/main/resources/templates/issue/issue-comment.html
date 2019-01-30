@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="page">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Issue Reply</title>
+    <link th:href="@{/simditor/styles/simditor.css}" rel="stylesheet"/>
+    <link th:href="@{/css/issue/issue-comment.css}" rel="stylesheet"/>
+    <script th:src="@{/simditor/scripts/module.js }"></script>
+    <script th:src="@{/simditor/scripts/hotkeys.js }"></script>
+    <script th:src="@{/simditor/scripts/uploader.js }"></script>
+    <script th:src="@{/simditor/scripts/simditor.js }"></script>
+    <script th:src="@{/js/issue/issue-common.js }"></script>
+    <script th:src="@{/js/issue/issue-comment.js }"></script>
+
+</head>
+<body>
+<div th:fragment="content" th:remove="tag">
+    <div class="gh-header-show ">
+        <div class="gh-header-actions">
+
+            <button class="btn btn-primary f-right btn-sm js-jump-create">
+                新建问题
+            </button>
+        </div>
+
+        <h1 class="gh-header-title">
+          <span class="js-issue-title">
+             [[${issueData.issueDto.title}]]
+          </span>
+            <span class="gh-header-number"># [[${issueData.issueDto.id}]]</span>
+        </h1>
+    </div>
+    <div class="issue-body my-3" >
+        <div class="pl-3" th:utext="${issueData.issueDto.body}"></div>
+    </div>
+    <div class="TableObject gh-header-meta">
+        <div class="TableObject-item">
+            <div class="State State--green">
+                <svg class="octicon octicon-issue-opened" viewBox="0 0 14 16" version="1.1" width="14" height="16"
+                     aria-hidden="true">
+                    <path fill-rule="evenodd"
+                          d="M7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 0 1 1.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7zm1 3H6v5h2V4zm0 6H6v2h2v-2z"></path>
+                </svg>
+                [[${issueData.issueDto.issueStatus.getName()}]]
+            </div>
+
+        </div>
+        <div class="TableObject-item TableObject-item--primary">
+            <a class="text-bold link-gray show-issue-user-card "
+               th:attr="data-username=${issueData.issueDto.usersDto.username}">[[${issueData.issueDto.usersDto.username}]]</a>  创建于
+            <create-time >[[${#dates.format(issueData.issueDto.createTime, 'yyyy-MM-dd HH:mm:ss') }]]</create-time>
+            ,  共[[${issueData.issueDto.commentCount}]] 条评论
+        </div>
+    </div>
+    <div class="discussion-timeline">
+        <th:block th:each="item:${issueData.commentDtos}">
+            <div class="timeline-comment-wrapper">
+                <div class="timeline-comment-avatar">
+                    <div class="rounded-1 overflow-hidden">
+                        <div class="issue-user-name show-issue-user-card cursor-p"
+                             style="box-shadow: 0px 0px 1px rgba(12,13,14,0.5);height: 48px;width: 48px"
+                             th:attr="data-username=${item.usersDto.username}" th:title="${item.usersDto.username}">
+                            <img th:if="${!#strings.isEmpty(item.usersDto.picture)}"
+                                 th:src="${nginxUrl+item.usersDto.picture}">
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="timeline-comment-group">
+                    <div class="unminimized-comment editable-comment comment timeline-comment current-user">
+                        <div class="timeline-comment-header clearfix">
+                            <h3 class="timeline-comment-header-text f5 text-normal">
+                                <strong class="css-truncate">
+                                    <a class="link-gray">[[${item.usersDto.username}]]</a>
+                                </strong>
+                                评论于
+                                <create-time >[[${#dates.format(item.createTime, 'yyyy-MM-dd HH:mm:ss')}]]</create-time>
+                            </h3>
+                        </div>
+
+
+                        <div class="edit-comment-hide">
+                            <task-lists sortable="">
+                                <table class="d-block">
+                                    <tbody class="d-block">
+                                    <tr class="d-block">
+                                        <td class="d-block comment-body markdown-body  js-comment-body">
+                                            <p  th:utext="${item.comment}"></p>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </task-lists>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </th:block>
+        <div class="timeline-comment-wrapper">
+            <div class="timeline-comment-avatar">
+                <div class="rounded-1 overflow-hidden">
+                    <div class="issue-user-name show-issue-user-card cursor-p"
+                         style="box-shadow: 0px 0px 1px rgba(12,13,14,0.5);height: 48px;width: 48px"
+                         th:attr="data-username=${user.username}" th:title="${user.username}">
+                        <img th:if="${!#strings.isEmpty(user.picture)}"
+                             th:src="${nginxUrl+user.picture}">
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="timeline-comment-group" id="issue-328805503">
+                <div class="unminimized-comment editable-comment comment timeline-comment current-user">
+                    <div class="timeline-comment-header clearfix">
+                        <h3 class="timeline-comment-header-text f5 text-normal">
+                            <strong class="css-truncate">
+                                <a class="link-gray">lingkdong</a>
+                            </strong>
+                            commented
+                            <relative-time datetime="2018-06-03T07:08:14Z" title="2018年6月3日 GMT+8 下午3:08">on 3 Jun
+                                2018
+                            </relative-time>
+                            <span class="js-comment-fragment"></span>
+                        </h3>
+                    </div>
+
+
+                    <div class="edit-comment-hide">
+
+
+                        <task-lists sortable="">
+                            <table class="d-block">
+                                <tbody class="d-block">
+                                <tr class="d-block">
+                                    <td class="d-block comment-body markdown-body  js-comment-body">
+
+                                        <p>test issues22</p>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </task-lists>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="timeline-comment-wrapper">
+            <div class="timeline-comment-avatar">
+                <div class="rounded-1 overflow-hidden">
+                    <div class="issue-user-name show-issue-user-card cursor-p"
+                         style="box-shadow: 0px 0px 1px rgba(12,13,14,0.5);height: 48px;width: 48px"
+                         th:attr="data-username=${user.username}" th:title="${user.username}">
+                        <img th:if="${!#strings.isEmpty(user.picture)}"
+                             th:src="${nginxUrl+user.picture}">
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="timeline-comment-group" id="issue-328805503">
+                <div class="unminimized-comment editable-comment comment timeline-comment current-user">
+                    <div class="timeline-comment-header clearfix">
+                        <h3 class="timeline-comment-header-text f5 text-normal">
+                            <strong class="css-truncate">
+                                <a class="link-gray">lingkdong</a>
+                            </strong>
+                            commented
+                            <relative-time datetime="2018-06-03T07:08:14Z" title="2018年6月3日 GMT+8 下午3:08">on 3 Jun
+                                2018
+                            </relative-time>
+                            <span class="js-comment-fragment"></span>
+                        </h3>
+                    </div>
+
+
+                    <div class="edit-comment-hide">
+
+
+                        <task-lists sortable="">
+                            <table class="d-block">
+                                <tbody class="d-block">
+                                <tr class="d-block">
+                                    <td class="d-block comment-body markdown-body  js-comment-body">
+
+                                        <p>test issues22</p>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </task-lists>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="discussion-timeline">
+        <div class="timeline-comment-wrapper timeline-new-comment composer">
+            <span class="timeline-comment-avatar">
+                <div class="rounded-1 overflow-hidden">
+                    <div class="issue-user-name show-issue-user-card cursor-p"
+                         style="box-shadow: 0px 0px 1px rgba(12,13,14,0.5);height: 48px;width: 48px"
+                         th:attr="data-username=${user.username}" th:title="${user.username}">
+                         <img th:if="${!#strings.isEmpty(user.picture)}"
+                              th:src="${nginxUrl+user.picture}">
+                    </div>
+                </div>
+            </span>
+            <div class="timeline-comment">
+                <div class="discussion-topic-text">
+                    <textarea id="editor" placeholder="添加评论" autofocus></textarea>
+                </div>
+                <div class="f-left">
+                    <a class="tabnav-extra" href="/tools/anon/issues/list">
+                        返回列表
+                    </a>
+                </div>
+                <div class="form-actions">
+                    <button class="btn btn-primary" id="create-issue">
+                        添加评论
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

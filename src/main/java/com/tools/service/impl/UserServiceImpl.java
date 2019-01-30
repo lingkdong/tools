@@ -434,4 +434,7 @@ public class UserServiceImpl implements UserService {
         return Worker.OK();
     }
 
+    public User findOne(Long id){
+        return  userDao.findOne(id);
+    }
 }

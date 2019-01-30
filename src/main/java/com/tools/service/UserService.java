@@ -96,4 +96,6 @@ public interface UserService {
 
     BaseResponseDTO getAvatar();
 
+    User findOne(Long id);
+
 }

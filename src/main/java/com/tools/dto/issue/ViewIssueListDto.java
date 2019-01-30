@@ -12,7 +12,7 @@ import java.util.Date;
  * @Date: 2018/7/13 17:06
  **/
 @Data
-public class ViewIssuesDto {
+public class ViewIssueListDto {
     private Long id;
     private String title;
     /**

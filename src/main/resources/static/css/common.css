@@ -432,7 +432,7 @@ a.tabnav-extra:hover {
 }
 
 .pl-1 {
-    padding-bottom: 4px !important
+    padding-left: 4px !important
 }
 
 .pb-4 {
@@ -2565,11 +2565,11 @@ select-menu-divider, .select-menu-header {
 
 .discussion-timeline {
     position: relative;
-    width: 80%;
+ /*   width: 80%;*/
 }
 .timeline-new-comment {
     margin-bottom: 0;
-    max-width: 80%;
+ /*   max-width: 80%;*/
 }
 
 .timeline-comment-wrapper {
@@ -2606,7 +2606,9 @@ div.composer {
     padding: 10px;
     position: relative;
 }
-.timeline-comment-wrapper>.timeline-comment:after, .timeline-comment-wrapper>.timeline-comment:before, .timeline-new-comment .timeline-comment:after, .timeline-new-comment .timeline-comment:before {
+.timeline-comment-wrapper>.timeline-comment:after, .timeline-comment-wrapper>.timeline-comment:before,
+.timeline-comment-wrapper>.timeline-comment:after, .timeline-comment-wrapper>.timeline-comment:before,
+.timeline-new-comment .timeline-comment:after, .timeline-new-comment .timeline-comment:before {
     border-color: transparent;
     border-style: solid solid outset;
     content: " ";

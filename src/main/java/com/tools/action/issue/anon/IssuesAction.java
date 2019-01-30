@@ -4,7 +4,7 @@ import com.tools.constants.IssueLabel;
 import com.tools.constants.IssueSort;
 import com.tools.constants.IssueStatus;
 import com.tools.dto.issue.FindIssuesParam;
-import com.tools.dto.issue.ViewIssuesDto;
+import com.tools.dto.issue.ViewIssueListDto;
 import com.tools.service.IssueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -44,7 +44,7 @@ public class IssuesAction {
         Pageable _pageable=new PageRequest(pageable.getPageNumber(),pageable.getPageSize(),sort);
         findIssuesParam.setSort(issueSort.code());
 
-        Page<ViewIssuesDto> page = issueService.findIssues(findIssuesParam, _pageable.previousOrFirst());
+        Page<ViewIssueListDto> page = issueService.findIssues(findIssuesParam, _pageable.previousOrFirst());
         mv.addObject("page", page);
         mv.addObject("findIssuesParam", findIssuesParam);
         mv.addObject("issueStatusDtos", issueService.getStatusStatistics());

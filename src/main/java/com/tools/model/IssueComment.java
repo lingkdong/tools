@@ -12,7 +12,7 @@ import java.util.Date;
  * To change this template use File | Settings | File Templates.
  */
 @Entity
-public class Comment implements Serializable {
+public class IssueComment implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -20,7 +20,7 @@ public class Comment implements Serializable {
     private Long issueId;
     @Column(nullable = false)
     private Long userId;// who reply
-    @Column(length = 800)
+    @Column(length = 2000)
     private String comment;
     @Column(nullable = false)
     private Byte type;// 1. comment 2.closed 3.reopen

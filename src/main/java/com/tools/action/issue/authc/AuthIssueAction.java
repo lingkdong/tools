@@ -7,11 +7,13 @@ import com.tools.dto.issue.CreateIssueParam;
 import com.tools.dto.user.UsersDto;
 import com.tools.model.User;
 import com.tools.service.FileService;
+import com.tools.service.IssueCommentService;
 import com.tools.service.IssueService;
 import com.tools.service.UsersService;
 import com.tools.worker.Worker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -36,7 +38,8 @@ public class AuthIssueAction {
     private IssueService issueService;
     @Autowired
     private FileService fileService;
-
+    @Autowired
+    private IssueCommentService issueCommentService;
     @RequestMapping(value = "/new")
     public ModelAndView newIssues() {
         ModelAndView mv = new ModelAndView("issue/new-issue");
@@ -69,4 +72,18 @@ public class AuthIssueAction {
     public BaseResponseDTO createIssue(CreateIssueParam createIssueParam) {
         return issueService.createIssue(createIssueParam);
     }
+
+
+    @RequestMapping(value = "/{issueId}")
+    public ModelAndView index(@PathVariable(value = "issueId") Long issueId) {
+        ModelAndView mv = new ModelAndView("issue/issue-comment");
+        User sessionUser = Worker.getCurrentUser();
+        if (sessionUser != null) {
+            UsersDto usersDto = usersService.toDto(sessionUser);
+            mv.addObject("user", usersDto);
+        }
+        mv.addObject("issueData",issueCommentService.getIssueComments(issueId).getData());
+        return mv;
+    }
+
 }

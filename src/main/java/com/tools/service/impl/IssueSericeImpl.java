@@ -7,14 +7,12 @@ import com.tools.dao.JdbcDao;
 import com.tools.dto.BaseResponseDTO;
 import com.tools.dto.HttpStatus;
 import com.tools.dto.UploadFileDto;
-import com.tools.dto.issue.CreateIssueParam;
-import com.tools.dto.issue.FindIssuesParam;
-import com.tools.dto.issue.IssueStatusDto;
-import com.tools.dto.issue.ViewIssuesDto;
+import com.tools.dto.issue.*;
 import com.tools.model.Issue;
 import com.tools.model.User;
 import com.tools.service.FileService;
 import com.tools.service.IssueService;
+import com.tools.service.UserService;
 import com.tools.service.UsersService;
 import com.tools.utils.BeanUtil;
 import com.tools.utils.FileChannelEnum;
@@ -45,12 +43,14 @@ public class IssueSericeImpl implements IssueService {
     @Autowired
     private UsersService usersService;
     @Autowired
+    private UserService userService;
+    @Autowired
     private JdbcDao jdbcDao;
     @Autowired
     private FileService fileService;
 
     @Override
-    public Page<ViewIssuesDto> findIssues(FindIssuesParam param, Pageable pageable) {
+    public Page<ViewIssueListDto> findIssues(FindIssuesParam param, Pageable pageable) {
         Page issues = findIssuesParam(param, pageable);
         if (pageable.getPageNumber() >= issues.getTotalPages() && (issues.getTotalPages() - 1) >= 0) {
             pageable = new PageRequest(issues.getTotalPages() - 1, pageable.getPageSize(), pageable.getSort());
@@ -64,15 +64,15 @@ public class IssueSericeImpl implements IssueService {
                             .stream()
                             .map(Issue::getUserId).collect(Collectors.toSet())));
             //build dto
-            List<ViewIssuesDto> dtos = new ArrayList<>();
+            List<ViewIssueListDto> dtos = new ArrayList<>();
             issueList.stream().forEach(item -> {
-                ViewIssuesDto dto = BeanUtil.cast(ViewIssuesDto.class, item);
+                ViewIssueListDto dto = BeanUtil.cast(ViewIssueListDto.class, item);
                 dto.setUsersDto(usersService.toDto(userMap.get(item.getUserId())));
                 dto.setIssueStatus(IssueStatus.getIssueStatus(item.getStatus()));
                 dto.setIssueLabel(IssueLabel.getIssueLabel(item.getLabel()));
                 dtos.add(dto);
             });
-            Page<ViewIssuesDto> result = new PageImpl<>(dtos, new PageRequest(issues.getNumber(), issues.getSize
+            Page<ViewIssueListDto> result = new PageImpl<>(dtos, new PageRequest(issues.getNumber(), issues.getSize
                     ()), issues.getTotalElements());
             return result;
         }
@@ -164,5 +164,17 @@ public class IssueSericeImpl implements IssueService {
         issue.setUserId(sessionUser.getId());
         issueDao.save(issue);
         return Worker.OK(issue.getTitle());
+    }
+
+    public Issue findOne(Long id){
+       return issueDao.findOne(id);
+    }
+
+    public ViewIssueDto toDto(Issue issue){
+        ViewIssueDto dto = BeanUtil.cast(ViewIssueDto.class, issue);
+        dto.setUsersDto(usersService.toDto(userService.findOne(issue.getUserId())));
+        dto.setIssueStatus(IssueStatus.getIssueStatus(issue.getStatus()));
+        dto.setIssueLabel(IssueLabel.getIssueLabel(issue.getLabel()));
+        return dto;
     }
 }
