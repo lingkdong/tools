@@ -3,6 +3,7 @@ package com.tools.action.issue.authc;
 import com.tools.constants.IssueLabel;
 import com.tools.dto.BaseResponseDTO;
 import com.tools.dto.UploadFileDto;
+import com.tools.dto.issue.CreateIssueCommentParam;
 import com.tools.dto.issue.CreateIssueParam;
 import com.tools.dto.user.UsersDto;
 import com.tools.model.User;
@@ -86,4 +87,9 @@ public class AuthIssueAction {
         return mv;
     }
 
+    @PostMapping(value = "/create-issue-comment")
+    @ResponseBody
+    public BaseResponseDTO createIssueComment(CreateIssueCommentParam param) {
+        return issueCommentService.createIssueComment(param);
+    }
 }

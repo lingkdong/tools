@@ -42,6 +42,10 @@ $(function () {
             $(popMsg).html("");
         }
     });
+    $(".js-issue-detail").click(function (event) {
+        jumpDetail(this);
+        stopEvent(event);
+    })
 })
 
 function chooseFilter(obj) {

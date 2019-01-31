@@ -1,5 +1,6 @@
 package com.tools.service.impl;
 
+import com.tools.constants.UserType;
 import com.tools.dao.UserDao;
 import com.tools.dto.BaseResponseDTO;
 import com.tools.dto.EmailDto;
@@ -332,6 +333,7 @@ public class UserServiceImpl implements UserService {
         user.setLastUpdateTime(date);
         user.setMale(true);
         user.setStatus(UserStatus.NORMAL.code());
+        user.setType(UserType.NORMAL.code());
         return user;
     }
 

@@ -10,7 +10,7 @@ package com.tools.constants;
  */
 public enum IssueStatus {
     OPEN((byte) 1, "open"),
-    CLOSED((byte) 2, "close");
+    CLOSED((byte) 2, "closed");
     private final Byte code;
 
     private final String name;

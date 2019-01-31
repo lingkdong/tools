@@ -7,7 +7,6 @@ $(function () {
         jumpCreate();
         stopEvent(event);
     })
-
 })
 
 function redirectToCard(obj) {
@@ -20,5 +19,16 @@ function redirectToCard(obj) {
 
 function jumpCreate() {
     var url = PRE_FOX_AUTHC_BASE + "/issue/new";
+    jump_page(url);
+}
+
+
+function jumpDetail(obj) {
+    var issueId=$(obj).attr("data-issue-id");
+    jumpDetailById(issueId);
+}
+
+function jumpDetailById(issueId) {
+    var url = PRE_FOX_AUTHC_BASE + "/issue/"+issueId;
     jump_page(url);
 }

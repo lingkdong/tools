@@ -1,6 +1,7 @@
 package com.tools.service;
 
 import com.tools.dto.BaseResponseDTO;
+import com.tools.dto.issue.CreateIssueCommentParam;
 
 /**
  * @Author: dongxin
@@ -8,5 +9,7 @@ import com.tools.dto.BaseResponseDTO;
  **/
 public interface IssueCommentService {
     BaseResponseDTO getIssueComments(Long issueId);
+
+    BaseResponseDTO createIssueComment(CreateIssueCommentParam param);
 
 }

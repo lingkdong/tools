@@ -10,5 +10,5 @@ import java.util.List;
  * @Date: 2018/12/21 17:23
  **/
 public interface IssueCommentDao extends JpaRepository<IssueComment, Long> {
-    List<IssueComment> findByIssueIdOrderByCreateTimeDesc(Long issueId);
+    List<IssueComment> findByIssueIdOrderByCreateTimeAsc(Long issueId);
 }

@@ -144,8 +144,9 @@
                         </div>
 
                         <div class="f-left w-percent-75 lh-2 p-2">
-                            <a th:id="${'issue-id-'+item.id}"
-                                class="link-gray-dark va-middle no-underline h4 fs-16px js-navigation-open"
+                            <a
+                               th:attr="data-issue-id=${item.id}"
+                                class="link-gray-dark va-middle no-underline h4 fs-16px js-issue-detail cursor-p"
                                 aria-describedby="hovercard-aria-description">   [[${item.title}]]
                             </a>
                             <span class="labels lh-1">
@@ -176,7 +177,7 @@
 
                         <div th:if="${item.commentCount>0}" class="f-right col-2">
                             <div class="f-right col-5 no-wrap pt-2 pr-3 text-right">
-                                <a  th:id="${'comment-on-id-'+item.id}" class="gray-line">
+                                <a   class="gray-line cursor-p js-issue-detail"   th:attr="data-issue-id=${item.id}">
                                     <svg class="octicon octicon-comment va-middle" viewBox="0 0 16 16" version="1.1"
                                          width="16" height="16" aria-hidden="true">
                                         <path fill-rule="evenodd"

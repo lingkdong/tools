@@ -60,6 +60,12 @@
                     </div>
                     <ul class="d-flex pl-2 flex-items-center text-bold list-style-none" role="navigation">
                         <li>
+                            <a th:href="@{/anon/index}"
+                               class="js-selected-navigation-item HeaderNavlink px-2">
+                                首页
+                            </a>
+                        </li>
+                        <li>
                             <a th:href="@{/anon/users/index}"
                                class="js-selected-navigation-item HeaderNavlink px-2">
                                 用户
@@ -68,7 +74,7 @@
                         <li>
                             <a href="#" aria-label="Issues you created"
                                class="js-selected-navigation-item HeaderNavlink px-2">
-                                问题
+                                问题列表
                             </a>
                         </li>
                         <li>

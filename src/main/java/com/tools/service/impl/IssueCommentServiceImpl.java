@@ -5,6 +5,7 @@ import com.tools.dao.IssueCommentDao;
 import com.tools.dto.BaseResponseDTO;
 import com.tools.dto.HttpStatus;
 import com.tools.dto.PreException;
+import com.tools.dto.issue.CreateIssueCommentParam;
 import com.tools.dto.issue.ViewIssueCommentDto;
 import com.tools.dto.issue.ViewIssueDto;
 import com.tools.model.Issue;
@@ -20,10 +21,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -51,7 +49,7 @@ public class IssueCommentServiceImpl implements IssueCommentService {
             throw new PreException(HttpStatus.PARAM_INCORRECT);
         }
         ViewIssueDto viewIssueDto = issueService.toDto(issue);
-        List<IssueComment> issueComments = issueCommentDao.findByIssueIdOrderByCreateTimeDesc(issueId);
+        List<IssueComment> issueComments = issueCommentDao.findByIssueIdOrderByCreateTimeAsc(issueId);
         List<ViewIssueCommentDto> commentDtos = new ArrayList<>();
         if (CollectionUtils.isNotEmpty(issueComments)) {
             Map<Long, User> userMap = usersService.toIdMap(
@@ -71,4 +69,44 @@ public class IssueCommentServiceImpl implements IssueCommentService {
         map.put("commentDtos", commentDtos);
         return Worker.OK(map);
     }
+
+    public BaseResponseDTO createIssueComment(CreateIssueCommentParam param){
+        BaseResponseDTO dto=detectComment(param);
+        if(!Worker.isOK(dto))return dto;
+        Date date=new Date();
+        IssueComment issueComment=new IssueComment();
+        issueComment.setComment(param.getComment());
+        issueComment.setCreateTime(date);
+        issueComment.setIssueId(param.getIssueId());
+        issueComment.setType(param.getType());
+        issueComment.setUserId(Worker.getCurrentUser().getId());
+        issueCommentDao.save(issueComment);
+        return Worker.OK();
+    }
+
+    private BaseResponseDTO detectComment(CreateIssueCommentParam param){
+        User sessionUser=Worker.getCurrentUser();
+        if(sessionUser==null){
+            return new BaseResponseDTO(HttpStatus.LOGIN_EXPIRED);
+        }
+        if(param.getIssueId()==null){
+            log.info("<issue id is null>");
+            return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT);
+        }
+        if(IssueCommentType.get(param.getType())==null){
+            log.info("<issue comment is unknow type={}>",param.getType());
+            return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT);
+        }
+        if(IssueCommentType.COMMENT.code().equals(param.getType())){
+            BaseResponseDTO dto=Worker.isBlank2("comment",param.getComment());
+            if(!Worker.isOK(dto)) return dto;
+        }
+        Issue issue = issueService.findOne(param.getIssueId());
+        if (issue == null) {
+            log.info("<can't find issue by id={}>", param.getIssueId());
+            return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT);
+        }
+        return Worker.OK();
+    }
+
 }

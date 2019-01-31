@@ -48,9 +48,6 @@ h1 {
     padding: 4px 8px;
     text-align: center;
 }
-.State--green {
-    background-color: #2cbe4e;
-}
 
 .gh-header-meta .State {
     margin-right: 8px;
@@ -191,4 +188,32 @@ table td, th {
 
 .issue-body{
     border: 1px solid #dfe2e5;
+}
+
+.discussion-item {
+    margin: 15px 0 15px 79px;
+    padding-left: 25px;
+    position: relative;
+}
+.discussion-item-icon {
+    background-color: #586069;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    color: #fff;
+    float: left;
+    height: 32px;
+    line-height: 28px;
+    margin-left: -40px;
+    margin-top: -7px;
+    text-align: center;
+    width: 32px;
+}
+
+.discussion-timeline-actions {
+    background-color: #fff;
+    border-top: 2px solid #e6ebf1;
+}
+
+.State--green {
+    background-color: #2cbe4e;
 }

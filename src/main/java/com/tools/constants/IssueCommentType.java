@@ -9,7 +9,7 @@ package com.tools.constants;
  * To change this template use File | Settings | File Templates.
  */
 public enum IssueCommentType {
-    comment((byte) 1, "comment", "评论"),
+    COMMENT((byte) 1, "comment", "评论"),
     CLOSED((byte) 2, "closed", "关闭"),
     REOPEN((byte) 3, "reopen", "重新开启");
     private final Byte code;
