@@ -80,6 +80,7 @@ public class IssueCommentServiceImpl implements IssueCommentService {
         issueComment.setIssueId(param.getIssueId());
         issueComment.setType(param.getType());
         issueComment.setUserId(Worker.getCurrentUser().getId());
+        issueComment.setLastUpdateTime(date);
         issueCommentDao.save(issueComment);
         return Worker.OK();
     }

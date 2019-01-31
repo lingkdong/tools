@@ -36,7 +36,7 @@ function create(type) {
         alertError("参数错误");
         return false;
     }
-    var comment=$(commentBody).getValue();
+    var comment=commentBody.getValue();
     if(isNotBlank(comment)){
         comment=comment.trim();
     }
