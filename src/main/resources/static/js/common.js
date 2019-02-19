@@ -1,14 +1,16 @@
-$(function(){
-  if (window.sidebar) {
-  $(".bookmarks").attr("href",window.location)
-                 .attr("title",document.title);
-  }
-  nginxUrl=$("#nginxUrl").val();
+$(function () {
+    if (window.sidebar) {
+        $(".bookmarks").attr("href", window.location)
+            .attr("title", document.title);
+    }
+    nginxUrl = $("#nginxUrl").val();
 })
+
 function _copy(obj) {
     obj.select(); // 选择对象
     document.execCommand("Copy");
 }
+
 function _clear0(obj) {
     $(obj).val("");
 }
@@ -25,12 +27,13 @@ function isExist(obj) {
     return !(obj == undefined || obj == null || obj.length == 0);
 }
 
-function strCut(value,size){
-  if(isNotBlank(value)&&value.length>size){
-    return value.substring(0,size)
-  }
-  return value;
+function strCut(value, size) {
+    if (isNotBlank(value) && value.length > size) {
+        return value.substring(0, size)
+    }
+    return value;
 }
+
 var HttpStatus = {
     OK: 2000,
     IS_BLANK: 4008,
@@ -64,33 +67,43 @@ var month_reg = /^(0?[1-9]|1[0-2])$/;
 var day_reg = /^((0?[1-9])|((1|2)[0-9])|30|31)$/;
 var phone_reg = /^0?(13[0-9]|14[56789]|15[012356789]|166|17[012345678]|18[0-9]|19[89])[0-9]{8}$/;
 var positive_reg = /^[0-9]*[1-9][0-9]*$/;
+
 function isUserName(value) {
     return usename_reg.test(value);
 }
+
 function isPassword(value) {
     return password_reg.test(value);
 }
+
 function isEmail(value) {
     return email_reg.test(value);
 }
+
 function isValidCode(value) {
     return validcode_reg.test(value);
 }
+
 function isYear(value) {
     return year_reg.test(value);
 }
+
 function isMonth(value) {
     return month_reg.test(value);
 }
+
 function isDay(value) {
     return day_reg.test(value);
 }
+
 function isPhone(value) {
     return phone_reg.test(value);
 }
+
 function isPositive(value) {
     return positive_reg.test(value);
 }
+
 //new modify
 function isDate() {
     try {
@@ -100,7 +113,9 @@ function isDate() {
         return false;
     }
 }
+
 var wait_time = 60;
+
 function time(obj, normalInfo, waitInfo, waitTime, url) {
     if (wait_time > waitTime) {
         wait_time = waitTime;
@@ -162,6 +177,7 @@ function alertServerError() {
 function alertSuccess(msg) {
     alertMsg(FlashType.SUCCESS, msg);
 }
+
 function alertError(msg) {
     alertMsg(FlashType.ERROR, msg);
 }
@@ -187,15 +203,19 @@ function addMsg(parent, type, msg) {
         }
     }
 }
+
 function addErrorMsg(obj, msg) {
     addMsg(obj, FlashType.ERROR, msg);
 }
+
 function addSuccessMsg(obj, msg) {
     addMsg(obj, FlashType.SUCCESS, msg);
 }
+
 function addWarnMsg(obj, msg) {
     addMsg(obj, FlashType.WARN, msg);
 }
+
 /*...........form item detect.........*/
 var itemStatus = {
     LOADING: "is-autocheck-loading-16",
@@ -218,6 +238,7 @@ function item_success(obj) {
     clearItemStatus(obj);
     $(obj).addClass(itemStatus.SUCCESS);
 }
+
 //success
 function select_item_success(obj) {
     clearItemStatus(obj);
@@ -235,6 +256,7 @@ function item_error(obj, txt) {
     addItemInfo(obj, txt);
     $(obj).parent().children(".note").hide();
 }
+
 function select_item_error(obj, txt) {
     clearItemStatus(obj);
     //lable
@@ -246,6 +268,7 @@ function select_item_error(obj, txt) {
     addItemInfo(obj, txt);
     $(obj).parent().children(".note").hide();
 }
+
 //clear status class
 function clearItemStatus(obj) {
     var group = getItemGroup(obj);
@@ -285,6 +308,7 @@ function addItemInfo(obj, txt) {
         $(group).append($(info));
     }
 }
+
 function addItemInfo_position(obj, txt) {
     group = getItemGroup(obj)
     var info = getItemInfo(group);
@@ -309,6 +333,7 @@ function item_error_position(obj, txt) {
     addItemInfo_position(obj, txt);
     $(obj).parent().children(".note").hide();
 }
+
 /*...........form item detect.........*/
 
 function backErrorTxt(property, status) {
@@ -330,10 +355,12 @@ function backErrorTxt(property, status) {
 
     }
 }
+
 var PRE_FOX_AUTHC_BASE = "/tools/authc";
 var PRE_FOX_ANON_BASE = "/tools/anon";
 var PRE_FOX_INDEX = PRE_FOX_ANON_BASE + "/index";
 var PRE_FOX_LOGIN = PRE_FOX_ANON_BASE + "/user/login";
+
 function jump_index() {
     window.location.href = PRE_FOX_INDEX;
 }
@@ -345,6 +372,7 @@ function jump_page(url) {
 function open_blank(url) {
     window.open(url, "_blank");
 }
+
 function makePreZero(obj, len) {
     var value = $(obj).val() + "";
     len = len - value.length;
@@ -354,8 +382,9 @@ function makePreZero(obj, len) {
     }
     return zero + value;
 }
+
 function isIE() {
-    return (!+[1, ])
+    return (!+[1,])
 }
 
 function isInArray(arr, value) {
@@ -388,7 +417,7 @@ function backDetectResult(result) {
 }
 
 function bookmark(url, title) {
-   try{
+    try {
         if (!url) {
             url = window.location
         }
@@ -416,10 +445,11 @@ function bookmark(url, title) {
         } else {
             alertError('您的浏览器不支持该操作.');
         }
-    }catch(error){
-       alertError('请按CTRL+D(Mac按Command+D) 来添加标签');
+    } catch (error) {
+        alertError('请按CTRL+D(Mac按Command+D) 来添加标签');
     }
 }
+
 $(function () {
     $('body').on("click", ".bookmarks", function () {
         var url = $(this).attr("data-url");
@@ -427,10 +457,11 @@ $(function () {
         if (isNotBlank(url)) {
             url = window.location.host + url;
         }
-        bookmark(url,name);
+        bookmark(url, name);
     })
 })
 var type_array = new Array("jpg", "jpeg", "png", "gif");
+
 function isLargeSize(fileSize) {
     var size = fileSize / 1024;
     if (size > 2000) {
@@ -438,4 +469,11 @@ function isLargeSize(fileSize) {
         return true
     }
     return false;
+}
+
+function scroll2Footer(time) {
+    $('html,body').animate({
+            scrollTop: $('.footer').offset().top
+        }
+        , time);
 }

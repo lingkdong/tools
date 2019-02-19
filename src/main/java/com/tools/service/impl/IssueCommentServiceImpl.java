@@ -1,6 +1,7 @@
 package com.tools.service.impl;
 
 import com.tools.constants.IssueCommentType;
+import com.tools.constants.IssueStatus;
 import com.tools.dao.IssueCommentDao;
 import com.tools.dto.BaseResponseDTO;
 import com.tools.dto.HttpStatus;
@@ -82,6 +83,7 @@ public class IssueCommentServiceImpl implements IssueCommentService {
         issueComment.setUserId(Worker.getCurrentUser().getId());
         issueComment.setLastUpdateTime(date);
         issueCommentDao.save(issueComment);
+        changeIssue(param);
         return Worker.OK();
     }
 
@@ -110,4 +112,14 @@ public class IssueCommentServiceImpl implements IssueCommentService {
         return Worker.OK();
     }
 
+    private int changeIssue(CreateIssueCommentParam param){
+        if(IssueCommentType.CLOSED.code().equals(param.getType())){
+           return issueService.updateStatus(param.getIssueId(), IssueStatus.CLOSED);
+        }else if(IssueCommentType.REOPEN.code().equals(param.getType())){
+            return issueService.updateStatus(param.getIssueId(), IssueStatus.OPEN);
+        }else if(IssueCommentType.COMMENT.code().equals(param.getType())){
+            return issueService.addCommentCount(param.getIssueId());
+        }
+        return 0;
+    }
 }

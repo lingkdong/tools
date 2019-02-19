@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +16,7 @@ import java.util.Map;
 public class JdbcDao {
     @Autowired
     private JdbcTemplate jdbcTemplate;
+
 
     /**
      * get resource and resource's category info
@@ -28,10 +30,27 @@ public class JdbcDao {
        sql.append(" order by cat.sort_num,res.sort_num;");
        return jdbcTemplate.queryForList(sql.toString());
     }
-
+    /*********************************************issue model**********************************************************/
     public List<Map<String, Object>> getIssueStatusStatistics(){
         StringBuilder sql=new StringBuilder();
         sql.append(" select status,count(1) as totalNum from issue group by status;");
         return jdbcTemplate.queryForList(sql.toString());
     }
+
+    public int addIssueCommentCount(Long issueId){
+        StringBuilder sql=new StringBuilder();
+        sql.append(" update issue set comment_count=comment_count+1,last_update_time=now() where id="+issueId);
+        return jdbcTemplate.update(sql.toString());
+    }
+
+    public int updateIssueStatus(Long issueId,Byte status){
+        StringBuilder sql=new StringBuilder();
+        sql.append(" update issue set status=? ,last_update_time=now()  where id=?");
+        List<Object> param=new ArrayList<>();
+        param.add(status);
+        param.add(issueId);
+        return jdbcTemplate.update(sql.toString(),param);
+    }
+
+    /*********************************************issue model**********************************************************/
 }

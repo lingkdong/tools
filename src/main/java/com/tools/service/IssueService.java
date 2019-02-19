@@ -1,5 +1,6 @@
 package com.tools.service;
 
+import com.tools.constants.IssueStatus;
 import com.tools.dto.BaseResponseDTO;
 import com.tools.dto.UploadFileDto;
 import com.tools.dto.issue.CreateIssueParam;
@@ -28,4 +29,8 @@ public interface IssueService {
     Issue findOne(Long id);
 
     ViewIssueDto toDto(Issue issue);
+
+    int updateStatus(Long id, IssueStatus issueStatus);
+
+    int addCommentCount(Long id);
 }

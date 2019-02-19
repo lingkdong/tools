@@ -177,4 +177,12 @@ public class IssueSericeImpl implements IssueService {
         dto.setIssueLabel(IssueLabel.getIssueLabel(issue.getLabel()));
         return dto;
     }
+
+    public int updateStatus(Long id,IssueStatus issueStatus){
+        return jdbcDao.updateIssueStatus(id,issueStatus.code());
+    }
+
+    public int addCommentCount(Long id){
+        return jdbcDao.addIssueCommentCount(id);
+    }
 }

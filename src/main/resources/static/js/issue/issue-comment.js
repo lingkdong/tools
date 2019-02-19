@@ -16,12 +16,13 @@ $(function () {
 
     issueFlag=$("#issue-flag");
     createBtn=$("#create");
-
-
+    toFooter();
     $(createBtn).click(function (event) {
         create(1);//1 comment 2 closed 3 reopen
         stopEvent(event);
     })
+
+
 })
 
 
@@ -55,6 +56,8 @@ function create(type) {
         },
         success: function (result) {
             if (backDetectResult(result)) {
+                var url=PRE_FOX_AUTHC_BASE + "/issue/"+issueId+"#footer";
+                jump_page(url);
                 location.reload();
             }
         },
@@ -72,5 +75,12 @@ function backError(item) {
         case 'comment':
             alertError(backErrorTxt("评论内容", item.status));
             break;
+    }
+}
+
+function  toFooter() {
+    var url = window.location.href;
+    if(url.indexOf("#footer")>0){
+        scroll2Footer(300);
     }
 }
