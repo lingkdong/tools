@@ -45,11 +45,8 @@ public class JdbcDao {
 
     public int updateIssueStatus(Long issueId,Byte status){
         StringBuilder sql=new StringBuilder();
-        sql.append(" update issue set status=? ,last_update_time=now()  where id=?");
-        List<Object> param=new ArrayList<>();
-        param.add(status);
-        param.add(issueId);
-        return jdbcTemplate.update(sql.toString(),param);
+        sql.append(" update issue set status="+status+",last_update_time=now()  where id="+issueId+" and status !="+status);
+        return jdbcTemplate.update(sql.toString());
     }
 
     /*********************************************issue model**********************************************************/

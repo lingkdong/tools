@@ -48,19 +48,6 @@ $(function () {
     })
 })
 
-function chooseFilter(obj) {
-    var checked = $(obj).attr("aria-checked");
-    var flag = false;
-    if ("true" != checked) flag = true;
-
-    var name = $(obj).attr("data-name");
-    //clear
-    $("a[name='issue-filter'][data-name='" + name + "']").attr("aria-checked", false);
-    //flag
-    $(obj).attr("aria-checked", flag);
-
-}
-
 function getParam() {
     var param = "";
     //get all filter conditions
@@ -68,24 +55,8 @@ function getParam() {
     if (isNotBlank(title)) {
         param = "title=" + title
     }
-    $("a[name='issue-filter'][aria-checked='true']").each(function () {
-        var name = $(this).attr("data-name");
-        var value = $(this).attr("data-value");
-        if (param.length == 0) {
-            param = name + "=" + value;
-        } else {
-            param = param + "&" + name + "=" + value;
-        }
-    })
-    return param;
+    return param+getFilterParam();
 }
-
-function searchIssue() {
-    var url = PRE_FOX_ANON_BASE + "/issues/list?";
-    var param = getParam();
-    jump_page(url + param);
-}
-
 function changePage(event) {
     var url = PRE_FOX_ANON_BASE + "/issues/list?";
     var param = getParam();

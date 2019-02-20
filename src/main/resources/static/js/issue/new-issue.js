@@ -17,7 +17,7 @@ $(function(){
     issueTitle=$("#issue_title");
     createIssue=$("#create-issue");
     $("a[name='issue-filter'][data-name='label']").click(function (event) {
-        chooseFilter(this);
+        chooseFilter2(this);
         $('details').removeAttr("open");
         stopEvent(event);
     })
@@ -29,7 +29,7 @@ $(function(){
 })
 
 
-function chooseFilter(obj) {
+function chooseFilter2(obj) {
     var checked = $(obj).attr("aria-checked");
     var value=$(defaultLabel).attr("data-value");
     var name=$(defaultLabel).attr("data-labelName");

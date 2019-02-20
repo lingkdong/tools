@@ -1,5 +1,6 @@
 package com.tools.config;
 
+import com.tools.constants.UserType;
 import com.tools.model.User;
 import com.tools.constants.UserStatus;
 import com.tools.service.UserService;
@@ -24,7 +25,7 @@ public class ShiroRealm extends AuthorizingRealm {
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         User user  = (User)principals.getPrimaryPrincipal();
         //get role and permisson from database.
-        authorizationInfo.addRole("user");
+        authorizationInfo.addRole(UserType.getName(user.getType()));
         Set permission=new HashSet();
         permission.add("create");
         permission.add("update");

@@ -14,32 +14,38 @@ $(function () {
         }
     });
 
-    issueFlag=$("#issue-flag");
-    createBtn=$("#create");
+    createBtn = $("#create");
+    changeStatusBtn = $("#change-status");
     toFooter();
     $(createBtn).click(function (event) {
-        create(1);//1 comment 2 closed 3 reopen
+        create(this);
+        stopEvent(event);
+    })
+    $(changeStatusBtn).click(function (event) {
+        changeStatus(this);
+        stopEvent(event);
+    })
+    $("a[name='issue-filter']").click(function (event) {
+        chooseFilter(this);
+        searchIssue();
         stopEvent(event);
     })
 
-
 })
 
-
-
-function create(type) {
-    if(undefined==type){
+function getParam() {
+   return getFilterParam();
+}
+function create(obj) {
+    var issueId = $(createBtn).attr("data-issue-id");
+    var text = $(obj).html();
+    if (isBlank(issueId)) {
         alertError("参数错误");
         return false;
     }
-    var issueId=$(issueFlag).attr("data-issue-id");
-    if(isBlank(issueId)){
-        alertError("参数错误");
-        return false;
-    }
-    var comment=commentBody.getValue();
-    if(isNotBlank(comment)){
-        comment=comment.trim();
+    var comment = commentBody.getValue();
+    if (isNotBlank(comment)) {
+        comment = comment.trim();
     }
     $.ajax({
         type: "post",
@@ -47,16 +53,16 @@ function create(type) {
         async: true,
         dataType: "json",
         beforeSend: function () {
-            $(createBtn).attr(DISABLED, true).html("保存...");
+            $(obj).attr(DISABLED, true).html("保存...");
         },
         data: {
             issueId: issueId,
-            type: type,
+            type: 1,//1 comment 2 closed 3 reopen
             comment: comment
         },
         success: function (result) {
             if (backDetectResult(result)) {
-                var url=PRE_FOX_AUTHC_BASE + "/issue/"+issueId+"#footer";
+                var url = PRE_FOX_AUTHC_BASE + "/issue/" + issueId + "#footer";
                 jump_page(url);
                 location.reload();
             }
@@ -65,10 +71,56 @@ function create(type) {
             alertServerError();
         },
         complete: function () {
-            $(createBtn).removeAttr(DISABLED).html("添加评论");
+            $(obj).removeAttr(DISABLED).html(text);
         }
     });
 }
+
+function changeStatus(obj) {
+    var issueId = $(obj).attr("data-issue-id");
+    var nowStatus = $(obj).attr("data-issue-status");//1.open 2.closed
+    var type = 1;
+    var text = $(obj).html();
+    //deal : 1 comment 2 closed 3 reopen
+    if (nowStatus == 1) {
+        //to closed
+        type = 2;
+    } else if (nowStatus == 2) {
+        // to  reopen
+        type = 3
+    }
+    if (isBlank(issueId)) {
+        alertError("参数错误");
+        return false;
+    }
+    $.ajax({
+        type: "post",
+        url: PRE_FOX_AUTHC_BASE + "/issue/create-issue-comment.json",
+        async: true,
+        dataType: "json",
+        beforeSend: function () {
+            $(obj).attr(DISABLED, true).html("保存...");
+        },
+        data: {
+            issueId: issueId,
+            type: type
+        },
+        success: function (result) {
+            if (backDetectResult(result)) {
+                var url = PRE_FOX_AUTHC_BASE + "/issue/" + issueId + "#footer";
+                jump_page(url);
+                location.reload();
+            }
+        },
+        error: function (result) {
+            alertServerError();
+        },
+        complete: function () {
+            $(obj).removeAttr(DISABLED).html(text);
+        }
+    });
+}
+
 
 function backError(item) {
     switch (item.property) {
@@ -78,9 +130,9 @@ function backError(item) {
     }
 }
 
-function  toFooter() {
+function toFooter() {
     var url = window.location.href;
-    if(url.indexOf("#footer")>0){
+    if (url.indexOf("#footer") > 0) {
         scroll2Footer(300);
     }
 }

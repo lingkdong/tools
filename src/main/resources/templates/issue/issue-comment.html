@@ -25,11 +25,18 @@
             </button>
         </div>
 
-        <h1 class="gh-header-title" th:attr="data-issue-id=${issueData.issueDto.id}" id="issue-flag">
+        <h1 class="gh-header-title">
           <span class="js-issue-title">
              [[${issueData.issueDto.title}]]
           </span>
             <span class="gh-header-number"># [[${issueData.issueDto.id}]]</span>
+            <a class="d-inline IssueLabel va-text-top cursor-p"
+               name="issue-filter"
+               data-name="label"
+               th:attr="data-value=${issueData.issueDto.issueLabel.code()}"
+               th:style="${#strings.concat('color: #ffffff;background-color:',issueData.issueDto.issueLabel.getBgColor())}"
+               th:title="${issueData.issueDto.issueLabel.getName()}"
+            >[[${issueData.issueDto.issueLabel.getName()}]]</a>
         </h1>
     </div>
     <div class="issue-body my-3">
@@ -192,8 +199,15 @@
                     </a>
                 </div>
                 <div class="form-actions">
-                    <button class="btn btn-primary" id="create">
+
+                    <button class="btn btn-primary" id="create"  th:attr="data-issue-id=${issueData.issueDto.id}">
                         添加评论
+                    </button>
+                    <button shiro:hasRole="admin" id="change-status" class="btn  mr-2 js-change-status"
+                            th:attr="data-issue-id=${issueData.issueDto.id}
+                         ,data-issue-status=${issueData.issueDto.issueStatus.code()}">
+                        <span th:if="${issueData.issueDto.issueStatus.code() eq 1}">关闭问题</span>
+                        <span th:if="${issueData.issueDto.issueStatus.code() eq 2}">重新开启</span>
                     </button>
                 </div>
             </div>

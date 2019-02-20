@@ -12,7 +12,7 @@ public enum UserType {
     NORMAL((byte) 2, "normal");
     private final Byte code;
 
-    private final String detail;
+    private final String name;
 
     public Byte code() {
         return this.code;
@@ -22,11 +22,25 @@ public enum UserType {
      * Return the reason phrase of this status code.
      */
     public String getDetail() {
-        return this.detail;
+        return this.name;
     }
 
-    UserType(Byte code, String detail) {
+    UserType(Byte code, String name) {
         this.code = code;
-        this.detail = detail;
+        this.name = name;
+    }
+
+    public static UserType get(Byte code) {
+        for (UserType item : UserType.values()) {
+            if (item.code.equals(code)) return item;
+        }
+        return null;
+    }
+
+    public static String getName(Byte code) {
+        for (UserType item : UserType.values()) {
+            if (item.code.equals(code)) return item.name;
+        }
+        return null;
     }
 }

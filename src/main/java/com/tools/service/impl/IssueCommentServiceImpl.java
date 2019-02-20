@@ -2,6 +2,7 @@ package com.tools.service.impl;
 
 import com.tools.constants.IssueCommentType;
 import com.tools.constants.IssueStatus;
+import com.tools.constants.UserType;
 import com.tools.dao.IssueCommentDao;
 import com.tools.dto.BaseResponseDTO;
 import com.tools.dto.HttpStatus;
@@ -103,6 +104,9 @@ public class IssueCommentServiceImpl implements IssueCommentService {
         if(IssueCommentType.COMMENT.code().equals(param.getType())){
             BaseResponseDTO dto=Worker.isBlank2("comment",param.getComment());
             if(!Worker.isOK(dto)) return dto;
+        }else if(!sessionUser.getType().equals(UserType.ADMIN.code())){
+            log.info("<issue comment  no permission type={},userId={}>",param.getType(),sessionUser.getId());
+            return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT);
         }
         Issue issue = issueService.findOne(param.getIssueId());
         if (issue == null) {
