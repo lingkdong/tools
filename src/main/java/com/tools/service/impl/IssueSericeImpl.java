@@ -15,7 +15,7 @@ import com.tools.service.IssueService;
 import com.tools.service.UserService;
 import com.tools.service.UsersService;
 import com.tools.utils.BeanUtil;
-import com.tools.utils.FileChannelEnum;
+import com.tools.constants.FileChannelEnum;
 import com.tools.utils.ImgUtil;
 import com.tools.worker.Worker;
 import lombok.extern.slf4j.Slf4j;

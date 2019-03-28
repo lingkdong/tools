@@ -50,4 +50,13 @@ public class JdbcDao {
     }
 
     /*********************************************issue model**********************************************************/
+
+
+    /*********************************************user model**********************************************************/
+    public int addScore(Long userId,int addScore){
+        StringBuilder sql=new StringBuilder();
+        sql.append(" update user set score=score+"+addScore+",last_update_time=now()  where id="+userId);
+        return jdbcTemplate.update(sql.toString());
+    }
+    /*********************************************user model**********************************************************/
 }

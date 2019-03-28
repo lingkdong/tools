@@ -18,4 +18,5 @@ public class UsersCardDto {
     private String bio;
     private Date createTime;
     private int view;
+    private int score;
 }

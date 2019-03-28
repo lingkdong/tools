@@ -1,6 +1,7 @@
 package com.tools.service.impl;
 
 import com.tools.constants.UserType;
+import com.tools.dao.JdbcDao;
 import com.tools.dao.UserDao;
 import com.tools.dto.BaseResponseDTO;
 import com.tools.dto.EmailDto;
@@ -15,6 +16,7 @@ import com.tools.service.UserService;
 import com.tools.utils.*;
 import com.tools.worker.SessionWorker;
 import com.tools.worker.Worker;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -40,6 +42,7 @@ import static com.tools.utils.AvatarConstant.*;
  * Created by lk on 2018/1/9.
  */
 @Service
+@Slf4j
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao userDao;
@@ -51,7 +54,8 @@ public class UserServiceImpl implements UserService {
     private FileService fileService;
     @Value("${prefox.nginx}")
     private String nginxUrl;
-
+    @Autowired
+    private JdbcDao jdbcDao;
 
     @Override
     public boolean _nameUnique(String name, Long userId) {
@@ -186,6 +190,10 @@ public class UserServiceImpl implements UserService {
             if (savedRequest != null && savedRequest.getRequestUrl() != null && !savedRequest.getRequestUrl().contains
                     ("favicon.ico")) {
                 data = savedRequest.getRequestUrl();
+            }
+            if(Worker.getCurrentUser()!=null){
+                //login success add score
+                addScore(Worker.getCurrentUser().getId(),1);
             }
             return Worker.OK(data);
         } catch (DisabledAccountException de) {
@@ -410,10 +418,10 @@ public class UserServiceImpl implements UserService {
             return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT, ErrorInfo.newErrorInfo().property("avatar")
                     .HttpStatus(HttpStatus.FILE_UPLOAD_ERROR).build());
         }
-        String token="_"+MathUtils.getRandom(6);
-        File largeFile = ImgUtil.doCompress(orig.getAbsolutePath(), large, large, token+large_flag, false);
+        String token = "_" + MathUtils.getRandom(6);
+        File largeFile = ImgUtil.doCompress(orig.getAbsolutePath(), large, large, token + large_flag, false);
         //compress
-        File smallFile = ImgUtil.doCompress(orig.getAbsolutePath(), small, small, token+small_flag, false);
+        File smallFile = ImgUtil.doCompress(orig.getAbsolutePath(), small, small, token + small_flag, false);
         if (largeFile == null || smallFile == null) {
             return new BaseResponseDTO(HttpStatus.PARAM_INCORRECT, ErrorInfo.newErrorInfo().property("avatar")
                     .HttpStatus(HttpStatus.FILE_UPLOAD_ERROR).build());
@@ -436,7 +444,17 @@ public class UserServiceImpl implements UserService {
         return Worker.OK();
     }
 
-    public User findOne(Long id){
-        return  userDao.findOne(id);
+    public User findOne(Long id) {
+        return userDao.findOne(id);
+    }
+
+    public int addScore(Long userId, int addScore) {
+        try {
+            return jdbcDao.addScore(userId, addScore);
+        } catch (Exception e) {
+            log.error("<UserServiceImpl.addScore failed,userId:{},addScore={} {} {}  >", userId, addScore
+                    , e, e.getStackTrace()[0].toString());
+        }
+        return 0;
     }
 }
