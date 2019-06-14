@@ -1,7 +1,5 @@
 package com.tools.utils;
 
-import com.sun.istack.internal.Nullable;
-
 import static com.tools.utils.StringUtil.lenientFormat;
 
 /**
@@ -18,14 +16,14 @@ public final class Validate {
         }
     }
 
-    public static void checkArgumment(boolean expression, @Nullable Object errorMessage) {
+    public static void checkArgumment(boolean expression,  Object errorMessage) {
         if (!expression) {
             throw new IllegalArgumentException(String.valueOf(errorMessage));
         }
     }
 
-    public static void checkArgumment(boolean expression, @Nullable String errorMessageTemplate,
-                                      @Nullable Object... errorMessageArgs) {
+    public static void checkArgumment(boolean expression,  String errorMessageTemplate,
+                                       Object... errorMessageArgs) {
         if (!expression) {
             throw new IllegalArgumentException(lenientFormat(errorMessageTemplate, errorMessageArgs));
         }
@@ -37,14 +35,14 @@ public final class Validate {
         }
     }
 
-    public static void checkState(boolean expression, @Nullable Object errorMessage) {
+    public static void checkState(boolean expression,  Object errorMessage) {
         if (!expression) {
             throw new IllegalStateException(String.valueOf(errorMessage));
         }
     }
 
-    public static void checkState(boolean expression, @Nullable String errorMessageTemplate,
-                                  @Nullable Object... errorMessageArgs) {
+    public static void checkState(boolean expression,  String errorMessageTemplate,
+                                   Object... errorMessageArgs) {
         if (!expression) {
             throw new IllegalStateException(lenientFormat(errorMessageTemplate, errorMessageArgs));
         }
@@ -66,7 +64,7 @@ public final class Validate {
      * @return
      */
     public static <T extends Object> T checkNotNull(
-            final T reference, @Nullable String errorMessageTemplate, @Nullable Object... errorMessageArgs) {
+            final T reference,  String errorMessageTemplate,  Object... errorMessageArgs) {
         if (reference == null) {
             throw new NullPointerException(lenientFormat(errorMessageTemplate, errorMessageArgs));
         }
@@ -100,8 +98,8 @@ public final class Validate {
      * @param <T> the CharSequence type
      * @return
      */
-    public static <T extends CharSequence> T checkNotBlank(final T chars, @Nullable String errorMessageTemplate,
-                                                           @Nullable Object... errorMessageArgs) {
+    public static <T extends CharSequence> T checkNotBlank(final T chars,  String errorMessageTemplate,
+                                                            Object... errorMessageArgs) {
         if (chars == null) {
             throw new NullPointerException(lenientFormat(errorMessageTemplate, errorMessageArgs));
         }

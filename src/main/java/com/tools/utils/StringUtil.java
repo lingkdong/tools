@@ -1,6 +1,5 @@
 package com.tools.utils;
 
-import com.sun.istack.internal.Nullable;
 import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -61,7 +60,7 @@ public final class StringUtil {
     }
 
     public static String lenientFormat(
-            @Nullable String template, @Nullable Object ... args) {
+             String template,  Object ... args) {
         template = String.valueOf(template); // null -> "null"
 
         if (args == null) {
@@ -103,7 +102,7 @@ public final class StringUtil {
         return builder.toString();
     }
 
-    private static String lenientToString(@Nullable Object o) {
+    private static String lenientToString( Object o) {
         try {
             return String.valueOf(o);
         } catch (Exception e) {
