@@ -17,14 +17,14 @@ spring:
     cache: false
   redis:
     database: 0
-    host: 111.230.23.211
+    host:
     pool:
       max-active: 8
       max-idle: 8
       max-wait: -1
       min-idle: 0
     timeout: 0
-    password: redis76!123
+    password:
     port: 6639
 server:
   port: 8081
@@ -41,7 +41,7 @@ prefox:
     port: 465
     from: prefoxchina@gmail.com
     user: prefoxchina@gmail.com
-    pass: google@109964
+    pass:
 #    host: smtp-mail.outlook.com
 #    port: 587
 #    from: pre_fox@outlook.com
