@@ -5,7 +5,7 @@
 |tag html page|
 |issue page|
 |markdown page js performance optimization|
-|Browser plugin|like open
+|Browser plugin|||||like open|
 
 
  
