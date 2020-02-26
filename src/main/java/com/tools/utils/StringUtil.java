@@ -114,7 +114,7 @@ public final class StringUtil {
         }
     }
 
-    /**
+    /**link
      * interface CharSequence
      * All know implementing classes:
      * String,StringBuffer,StringBuilder,Segment,CharBuffer

@@ -8,8 +8,7 @@
     <version>1.0.0</version>
     <packaging>war</packaging>
 
-    <name>tools</name>
-    <description>tools project by Spring Boot</description>
+    <name>tools</name><description>tools project by Spring Boot</description>
     <profiles>
         <profile>
             <id>dev</id>
@@ -126,6 +125,11 @@
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
             <version>1.11</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-csv</artifactId>
+            <version>1.7</version>
         </dependency>
         <dependency>
             <groupId>commons-collections</groupId>

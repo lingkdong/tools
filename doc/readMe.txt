@@ -23,13 +23,14 @@ netstat -lnp | grep 8100
 1.wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u161-b12/2f38c3b165be4555a1fa6e98c45e0808/jdk-8u161-linux-x64.rpm
 2. rpm -ivh  jdk-8u161-linux-x64.rpm
 3./etc/profile
-
 JAVA_HOME=/usr/java/jdk1.8.0_161/
 PATH=$JAVA_HOME/bin:$PATH
 CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
 export JAVA_HOME
 export PATH
 export CLASSPATH
+4. source /etc/profile
+
 
 //mysql install
 # wget http://dev.mysql.com/get/mysql-community-release-el7-5.noarch.rpm
