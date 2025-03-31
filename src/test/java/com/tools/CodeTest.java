@@ -167,7 +167,7 @@ public class CodeTest {
                 CategoryDto.newCategoryDto().id(2L).name("test2").description("two") .build(),
                 CategoryDto.newCategoryDto().id(3L).name("test3").description("three") .build()
                 );
-        Map<Long,CategoryDto> map=list.stream().collect(Collectors.toMap(CategoryDto::getId,Function.identity()));
+        Map<Long,CategoryDto> map=list.stream().collect(Collectors.toMap(CategoryDto::getId,Function.identity(),(existingValue, newValue) -> existingValue));
         System.out.println(map.size());
         Set<Long> ids=new HashSet<>(map.keySet());
         ids.remove(1L);
